@@ -4,7 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Attachment Anywhere | Smart NFC Hardware & Systems</title>
-<link rel="icon" type="image/jpg" href="logo.jpg">
+<link rel="icon" type="image/png" href="logo.png" id="favicon">
+
+<script>
+  // Automatic Dark/Light Mode Favicon Switcher para sa Chrome at Safari
+  const updateFavicon = () => {
+    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const favicon = document.getElementById('favicon');
+    // Pwede kang gumawa ng dalawang version: logo-white.png para sa dark mode at logo.png para sa light mode
+    favicon.href = isDark ? 'logo-white.png' : 'logo.png';
+  };
+  
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateFavicon);
+  window.addEventListener('DOMContentLoaded', updateFavicon);
+</script>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
