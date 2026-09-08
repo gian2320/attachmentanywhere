@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bernard Sabalza | DYKTJ Auto Supply</title>
+    <!-- Tailwind CSS for clean, modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- QR Code Generator Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- FontAwesome for clean icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Montserrat & Archivo Black -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #fafafa;
+            color: #111827;
+        }
+        .main-title {
+            font-family: 'Archivo Black', sans-serif;
+            font-weight: 400;
+        }
+        .ig-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+        }
+        .ig-button {
+            transition: all 0.2s ease;
+        }
+        .ig-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div class="w-full max-w-md bg-white rounded-[32px] shadow-xl border border-gray-100 overflow-hidden p-6 relative">
+        
+        <!-- Profile Header -->
+        <div class="flex flex-col items-center text-center mt-4">
+            <div class="w-24 h-24 rounded-full overflow-hidden shadow-md border-2 border-white mb-4 bg-gray-100">
+                <img src="Bernard Sabalza.jpeg" class="w-full h-full object-cover">
+            </div>
+            <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">Bernard Sabalza</h1>
+            <p class="text-sm font-semibold text-gray-600 mt-0.5">Salesman | DYKTJ Auto Supply</p>
+        </div>
+
+      <!-- Action Buttons (Save Contact & Show QR) -->
+        <div class="grid grid-cols-2 gap-3 mt-6">
+            <button onclick="downloadVCard()" class="flex items-center justify-center gap-2 bg-black text-white text-xs md:text-sm font-semibold py-3 px-4 rounded-xl ig-button shadow-sm cursor-pointer">
+                <i class="fa-solid fa-user-plus text-xs"></i> Save Contact
+            </button>
+            <button onclick="toggleQRModal()" class="flex items-center justify-center gap-2 bg-gray-100 text-gray-800 text-xs md:text-sm font-semibold py-3 px-4 rounded-xl ig-button border border-gray-200 cursor-pointer">
+                <i class="fa-solid fa-qrcode text-xs"></i> Show QR
+            </button>
+        </div>
+
+        <hr class="border-gray-100 mb-6">
+
+        <!-- Links & Buttons List -->
+        <div class="space-y-3">
+
+            <!-- Call Number -->
+            <a href="tel:+6390947801497" class="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50 border border-gray-100 ig-button group">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-emerald-600 shadow-sm border border-gray-100">
+                        <i class="fa-solid fa-phone"></i>
+                    </div>
+                    <div>
+                        <div class="text-sm font-semibold text-gray-900">Call Number</div>
+                        <div class="text-xs text-gray-500">0909 478 01497</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
+            </a>
+
+            <!-- Viber -->
+            <a href="viber://chat?number=639173600400" class="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50 border border-gray-100 ig-button group">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-purple-600 shadow-sm border border-gray-100">
+                        <i class="fa-brands fa-viber"></i>
+                    </div>
+                    <div>
+                        <div class="text-sm font-semibold text-gray-900">Viber</div>
+                        <div class="text-xs text-gray-500">0917 360 0400</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
+            </a>
+
+            <!-- Facebook -->
+            <a href="https://m.facebook.com/dktj.ktj.flaviano/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50 border border-gray-100 ig-button group">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-blue-600 shadow-sm border border-gray-100">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </div>
+                    <div>
+                        <div class="text-sm font-semibold text-gray-900">Facebook</div>
+                        <div class="text-xs text-gray-500">View Facebook Profile</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
+            </a>
+
+            <!-- Google Mail -->
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=khimflaviano123@gmail.com" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50 border border-gray-100 ig-button group">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm border border-gray-100">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+                    </div>
+                    <div>
+                        <div class="text-sm font-semibold text-gray-900">Google Mail</div>
+                        <div class="text-xs text-gray-500">khimflaviano123@gmail.com</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
+            </a>
+
+        </div>
+
+        <!-- Footer Branding -->
+        <div class="text-center mt-8 flex items-center justify-center gap-0.5">
+            <span class="text-xs text-gray-400 font-medium">Powered by</span>
+            <a href="https://attachmentanywhere.com" target="_blank" class="hover:opacity-80 transition inline-flex items-center">
+                <img src="brand.jpg" class="h-12 w-auto object-contain">
+            </a>
+        </div>
+
+    </div>
+
+    <!-- QR Code Modal -->
+    <div id="qrModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-3xl p-6 max-w-xs w-full text-center shadow-xl relative animate-in fade-in zoom-in duration-200">
+            <button onclick="toggleQRModal()" class="absolute top-4 right-4 text-gray-400 hover:text-black cursor-pointer">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 class="text-base font-bold text-gray-900 mb-1">Scan to Connect</h3>
+            <p class="text-xs text-gray-500 mb-4">Point your camera to view this card</p>
+            <div id="qrcode" class="flex justify-center p-2 bg-gray-50 rounded-2xl border border-gray-100 mb-4"></div>
+            <button onclick="toggleQRModal()" class="w-full bg-gray-100 text-gray-800 text-xs font-semibold py-2.5 rounded-xl cursor-pointer">Close</button>
+        </div>
+    </div>
+
+    <!-- Scripts for vCard & QR Generation -->
+    <script>
+        function downloadVCard() {
+            const vcardData = `BEGIN:VCARD
+VERSION:3.0
+FN:Bernard Sabalza
+N:Sabalza;Bernard;;;
+TITLE:Salesman | DYKTJ Auto Supply
+ORG:DYKTJ Auto Supply
+TEL;TYPE=CELL:+6390947801497
+TEL;TYPE=WORK:+639173600400
+EMAIL:khimflaviano123@gmail.com
+URL:${window.location.href}
+END:VCARD`;
+
+            const blob = new Blob([vcardData], { type: 'text/vcard;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'Bernard_Sabalza.vcf');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        // Initialize QR Code generator
+        const qrContainer = document.getElementById("qrcode");
+        const currentUrl = window.location.href;
+        new QRCode(qrContainer, {
+            text: currentUrl,
+            width: 180,
+            height: 180,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
+        // Toggle QR Modal
+        function toggleQRModal() {
+            const modal = document.getElementById('qrModal');
+            modal.classList.toggle('hidden');
+            modal.classList.toggle('flex');
+        }
+    </script>
+</body>
+</html>
