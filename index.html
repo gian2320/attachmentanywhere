@@ -4,15 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Attachment Anywhere | Smart NFC Hardware & Systems</title>
-<link rel="icon" type="image/png" href="logo.png" id="favicon">
+<link rel="icon" type="image/png" href="logo.jpg" id="favicon">
 
 <script>
   // Automatic Dark/Light Mode Favicon Switcher para sa Chrome at Safari
   const updateFavicon = () => {
     const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const favicon = document.getElementById('favicon');
-    // Pwede kang gumawa ng dalawang version: logo-white.png para sa dark mode at logo.png para sa light mode
-    favicon.href = isDark ? 'logo-white.png' : 'logo.png';
+    // Pwede kang gumawa ng dalawang version: logo-white.jpg para sa dark mode at logo.jpg para sa light mode
+    favicon.href = isDark ? 'logo-white.png' : 'logo.jpg';
   };
   
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateFavicon);
@@ -176,19 +176,6 @@
     </div>
   </section>
 
-<!-- ==================== CLIENT TICKER BAR ==================== -->
-  <div class="w-full py-6 bg-neutral-100 dark:bg-neutral-900/50 border-y border-neutral-200 dark:border-borderDark overflow-hidden select-none">
-    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-center gap-4 text-center sm:text-left">
-      <span class="text-[10px] font-black uppercase tracking-widest text-neutral-400 shrink-0">Trusted By Local Brands:</span>
-      <div class="flex flex-wrap items-center justify-center gap-6 text-xs font-bold uppercase tracking-wider text-neutral-700 dark:text-neutral-300">
-        <span class="flex items-center gap-1.5">☕ Mama Bean Coffee</span>
-        <span class="text-neutral-300 dark:text-neutral-700">•</span>
-        <span class="flex items-center gap-1.5">🍣 Maki Sushi Rolls</span>
-        <span class="text-neutral-300 dark:text-neutral-700">•</span>
-        <span class="flex items-center gap-1.5">⚡ Attachment Anywhere Ecosystem</span>
-      </div>
-    </div>
-  </div>
 
   <!-- ==================== 3. PRODUCT CATALOG ==================== -->
   <section id="lineup" class="w-full py-16 sm:py-24 px-4 sm:px-6 border-t border-neutral-200 dark:border-borderDark">
@@ -240,6 +227,7 @@
 
     </div>
   </section>
+
 
   <!-- ==================== 4. HOW IT WORKS ==================== -->
   <section class="w-full py-16 sm:py-24 px-4 sm:px-6 border-t border-neutral-200 dark:border-borderDark text-center">
@@ -447,15 +435,140 @@
       });
     }
 
-    function submitFeedback(e) {
-      e.preventDefault();
-      const msg = document.getElementById('feedback-text').value;
-      const email = "attachmentanywhere@gmail.com";
-      const subject = encodeURIComponent(`Feedback: ${currentRating} Stars for Attachment Anywhere`);
-      const body = encodeURIComponent(`Rating: ${currentRating}/5 Stars\n\nComments:\n${msg}`);
-      closeModal('feedback-modal');
-      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+    async function submitFeedback(e) {
+    e.preventDefault();
+    const msg = document.getElementById('feedback-text').value;
+    const btn = e.target.querySelector('button[type="submit"]');
+    const originalText = btn.innerText;
+
+    // Loading state para mukhang pro
+    btn.innerText = "Transmitting to HQ...";
+    btn.disabled = true;
+    btn.classList.add('opacity-70', 'cursor-not-allowed');
+
+    try {
+      // Dito kinakausap ng website yung ginawa mong backend file
+      const res = await fetch('/.netlify/functions/process-feedback', {
+        method: 'POST',
+        body: JSON.stringify({ rating: currentRating, message: msg })
+      });
+
+      if (res.ok) {
+        btn.innerText = "Sent. Daemon is on it.";
+        btn.classList.replace('bg-rose-600', 'bg-emerald-600');
+        
+        // Reset form at isara ang modal after 2 seconds
+        setTimeout(() => {
+          closeModal('feedback-modal');
+          document.getElementById('feedback-text').value = '';
+          btn.innerText = originalText;
+          btn.disabled = false;
+          btn.classList.remove('opacity-70', 'cursor-not-allowed');
+          btn.classList.replace('bg-emerald-600', 'bg-rose-600');
+          setStars(5); 
+        }, 2000);
+      } else {
+        throw new Error('Backend failed');
+      }
+    } catch(err) {
+      btn.innerText = "Connection Failed. Try again.";
+      btn.disabled = false;
+      btn.classList.remove('opacity-70', 'cursor-not-allowed');
+      setTimeout(() => {
+        btn.innerText = originalText;
+      }, 3000);
     }
-  </script>
+  }
+
+<!-- START: FLOATING IMPACT BUTTON & OVERLAY -->
+
+<!-- 1. The Sleek Floating Button (Fixed Bottom-Right) -->
+<button onclick="toggleImpactModal()" class="fixed bottom-6 right-6 z-40 flex items-center gap-2.5 bg-[#0a0a0a] text-white px-5 py-3 rounded-full shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-neutral-800 hover:bg-neutral-800 hover:scale-105 transition-all duration-300 focus:outline-none group">
+  <!-- Minimalist Globe/Tech Icon -->
+  <svg class="w-4 h-4 text-neutral-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+  <span class="text-[11px] font-bold uppercase tracking-[0.15em] pt-px">Our Impact</span>
+</button>
+
+<!-- 2. The Matte-Black Modal Overlay (Hidden by Default) -->
+<div id="impact-modal" class="fixed inset-0 z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-400 ease-out">
+  
+  <!-- Blurred Backdrop -->
+  <div class="absolute inset-0 bg-white/80 backdrop-blur-md" onclick="toggleImpactModal()"></div>
+  
+  <!-- Modal Content Box -->
+  <div id="impact-modal-content" class="relative w-[90%] max-w-lg bg-[#0a0a0a] border border-neutral-800 rounded-3xl p-8 sm:p-10 shadow-2xl transform scale-95 transition-transform duration-400 ease-out overflow-y-auto max-h-[85vh]">
+    
+    <!-- Close Button -->
+    <button onclick="toggleImpactModal()" class="absolute top-6 right-6 text-neutral-500 hover:text-white transition-colors focus:outline-none">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+    </button>
+
+    <!-- Modal Header -->
+    <div class="mb-8">
+      <h2 class="text-xs font-mono uppercase tracking-[0.2em] text-neutral-500 mb-2">// Sustainability</h2>
+      <h3 class="text-2xl font-bold text-white tracking-tight">Engineered for Impact.</h3>
+    </div>
+
+    <!-- SDG Items List -->
+    <div class="space-y-8">
+      
+      <!-- SDG 9 -->
+      <div>
+        <h4 class="text-sm font-bold text-white uppercase tracking-widest mb-1.5 flex items-center gap-2">
+          <span class="w-1.5 h-1.5 bg-white rounded-full"></span> SDG 09: Innovation
+        </h4>
+        <p class="text-neutral-400 text-sm leading-relaxed font-light pl-3.5 border-l border-neutral-800">
+          <strong class="text-neutral-200 font-medium">Upgrading the Networking Infrastructure.</strong> We transform outdated analog handshakes into seamless digital connections. One tap instantly transfers your complete executive profile directly into any smartphone—bypassing manual data entry.
+        </p>
+      </div>
+
+      <!-- SDG 12 -->
+      <div>
+        <h4 class="text-sm font-bold text-white uppercase tracking-widest mb-1.5 flex items-center gap-2">
+          <span class="w-1.5 h-1.5 bg-white rounded-full"></span> SDG 12: Zero Waste
+        </h4>
+        <p class="text-neutral-400 text-sm leading-relaxed font-light pl-3.5 border-l border-neutral-800">
+          <strong class="text-neutral-200 font-medium">One Card, Infinite Connections.</strong> A single premium matte-finish NFC card replaces thousands of disposable paper business cards over its lifetime. We are directly eliminating the micro-waste tied to traditional printing.
+        </p>
+      </div>
+
+      <!-- SDG 13 -->
+      <div>
+        <h4 class="text-sm font-bold text-white uppercase tracking-widest mb-1.5 flex items-center gap-2">
+          <span class="w-1.5 h-1.5 bg-white rounded-full"></span> SDG 13: Climate Action
+        </h4>
+        <p class="text-neutral-400 text-sm leading-relaxed font-light pl-3.5 border-l border-neutral-800">
+          <strong class="text-neutral-200 font-medium">Decarbonizing First Impressions.</strong> By ditching bulk paper cards, you actively cut out the deforestation, chemical inks, water waste, and carbon emissions from the traditional printing supply chain.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 3. Vanilla JS to handle Modal Toggle -->
+<script>
+  function toggleImpactModal() {
+    const modal = document.getElementById('impact-modal');
+    const content = document.getElementById('impact-modal-content');
+    const isHidden = modal.classList.contains('opacity-0');
+
+    if (isHidden) {
+      // Open Modal
+      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      content.classList.remove('scale-95');
+      content.classList.add('scale-100');
+    } else {
+      // Close Modal
+      document.body.style.overflow = ''; // Restore scrolling
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      content.classList.remove('scale-100');
+      content.classList.add('scale-95');
+    }
+  }
+</script>
+<!-- END: FLOATING IMPACT BUTTON & OVERLAY -->
+
 </body>
 </html>
