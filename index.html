@@ -397,67 +397,56 @@
 
   <!-- JAVASCRIPT -->
   <script>
-    function toggleTheme() {
-      const html = document.documentElement;
-      if (html.classList.contains('dark')) {
-        html.classList.remove('dark');
-        localStorage.setItem('theme', 'light');
-      } else {
-        html.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
-      }
-    }
-
-   if (localStorage.getItem('theme') === 'dark') {
-      document.documentElement.classList.add('dark');
+  function toggleTheme() {
+    const html = document.documentElement;
+    if (html.classList.contains('dark')) {
+      html.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
     } else {
-      document.documentElement.classList.remove('dark');
+      html.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
     }
+  }
 
-    function openModal(id) {
-      const modal = document.getElementById(id);
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-    }
+  if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
 
-    function closeModal(id) {
-      const modal = document.getElementById(id);
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-    }
+  function openModal(id) {
+    const modal = document.getElementById(id);
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
 
-    let currentRating = 5;
-    function setStars(count) {
-      currentRating = count;
-      const stars = document.querySelectorAll('.star-btn');
-      stars.forEach((btn, index) => {
-        btn.style.opacity = index < count ? "1" : "0.25";
-      });
-    }
+  function closeModal(id) {
+    const modal = document.getElementById(id);
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
 
-    async function submitFeedback(e) {
+  async function submitFeedback(e) {
     e.preventDefault();
     const msg = document.getElementById('feedback-text').value;
     const btn = e.target.querySelector('button[type="submit"]');
     const originalText = btn.innerText;
 
-    // Loading state para mukhang pro
     btn.innerText = "Transmitting to HQ...";
     btn.disabled = true;
     btn.classList.add('opacity-70', 'cursor-not-allowed');
 
     try {
-      // Dito kinakausap ng website yung ginawa mong backend file
       const res = await fetch('/.netlify/functions/process-feedback', {
         method: 'POST',
-        body: JSON.stringify({ rating: currentRating, message: msg })
+        // Default to 5 rating sa system para laging green ang alert sa Discord
+        body: JSON.stringify({ rating: 5, message: msg }) 
       });
 
       if (res.ok) {
         btn.innerText = "Sent. Daemon is on it.";
         btn.classList.replace('bg-rose-600', 'bg-emerald-600');
         
-        // Reset form at isara ang modal after 2 seconds
         setTimeout(() => {
           closeModal('feedback-modal');
           document.getElementById('feedback-text').value = '';
@@ -465,7 +454,6 @@
           btn.disabled = false;
           btn.classList.remove('opacity-70', 'cursor-not-allowed');
           btn.classList.replace('bg-emerald-600', 'bg-rose-600');
-          setStars(5); 
         }, 2000);
       } else {
         throw new Error('Backend failed');
@@ -479,6 +467,7 @@
       }, 3000);
     }
   }
+</script>
 
 <!-- START: FLOATING IMPACT BUTTON & OVERLAY -->
 
