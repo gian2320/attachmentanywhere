@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gian Christian Villanueva | Digital Calling Card</title>
-    <!-- Tailwind CSS for clean, modern styling -->
+    <title>Shawn Xedrix Manucdoc | Digital Calling Card</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- QR Code Generator Library -->
+    <!-- QR Code Generator -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <!-- FontAwesome for clean icons -->
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Montserrat & Archivo Black -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -43,17 +43,18 @@
         
         <!-- Brand & Logo Slot -->
         <div class="text-center mb-6">
-            <img src="GI.jpg" class="w-20 h-20 mx-auto mb-3 object-cover rounded-full border-2 border-gray-100 p-1 bg-white shadow-sm" onerror="this.style.display='none'">
+            <!-- Palitan ng tamang filename ng picture niya -->
+            <img src="Shawn Manucdoc.jpg" class="w-20 h-20 mx-auto mb-3 object-cover rounded-full border-2 border-gray-100 p-1 bg-white shadow-sm" onerror="this.style.display='none'">
         </div>
 
         <!-- Profile Info -->
         <div class="text-center mb-6">
-            <h1 class="main-title text-xl md:text-2xl text-gray-900 tracking-tight leading-tight">Gian Christian Villanueva</h1>
-            <p class="text-sm font-semibold text-gray-700 mt-2">Entrepreneur</p>
-            <p class="text-xs text-gray-400 mt-0.5">Attachment Anywhere</p>
+            <h1 class="main-title text-xl md:text-2xl text-gray-900 tracking-tight leading-tight">Shawn Xedrix Manucdoc</h1>
+            <p class="text-sm font-semibold text-gray-700 mt-2">Reseller</p>
+            <p class="text-xs text-gray-400 mt-0.5">Accountancy Student</p>
         </div>
 
-        <!-- Primary Actions: Save Contact & Share QR -->
+        <!-- Primary Actions -->
         <div class="grid grid-cols-2 gap-3 mb-6">
             <button onclick="downloadVCard()" class="flex items-center justify-center gap-2 bg-black text-white text-xs md:text-sm font-semibold py-3 px-4 rounded-xl ig-button shadow-sm cursor-pointer">
                 <i class="fa-solid fa-user-plus text-xs"></i> Save Contact
@@ -68,71 +69,57 @@
         <!-- Links & Buttons List -->
         <div class="space-y-3">
 
-            <!-- Contact Number -->
-            <a href="tel:+639657689591" class="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50 border border-gray-100 ig-button group">
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/in/shawn-xedrix-manucdoc-44480b280" target="_blank" class="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50 border border-gray-100 ig-button group">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-emerald-600 shadow-sm border border-gray-100">
-                        <i class="fa-solid fa-phone"></i>
+                    <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-blue-700 shadow-sm border border-gray-100">
+                        <i class="fa-brands fa-linkedin-in"></i>
                     </div>
                     <div>
-                        <div class="text-sm font-semibold text-gray-900">Call Number</div>
-                        <div class="text-xs text-gray-500">+63 965 768 9591</div>
+                        <div class="text-sm font-semibold text-gray-900">LinkedIn</div>
+                        <div class="text-xs text-gray-500">Professional Profile</div>
                     </div>
                 </div>
                 <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
             </a>
 
-            <!-- Messenger -->
-            <a href="https://m.me/Gian2320" target="_blank" class="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50 border border-gray-100 ig-button group">
+            <!-- Facebook -->
+            <a href="https://www.facebook.com/Shawii.95" target="_blank" class="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50 border border-gray-100 ig-button group">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-blue-600 shadow-sm border border-gray-100">
-                        <i class="fa-brands fa-facebook-messenger"></i>
+                        <i class="fa-brands fa-facebook-f"></i>
                     </div>
                     <div>
-                        <div class="text-sm font-semibold text-gray-900">Messenger</div>
-                        <div class="text-xs text-gray-500">Chat directly on Messenger</div>
+                        <div class="text-sm font-semibold text-gray-900">Facebook</div>
+                        <div class="text-xs text-gray-500">Shawii.95</div>
                     </div>
                 </div>
                 <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
             </a>
 
             <!-- Instagram -->
-            <a href="https://instagram.com/g.attachmenz" target="_blank" class="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50 border border-gray-100 ig-button group">
+            <a href="https://www.instagram.com/shawawawaww" target="_blank" class="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50 border border-gray-100 ig-button group">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-pink-600 shadow-sm border border-gray-100">
                         <i class="fa-brands fa-instagram"></i>
                     </div>
                     <div>
                         <div class="text-sm font-semibold text-gray-900">Instagram</div>
-                        <div class="text-xs text-gray-500">Follow or DM on IG</div>
+                        <div class="text-xs text-gray-500">@shawawawaww</div>
                     </div>
                 </div>
                 <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
             </a>
 
-            <!-- Viber -->
-            <a href="viber://chat?number=%2B63965768951" target="_blank" class="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50 border border-gray-100 ig-button group">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-purple-600 shadow-sm border border-gray-100">
-                        <i class="fa-brands fa-viber"></i>
-                    </div>
-                    <div>
-                        <div class="text-sm font-semibold text-gray-900">Viber</div>
-                        <div class="text-xs text-gray-500">Message on Viber</div>
-                    </div>
-                </div>
-                <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
-            </a>
-
-            <!-- Google Mail Direct Link -->
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=gianchristianvillanueva@gmail.com" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50 border border-gray-100 ig-button group">
+            <!-- Google Mail -->
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=xedrix99@gmail.com" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50 border border-gray-100 ig-button group">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm border border-gray-100">
                         <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
                     </div>
                     <div>
                         <div class="text-sm font-semibold text-gray-900">Google Mail</div>
-                        <div class="text-xs text-gray-500">gianchristianvillanueva@gmail.com</div>
+                        <div class="text-xs text-gray-500">xedrix99@gmail.com</div>
                     </div>
                 </div>
                 <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
@@ -150,7 +137,7 @@
 
     </div>
 
-    <!-- QR Code Modal -->
+<!-- QR Code Modal -->
     <div id="qrModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
         <div class="bg-white rounded-3xl p-6 max-w-xs w-full text-center shadow-xl relative animate-in fade-in zoom-in duration-200">
             <button onclick="toggleQRModal()" class="absolute top-4 right-4 text-gray-400 hover:text-black cursor-pointer">
@@ -160,7 +147,7 @@
             <p class="text-xs text-gray-500 mb-4">Point your camera to view this card</p>
             <div id="qrcode" class="flex justify-center p-2 bg-gray-50 rounded-2xl border border-gray-100 mb-4"></div>
             
-            <!-- Download QR Button -->
+            <!-- Download Button -->
             <button onclick="downloadQR()" class="w-full bg-black text-white text-xs font-semibold py-2.5 rounded-xl cursor-pointer mb-2 hover:bg-gray-800 transition">
                 <i class="fa-solid fa-download mr-1"></i> Download QR
             </button>
@@ -169,33 +156,31 @@
         </div>
     </div>
 
-    <!-- Scripts for vCard & QR Generation -->
     <script>
-        // Generate vCard Data and trigger download
+        // Generate vCard Data
         function downloadVCard() {
             const vcardData = `BEGIN:VCARD
 VERSION:3.0
-FN:Gian Christian Villanueva
-N:Villanueva;Gian;;Christian;
-TITLE:Entrepreneur
-ORG:Attachment Anywhere
-TEL;TYPE=CELL:+639657689591
-EMAIL:gianchristianvillanueva@gmail.com
-URL:https://attachmentanywhere.com/260906052304.html
+FN:Shawn Xedrix Manucdoc
+N:Manucdoc;Shawn Xedrix;;;
+TITLE:Reseller | Accountancy Student
+EMAIL:xedrix99@gmail.com
+URL:https://www.linkedin.com/in/shawn-xedrix-manucdoc-44480b280
+URL:https://attachmentanywhere.com/aa260919153138.html
 END:VCARD`;
 
             const blob = new Blob([vcardData], { type: 'text/vcard;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', 'Gian_Villanueva.vcf');
+            link.setAttribute('download', 'Shawn_Xedrix_Manucdoc.vcf');
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
         }
 
-        // Initialize QR Code generator
+        // Initialize QR
         const qrContainer = document.getElementById("qrcode");
         qrContainer.innerHTML = ""; // Prevents double QR load
         const currentUrl = window.location.href;
@@ -208,21 +193,20 @@ END:VCARD`;
             correctLevel: QRCode.CorrectLevel.H
         });
 
-        // Toggle QR Modal
+        // Toggle Modal
         function toggleQRModal() {
             const modal = document.getElementById('qrModal');
             modal.classList.toggle('hidden');
             modal.classList.toggle('flex');
         }
-
-        // Download QR Code Image
+	// Download QR Code Image
         function downloadQR() {
             const qrImage = qrContainer.querySelector("img");
             
             if (qrImage && qrImage.src) {
                 const link = document.createElement("a");
                 link.href = qrImage.src;
-                link.download = "Gian_Villanueva_QR.png"; 
+                link.download = "Shawn_Manucdoc_QR.png"; 
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
@@ -230,6 +214,9 @@ END:VCARD`;
                 alert("QR Code is still generating, please try again in a second.");
             }
         }
+    </script>
+</body>
+</html>
     </script>
 </body>
 </html>
