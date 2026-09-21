@@ -69,19 +69,19 @@ exports.handler = async (event, context) => {
           show_line_items: true,
           description: `Shipping Method: ${shipping.toUpperCase()}`,
           
-          // PINAG-ISA NATIN ANG LINE ITEM PARA WALANG KAWALA ANG SHIPPING FEE
           line_items: [
             {
               name: `Attachment Anywhere - ${product.toUpperCase()}`,
               description: `Qty: ${quantity} | Includes +₱${shippingFee} Shipping Fee`,
-              amount: Math.round(computedTotal * 100), // Ito ang sisingilin niya (Naka-multiply sa 100 cents para sa PayMongo)
+              amount: Math.round(computedTotal * 100), 
               currency: 'PHP',
-              quantity: 1 // Naka-1 na lang ito dahil na-multiply na natin sa itaas yung bilang
+              quantity: 1 
             }
           ],
           
-          // TINANGGAL NATIN ANG 'payment_method_types'
-          // Dahilan: Para si PayMongo na ang bahalang maglabas ng LAHAT ng payment options (GCash, Maya, Card, QR Ph, etc.)
+          // IBINALIK NATIN ITO DAHIL REQUIRED PALA NG PAYMONGO
+          // Dinagdagan ko na rin ng billease at online banking (dob) kung sakaling activated sa account mo
+          payment_method_types: ['gcash', 'paymaya', 'card', 'billease', 'dob'],
           
           success_url: 'https://attachmentanywhere.com', 
           cancel_url: 'https://attachmentanywhere.com/order.html'
