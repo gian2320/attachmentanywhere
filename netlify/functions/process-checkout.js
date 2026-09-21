@@ -7,10 +7,9 @@ exports.handler = async (event, context) => {
 
   try {
     const data = JSON.parse(event.body);
-    // Hindi na natin gagamitin yung totalPrice galing sa HTML para iwas daya
     const { product, quantity, name, phone, address, shipping, message } = data;
 
-    // 1. 🧠 BACKEND COMPUTATION (Mas secure, server ang nagbibilang)
+    // 1. 🧠 BACKEND COMPUTATION
     const productPrices = { 
       "executive": 1200, "executive-custom": 1500,
       "reviewshield": 500, "reviewshield-custom": 750,
@@ -20,9 +19,11 @@ exports.handler = async (event, context) => {
 
     const basePrice = productPrices[product] || 0;
     const shippingFee = shippingRates[shipping] || 0;
+    
+    // ETO ANG FINAL TOTAL NA SISINGILIN KAY CUSTOMER (KASAMA SHIPPING)
     const computedTotal = (basePrice * quantity) + shippingFee;
 
-    // 2. 🚨 DISCORD NOTIFICATION (Kasama na ang message at shipping info)
+    // 2. 🚨 DISCORD NOTIFICATION
     const discordWebhookUrl = process.env.DISCORD_WEBHOOK_URL;
     if (discordWebhookUrl) {
       const discordPayload = {
@@ -51,31 +52,9 @@ exports.handler = async (event, context) => {
       }).catch(err => console.error("Discord Error:", err));
     }
 
-    // 3. 💳 PAYMONGO API (HIWALAY NA LINE ITEMS PARA CLEAR SA RESIBO)
+    // 3. 💳 PAYMONGO API
     const paymongoSecretKey = process.env.PAYMONGO_SECRET_KEY;
     const authHeader = 'Basic ' + Buffer.from(paymongoSecretKey + ':').toString('base64');
-
-    // Item 1: Yung mismong Produkto
-    const lineItems = [
-      {
-        name: `Attachment Anywhere - ${product.toUpperCase()}`,
-        description: `Quantity: ${quantity}`,
-        amount: Math.round(basePrice * quantity * 100), // PayMongo format (Cents)
-        currency: 'PHP',
-        quantity: 1
-      }
-    ];
-
-    // Item 2: Isasama lang sa resibo kapag may bayad ang shipping (Standard/Meetup)
-    if (shippingFee > 0) {
-      lineItems.push({
-        name: `Logistics Fee`,
-        description: `${shipping.toUpperCase()} Delivery`,
-        amount: Math.round(shippingFee * 100), 
-        currency: 'PHP',
-        quantity: 1
-      });
-    }
 
     const paymongoPayload = {
       data: {
@@ -88,9 +67,22 @@ exports.handler = async (event, context) => {
           send_email_receipt: false,
           show_description: true,
           show_line_items: true,
-          description: `Checkout for ${name}`,
-          line_items: lineItems,
-          payment_method_types: ['gcash', 'paymaya', 'card'],
+          description: `Shipping Method: ${shipping.toUpperCase()}`,
+          
+          // PINAG-ISA NATIN ANG LINE ITEM PARA WALANG KAWALA ANG SHIPPING FEE
+          line_items: [
+            {
+              name: `Attachment Anywhere - ${product.toUpperCase()}`,
+              description: `Qty: ${quantity} | Includes +₱${shippingFee} Shipping Fee`,
+              amount: Math.round(computedTotal * 100), // Ito ang sisingilin niya (Naka-multiply sa 100 cents para sa PayMongo)
+              currency: 'PHP',
+              quantity: 1 // Naka-1 na lang ito dahil na-multiply na natin sa itaas yung bilang
+            }
+          ],
+          
+          // TINANGGAL NATIN ANG 'payment_method_types'
+          // Dahilan: Para si PayMongo na ang bahalang maglabas ng LAHAT ng payment options (GCash, Maya, Card, QR Ph, etc.)
+          
           success_url: 'https://attachmentanywhere.com', 
           cancel_url: 'https://attachmentanywhere.com/order.html'
         }
@@ -114,7 +106,6 @@ exports.handler = async (event, context) => {
       return { statusCode: 400, body: JSON.stringify({ error: "Failed to generate PayMongo link." }) };
     }
 
-    // 4. Ibalik ang checkout link
     return {
       statusCode: 200,
       body: JSON.stringify({ checkoutUrl: paymongoData.data.attributes.checkout_url })
