@@ -3,139 +3,185 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Order Checkout | Attachment Anywhere</title>
+  <title>Secure Checkout | Attachment Anywhere</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     ::-webkit-scrollbar { display: none; }
-    /* PayMongo Green accent for the checkout button */
-    .paymongo-bg { background-color: #12b76a; }
-    .paymongo-hover:hover { background-color: #0e9f5d; }
+    body { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
-<body class="bg-[#f4f4f5] text-black font-sans antialiased selection:bg-black selection:text-white flex flex-col min-h-screen">
+<body class="bg-[#f4f4f5] text-[#171717] font-sans antialiased selection:bg-[#171717] selection:text-white flex flex-col min-h-screen">
 
 <!-- UNIVERSAL NAVIGATION BAR -->
-  <nav class="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 transition-all">
+  <nav class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100 transition-all">
     <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
       <a href="index.html" class="flex items-center">
-        <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-10 md:h-20 w-auto object-contain" />
+        <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-10 md:h-16 w-auto object-contain" />
       </a>
       <div class="hidden md:flex items-center gap-10">
         <div class="flex items-center gap-8">
-          <a href="index.html" class="text-sm font-bold uppercase tracking-widest text-black hover:text-gray-500 transition-colors">Home</a>
-          <a href="products.html" class="text-sm font-bold uppercase tracking-widest text-black hover:text-gray-500 transition-colors">Products</a>
-          <a href="story.html" class="text-sm font-bold uppercase tracking-widest text-black hover:text-gray-500 transition-colors">Story</a>
+          <a href="index.html" class="text-xs font-bold uppercase tracking-[0.15em] text-[#171717] hover:text-gray-400 transition-colors">Home</a>
+          <a href="products.html" class="text-xs font-bold uppercase tracking-[0.15em] text-[#171717] hover:text-gray-400 transition-colors">Products</a>
+          <a href="story.html" class="text-xs font-bold uppercase tracking-[0.15em] text-[#171717] hover:text-gray-400 transition-colors">Story</a>
         </div>
-        <button onclick="window.location.href='products.html'" class="bg-black text-white px-8 py-3 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] hover:scale-105 hover:bg-neutral-800 transition-all shadow-xl">
+        <button onclick="window.location.href='products.html'" class="bg-[#171717] text-white px-8 py-3 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] hover:scale-105 hover:bg-black transition-all shadow-[0_4px_14px_0_rgba(0,0,0,0.1)]">
           Order Now
         </button>
       </div>
       <button class="md:hidden flex flex-col items-end gap-1.5 p-2" aria-label="Menu">
-        <span class="w-6 h-0.5 bg-black rounded-full"></span>
-        <span class="w-5 h-0.5 bg-black rounded-full"></span>
-        <span class="w-6 h-0.5 bg-black rounded-full"></span>
+        <span class="w-6 h-0.5 bg-[#171717] rounded-full"></span>
+        <span class="w-5 h-0.5 bg-[#171717] rounded-full"></span>
+        <span class="w-6 h-0.5 bg-[#171717] rounded-full"></span>
       </button>
     </div>
   </nav>
 
-  <div class="pt-24"></div> <!-- Top spacer -->
+<!-- ================= MOBILE MENU DROPDOWN ================= -->
+  <div id="mobile-menu" class="hidden fixed top-24 left-0 w-full bg-white/95 backdrop-blur-xl border-b border-gray-100 shadow-2xl z-40 flex flex-col items-center py-8 gap-6 md:hidden">
+    <a href="index.html" class="text-xs font-bold uppercase tracking-[0.15em] text-[#171717]">Home</a>
+    <a href="products.html" class="text-xs font-bold uppercase tracking-[0.15em] text-[#171717]">Products</a>
+    <a href="story.html" class="text-xs font-bold uppercase tracking-[0.15em] text-[#171717]">Story</a>
+    <button onclick="window.location.href='order.html'" class="bg-[#171717] text-white px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] shadow-lg mt-4">Order Now</button>
+  </div>
 
-  <!-- ================= ORDER CONTENT ================= -->
-  <main class="flex-grow max-w-5xl mx-auto px-6 md:px-12 py-12 md:py-20 w-full grid grid-cols-1 lg:grid-cols-12 gap-12">
+  <div class="pt-32"></div>
+
+<!-- ================= ORDER CONTENT ================= -->
+  <main class="flex-grow max-w-2xl mx-auto px-6 md:px-12 py-10 w-full flex flex-col items-center">
     
-    <!-- LEFT COLUMN: HEADER & BASIC INFO -->
-    <div class="lg:col-span-5 flex flex-col">
-      <p class="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-400 mb-4">Secure Checkout</p>
-      <h1 class="text-4xl md:text-5xl font-black tracking-tighter mb-6">Finalize<br>Order.</h1>
-      <p class="text-gray-500 font-light text-sm md:text-base mb-8 leading-relaxed">
-        Your selected hardware configuration will be passed directly to our programming team. Please provide accurate details for your NFC setup.
-      </p>
-
-      <!-- Security Badges -->
-      <div class="flex items-center gap-4 mt-auto hidden lg:flex opacity-60">
-        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-        <span class="text-xs font-bold uppercase tracking-widest">SSL Secured<br>Powered by PayMongo</span>
-      </div>
+    <div class="text-center mb-10 w-full">
+      <h1 class="text-4xl md:text-5xl font-black tracking-tighter text-[#171717]">Checkout.</h1>
+      <p class="text-xs font-medium tracking-widest uppercase text-neutral-400 mt-4">Secure your digital identity.</p>
     </div>
 
-    <!-- RIGHT COLUMN: THE DYNAMIC FORM -->
-    <div class="lg:col-span-7 bg-white p-8 md:p-10 rounded-3xl shadow-2xl border border-neutral-100">
+    <!-- THE DYNAMIC FORM -->
+    <div class="w-full bg-white p-8 md:p-12 rounded-[2rem] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.05)] border border-neutral-100">
       
       <form id="orderForm" class="flex flex-col gap-8">
         
-        <!-- AUTO-TRANSFER SECTION: PRODUCT SELECTION -->
+        <!-- PRODUCT & QUANTITY SECTION -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="md:col-span-2">
+            <label class="block text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400 mb-3">Selected Product</label>
+            <select id="productSelect" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-300 rounded-2xl px-5 py-4 text-sm font-semibold outline-none transition-colors appearance-none cursor-pointer">
+              <option value="none" disabled selected>-- Select a Product --</option>
+              
+              <!-- EXECUTIVE CARD VARIANTS -->
+              <option value="executive">Smart Executive Card - Original (₱1,200)</option>
+              <option value="executive-custom">Smart Executive Card - Customized (₱1,500)</option>
+              
+              <!-- REVIEWSHIELD VARIANTS -->
+              <option value="reviewshield">Google ReviewShield™ - Original (₱500)</option>
+              <option value="reviewshield-custom">Google ReviewShield™ - Customized (₱750)</option>
+              
+              <!-- HUB VARIANTS -->
+              <option value="hub">Business Smart Hub - Original (₱2,500)</option>
+              <option value="hub-custom">Business Smart Hub - Customized (₱3,000)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400 mb-3">Quantity</label>
+            <input type="number" id="productQuantity" min="1" value="1" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-300 rounded-2xl px-5 py-4 text-sm font-semibold outline-none transition-colors text-center">
+          </div>
+        </div>
+
+        <!-- BASIC CONTACT INFO -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400 mb-3">Full Name</label>
+            <input type="text" id="customerName" required class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-300 rounded-2xl px-5 py-4 text-sm outline-none transition-colors placeholder:text-neutral-400" placeholder="Juan Dela Cruz">
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400 mb-3">Phone Number</label>
+            <input type="tel" id="customerPhone" required class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-300 rounded-2xl px-5 py-4 text-sm outline-none transition-colors placeholder:text-neutral-400" placeholder="0917 123 4567">
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400 mb-3">Shipping Address</label>
+            <input type="text" id="customerAddress" required class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-300 rounded-2xl px-5 py-4 text-sm outline-none transition-colors placeholder:text-neutral-400" placeholder="Complete Delivery Address">
+          </div>
+        </div>
+
+<!-- SHIPPING METHOD -->
         <div>
-          <label class="block text-xs font-bold uppercase tracking-widest text-neutral-500 mb-3">Selected Product</label>
-          <select id="productSelect" class="w-full bg-[#f4f4f5] border-2 border-transparent focus:border-black rounded-xl px-5 py-4 text-sm font-bold outline-none transition-colors appearance-none cursor-pointer">
-            <option value="none" disabled selected>-- Select a Product --</option>
-            <option value="executive">Smart Executive Card (₱1,200)</option>
-            <option value="reviewshield">Google ReviewShield™ (₱500)</option>
-            <option value="hub">Business Smart Hub (₱2,500)</option>
+          <label class="block text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400 mb-3">Shipping Method</label>
+          <select id="shippingSelect" required class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-300 rounded-2xl px-5 py-4 text-sm font-semibold outline-none cursor-pointer transition-colors appearance-none">
+            <option value="" disabled selected>-- Select Shipping Option --</option>
+            <option value="standard">Standard Nationwide (J&T Express) - +₱49</option>
+            <option value="meetup">Meetup (Manila Malls / LRT & MRT Stations) - +50</option>
+            <option value="others">Message me on Live Negotiation</option>
+
           </select>
         </div>
 
-        <!-- BASIC CONTACT INFO (Always visible) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label class="block text-[10px] font-bold uppercase tracking-widest text-neutral-500 mb-2">Full Name</label>
-            <input type="text" required class="w-full bg-[#f4f4f5] border border-transparent focus:border-black rounded-lg px-4 py-3 text-sm outline-none transition-colors" placeholder="Juan Dela Cruz">
+<!-- LIVE NEGOTIATION / MESSENGER INTEGRATION -->
+        <div class="w-full bg-[#f4f4f5] border border-neutral-200 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="text-center md:text-left">
+            <h3 class="text-[11px] font-black uppercase tracking-[0.2em] text-[#171717]">Need Bulk Pricing?</h3>
+            <p class="text-[10px] text-neutral-500 mt-2 font-medium leading-relaxed">Negotiating for a team or need custom features? Chat with the founder directly for instant approval before you checkout.</p>
           </div>
-          <div>
-            <label class="block text-[10px] font-bold uppercase tracking-widest text-neutral-500 mb-2">Phone Number</label>
-            <input type="tel" required class="w-full bg-[#f4f4f5] border border-transparent focus:border-black rounded-lg px-4 py-3 text-sm outline-none transition-colors" placeholder="0917 123 4567">
-          </div>
-          <div class="md:col-span-2">
-            <label class="block text-[10px] font-bold uppercase tracking-widest text-neutral-500 mb-2">Shipping Address</label>
-            <input type="text" required class="w-full bg-[#f4f4f5] border border-transparent focus:border-black rounded-lg px-4 py-3 text-sm outline-none transition-colors" placeholder="Complete Delivery Address">
-          </div>
+          <a href="https://m.me/attachmentanywhere" target="_blank" class="flex-shrink-0 bg-white border border-neutral-200 hover:border-black text-[#171717] px-6 py-4 rounded-full text-[9px] font-bold uppercase tracking-widest transition-all shadow-sm flex items-center justify-center gap-2 w-full md:w-auto">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 2 24 24"><path d="M12 2C6.477 2 2 6.14 2 11.25c0 2.923 1.5 5.514 3.82 7.235V22l3.498-1.921c1.238.343 2.56.531 3.932.531 5.523 0 10-4.14 10-9.25S17.523 2 12 2zm1.094 12.383l-2.73-2.909-5.342 2.909 5.864-6.22 2.756 2.909 5.316-2.909-5.864 6.22z"/></svg>
+            Live Chat Negotiation
+          </a>
         </div>
 
         <!-- DYNAMIC SECTION: SMART EXECUTIVE CARD -->
-        <div id="dynamic-executive" class="hidden border-t border-neutral-200 pt-6">
-          <h3 class="text-xs font-black uppercase tracking-widest mb-4">Executive Card Setup</h3>
+        <div id="dynamic-executive" class="hidden border-t border-neutral-100 pt-8 mt-2">
+          <h3 class="text-[11px] font-bold uppercase tracking-[0.2em] text-[#171717] mb-5">Executive Card Setup</h3>
           <div class="flex flex-col gap-4">
-            <input type="text" placeholder="Name to display on digital profile" class="w-full border border-neutral-300 rounded-lg px-4 py-3 text-sm outline-none focus:border-black">
-            <input type="text" placeholder="Profession / Occupation / Business Name" class="w-full border border-neutral-300 rounded-lg px-4 py-3 text-sm outline-none focus:border-black">
-            
-            <p class="text-[10px] font-bold uppercase tracking-widest text-neutral-500 mt-2">Check links to include:</p>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-              <label class="flex items-center gap-2 text-sm"><input type="checkbox" class="accent-black"> Facebook</label>
-              <label class="flex items-center gap-2 text-sm"><input type="checkbox" class="accent-black"> Instagram</label>
-              <label class="flex items-center gap-2 text-sm"><input type="checkbox" class="accent-black"> Messenger</label>
-              <label class="flex items-center gap-2 text-sm"><input type="checkbox" class="accent-black"> Viber</label>
-              <label class="flex items-center gap-2 text-sm"><input type="checkbox" class="accent-black"> LinkedIn</label>
-              <label class="flex items-center gap-2 text-sm"><input type="checkbox" class="accent-black"> Others</label>
+            <input type="text" placeholder="Name to display on digital profile" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-300 rounded-2xl px-5 py-4 text-sm outline-none transition-colors placeholder:text-neutral-400">
+            <input type="text" placeholder="Profession / Occupation / Business Name" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-300 rounded-2xl px-5 py-4 text-sm outline-none transition-colors placeholder:text-neutral-400">
+            <p class="text-[9px] font-bold uppercase tracking-[0.2em] text-neutral-400 mt-4">Check links to include:</p>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-2">
+              <label class="flex items-center gap-3 text-xs font-medium cursor-pointer"><input type="checkbox" class="w-4 h-4 accent-[#171717] rounded"> Facebook</label>
+              <label class="flex items-center gap-3 text-xs font-medium cursor-pointer"><input type="checkbox" class="w-4 h-4 accent-[#171717] rounded"> Instagram</label>
+              <label class="flex items-center gap-3 text-xs font-medium cursor-pointer"><input type="checkbox" class="w-4 h-4 accent-[#171717] rounded"> Messenger</label>
+              <label class="flex items-center gap-3 text-xs font-medium cursor-pointer"><input type="checkbox" class="w-4 h-4 accent-[#171717] rounded"> Viber</label>
+              <label class="flex items-center gap-3 text-xs font-medium cursor-pointer"><input type="checkbox" class="w-4 h-4 accent-[#171717] rounded"> LinkedIn</label>
+              <label class="flex items-center gap-3 text-xs font-medium cursor-pointer"><input type="checkbox" class="w-4 h-4 accent-[#171717] rounded"> Others</label>
             </div>
-            <textarea placeholder="Paste your URLs/Usernames here..." class="w-full border border-neutral-300 rounded-lg px-4 py-3 text-sm outline-none focus:border-black mt-2 h-20 resize-none"></textarea>
+            <textarea placeholder="Paste your URLs/Usernames here..." class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-300 rounded-2xl px-5 py-4 text-sm outline-none transition-colors placeholder:text-neutral-400 mt-4 h-24 resize-none"></textarea>
           </div>
         </div>
 
         <!-- DYNAMIC SECTION: DIGITAL HUB -->
-        <div id="dynamic-hub" class="hidden border-t border-neutral-200 pt-6">
-          <h3 class="text-xs font-black uppercase tracking-widest mb-4">Digital Hub Setup</h3>
+        <div id="dynamic-hub" class="hidden border-t border-neutral-100 pt-8 mt-2">
+          <h3 class="text-[11px] font-bold uppercase tracking-[0.2em] text-[#171717] mb-5">Digital Hub Setup</h3>
           <div class="flex flex-col gap-4">
-            <input type="text" placeholder="Name / Brand of your Business" class="w-full border border-neutral-300 rounded-lg px-4 py-3 text-sm outline-none focus:border-black">
-            <input type="text" placeholder="Website Features needed (e.g. Menu, Booking)" class="w-full border border-neutral-300 rounded-lg px-4 py-3 text-sm outline-none focus:border-black">
-            <textarea placeholder="Paste URLs of your Social Media Accounts..." class="w-full border border-neutral-300 rounded-lg px-4 py-3 text-sm outline-none focus:border-black h-20 resize-none"></textarea>
+            <input type="text" placeholder="Name / Brand of your Business" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-300 rounded-2xl px-5 py-4 text-sm outline-none transition-colors placeholder:text-neutral-400">
+            <input type="text" placeholder="Website Features needed (e.g. Menu, Booking)" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-300 rounded-2xl px-5 py-4 text-sm outline-none transition-colors placeholder:text-neutral-400">
+            <textarea placeholder="Paste URLs of Social Media Accounts..." class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-300 rounded-2xl px-5 py-4 text-sm outline-none transition-colors placeholder:text-neutral-400 h-24 resize-none"></textarea>
           </div>
         </div>
 
         <!-- DYNAMIC SECTION: REVIEWSHIELD -->
-        <div id="dynamic-reviewshield" class="hidden border-t border-neutral-200 pt-6">
-          <h3 class="text-xs font-black uppercase tracking-widest mb-2">ReviewShield™ Setup</h3>
-          <p class="text-sm font-light text-neutral-500 bg-gray-50 p-4 rounded-lg">
+        <div id="dynamic-reviewshield" class="hidden border-t border-neutral-100 pt-8 mt-2">
+          <h3 class="text-[11px] font-bold uppercase tracking-[0.2em] text-[#171717] mb-3">ReviewShield™ Setup</h3>
+          <p class="text-xs font-medium leading-relaxed text-neutral-500 bg-[#f4f4f5] p-5 rounded-2xl border border-neutral-100">
             No complex setup required. We will simply route this to your Google Business Profile. Our team will verify your exact business link upon order confirmation.
           </p>
         </div>
 
-        <!-- PAYMONGO SUBMIT BUTTON -->
-        <div class="mt-4 pt-6 border-t border-neutral-200">
-          <button type="button" id="paymongoBtn" class="w-full paymongo-bg paymongo-hover text-white px-8 py-5 rounded-xl text-xs md:text-sm font-bold uppercase tracking-[0.2em] transition-all shadow-xl flex items-center justify-center gap-3">
+        <!-- TOTAL BILLING & CHECKOUT -->
+        <div class="mt-2 pt-8 border-t border-neutral-100">
+          
+          <div class="flex items-center justify-between mb-8 px-2">
+            <span class="text-xs font-bold uppercase tracking-[0.2em] text-neutral-400">Total Billing</span>
+            <span id="totalDisplay" class="text-3xl font-black tracking-tighter text-[#171717]">₱0.00</span>
+          </div>
+
+          <button type="button" id="paymongoBtn" class="w-full bg-[#171717] text-white hover:bg-black px-8 py-5 rounded-full text-xs md:text-sm font-bold uppercase tracking-[0.2em] transition-all duration-300 shadow-[0_8px_20px_rgba(23,23,23,0.25)] flex items-center justify-center gap-3">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-            Proceed to PayMongo
+            Proceed to Checkout
           </button>
-          <div class="flex items-center justify-center gap-3 mt-4 text-[10px] uppercase font-bold text-neutral-400 tracking-widest">
+          
+          <div class="flex items-center justify-center gap-4 mt-6 text-[9px] uppercase font-bold text-neutral-400 tracking-[0.15em]">
             <span>GCash</span> • <span>Maya</span> • <span>Credit Card</span>
+          </div>
+
+          <div class="flex items-center justify-center gap-2 mt-4 text-neutral-300">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+            <span class="text-[9px] font-bold uppercase tracking-[0.2em]">Secured by PayMongo API</span>
           </div>
         </div>
 
@@ -143,134 +189,159 @@
     </div>
   </main>
 
-<!-- THE STREAMLINED HARDWARE FOOTER (SINGLE ROW, NO COPYRIGHT) -->
-<footer class="w-full bg-black text-white pt-16 pb-16 px-6 md:px-12 lg:px-24 border-t border-neutral-900">
-  <!-- Gumamit tayo ng flex-row para isang linya lang ang logo at ang mga links sa desktop -->
-  <div class="max-w-7xl mx-auto flex flex-col xl:flex-row justify-between items-center gap-10 xl:gap-0">
-    
-    <!-- LEFT: Laki-fied Logo -->
-    <div class="flex-shrink-0">
-      <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-24 md:h-32 object-contain invert opacity-95">
+  <footer class="w-full bg-[#171717] text-white pt-16 pb-16 px-6 md:px-12 lg:px-24 border-t border-black">
+    <div class="max-w-7xl mx-auto flex flex-col xl:flex-row justify-between items-center gap-10 xl:gap-0">
+      <div class="flex-shrink-0">
+        <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-20 md:h-28 object-contain invert opacity-90">
+      </div>
+      <div class="flex flex-wrap items-center justify-center xl:justify-end gap-6 md:gap-8 w-full xl:w-auto">
+        <a href="https://instagram.com/attachmentanywhere" target="_blank" class="flex items-center gap-2 border border-neutral-700 rounded-full px-5 py-3 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-neutral-300 hover:bg-white hover:text-black hover:border-white transition-all duration-300">Instagram</a>
+        <a href="https://m.me/attachmentanywhere" target="_blank" class="flex items-center gap-2 border border-neutral-700 rounded-full px-5 py-3 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-neutral-300 hover:bg-white hover:text-black hover:border-white transition-all duration-300">Messenger</a>
+      </div>
     </div>
+  </footer>
 
-    <!-- RIGHT: Everything in ONE ROW -->
-    <div class="flex flex-wrap items-center justify-center xl:justify-end gap-6 md:gap-8 w-full xl:w-auto">
-      
-      <!-- Instagram -->
-      <a href="https://instagram.com/attachmentanywhere" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 border border-neutral-800 rounded-full px-5 py-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 hover:bg-white hover:text-black hover:border-white transition-all duration-300">
-        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-        Instagram
-      </a>
-
-      <!-- Messenger -->
-      <a href="https://m.me/attachmentanywhere" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 border border-neutral-800 rounded-full px-5 py-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 hover:bg-white hover:text-black hover:border-white transition-all duration-300">
-        <svg class="w-4 h-4" fill="currentColor" viewBox="0 2 24 24"><path d="M12 2C6.477 2 2 6.14 2 11.25c0 2.923 1.5 5.514 3.82 7.235V22l3.498-1.921c1.238.343 2.56.531 3.932.531 5.523 0 10-4.14 10-9.25S17.523 2 12 2zm1.094 12.383l-2.73-2.909-5.342 2.909 5.864-6.22 2.756 2.909 5.316-2.909-5.864 6.22z"/></svg>
-        Messenger
-      </a>
-
-      <!-- Subtle Divider to separate Buttons from Text Links -->
-      <div class="hidden md:block h-5 w-px bg-neutral-800"></div>
-
-      <!-- FAQ & Feedback -->
-      <button onclick="document.getElementById('faq-modal').classList.remove('hidden')" class="text-sm text-neutral-400 font-medium hover:text-white transition-colors">FAQ</button>
-      <button onclick="document.getElementById('feedback-modal').classList.remove('hidden')" class="text-sm text-neutral-400 font-medium hover:text-white transition-colors relative border-b border-transparent hover:border-white pb-0.5">
-        System Feedback
-      </button>
-
-    </div>
-    
-  </div>
-</footer>
-
-  <!-- JAVASCRIPT FOR AUTO-TRANSFER & DYNAMIC FIELDS -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
+      
       const productSelect = document.getElementById("productSelect");
+      const quantityInput = document.getElementById("productQuantity");
+      const shippingSelect = document.getElementById("shippingSelect");
+      const totalDisplay = document.getElementById("totalDisplay");
+      
       const sectionExecutive = document.getElementById("dynamic-executive");
       const sectionHub = document.getElementById("dynamic-hub");
       const sectionReviewShield = document.getElementById("dynamic-reviewshield");
 
-      // Function to hide all dynamic sections
-      const hideAllSections = () => {
-        sectionExecutive.classList.add("hidden");
-        sectionHub.classList.add("hidden");
-        sectionReviewShield.classList.add("hidden");
+      // ================= PRICING CONFIG =================
+      const productPrices = { 
+        none: 0, 
+        executive: 1200, 
+        "executive-custom": 1500,
+        reviewshield: 500, 
+        "reviewshield-custom": 750,
+        hub: 2500,
+        "hub-custom": 3000
       };
-
-      // Function to show specific section based on value
-      const updateFormFields = (value) => {
-        hideAllSections();
-        if (value === "executive") sectionExecutive.classList.remove("hidden");
-        if (value === "hub") sectionHub.classList.remove("hidden");
-        if (value === "reviewshield") sectionReviewShield.classList.remove("hidden");
-      };
-
-      // 1. AUTO-TRANSFER LOGIC: Check URL parameters
-      // Example: If user clicks "Add to Cart" in products.html, direct them to order.html?product=executive
-      const urlParams = new URLSearchParams(window.location.search);
-      const passedProduct = urlParams.get('product');
       
-      if (passedProduct && ["executive", "hub", "reviewshield"].includes(passedProduct)) {
-        productSelect.value = passedProduct;
-        updateFormFields(passedProduct);
+      const shippingRates = { "": 0, standard: 100, express: 200 };
+
+      // ================= COMPUTATION =================
+      const calculateTotal = () => {
+        const basePrice = productPrices[productSelect.value] || 0;
+        let qty = parseInt(quantityInput.value) || 1;
+        if (qty < 1) { qty = 1; quantityInput.value = 1; }
+        const shippingFee = shippingRates[shippingSelect.value] || 0;
+        const totalAmount = (basePrice * qty) + shippingFee;
+        
+        if (basePrice === 0) totalDisplay.innerText = "₱0.00";
+        else totalDisplay.innerText = "₱" + totalAmount.toLocaleString('en-PH', {minimumFractionDigits: 2});
+      };
+
+      // ================= UI SWITCHER =================
+      const updateFormFields = (value) => {
+        if (!value) return;
+
+        if (sectionExecutive) sectionExecutive.classList.add("hidden");
+        if (sectionHub) sectionHub.classList.add("hidden");
+        if (sectionReviewShield) sectionReviewShield.classList.add("hidden");
+        
+        // Gamit ang "includes" para kahit anong variant (original man o custom), lalabas ang setup fields.
+        if (value.includes("executive") && sectionExecutive) sectionExecutive.classList.remove("hidden");
+        if (value.includes("hub") && sectionHub) sectionHub.classList.remove("hidden");
+        if (value.includes("reviewshield") && sectionReviewShield) sectionReviewShield.classList.remove("hidden");
+        
+        calculateTotal();
+      };
+
+      // ================= 🧠 THE MEMORY PIPELINE =================
+      if (productSelect) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const passedProduct = urlParams.get('product');
+        const passedQuantity = urlParams.get('quantity');
+        
+        if (passedProduct) {
+          productSelect.value = passedProduct; 
+          
+          // I-LOCK ANG DROPDOWN
+          productSelect.style.pointerEvents = "none"; 
+          productSelect.classList.add("opacity-60", "bg-gray-100"); 
+          
+          updateFormFields(passedProduct); 
+        }
+
+        if (passedQuantity && !isNaN(passedQuantity)) {
+          quantityInput.value = passedQuantity;
+          quantityInput.style.pointerEvents = "none";
+          quantityInput.classList.add("opacity-60", "bg-gray-100");
+          calculateTotal(); 
+        }
+
+        productSelect.addEventListener("change", (e) => updateFormFields(e.target.value));
+        quantityInput.addEventListener("input", calculateTotal);
+        shippingSelect.addEventListener("change", calculateTotal);
       }
 
-      // 2. LISTEN FOR MANUAL CHANGES (If they change their mind on the checkout page)
-      productSelect.addEventListener("change", (e) => {
-        updateFormFields(e.target.value);
-      });
-
-// 3. PAYMONGO ACTUAL INTEGRATION
+      // ================= PAYMONGO TRIGGER =================
       const paymongoBtn = document.getElementById("paymongoBtn");
-      
-      paymongoBtn.addEventListener("click", async () => {
-        // Kunin yung values sa form
-        const productSelected = productSelect.value;
-        const customerName = document.querySelector('input[placeholder="Juan Dela Cruz"]').value;
-        const customerPhone = document.querySelector('input[placeholder="0917 123 4567"]').value;
+      if (paymongoBtn) {
+        paymongoBtn.addEventListener("click", async () => {
+          const productSelected = productSelect ? productSelect.value : "none";
+          const customerName = document.getElementById('customerName').value.trim();
+          const customerPhone = document.getElementById('customerPhone').value.trim();
+          const customerAddress = document.getElementById('customerAddress').value.trim();
+          const shippingMethod = shippingSelect.value;
+          
+          // Kunin ang value ng bagong message field
+          const customerMessage = document.getElementById('customerMessage') ? document.getElementById('customerMessage').value.trim() : "";
+          
+          const finalQuantity = parseInt(quantityInput.value) || 1;
 
-        // Simpleng validation para iwas error
-        if (productSelected === "none" || !customerName || !customerPhone) {
-          alert("Please fill in your Name, Phone, and select a product.");
-          return;
-        }
+          if (productSelected === "none" || !customerName || !customerPhone || !customerAddress || !shippingMethod) {
+            alert("Please complete all required fields to proceed.");
+            return;
+          }
 
-        paymongoBtn.innerHTML = "Generating Secure Link...";
-        paymongoBtn.classList.add("opacity-70");
-        paymongoBtn.disabled = true;
+          paymongoBtn.innerHTML = "Generating Secure Link...";
+          paymongoBtn.classList.add("opacity-70", "cursor-not-allowed");
+          paymongoBtn.disabled = true;
 
-        try {
-          // Tawagin ang Netlify Function mo
-          const response = await fetch('/.netlify/functions/process-checkout', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              product: productSelected,
-              name: customerName,
-              phone: customerPhone
-            })
-          });
+          try {
+            const response = await fetch('/.netlify/functions/process-checkout', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                product: productSelected, 
+                quantity: finalQuantity, 
+                name: customerName,
+                phone: customerPhone, 
+                address: customerAddress, 
+                shipping: shippingMethod,
+                message: customerMessage, // Ipinasa na sa backend ang message
+                totalPrice: (productPrices[productSelected] * finalQuantity) + shippingRates[shippingMethod]
+              })
+            });
 
-          const data = await response.json();
-
-          if (data.checkoutUrl) {
-            // I-redirect ang user sa PayMongo Checkout Page!
-            window.location.href = data.checkoutUrl;
-          } else {
-            alert("Checkout failed. Please try again.");
-            paymongoBtn.innerHTML = "Proceed to PayMongo";
-            paymongoBtn.classList.remove("opacity-70");
+            const data = await response.json();
+            if (data.checkoutUrl) window.location.href = data.checkoutUrl; 
+            else throw new Error("Missing checkoutUrl");
+          } catch (error) {
+            alert("Server connection failed. Ensure your Netlify Function is live.");
+            paymongoBtn.innerHTML = "Proceed to Checkout";
+            paymongoBtn.classList.remove("opacity-70", "cursor-not-allowed");
             paymongoBtn.disabled = false;
           }
-        } catch (error) {
-          console.error("Error:", error);
-          alert("Something went wrong catching the payment link.");
-          paymongoBtn.innerHTML = "Proceed to PayMongo";
-          paymongoBtn.classList.remove("opacity-70");
-          paymongoBtn.disabled = false;
-        }
-      });
-  </script>
+        });
+      }
 
+      const menuBtn = document.querySelector('button[aria-label="Menu"]');
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+        });
+      }
+    });
+  </script>
 </body>
 </html>

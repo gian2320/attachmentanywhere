@@ -1,0 +1,76 @@
+// netlify/functions/process-checkout.js
+
+exports.handler = async (event, context) => {
+  // Block any non-POST requests
+  if (event.httpMethod !== "POST") {
+    return { statusCode: 405, body: "Method Not Allowed" };
+  }
+
+  try {
+    const data = JSON.parse(event.body);
+    const { productType, qty, totalAmount, custName, custEmail, custPhone, shipping, address, customLink } = data;
+
+    // 1. SETUP PAYMONGO API
+    // Kinukuha natin ang secret key sa Netlify Environment Variables para safe
+    const paymongoSecret = process.env.PAYMONGO_SECRET_KEY; 
+    const encodedKey = Buffer.from(paymongoSecret + ':').toString('base64');
+
+    // PayMongo expects amounts in centavos (so multiply by 100)
+    const amountInCentavos = totalAmount * 100;
+
+    const paymongoPayload = {
+      data: {
+        attributes: {
+          amount: amountInCentavos,
+          description: `Order: ${qty}x ${productType} for ${custName}`,
+          remarks: `Shipping: ${shipping} | Address: ${address} | Custom: ${customLink}`
+        }
+      }
+    };
+
+    // Pinger to PayMongo API to generate a Payment Link
+    const paymongoRes = await fetch("https://api.paymongo.com/v1/links", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Basic ${encodedKey}`
+      },
+      body: JSON.stringify(paymongoPayload)
+    });
+
+    const paymongoData = await paymongoRes.json();
+    
+    if (!paymongoRes.ok) {
+      throw new Error("PayMongo Error: " + JSON.stringify(paymongoData));
+    }
+
+    const checkoutUrl = paymongoData.data.attributes.checkout_url;
+
+    // 2. SETUP DISCORD NOTIFICATION (OPTIONAL BUT HIGHLY RECOMMENDED)
+    const discordWebhookUrl = process.env.DISCORD_WEBHOOK_URL;
+    if (discordWebhookUrl) {
+      const discordMsg = {
+        content: `💰 **NEW ORDER INITIATED** 💰\n\n**Customer:** ${custName}\n**Order:** ${qty}x ${productType}\n**Amount:** ₱${totalAmount}\n**Logistics:** ${shipping}\n**Status:** Waiting for payment via PayMongo.`
+      };
+      
+      await fetch(discordWebhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(discordMsg)
+      });
+    }
+
+    // 3. I-BALIK SA FRONTEND YUNG CHECKOUT LINK
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ checkoutUrl: checkoutUrl })
+    };
+
+  } catch (error) {
+    console.error("Backend Error:", error);
+    return { 
+      statusCode: 500, 
+      body: JSON.stringify({ error: "Failed to process checkout. Check server logs." }) 
+    };
+  }
+};

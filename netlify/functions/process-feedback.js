@@ -1,46 +1,63 @@
-exports.handler = async (event) => {
+// File location: netlify/functions/process-feedback.js
+
+exports.handler = async function(event, context) {
+  // Harangin kung hindi POST request
   if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method Not Allowed' };
 
   try {
     const { rating, message } = JSON.parse(event.body);
+    const apiKey = process.env.GEMINI_API_KEY;
+    const discordUrl = process.env.DISCORD_WEBHOOK_URL;
 
-    // 1. Kakausapin si Gemini gamit ang raw fetch (Walang package na kailangan!)
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`;
-    const prompt = `You are Daemon, an AI operations manager for an NFC business called 'Attachment Anywhere'. A customer left this feedback: "${message}". Analyze the issue briefly and provide a direct, actionable recommendation for the owner to fix it. Keep it punchy and professional.`;
+    // 1. Kakausapin natin si Gemini
+    const geminiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    
+    const prompt = `
+      You are Daemon, Gian's direct, witty, and practical AI collaborator. 
+      Gian just received a ${rating}-star feedback for his NFC business 'Attachment Anywhere'. 
+      Customer message: "${message}". 
+      
+      Your job:
+      1. Categorize it (e.g., Complaint, Praise, Feature Request).
+      2. Give Gian 2 direct, actionable steps to handle this. Keep it practical, no corporate fluff, and speak in Taglish.
+    `;
 
-    const geminiRes = await fetch(geminiUrl, {
+    const geminiRes = await fetch(geminiEndpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }]
-      })
+      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
     });
-
+    
     const geminiData = await geminiRes.json();
-    const analysis = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || "Daemon analysis unavailable.";
+    const analysis = geminiData.candidates[0].content.parts[0].text;
 
-    // 2. Ipapadala sa Discord Webhook ang alert
-    const discordPayload = {
+    // 2. Ibabato ang report sa Discord HQ mo
+    // Green kung 5-star, Yellow kung 3-4, Red kung 1-2 stars
+    const colorCode = rating === 5 ? 65280 : (rating > 2 ? 16776960 : 16711680);
+
+    const discordMessage = {
       embeds: [{
-        title: `🚨 New Feedback Alert`,
-        color: 3066993, // Green color
+        title: "📡 New Intel: Attachment Anywhere",
+        color: colorCode,
         fields: [
-          { name: "Customer Feedback", value: message || "No comment provided." },
-          { name: "Daemon's Action Plan", value: analysis }
+          { name: "Rating", value: `${rating}/5 Stars`, inline: true },
+          { name: "Raw Customer Feedback", value: `"${message}"` },
+          { name: "Daemon's Analysis & Protocol", value: analysis }
         ],
-        timestamp: new Date().toISOString()
+        footer: { text: "Securely processed via Netlify + Gemini" }
       }]
     };
 
-    await fetch(process.env.DISCORD_WEBHOOK_URL, {
+    await fetch(discordUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(discordPayload)
+      body: JSON.stringify(discordMessage)
     });
 
+    // Tapos na, ibalik ang success signal sa front-end
     return { statusCode: 200, body: JSON.stringify({ success: true }) };
+
   } catch (error) {
-    console.error(error);
     return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
   }
 };
