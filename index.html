@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Attachment Anywhere | Smart NFC Hardware & Systems</title>
+  <title>Attachment Anywhere</title>
 <link rel="icon" type="image/png" href="logo.jpg" id="favicon">
 
 <script>
@@ -68,30 +68,55 @@
   }
 </style>
 
-<!-- ================= UNIVERSAL NAVIGATION BAR ================= -->
-  <nav class="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 transition-all">
-    <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-      <a href="index.html" class="flex items-center">
-        <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-10 md:h-20 w-auto object-contain" />
-      </a>
-      <div class="hidden md:flex items-center gap-10">
-        <div class="flex items-center gap-8">
-          <a href="index.html" class="text-sm font-bold uppercase tracking-widest text-black hover:text-gray-500 transition-colors">Home</a>
-          <a href="products.html" class="text-sm font-bold uppercase tracking-widest text-black hover:text-gray-500 transition-colors">Products</a>
-          <a href="story.html" class="text-sm font-bold uppercase tracking-widest text-black hover:text-gray-500 transition-colors">Story</a>
-        </div>
-        <!-- Pwede mong palitan yung href pa-order.html kung gusto mong direkta sa checkout form -->
+<!-- ==================== UNIVERSAL NAVIGATION BAR ==================== -->
+<nav class="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 transition-all">
+  <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+    
+    <!-- Logo Mo -->
+    <a href="index.html" class="flex items-center">
+      <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-10 md:h-20 w-auto object-contain" />
+    </a>
+    
+    <!-- Desktop Menu -->
+    <div class="hidden md:flex items-center gap-10">
+      <div class="flex items-center gap-8">
+        <a href="index.html" class="text-sm font-bold uppercase tracking-widest text-black hover:text-gray-500 transition-colors">Home</a>
+        <a href="products.html" class="text-sm font-bold uppercase tracking-widest text-black hover:text-gray-500 transition-colors">Products</a>
+        <a href="story.html" class="text-sm font-bold uppercase tracking-widest text-black hover:text-gray-500 transition-colors">Story</a>
+      </div>
         <button onclick="window.location.href='products.html'" class="bg-black text-white px-8 py-3 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] hover:scale-105 hover:bg-neutral-800 transition-all shadow-xl">
           Order Now
         </button>
-      </div>
-      <button class="md:hidden flex flex-col items-end gap-1.5 p-2" aria-label="Menu">
-        <span class="w-6 h-0.5 bg-black rounded-full"></span>
-        <span class="w-5 h-0.5 bg-black rounded-full"></span>
-        <span class="w-6 h-0.5 bg-black rounded-full"></span>
-      </button>
     </div>
-  </nav>
+
+    <!-- ETO YUNG FIX: 3 Lines Menu Button (Nilagyan ko ng id at z-[60] para nasa pinaka-ibabaw) -->
+    <button id="mobile-menu-btn" class="md:hidden flex flex-col items-end gap-1.5 p-2 relative z-[60]" aria-label="Menu">
+      <span class="w-6 h-0.5 bg-black rounded-full pointer-events-none"></span>
+      <span class="w-5 h-0.5 bg-black rounded-full pointer-events-none"></span>
+      <span class="w-6 h-0.5 bg-black rounded-full pointer-events-none"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ==================== MOBILE MENU DROPDOWN ==================== -->
+<div id="mobile-menu" class="hidden fixed top-0 left-0 w-full h-screen bg-white/95 backdrop-blur-md z-40 flex flex-col pt-32 px-6 gap-6">
+  <a href="index.html" class="text-lg font-bold uppercase tracking-widest text-black border-b border-gray-200 pb-4">Home</a>
+  <a href="products.html" class="text-lg font-bold uppercase tracking-widest text-black border-b border-gray-200 pb-4">Products</a>
+  <a href="story.html" class="text-lg font-bold uppercase tracking-widest text-black border-b border-gray-200 pb-4">Story</a>
+  <button onclick="window.location.href='order.html'" class="bg-black text-white px-8 py-4 rounded-full font-bold mt-4">
+    Order Now
+  </button>
+</div>
+
+<!-- JS PARA BUMUKAS ANG MOBILE MENU -->
+<script>
+  const mobileBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  mobileBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+  });
+</script>
 
   <div class="pt-24"></div> <!-- Top spacer -->
 
@@ -298,14 +323,6 @@
   </div>
 </section>
 
-<!-- START: FLOATING IMPACT BUTTON & OVERLAY -->
-<!-- 1. The Sleek Floating Button (Fixed Bottom-Right) -->
-<button onclick="toggleImpactModal()" class="fixed bottom-6 right-6 z-40 flex items-center gap-2.5 bg-[#0a0a0a] text-white px-5 py-3 rounded-full shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-neutral-800 hover:bg-neutral-800 hover:scale-105 transition-all duration-300 focus:outline-none group">
-  <!-- Minimalist Globe/Tech Icon -->
-  <svg class="w-4 h-4 text-neutral-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
-  <span class="text-[11px] font-bold uppercase tracking-[0.15em] pt-px">Our Impact</span>
-</button>
-
 <!-- 2. The Matte-Black Modal Overlay (Hidden by Default) -->
 <div id="impact-modal" class="fixed inset-0 z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-400 ease-out">
   
@@ -407,12 +424,11 @@
   }
 </script>
 
-<!-- THE STREAMLINED HARDWARE FOOTER (SINGLE ROW, NO COPYRIGHT) -->
+<!-- ==================== THE STREAMLINED HARDWARE FOOTER ==================== -->
 <footer class="w-full bg-black text-white pt-16 pb-16 px-6 md:px-12 lg:px-24 border-t border-neutral-900">
-  <!-- Gumamit tayo ng flex-row para isang linya lang ang logo at ang mga links sa desktop -->
   <div class="max-w-7xl mx-auto flex flex-col xl:flex-row justify-between items-center gap-10 xl:gap-0">
     
-    <!-- LEFT: Laki-fied Logo -->
+    <!-- LEFT: Logo -->
     <div class="flex-shrink-0">
       <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-24 md:h-32 object-contain invert opacity-95">
     </div>
@@ -432,25 +448,23 @@
         Messenger
       </a>
 
-      <!-- Subtle Divider to separate Buttons from Text Links -->
+      <!-- Divider -->
       <div class="hidden md:block h-5 w-px bg-neutral-800"></div>
 
       <!-- FAQ & Feedback -->
-      <button onclick="document.getElementById('faq-modal').classList.remove('hidden')" class="text-sm text-neutral-400 font-medium hover:text-white transition-colors">FAQ</button>
-      <button onclick="document.getElementById('feedback-modal').classList.remove('hidden')" class="text-sm text-neutral-400 font-medium hover:text-white transition-colors relative border-b border-transparent hover:border-white pb-0.5">
+      <button onclick="openModal('faq-modal')" class="text-sm text-neutral-400 font-medium hover:text-white transition-colors">FAQ</button>
+      <button onclick="openModal('feedback-modal')" class="text-sm text-neutral-400 font-medium hover:text-white transition-colors relative border-b border-transparent hover:border-white pb-0.5">
         System Feedback
       </button>
 
     </div>
-    
   </div>
 </footer>
 
 <!-- ==================== MODALS ==================== -->
-
 <!-- 1. FAQ MODAL -->
-<div id="faq-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
-  <div class="bg-[#111] rounded-3xl p-6 max-w-md w-full border border-gray-800 shadow-2xl text-left">
+<div id="faq-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-[100]">
+  <div class="bg-[#111] rounded-3xl p-6 max-w-md w-full border border-gray-800 shadow-2xl text-left relative">
     <div class="flex justify-between items-center pb-3 border-b border-gray-800">
       <h3 class="text-sm font-extrabold text-white uppercase tracking-wider">Frequently Asked Questions</h3>
       <button onclick="closeModal('faq-modal')" class="text-gray-500 hover:text-white text-2xl px-2">&times;</button>
@@ -466,98 +480,95 @@
       </div>
       <div>
         <h4 class="font-bold text-white mb-1">Paano mag-order?</h4>
-        <p>I-click lamang ang "Start Order Form" button para masagutan ang aming system.</p>
+        <p>I-click lamang ang "Order Now" para masagutan ang aming system.</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- 2. FEEDBACK MODAL (Dark Premium Version) -->
-<div id="feedback-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+<!-- 2. FEEDBACK MODAL (Direct to Discord) -->
+<div id="feedback-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-[100]">
   <div class="bg-[#111] rounded-3xl p-8 max-w-md w-full border border-gray-800 shadow-2xl relative">
     <button onclick="closeModal('feedback-modal')" class="absolute top-6 right-6 text-gray-600 hover:text-white text-2xl">&times;</button>
     
     <h3 class="text-xl font-black tracking-tight mb-2 text-white">System Feedback</h3>
     <p class="text-gray-500 text-sm mb-6">Leave a thought or suggestion. Daemon is listening.</p>
     
-    <form id="feedback-form" onsubmit="submitFeedback(event)" class="flex flex-col gap-4">
-      <textarea 
-        id="feedback-text" 
-        rows="4" 
-        required 
-        placeholder="Type your message here..." 
-        class="w-full bg-[#1a1a1a] border border-gray-800 rounded-xl p-4 text-white text-sm focus:outline-none focus:border-gray-500 resize-none"
-      ></textarea>
-      
-      <button 
-        type="submit" 
-        class="w-full bg-white text-black font-bold py-3 rounded-xl hover:bg-gray-200 transition-colors mt-2"
-      >
-        Send to HQ
-      </button>
-    </form>
+    <div class="flex flex-col gap-4">
+      <textarea id="feedback-text" rows="4" placeholder="Type your message here..." class="w-full bg-[#1a1a1a] border border-gray-800 rounded-xl p-4 text-white text-sm focus:outline-none focus:border-gray-500 resize-none"></textarea>
+      <button id="send-hq-btn" class="w-full bg-white text-black font-bold py-3 rounded-xl hover:bg-gray-200 transition-colors mt-2">Send to HQ</button>
+    </div>
   </div>
 </div>
 
-<!-- ==================== JAVASCRIPT ==================== -->
+<!-- ==================== JAVASCRIPT FOR FOOTER & MODALS ==================== -->
 <script>
-  // Simplified Modal Logic
+  // Pambukas at Pansara ng mga Modal (FAQ & Feedback)
   function openModal(id) {
     const modal = document.getElementById(id);
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
+    if(modal) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
   }
 
   function closeModal(id) {
     const modal = document.getElementById(id);
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
+    if(modal) {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
   }
 
-  // Feedback Submission Logic
-  async function submitFeedback(e) {
-    e.preventDefault();
-    const msg = document.getElementById('feedback-text').value;
-    const btn = e.target.querySelector('button[type="submit"]');
-    const originalText = btn.innerText;
+  // Discord Webhook Logic para sa System Feedback
+  const sendHqBtn = document.getElementById('send-hq-btn');
+  const feedbackText = document.getElementById('feedback-text');
+  
+  // Naka-set na dito yung mismong link mo
+  const FEEDBACK_DISCORD_WEBHOOK = 'https://discordapp.com/api/webhooks/1546951637086765127/M1OwcHGy82fSzta3WRHvQ4nKmGKQ7CVxsxilgKFAfbN66ser7rEDqjt8bBhtriuW9hVb';
 
-    btn.innerText = "Transmitting to HQ...";
-    btn.disabled = true;
-    btn.classList.add('opacity-70', 'cursor-not-allowed');
+  if(sendHqBtn) {
+    sendHqBtn.addEventListener('click', async () => {
+      const message = feedbackText.value.trim();
+      if (!message) { alert("Boss, walang laman yung mensahe."); return; }
 
-    try {
-      const res = await fetch('/.netlify/functions/process-feedback', {
-        method: 'POST',
-        // Pinapanatili natin ang format para pumasok sa Discord webhook mo
-        body: JSON.stringify({ rating: 5, message: msg }) 
-      });
+      const originalText = sendHqBtn.innerText;
+      sendHqBtn.innerText = "Transmitting to HQ...";
+      sendHqBtn.classList.add('opacity-70', 'cursor-not-allowed');
 
-      if (res.ok) {
-        btn.innerText = "Sent. Daemon is on it.";
-        btn.classList.replace('bg-white', 'bg-emerald-600');
-        btn.classList.replace('text-black', 'text-white');
+      try {
+        await fetch(FEEDBACK_DISCORD_WEBHOOK, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            content: `🛠️ **SYSTEM FEEDBACK / BUG REPORT** 🛠️\n> **Message:** ${message}\n> **Timestamp:** ${new Date().toLocaleString()}`
+          })
+        });
+        
+        feedbackText.value = '';
+        sendHqBtn.innerText = "Sent. Daemon is on it.";
+        sendHqBtn.classList.replace('bg-white', 'bg-emerald-600');
+        sendHqBtn.classList.replace('text-black', 'text-white');
         
         setTimeout(() => {
           closeModal('feedback-modal');
-          document.getElementById('feedback-text').value = '';
-          btn.innerText = originalText;
-          btn.disabled = false;
-          btn.classList.remove('opacity-70', 'cursor-not-allowed');
-          btn.classList.replace('bg-emerald-600', 'bg-white');
-          btn.classList.replace('text-white', 'text-black');
+          sendHqBtn.innerText = originalText;
+          sendHqBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+          sendHqBtn.classList.replace('bg-emerald-600', 'bg-white');
+          sendHqBtn.classList.replace('text-white', 'text-black');
         }, 2000);
-      } else {
-        throw new Error('Backend failed');
+
+      } catch (error) {
+        console.error("Error:", error);
+        sendHqBtn.innerText = "Connection Failed. Try again.";
+        setTimeout(() => {
+          sendHqBtn.innerText = originalText;
+          sendHqBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+        }, 3000);
       }
-    } catch(err) {
-      btn.innerText = "Connection Failed. Try again.";
-      btn.disabled = false;
-      btn.classList.remove('opacity-70', 'cursor-not-allowed');
-      setTimeout(() => {
-        btn.innerText = originalText;
-      }, 3000);
-    }
+    });
   }
 </script>
+
 </body>
 </html>

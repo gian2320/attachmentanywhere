@@ -206,72 +206,151 @@
     </div>
   </section>
 
-  <!-- ================= FOOTER ================= -->
-  <footer class="w-full bg-black text-white pt-16 pb-16 px-6 md:px-12 lg:px-24 border-t border-neutral-900">
-    <div class="max-w-7xl mx-auto flex flex-col xl:flex-row justify-between items-center gap-10 xl:gap-0">
-      <div class="flex-shrink-0">
-        <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-24 md:h-32 object-contain invert opacity-95">
+<!-- ==================== THE STREAMLINED HARDWARE FOOTER ==================== -->
+<footer class="w-full bg-black text-white pt-16 pb-16 px-6 md:px-12 lg:px-24 border-t border-neutral-900">
+  <div class="max-w-7xl mx-auto flex flex-col xl:flex-row justify-between items-center gap-10 xl:gap-0">
+    
+    <!-- LEFT: Logo -->
+    <div class="flex-shrink-0">
+      <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-24 md:h-32 object-contain invert opacity-95">
+    </div>
+
+    <!-- RIGHT: Everything in ONE ROW -->
+    <div class="flex flex-wrap items-center justify-center xl:justify-end gap-6 md:gap-8 w-full xl:w-auto">
+      
+      <!-- Instagram -->
+      <a href="https://instagram.com/attachmentanywhere" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 border border-neutral-800 rounded-full px-5 py-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 hover:bg-white hover:text-black hover:border-white transition-all duration-300">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        Instagram
+      </a>
+
+      <!-- Messenger -->
+      <a href="https://m.me/attachmentanywhere" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 border border-neutral-800 rounded-full px-5 py-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 hover:bg-white hover:text-black hover:border-white transition-all duration-300">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 2 24 24"><path d="M12 2C6.477 2 2 6.14 2 11.25c0 2.923 1.5 5.514 3.82 7.235V22l3.498-1.921c1.238.343 2.56.531 3.932.531 5.523 0 10-4.14 10-9.25S17.523 2 12 2zm1.094 12.383l-2.73-2.909-5.342 2.909 5.864-6.22 2.756 2.909 5.316-2.909-5.864 6.22z"/></svg>
+        Messenger
+      </a>
+
+      <!-- Divider -->
+      <div class="hidden md:block h-5 w-px bg-neutral-800"></div>
+
+      <!-- FAQ & Feedback -->
+      <button onclick="openModal('faq-modal')" class="text-sm text-neutral-400 font-medium hover:text-white transition-colors">FAQ</button>
+      <button onclick="openModal('feedback-modal')" class="text-sm text-neutral-400 font-medium hover:text-white transition-colors relative border-b border-transparent hover:border-white pb-0.5">
+        System Feedback
+      </button>
+
+    </div>
+  </div>
+</footer>
+
+<!-- ==================== MODALS ==================== -->
+<!-- 1. FAQ MODAL -->
+<div id="faq-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-[100]">
+  <div class="bg-[#111] rounded-3xl p-6 max-w-md w-full border border-gray-800 shadow-2xl text-left relative">
+    <div class="flex justify-between items-center pb-3 border-b border-gray-800">
+      <h3 class="text-sm font-extrabold text-white uppercase tracking-wider">Frequently Asked Questions</h3>
+      <button onclick="closeModal('faq-modal')" class="text-gray-500 hover:text-white text-2xl px-2">&times;</button>
+    </div>
+    <div class="mt-4 space-y-4 text-sm max-h-[60vh] overflow-y-auto pr-1 text-gray-400">
+      <div>
+        <h4 class="font-bold text-white mb-1">Kailangan ba ng app para gumana?</h4>
+        <p>Hindi na. Isang tap lang sa modern smartphone, lalabas na agad ang profile mo.</p>
       </div>
-      <div class="flex flex-wrap items-center justify-center xl:justify-end gap-6 md:gap-8 w-full xl:w-auto">
-        <a href="https://instagram.com/attachmentanywhere" target="_blank" class="flex items-center gap-2 border border-neutral-800 rounded-full px-5 py-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 hover:bg-white hover:text-black hover:border-white transition-all duration-300">Instagram</a>
-        <a href="https://m.me/attachmentanywhere" target="_blank" class="flex items-center gap-2 border border-neutral-800 rounded-full px-5 py-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 hover:bg-white hover:text-black hover:border-white transition-all duration-300">Messenger</a>
+      <div>
+        <h4 class="font-bold text-white mb-1">Compatible ba sa iPhone at Android?</h4>
+        <p>Oo, gumagana ito sa lahat ng iPhone na may NFC at halos lahat ng modern Android devices.</p>
+      </div>
+      <div>
+        <h4 class="font-bold text-white mb-1">Paano mag-order?</h4>
+        <p>I-click lamang ang "Order Now" para masagutan ang aming system.</p>
       </div>
     </div>
-  </footer>
+  </div>
+</div>
 
-  <!-- JS LOGIC -->
-  <script>
-    document.querySelectorAll('.product-block').forEach(block => {
-      const variantBtns = block.querySelectorAll('.variant-btn');
-      const priceDisplay = block.querySelector('.price-display');
+<!-- 2. FEEDBACK MODAL (Direct to Discord) -->
+<div id="feedback-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-[100]">
+  <div class="bg-[#111] rounded-3xl p-8 max-w-md w-full border border-gray-800 shadow-2xl relative">
+    <button onclick="closeModal('feedback-modal')" class="absolute top-6 right-6 text-gray-600 hover:text-white text-2xl">&times;</button>
+    
+    <h3 class="text-xl font-black tracking-tight mb-2 text-white">System Feedback</h3>
+    <p class="text-gray-500 text-sm mb-6">Leave a thought or suggestion. Daemon is listening.</p>
+    
+    <div class="flex flex-col gap-4">
+      <textarea id="feedback-text" rows="4" placeholder="Type your message here..." class="w-full bg-[#1a1a1a] border border-gray-800 rounded-xl p-4 text-white text-sm focus:outline-none focus:border-gray-500 resize-none"></textarea>
+      <button id="send-hq-btn" class="w-full bg-white text-black font-bold py-3 rounded-xl hover:bg-gray-200 transition-colors mt-2">Send to HQ</button>
+    </div>
+  </div>
+</div>
 
-      variantBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          variantBtns.forEach(b => {
-            b.classList.remove('bg-black', 'text-white', 'border-black');
-            b.classList.add('bg-transparent', 'border-neutral-300', 'text-neutral-500');
-          });
-          btn.classList.remove('bg-transparent', 'border-neutral-300', 'text-neutral-500');
-          btn.classList.add('bg-black', 'text-white', 'border-black');
-          
-          const newPrice = btn.getAttribute('data-price');
-          priceDisplay.innerText = `₱${newPrice}.00`;
-        });
-      });
-
-      const qtyBtns = block.querySelectorAll('.qty-btn');
-      const qtyDisplay = block.querySelector('.qty-display');
-      let quantity = 1;
-
-      qtyBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const action = btn.getAttribute('data-action');
-          if (action === 'plus') quantity++;
-          else if (action === 'minus' && quantity > 1) quantity--;
-          qtyDisplay.innerText = quantity;
-        });
-      });
-    });
-
-    // MEMORY SENDER: Binabasa kung Original o Custom ang pinili
-    function goToCheckout(baseProductKey, btnElement) {
-      const block = btnElement.closest('.product-block');
-      const qty = block.querySelector('.qty-display').innerText;
-      
-      let finalProductKey = baseProductKey;
-      const activeVariantBtn = block.querySelector('.variant-btn.bg-black');
-      
-      if (activeVariantBtn && activeVariantBtn.getAttribute('data-variant') === 'custom') {
-        finalProductKey += '-custom';
-      }
-
-      window.location.href = `order.html?product=${finalProductKey}&quantity=${qty}`;
+<!-- ==================== JAVASCRIPT FOR FOOTER & MODALS ==================== -->
+<script>
+  // Pambukas at Pansara ng mga Modal (FAQ & Feedback)
+  function openModal(id) {
+    const modal = document.getElementById(id);
+    if(modal) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
     }
+  }
 
-    document.querySelector('button[aria-label="Menu"]').addEventListener('click', function() {
-      document.getElementById('mobile-menu').classList.toggle('hidden');
+  function closeModal(id) {
+    const modal = document.getElementById(id);
+    if(modal) {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+  }
+
+  // Discord Webhook Logic para sa System Feedback
+  const sendHqBtn = document.getElementById('send-hq-btn');
+  const feedbackText = document.getElementById('feedback-text');
+  
+  // Naka-set na dito yung mismong link mo
+  const FEEDBACK_DISCORD_WEBHOOK = 'https://discordapp.com/api/webhooks/1546951637086765127/M1OwcHGy82fSzta3WRHvQ4nKmGKQ7CVxsxilgKFAfbN66ser7rEDqjt8bBhtriuW9hVb';
+
+  if(sendHqBtn) {
+    sendHqBtn.addEventListener('click', async () => {
+      const message = feedbackText.value.trim();
+      if (!message) { alert("Boss, walang laman yung mensahe."); return; }
+
+      const originalText = sendHqBtn.innerText;
+      sendHqBtn.innerText = "Transmitting to HQ...";
+      sendHqBtn.classList.add('opacity-70', 'cursor-not-allowed');
+
+      try {
+        await fetch(FEEDBACK_DISCORD_WEBHOOK, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            content: `🛠️ **SYSTEM FEEDBACK / BUG REPORT** 🛠️\n> **Message:** ${message}\n> **Timestamp:** ${new Date().toLocaleString()}`
+          })
+        });
+        
+        feedbackText.value = '';
+        sendHqBtn.innerText = "Sent. Daemon is on it.";
+        sendHqBtn.classList.replace('bg-white', 'bg-emerald-600');
+        sendHqBtn.classList.replace('text-black', 'text-white');
+        
+        setTimeout(() => {
+          closeModal('feedback-modal');
+          sendHqBtn.innerText = originalText;
+          sendHqBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+          sendHqBtn.classList.replace('bg-emerald-600', 'bg-white');
+          sendHqBtn.classList.replace('text-white', 'text-black');
+        }, 2000);
+
+      } catch (error) {
+        console.error("Error:", error);
+        sendHqBtn.innerText = "Connection Failed. Try again.";
+        setTimeout(() => {
+          sendHqBtn.innerText = originalText;
+          sendHqBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+        }, 3000);
+      }
     });
-  </script>
+  }
+</script>
 
 </body>
 </html>
