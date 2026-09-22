@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // SETUP NG MGA KEYS AT WEBHOOKS (PALITAN MO 'TO)
       // ==========================================
       const PAYMONGO_SECRET_KEY = process.env.PAYMONGO_SECRET_KEY; 
-      const ORDER_DISCORD_WEBHOOK = 'https://discordapp.com/api/webhooks/1551507295513350255/JrBrOa8M83EkW6lueIaM2hEQPhgPDnuvSEQTEBKdpXeQNZbWzLVPM9ML-y22fYuF5KP7';
+      const ORDER_DISCORD_WEBHOOK = process.env.ORDER_DISCORD_WEBHOOK;
       // ==========================================
       
       const encodedKey = btoa(PAYMONGO_SECRET_KEY); 
