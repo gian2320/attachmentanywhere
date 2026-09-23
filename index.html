@@ -4,571 +4,426 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Attachment Anywhere</title>
-<link rel="icon" type="image/png" href="logo.jpg" id="favicon">
-
-<script>
-  // Automatic Dark/Light Mode Favicon Switcher para sa Chrome at Safari
-  const updateFavicon = () => {
-    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const favicon = document.getElementById('favicon');
-    // Pwede kang gumawa ng dalawang version: logo-white.jpg para sa dark mode at logo.jpg para sa light mode
-    favicon.href = isDark ? 'logo-white.png' : 'logo.jpg';
-  };
-  
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateFavicon);
-  window.addEventListener('DOMContentLoaded', updateFavicon);
-</script>
+  <link rel="icon" type="image/png" href="brandbgrmv.png">
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            oled: '#000000',
-            panel: '#0d0d11',
-            borderDark: '#1e1e24'
-          }
-        }
-      }
-    }
-  </script>
 
   <style>
+    /* Clean aesthetics & remove default scrollbars */
+    ::-webkit-scrollbar { display: none; }
     body { -webkit-tap-highlight-color: transparent; }
+
+    /* 3D Auto-Flip Card Animation */
+    @keyframes flip3d {
+      0% { transform: perspective(1000px) rotateY(0deg) rotateX(10deg); }
+      50% { transform: perspective(1000px) rotateY(180deg) rotateX(-10deg); }
+      100% { transform: perspective(1000px) rotateY(360deg) rotateX(10deg); }
+    }
+    .animate-3d-flip {
+      animation: flip3d 12s infinite linear;
+      transform-style: preserve-3d;
+      position: relative;
+    }
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 1rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+    .card-back {
+      transform: rotateY(180deg);
+    }
+
+    /* Client Logos Marquee */
+    @keyframes scroll-logos {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-logos {
+      display: flex;
+      width: max-content;
+      animation: scroll-logos 25s linear infinite;
+    }
+
+    /* Catalog Auto-Scroll Gallery */
+    @keyframes scroll-gallery {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-gallery {
+      display: flex;
+      width: max-content;
+      animation: scroll-gallery 30s linear infinite;
+    }
+    .animate-gallery:hover {
+      animation-play-state: paused;
+    }
   </style>
 </head>
 
-<body class="bg-neutral-50 dark:bg-oled text-neutral-900 dark:text-neutral-100 antialiased selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-black transition-colors duration-200">
+<body class="bg-[#f4f4f5] text-black font-sans antialiased selection:bg-black selection:text-white flex flex-col min-h-screen">
 
-<!-- STYLE PARA SA 3D AUTO-FLIP ANIMATION -->
-<style>
-  @keyframes flip3d {
-    0% { transform: perspective(1000px) rotateY(0deg) rotateX(10deg); }
-    50% { transform: perspective(1000px) rotateY(180deg) rotateX(-10deg); }
-    100% { transform: perspective(1000px) rotateY(360deg) rotateX(10deg); }
-  }
-  .animate-3d-flip {
-    animation: flip3d 12s infinite linear;
-    transform-style: preserve-3d;
-    position: relative;
-  }
-  .card-face {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden; /* Tinatago yung likod kapag nakaharap */
-    border-radius: 1rem;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-  }
-  .card-back {
-    transform: rotateY(180deg); /* Nakatalikod by default */
-  }
-</style>
-
-<!-- ==================== UNIVERSAL NAVIGATION BAR ==================== -->
-<nav class="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 transition-all">
-  <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-    
-    <!-- Logo Mo -->
-    <a href="index.html" class="flex items-center">
-      <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-10 md:h-20 w-auto object-contain" />
-    </a>
-    
-    <!-- Desktop Menu -->
-    <div class="hidden md:flex items-center gap-10">
-      <div class="flex items-center gap-8">
-        <a href="index.html" class="text-sm font-bold uppercase tracking-widest text-black hover:text-gray-500 transition-colors">Home</a>
-        <a href="products.html" class="text-sm font-bold uppercase tracking-widest text-black hover:text-gray-500 transition-colors">Products</a>
-        <a href="story.html" class="text-sm font-bold uppercase tracking-widest text-black hover:text-gray-500 transition-colors">Story</a>
-      </div>
-        <button onclick="window.location.href='products.html'" class="bg-black text-white px-8 py-3 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] hover:scale-105 hover:bg-neutral-800 transition-all shadow-xl">
+  <!-- ================= UNIVERSAL NAVIGATION BAR ================= -->
+  <nav class="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 transition-all">
+    <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center">
+        <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-10 md:h-20 w-auto object-contain" />
+      </a>
+      
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center gap-10">
+        <div class="flex items-center gap-8">
+          <a href="index.html" class="text-sm font-bold uppercase tracking-widest text-black border-b-2 border-black pb-1">Home</a>
+          <a href="products.html" class="text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black transition-colors">Products</a>
+          <a href="story.html" class="text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black transition-colors">Story</a>
+        </div>
+        <button onclick="window.location.href='order.html'" class="bg-black text-white px-8 py-3 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] hover:scale-105 hover:bg-neutral-800 transition-all shadow-xl cursor-pointer">
           Order Now
         </button>
-    </div>
-
-    <!-- ETO YUNG FIX: 3 Lines Menu Button (Nilagyan ko ng id at z-[60] para nasa pinaka-ibabaw) -->
-    <button id="mobile-menu-btn" class="md:hidden flex flex-col items-end gap-1.5 p-2 relative z-[60]" aria-label="Menu">
-      <span class="w-6 h-0.5 bg-black rounded-full pointer-events-none"></span>
-      <span class="w-5 h-0.5 bg-black rounded-full pointer-events-none"></span>
-      <span class="w-6 h-0.5 bg-black rounded-full pointer-events-none"></span>
-    </button>
-  </div>
-</nav>
-
-<!-- ==================== MOBILE MENU DROPDOWN ==================== -->
-<div id="mobile-menu" class="hidden fixed top-0 left-0 w-full h-screen bg-white/95 backdrop-blur-md z-40 flex flex-col pt-32 px-6 gap-6">
-  <a href="index.html" class="text-lg font-bold uppercase tracking-widest text-black border-b border-gray-200 pb-4">Home</a>
-  <a href="products.html" class="text-lg font-bold uppercase tracking-widest text-black border-b border-gray-200 pb-4">Products</a>
-  <a href="story.html" class="text-lg font-bold uppercase tracking-widest text-black border-b border-gray-200 pb-4">Story</a>
-  <button onclick="window.location.href='order.html'" class="bg-black text-white px-8 py-4 rounded-full font-bold mt-4">
-    Order Now
-  </button>
-</div>
-
-<!-- JS PARA BUMUKAS ANG MOBILE MENU -->
-<script>
-  const mobileBtn = document.getElementById('mobile-menu-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
-
-  mobileBtn.addEventListener('click', () => {
-    mobileMenu.classList.toggle('hidden');
-  });
-</script>
-
-  <div class="pt-24"></div> <!-- Top spacer -->
-
-<!-- NEW HERO SECTION -->
-<section class="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-[#fbfbfd]">
-  
-  <!-- BACKGROUND: The Auto-Moving 3D Card gamit ang actual images mo -->
-  <div class="absolute inset-0 flex items-center justify-center z-0 opacity-20 md:opacity-40 pointer-events-none mt-10">
-    
-    <!-- YUNG UMIKOT NA CONTAINER -->
-    <div class="animate-3d-flip w-[320px] h-[200px] md:w-[600px] md:h-[375px]">
-      
-      <!-- HARAP NG CARD -->
-      <img src="card-design.png" alt="Front Design" class="card-face object-cover">
-      
-      <!-- LIKOD NG CARD -->
-      <img src="card-back.png" alt="Back Design" class="card-face card-back object-cover">
-      
-    </div>
-  </div>
-
-  <!-- FOREGROUND: Massive Typography & CTA -->
-  <div class="relative z-10 text-center flex flex-col items-center mt-32 px-4">
-    <!-- Yung giant text -->
-    <h1 class="text-[3.5rem] md:text-[8rem] lg:text-[10rem] font-black tracking-tighter leading-[0.85] text-black">
-      ATTACHMENT<br>ANYWHERE
-    </h1>
-    
-    <!-- Yung motto na ibinaba natin -->
-    <p class="mt-8 md:mt-12 text-lg md:text-2xl font-light text-gray-600 max-w-2xl">
-      The last business card you'll ever hand out.
-    </p>
-    
-    <div class="mt-20">
-      <a href="#order" class="inline-block bg-black text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-800 hover:scale-105 transition-all shadow-xl">
-        Claim Your Card &rarr;
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- STYLE PARA SA CLIENT LOGO MARQUEE -->
-<style>
-  @keyframes scroll-logos {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-  .animate-logos {
-    display: flex;
-    width: max-content;
-    animation: scroll-logos 25s linear infinite;
-  }
-</style>
-
-<!-- THE CLIENTS TICKER SECTION (Kvant / Enterprise Vibe) -->
-<section class="w-full bg-white py-16 relative overflow-hidden border-b border-gray-100">
-  
-  <!-- "OUR CLIENTS" Label (Tulad ng nasa peg mo) -->
-  <p class="text-center text-[10px] font-mono tracking-[0.2em] uppercase text-neutral-400 mb-10">
-    Our Clients
-  </p>
-
-  <!-- Gradient Fades para sa gilid (Yung nagpapa-blur bago mawala sa screen) -->
-  <div class="absolute inset-y-0 left-0 w-24 md:w-48 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none mt-16"></div>
-  <div class="absolute inset-y-0 right-0 w-24 md:w-48 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none mt-16"></div>
-
-  <!-- The Auto-Scrolling Logo Container -->
-  <div class="flex overflow-hidden w-full">
-    
-    <div class="animate-logos flex items-center gap-16 md:gap-32 px-8">
-      
-      <!-- ================= SET 1 ================= -->
-      <!-- Pwede mo 'tong palitan ng <img> tags kapag may raw transparent logos ka na -->
-      <h3 class="font-black text-2xl md:text-3xl tracking-tighter text-neutral-300 uppercase whitespace-nowrap">Sushi Maki Rolls</h3>
-      <h3 class="font-black text-2xl md:text-3xl tracking-tighter text-neutral-300 uppercase whitespace-nowrap">Mama Bean Coffee Club</h3>
-      <h3 class="font-black text-2xl md:text-3xl tracking-tighter text-neutral-300 uppercase whitespace-nowrap">DYKTJ Auto Supply</h3>
-
-      <!-- ================= SET 2 (Duplicate for Seamless Loop) ================= -->
-      <h3 class="font-black text-2xl md:text-3xl tracking-tighter text-neutral-300 uppercase whitespace-nowrap">Sushi Maki Rolls</h3>
-      <h3 class="font-black text-2xl md:text-3xl tracking-tighter text-neutral-300 uppercase whitespace-nowrap">Mama Bean Coffee Club</h3>
-      <h3 class="font-black text-2xl md:text-3xl tracking-tighter text-neutral-300 uppercase whitespace-nowrap">DYKTJ Auto Supply</h3>
-
-    </div>
-  </div>
-</section>
-
-<!-- STYLE PARA SA INFINITE AUTO-SCROLL -->
-<style>
-  @keyframes scroll-gallery {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); } /* Half ng total width para seamless yung loop */
-  }
-  .animate-gallery {
-    display: flex;
-    width: max-content;
-    animation: scroll-gallery 30s linear infinite; /* 30 seconds = very slow & premium pace */
-  }
-  /* Titigil ang ikot kapag tinapatan ng mouse para madaling i-click */
-  .animate-gallery:hover {
-    animation-play-state: paused;
-  }
-</style>
-
-<!-- THE UNIFIED ECOSYSTEM & CATALOG SECTION (Auto-Scroll Gallery Vibe) -->
-<section id="catalog" class="w-full bg-white py-32 overflow-hidden">
-  
-  <!-- Unified Section Header -->
-  <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 mb-16 text-center">
-    <h2 class="text-[2.5rem] md:text-[4rem] lg:text-[5rem] font-black tracking-tighter leading-[0.9]">
-      ONE TAP.<br>ENDLESS POSSIBILITIES.
-    </h2>
-  </div>
-
-  <!-- The Auto-Scrolling Container -->
-  <div class="relative w-full flex overflow-hidden">
-    
-    <!-- Ang Track na gumagalaw (Contains 2 sets of cards for seamless loop) -->
-    <div class="animate-gallery gap-8 px-4">
-      
-      <!-- ================= SET 1 (Original 3 Cards) ================= -->
-      
-      <!-- Product 1: Executive Card -->
-      <div class="flex flex-col group cursor-pointer w-[320px] md:w-[450px] shrink-0" onclick="window.location.href='products.html#executive'">
-        <div class="relative w-full h-[450px] md:h-[550px] rounded-[2rem] overflow-hidden mb-6 bg-gray-100 flex items-center justify-center p-8">
-          <img src="card-design.png" alt="Smart Executive Card" class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105 drop-shadow-[0_20px_30px_rgba(0,0,0,0.2)]">
-          <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-[2px]">
-            <span class="bg-black text-white px-8 py-4 rounded-full text-sm font-bold uppercase tracking-widest shadow-2xl flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-              Order Now &rarr;
-            </span>
-          </div>
-        </div>
-        <h3 class="text-2xl font-bold tracking-tight mb-1 px-2">Smart Executive Card</h3>
       </div>
 
-      <!-- Product 2: ReviewShield -->
-      <div class="flex flex-col group cursor-pointer w-[320px] md:w-[450px] shrink-0" onclick="window.location.href='products.html#reviewshield'">
-        <div class="relative w-full h-[450px] md:h-[550px] rounded-[2rem] overflow-hidden mb-6 bg-gray-100 flex items-center justify-center p-8">
-          <img src="GOOGLE REVIEW.jpg" alt="ReviewShield Card" class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105 drop-shadow-[0_20px_30px_rgba(0,0,0,0.2)]">
-          <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-[2px]">
-            <span class="bg-black text-white px-8 py-4 rounded-full text-sm font-bold uppercase tracking-widest shadow-2xl flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-              Order Now &rarr;
-            </span>
-          </div>
-        </div>
-        <h3 class="text-2xl font-bold tracking-tight mb-1 px-2">ReviewShield&trade;</h3>
-      </div>
-
-      <!-- Product 3: Business Hub -->
-      <div class="flex flex-col group cursor-pointer w-[320px] md:w-[450px] shrink-0" onclick="window.location.href='products.html#hub'">
-        <div class="relative w-full h-[450px] md:h-[550px] rounded-[2rem] overflow-hidden mb-6 bg-gray-100 flex items-center justify-center p-8">
-          <img src="DIGITAL HUB.jpg" alt="Business Smart Hub" class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105 drop-shadow-[0_20px_30px_rgba(0,0,0,0.2)]">
-          <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-[2px]">
-            <span class="bg-black text-white px-8 py-4 rounded-full text-sm font-bold uppercase tracking-widest shadow-2xl flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-              Order Now &rarr;
-            </span>
-          </div>
-        </div>
-        <h3 class="text-2xl font-bold tracking-tight mb-1 px-2">Business Smart Hub</h3>
-      </div>
-
-      <!-- ================= SET 2 (Duplicated for Seamless Loop) ================= -->
-      <!-- Eksaktong kopya 'to ng Set 1 para hindi maputol yung gallery habang umiikot -->
-      
-      <!-- Copy of Product 1 -->
-      <div class="flex flex-col group cursor-pointer w-[320px] md:w-[450px] shrink-0" onclick="window.location.href='products.html#executive'">
-        <div class="relative w-full h-[450px] md:h-[550px] rounded-[2rem] overflow-hidden mb-6 bg-gray-100 flex items-center justify-center p-8">
-          <img src="card-design.png" alt="Smart Executive Card" class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105 drop-shadow-[0_20px_30px_rgba(0,0,0,0.2)]">
-          <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-[2px]">
-            <span class="bg-black text-white px-8 py-4 rounded-full text-sm font-bold uppercase tracking-widest shadow-2xl flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-              Order Now &rarr;
-            </span>
-          </div>
-        </div>
-        <h3 class="text-2xl font-bold tracking-tight mb-1 px-2">Smart Executive Card</h3>
-      </div>
-
-      <!-- Copy of Product 2 -->
-      <div class="flex flex-col group cursor-pointer w-[320px] md:w-[450px] shrink-0" onclick="window.location.href='products.html#reviewshield'">
-        <div class="relative w-full h-[450px] md:h-[550px] rounded-[2rem] overflow-hidden mb-6 bg-gray-100 flex items-center justify-center p-8">
-          <img src="GOOGLE REVIEW.jpg" alt="ReviewShield Card" class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105 drop-shadow-[0_20px_30px_rgba(0,0,0,0.2)]">
-          <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-[2px]">
-            <span class="bg-black text-white px-8 py-4 rounded-full text-sm font-bold uppercase tracking-widest shadow-2xl flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-              Order Now &rarr;
-            </span>
-          </div>
-        </div>
-        <h3 class="text-2xl font-bold tracking-tight mb-1 px-2">ReviewShield&trade;</h3>
-      </div>
-
-      <!-- Copy of Product 3 -->
-      <div class="flex flex-col group cursor-pointer w-[320px] md:w-[450px] shrink-0" onclick="window.location.href='products.html#hub'">
-        <div class="relative w-full h-[450px] md:h-[550px] rounded-[2rem] overflow-hidden mb-6 bg-gray-100 flex items-center justify-center p-8">
-          <img src="DIGITAL HUB.jpg" alt="Business Smart Hub" class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105 drop-shadow-[0_20px_30px_rgba(0,0,0,0.2)]">
-          <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-[2px]">
-            <span class="bg-black text-white px-8 py-4 rounded-full text-sm font-bold uppercase tracking-widest shadow-2xl flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-              Order Now &rarr;
-            </span>
-          </div>
-        </div>
-        <h3 class="text-2xl font-bold tracking-tight mb-1 px-2">Business Smart Hub</h3>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- 2. The Matte-Black Modal Overlay (Hidden by Default) -->
-<div id="impact-modal" class="fixed inset-0 z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-400 ease-out">
-  
-  <!-- Blurred Backdrop -->
-  <div class="absolute inset-0 bg-white/80 backdrop-blur-md" onclick="toggleImpactModal()"></div>
-  
-  <!-- Modal Content Box -->
-  <div id="impact-modal-content" class="relative w-[90%] max-w-lg bg-[#0a0a0a] border border-neutral-800 rounded-3xl p-8 sm:p-10 shadow-2xl transform scale-95 transition-transform duration-400 ease-out overflow-y-auto max-h-[85vh]">
-    
-    <!-- Close Button -->
-    <button onclick="toggleImpactModal()" class="absolute top-6 right-6 text-neutral-500 hover:text-white transition-colors focus:outline-none">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-    </button>
-
-    <!-- Modal Header -->
-    <div class="mb-8">
-      <h2 class="text-xs font-mono uppercase tracking-[0.2em] text-neutral-500 mb-2">// Sustainability</h2>
-      <h3 class="text-2xl font-bold text-white tracking-tight">Engineered for Impact.</h3>
-    </div>
-
-    <!-- SDG Items List -->
-    <div class="space-y-8">
-      
-      <!-- SDG 9 -->
-      <div>
-        <h4 class="text-sm font-bold text-white uppercase tracking-widest mb-1.5 flex items-center gap-2">
-          <span class="w-1.5 h-1.5 bg-white rounded-full"></span> SDG 09: Industry & Innovation
-        </h4>
-        <p class="text-neutral-400 text-sm leading-relaxed font-light pl-3.5 border-l border-neutral-800">
-          <strong class="text-neutral-200 font-medium">Smart infrastructure.</strong> We build seamless digital touchpoints that modernize how professionals and local businesses share their identity, pushing networking into the future.
-        </p>
-      </div>
-
-      <!-- SDG 12 -->
-      <div>
-        <h4 class="text-sm font-bold text-white uppercase tracking-widest mb-1.5 flex items-center gap-2">
-          <span class="w-1.5 h-1.5 bg-white rounded-full"></span> SDG 12: Responsible Consumption
-        </h4>
-        <p class="text-neutral-400 text-sm leading-relaxed font-light pl-3.5 border-l border-neutral-800">
-          <strong class="text-neutral-200 font-medium">Built to last.</strong> One premium Attachment Anywhere piece is designed for a lifetime of taps, offering a highly durable alternative to single-use printed materials.
-        </p>
-      </div>
-
-      <!-- SDG 13 -->
-      <div>
-        <h4 class="text-sm font-bold text-white uppercase tracking-widest mb-1.5 flex items-center gap-2">
-          <span class="w-1.5 h-1.5 bg-white rounded-full"></span> SDG 13: Climate Action
-        </h4>
-        <p class="text-neutral-400 text-sm leading-relaxed font-light pl-3.5 border-l border-neutral-800">
-          <strong class="text-neutral-200 font-medium">Greener connections.</strong> By transitioning to digital-first hardware, we help individuals and businesses naturally reduce their reliance on bulk printing and physical waste.
-        </p>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- 3. Vanilla JS to handle Modal Toggle -->
-<script>
-  function toggleImpactModal() {
-    const modal = document.getElementById('impact-modal');
-    const content = document.getElementById('impact-modal-content');
-    const isHidden = modal.classList.contains('opacity-0');
-
-    if (isHidden) {
-      // Open Modal
-      modal.classList.remove('opacity-0', 'pointer-events-none');
-      content.classList.remove('scale-95');
-      content.classList.add('scale-100');
-    } else {
-      // Close Modal
-      modal.classList.add('opacity-0', 'pointer-events-none');
-      content.classList.remove('scale-100');
-      content.classList.add('scale-95');
-    }
-  }
-</script>
-
-<!-- 3. Vanilla JS to handle Modal Toggle -->
-<script>
-  function toggleImpactModal() {
-    const modal = document.getElementById('impact-modal');
-    const content = document.getElementById('impact-modal-content');
-    const isHidden = modal.classList.contains('opacity-0');
-
-    if (isHidden) {
-      // Open Modal
-      document.body.style.overflow = 'hidden'; // Prevent background scrolling
-      modal.classList.remove('opacity-0', 'pointer-events-none');
-      content.classList.remove('scale-95');
-      content.classList.add('scale-100');
-    } else {
-      // Close Modal
-      document.body.style.overflow = ''; // Restore scrolling
-      modal.classList.add('opacity-0', 'pointer-events-none');
-      content.classList.remove('scale-100');
-      content.classList.add('scale-95');
-    }
-  }
-</script>
-
-<!-- ==================== THE STREAMLINED HARDWARE FOOTER ==================== -->
-<footer class="w-full bg-black text-white pt-16 pb-16 px-6 md:px-12 lg:px-24 border-t border-neutral-900">
-  <div class="max-w-7xl mx-auto flex flex-col xl:flex-row justify-between items-center gap-10 xl:gap-0">
-    
-    <!-- LEFT: Logo -->
-    <div class="flex-shrink-0">
-      <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-24 md:h-32 object-contain invert opacity-95">
-    </div>
-
-    <!-- RIGHT: Everything in ONE ROW -->
-    <div class="flex flex-wrap items-center justify-center xl:justify-end gap-6 md:gap-8 w-full xl:w-auto">
-      
-      <!-- Instagram -->
-      <a href="https://instagram.com/attachmentanywhere" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 border border-neutral-800 rounded-full px-5 py-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 hover:bg-white hover:text-black hover:border-white transition-all duration-300">
-        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-        Instagram
-      </a>
-
-      <!-- Messenger -->
-      <a href="https://m.me/attachmentanywhere" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 border border-neutral-800 rounded-full px-5 py-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 hover:bg-white hover:text-black hover:border-white transition-all duration-300">
-        <svg class="w-4 h-4" fill="currentColor" viewBox="0 2 24 24"><path d="M12 2C6.477 2 2 6.14 2 11.25c0 2.923 1.5 5.514 3.82 7.235V22l3.498-1.921c1.238.343 2.56.531 3.932.531 5.523 0 10-4.14 10-9.25S17.523 2 12 2zm1.094 12.383l-2.73-2.909-5.342 2.909 5.864-6.22 2.756 2.909 5.316-2.909-5.864 6.22z"/></svg>
-        Messenger
-      </a>
-
-      <!-- Divider -->
-      <div class="hidden md:block h-5 w-px bg-neutral-800"></div>
-
-      <!-- FAQ & Feedback -->
-      <button onclick="openModal('faq-modal')" class="text-sm text-neutral-400 font-medium hover:text-white transition-colors">FAQ</button>
-      <button onclick="openModal('feedback-modal')" class="text-sm text-neutral-400 font-medium hover:text-white transition-colors relative border-b border-transparent hover:border-white pb-0.5">
-        System Feedback
+      <!-- Mobile Hamburger Button -->
+      <button id="mobile-menu-btn" class="md:hidden flex flex-col items-end gap-1.5 p-2 focus:outline-none cursor-pointer" aria-label="Toggle Menu">
+        <span class="w-6 h-0.5 bg-black rounded-full transition-transform"></span>
+        <span class="w-5 h-0.5 bg-black rounded-full transition-opacity"></span>
+        <span class="w-6 h-0.5 bg-black rounded-full transition-transform"></span>
       </button>
-
     </div>
-  </div>
-</footer>
 
-<!-- ==================== MODALS ==================== -->
-<!-- 1. FAQ MODAL -->
-<div id="faq-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-[100]">
-  <div class="bg-[#111] rounded-3xl p-6 max-w-md w-full border border-gray-800 shadow-2xl text-left relative">
-    <div class="flex justify-between items-center pb-3 border-b border-gray-800">
-      <h3 class="text-sm font-extrabold text-white uppercase tracking-wider">Frequently Asked Questions</h3>
-      <button onclick="closeModal('faq-modal')" class="text-gray-500 hover:text-white text-2xl px-2">&times;</button>
+    <!-- Mobile Menu Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-neutral-200 px-6 py-6 flex flex-col gap-4">
+      <a href="index.html" class="text-xs font-bold uppercase tracking-widest text-black">Home</a>
+      <a href="products.html" class="text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Products</a>
+      <a href="story.html" class="text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Story</a>
+      <a href="order.html" class="bg-black text-white text-center py-3 rounded-xl text-xs font-bold uppercase tracking-widest mt-2">Order Now</a>
     </div>
-    <div class="mt-4 space-y-4 text-sm max-h-[60vh] overflow-y-auto pr-1 text-gray-400">
-      <div>
-        <h4 class="font-bold text-white mb-1">Kailangan ba ng app para gumana?</h4>
-        <p>Hindi na. Isang tap lang sa modern smartphone, lalabas na agad ang profile mo.</p>
-      </div>
-      <div>
-        <h4 class="font-bold text-white mb-1">Compatible ba sa iPhone at Android?</h4>
-        <p>Oo, gumagana ito sa lahat ng iPhone na may NFC at halos lahat ng modern Android devices.</p>
-      </div>
-      <div>
-        <h4 class="font-bold text-white mb-1">Paano mag-order?</h4>
-        <p>I-click lamang ang "Order Now" para masagutan ang aming system.</p>
-      </div>
-    </div>
-  </div>
-</div>
+  </nav>
 
-<!-- 2. FEEDBACK MODAL (Direct to Discord) -->
-<div id="feedback-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-[100]">
-  <div class="bg-[#111] rounded-3xl p-8 max-w-md w-full border border-gray-800 shadow-2xl relative">
-    <button onclick="closeModal('feedback-modal')" class="absolute top-6 right-6 text-gray-600 hover:text-white text-2xl">&times;</button>
+  <div class="pt-24"></div> <!-- Header Spacer -->
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="relative min-h-[85vh] w-full flex flex-col items-center justify-center overflow-hidden bg-[#fbfbfd] px-4 py-16 md:py-24">
     
-    <h3 class="text-xl font-black tracking-tight mb-2 text-white">System Feedback</h3>
-    <p class="text-gray-500 text-sm mb-6">Leave a thought or suggestion. Daemon is listening.</p>
+    <!-- BACKGROUND: Auto-Moving 3D Card -->
+    <div class="absolute inset-0 flex items-center justify-center z-0 opacity-20 md:opacity-35 pointer-events-none mt-6">
+      <div class="animate-3d-flip w-[300px] h-[190px] sm:w-[380px] sm:h-[240px] md:w-[580px] md:h-[365px]">
+        <img src="card-design.png" alt="Front Design" class="card-face object-cover">
+        <img src="card-back.png" alt="Back Design" class="card-face card-back object-cover">
+      </div>
+    </div>
+
+    <!-- FOREGROUND: Clean Massive Typography -->
+    <div class="relative z-10 text-center flex flex-col items-center max-w-5xl">
+      <h1 class="text-[3.2rem] sm:text-[5.5rem] md:text-[7.5rem] lg:text-[9.5rem] font-black tracking-tighter leading-[0.88] text-black">
+        ATTACHMENT<br>ANYWHERE
+      </h1>
+      
+      <p class="mt-6 md:mt-8 text-base sm:text-xl md:text-2xl font-light text-neutral-600 max-w-xl">
+        The last business card you will ever hand out.
+      </p>
+
+      <div class="mt-10 flex items-center gap-4">
+        <a href="products.html" class="bg-black text-white px-8 py-4 rounded-full font-bold text-xs uppercase tracking-[0.2em] hover:bg-neutral-800 hover:scale-105 transition-all shadow-xl">
+          Explore Products &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CLIENT LOGO TICKER SECTION ================= -->
+  <section class="w-full bg-white py-12 md:py-16 relative overflow-hidden border-y border-neutral-200">
+    <p class="text-center text-[10px] font-mono tracking-[0.2em] uppercase text-neutral-400 mb-8">
+      Trusted By Local Businesses & Professionals
+    </p>
+
+    <!-- Side Gradient Fades -->
+    <div class="absolute inset-y-0 left-0 w-20 md:w-40 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+    <div class="absolute inset-y-0 right-0 w-20 md:w-40 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+
+    <!-- Auto-Scrolling Logo Container -->
+    <div class="flex overflow-hidden w-full">
+      <div class="animate-logos flex items-center gap-16 md:gap-32 px-8">
+        <!-- Set 1 -->
+        <h3 class="font-black text-xl md:text-2xl tracking-tighter text-neutral-300 uppercase whitespace-nowrap">Sushi Maki Rolls</h3>
+        <h3 class="font-black text-xl md:text-2xl tracking-tighter text-neutral-300 uppercase whitespace-nowrap">Mama Bean Coffee Club</h3>
+        <h3 class="font-black text-xl md:text-2xl tracking-tighter text-neutral-300 uppercase whitespace-nowrap">DYKTJ Auto Supply</h3>
+        <!-- Set 2 (Duplicate for Seamless Loop) -->
+        <h3 class="font-black text-xl md:text-2xl tracking-tighter text-neutral-300 uppercase whitespace-nowrap">Sushi Maki Rolls</h3>
+        <h3 class="font-black text-xl md:text-2xl tracking-tighter text-neutral-300 uppercase whitespace-nowrap">Mama Bean Coffee Club</h3>
+        <h3 class="font-black text-xl md:text-2xl tracking-tighter text-neutral-300 uppercase whitespace-nowrap">DYKTJ Auto Supply</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CATALOG GALLERY SECTION ================= -->
+  <section id="catalog" class="w-full bg-[#f4f4f5] py-20 md:py-28 overflow-hidden">
     
-    <div class="flex flex-col gap-4">
-      <textarea id="feedback-text" rows="4" placeholder="Type your message here..." class="w-full bg-[#1a1a1a] border border-gray-800 rounded-xl p-4 text-white text-sm focus:outline-none focus:border-gray-500 resize-none"></textarea>
-      <button id="send-hq-btn" class="w-full bg-white text-black font-bold py-3 rounded-xl hover:bg-gray-200 transition-colors mt-2">Send to HQ</button>
+    <div class="max-w-7xl mx-auto px-6 md:px-12 mb-12 text-center">
+      <h2 class="text-3xl sm:text-5xl md:text-6xl font-black tracking-tighter leading-tight text-neutral-900">
+        ONE TAP.<br>ENDLESS POSSIBILITIES.
+      </h2>
+      <p class="text-neutral-500 text-sm mt-3">Tap any product to customize your configuration.</p>
+    </div>
+
+    <!-- Auto-Scrolling Card Gallery -->
+    <div class="relative w-full flex overflow-hidden">
+      <div class="animate-gallery gap-6 md:gap-8 px-4">
+        
+        <!-- SET 1 -->
+        <!-- Product 1: Executive Card -->
+        <div class="flex flex-col group cursor-pointer w-[280px] sm:w-[350px] md:w-[420px] shrink-0" onclick="window.location.href='products.html#executive'">
+          <div class="relative w-full h-[380px] sm:h-[480px] rounded-3xl overflow-hidden mb-4 bg-white border border-neutral-200 flex items-center justify-center p-8">
+            <img src="card-design.png" alt="Smart Executive Card" class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105 drop-shadow-[0_20px_30px_rgba(0,0,0,0.2)]">
+            <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-[2px]">
+              <span class="bg-black text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest shadow-2xl flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                View Product &rarr;
+              </span>
+            </div>
+          </div>
+          <h3 class="text-xl font-bold tracking-tight px-2 text-neutral-900">Smart Executive Card</h3>
+        </div>
+
+        <!-- Product 2: ReviewShield -->
+        <div class="flex flex-col group cursor-pointer w-[280px] sm:w-[350px] md:w-[420px] shrink-0" onclick="window.location.href='products.html#reviewshield'">
+          <div class="relative w-full h-[380px] sm:h-[480px] rounded-3xl overflow-hidden mb-4 bg-white border border-neutral-200 flex items-center justify-center p-8">
+            <img src="GOOGLE REVIEW.jpg" alt="ReviewShield Card" class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105 drop-shadow-[0_20px_30px_rgba(0,0,0,0.2)]">
+            <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-[2px]">
+              <span class="bg-black text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest shadow-2xl flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                View Product &rarr;
+              </span>
+            </div>
+          </div>
+          <h3 class="text-xl font-bold tracking-tight px-2 text-neutral-900">ReviewShield&trade;</h3>
+        </div>
+
+        <!-- Product 3: Business Hub -->
+        <div class="flex flex-col group cursor-pointer w-[280px] sm:w-[350px] md:w-[420px] shrink-0" onclick="window.location.href='products.html#hub'">
+          <div class="relative w-full h-[380px] sm:h-[480px] rounded-3xl overflow-hidden mb-4 bg-white border border-neutral-200 flex items-center justify-center p-8">
+            <img src="DIGITAL HUB.jpg" alt="Business Smart Hub" class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105 drop-shadow-[0_20px_30px_rgba(0,0,0,0.2)]">
+            <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-[2px]">
+              <span class="bg-black text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest shadow-2xl flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                View Product &rarr;
+              </span>
+            </div>
+          </div>
+          <h3 class="text-xl font-bold tracking-tight px-2 text-neutral-900">Business Smart Hub</h3>
+        </div>
+
+        <!-- SET 2 (Loop duplicate) -->
+        <div class="flex flex-col group cursor-pointer w-[280px] sm:w-[350px] md:w-[420px] shrink-0" onclick="window.location.href='products.html#executive'">
+          <div class="relative w-full h-[380px] sm:h-[480px] rounded-3xl overflow-hidden mb-4 bg-white border border-neutral-200 flex items-center justify-center p-8">
+            <img src="card-design.png" alt="Smart Executive Card" class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105 drop-shadow-[0_20px_30px_rgba(0,0,0,0.2)]">
+            <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-[2px]">
+              <span class="bg-black text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest shadow-2xl flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                View Product &rarr;
+              </span>
+            </div>
+          </div>
+          <h3 class="text-xl font-bold tracking-tight px-2 text-neutral-900">Smart Executive Card</h3>
+        </div>
+
+        <div class="flex flex-col group cursor-pointer w-[280px] sm:w-[350px] md:w-[420px] shrink-0" onclick="window.location.href='products.html#reviewshield'">
+          <div class="relative w-full h-[380px] sm:h-[480px] rounded-3xl overflow-hidden mb-4 bg-white border border-neutral-200 flex items-center justify-center p-8">
+            <img src="GOOGLE REVIEW.jpg" alt="ReviewShield Card" class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105 drop-shadow-[0_20px_30px_rgba(0,0,0,0.2)]">
+            <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-[2px]">
+              <span class="bg-black text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest shadow-2xl flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                View Product &rarr;
+              </span>
+            </div>
+          </div>
+          <h3 class="text-xl font-bold tracking-tight px-2 text-neutral-900">ReviewShield&trade;</h3>
+        </div>
+
+        <div class="flex flex-col group cursor-pointer w-[280px] sm:w-[350px] md:w-[420px] shrink-0" onclick="window.location.href='products.html#hub'">
+          <div class="relative w-full h-[380px] sm:h-[480px] rounded-3xl overflow-hidden mb-4 bg-white border border-neutral-200 flex items-center justify-center p-8">
+            <img src="DIGITAL HUB.jpg" alt="Business Smart Hub" class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105 drop-shadow-[0_20px_30px_rgba(0,0,0,0.2)]">
+            <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-[2px]">
+              <span class="bg-black text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest shadow-2xl flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                View Product &rarr;
+              </span>
+            </div>
+          </div>
+          <h3 class="text-xl font-bold tracking-tight px-2 text-neutral-900">Business Smart Hub</h3>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= UNIVERSAL FOOTER ================= -->
+  <footer class="w-full bg-black text-white pt-16 pb-16 px-6 md:px-12 lg:px-24 border-t border-neutral-900 mt-auto">
+    <div class="max-w-7xl mx-auto flex flex-col xl:flex-row justify-between items-center gap-10 xl:gap-0">
+      
+      <!-- Logo -->
+      <div class="flex-shrink-0">
+        <a href="index.html">
+          <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-24 md:h-32 object-contain invert opacity-95">
+        </a>
+      </div>
+
+      <!-- Links & Modals Triggers -->
+      <div class="flex flex-wrap items-center justify-center xl:justify-end gap-6 md:gap-8 w-full xl:w-auto">
+        
+        <!-- Instagram -->
+        <a href="https://instagram.com/attachmentanywhere" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 border border-neutral-800 rounded-full px-5 py-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 hover:bg-white hover:text-black hover:border-white transition-all duration-300">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          Instagram
+        </a>
+
+        <!-- Messenger -->
+        <a href="https://m.me/attachmentanywhere" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 border border-neutral-800 rounded-full px-5 py-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 hover:bg-white hover:text-black hover:border-white transition-all duration-300">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 2 24 24"><path d="M12 2C6.477 2 2 6.14 2 11.25c0 2.923 1.5 5.514 3.82 7.235V22l3.498-1.921c1.238.343 2.56.531 3.932.531 5.523 0 10-4.14 10-9.25S17.523 2 12 2zm1.094 12.383l-2.73-2.909-5.342 2.909 5.864-6.22 2.756 2.909 5.316-2.909-5.864 6.22z"/></svg>
+          Messenger
+        </a>
+
+        <div class="hidden md:block h-5 w-px bg-neutral-800"></div>
+
+        <!-- FAQ & Feedback -->
+        <button onclick="openModal('faq-modal')" class="text-sm text-neutral-400 font-medium hover:text-white transition-colors cursor-pointer">FAQ</button>
+        <button onclick="openModal('feedback-modal')" class="text-sm text-neutral-400 font-medium hover:text-white transition-colors relative border-b border-transparent hover:border-white pb-0.5 cursor-pointer">Feedback</button>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= MODALS ================= -->
+  <!-- 1. FAQ MODAL -->
+  <div id="faq-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-[100]">
+    <div class="bg-[#111] rounded-3xl p-6 max-w-md w-full border border-gray-800 shadow-2xl text-left relative">
+      <div class="flex justify-between items-center pb-3 border-b border-gray-800">
+        <h3 class="text-sm font-extrabold text-white uppercase tracking-wider">Frequently Asked Questions</h3>
+        <button onclick="closeModal('faq-modal')" class="text-gray-500 hover:text-white text-2xl px-2 cursor-pointer">&times;</button>
+      </div>
+      <div class="mt-4 space-y-4 text-sm max-h-[60vh] overflow-y-auto pr-1 text-gray-400">
+        <div>
+          <h4 class="font-bold text-white mb-1">Do recipients need an app?</h4>
+          <p>No apps required. A single tap against any modern smartphone natively launches your profile.</p>
+        </div>
+        <div>
+          <h4 class="font-bold text-white mb-1">Is it compatible with iPhone and Android?</h4>
+          <p>Yes. Works natively with NFC-enabled iPhones and modern Android devices.</p>
+        </div>
+        <div>
+          <h4 class="font-bold text-white mb-1">How do I place an order?</h4>
+          <p>Click 'Order Now' or select a hardware piece in the catalog to finalize your custom setup.</p>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- ==================== JAVASCRIPT FOR FOOTER & MODALS ==================== -->
-<script>
-  // Pambukas at Pansara ng mga Modal (FAQ & Feedback)
-  function openModal(id) {
-    const modal = document.getElementById(id);
-    if(modal) {
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
+  <!-- 2. FEEDBACK MODAL (Direct to Discord) -->
+  <div id="feedback-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-[100]">
+    <div class="bg-[#111] rounded-3xl p-8 max-w-md w-full border border-gray-800 shadow-2xl relative">
+      <button onclick="closeModal('feedback-modal')" class="absolute top-6 right-6 text-gray-600 hover:text-white text-2xl cursor-pointer">&times;</button>
+      
+      <h3 class="text-xl font-black tracking-tight mb-2 text-white">System Feedback</h3>
+      <p class="text-gray-500 text-sm mb-6">Leave a thought, bug report, or system suggestion. Daemon is listening.</p>
+      
+      <div class="flex flex-col gap-4">
+        <textarea id="feedback-text" rows="4" placeholder="Enter your transmission here..." class="w-full bg-[#1a1a1a] border border-gray-800 rounded-xl p-4 text-white text-sm focus:outline-none focus:border-gray-500 resize-none"></textarea>
+        <button id="send-hq-btn" class="w-full bg-white text-black font-bold py-3 rounded-xl hover:bg-gray-200 transition-colors mt-2 cursor-pointer">Transmit to HQ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SCRIPTS ================= -->
+  <script>
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (mobileMenuBtn && mobileMenu) {
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
     }
-  }
 
-  function closeModal(id) {
-    const modal = document.getElementById(id);
-    if(modal) {
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-    }
-  }
-
-  // Discord Webhook Logic para sa System Feedback
-  const sendHqBtn = document.getElementById('send-hq-btn');
-  const feedbackText = document.getElementById('feedback-text');
-  
-  // Naka-set na dito yung mismong link mo
-  const FEEDBACK_DISCORD_WEBHOOK = 'https://discordapp.com/api/webhooks/1546951637086765127/M1OwcHGy82fSzta3WRHvQ4nKmGKQ7CVxsxilgKFAfbN66ser7rEDqjt8bBhtriuW9hVb';
-
-  if(sendHqBtn) {
-    sendHqBtn.addEventListener('click', async () => {
-      const message = feedbackText.value.trim();
-      if (!message) { alert("Boss, walang laman yung mensahe."); return; }
-
-      const originalText = sendHqBtn.innerText;
-      sendHqBtn.innerText = "Transmitting to HQ...";
-      sendHqBtn.classList.add('opacity-70', 'cursor-not-allowed');
-
-      try {
-        await fetch(FEEDBACK_DISCORD_WEBHOOK, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            content: `🛠️ **SYSTEM FEEDBACK / BUG REPORT** 🛠️\n> **Message:** ${message}\n> **Timestamp:** ${new Date().toLocaleString()}`
-          })
-        });
-        
-        feedbackText.value = '';
-        sendHqBtn.innerText = "Sent. Daemon is on it.";
-        sendHqBtn.classList.replace('bg-white', 'bg-emerald-600');
-        sendHqBtn.classList.replace('text-black', 'text-white');
-        
-        setTimeout(() => {
-          closeModal('feedback-modal');
-          sendHqBtn.innerText = originalText;
-          sendHqBtn.classList.remove('opacity-70', 'cursor-not-allowed');
-          sendHqBtn.classList.replace('bg-emerald-600', 'bg-white');
-          sendHqBtn.classList.replace('text-white', 'text-black');
-        }, 2000);
-
-      } catch (error) {
-        console.error("Error:", error);
-        sendHqBtn.innerText = "Connection Failed. Try again.";
-        setTimeout(() => {
-          sendHqBtn.innerText = originalText;
-          sendHqBtn.classList.remove('opacity-70', 'cursor-not-allowed');
-        }, 3000);
+    // Modal Visibility Helpers
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if(modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
       }
-    });
-  }
-</script>
+    }
 
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if(modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    // Impact Modal Controls
+    function toggleImpactModal() {
+      const modal = document.getElementById('impact-modal');
+      const content = document.getElementById('impact-modal-content');
+      const isHidden = modal.classList.contains('opacity-0');
+
+      if (isHidden) {
+        document.body.style.overflow = 'hidden';
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        content.classList.remove('scale-95');
+        content.classList.add('scale-100');
+      } else {
+        document.body.style.overflow = '';
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        content.classList.remove('scale-100');
+        content.classList.add('scale-95');
+      }
+    }
+
+    // Discord Feedback Webhook Handler
+    const sendHqBtn = document.getElementById('send-hq-btn');
+    const feedbackText = document.getElementById('feedback-text');
+    const FEEDBACK_DISCORD_WEBHOOK = 'https://discordapp.com/api/webhooks/1546951637086765127/M1OwcHGy82fSzta3WRHvQ4nKmGKQ7CVxsxilgKFAfbN66ser7rEDqjt8bBhtriuW9hVb';
+
+    if(sendHqBtn) {
+      sendHqBtn.addEventListener('click', async () => {
+        const message = feedbackText.value.trim();
+        if (!message) { alert("Please input a message before transmitting."); return; }
+
+        const originalText = sendHqBtn.innerText;
+        sendHqBtn.innerText = "Transmitting to HQ...";
+        sendHqBtn.classList.add('opacity-70', 'cursor-not-allowed');
+
+        try {
+          await fetch(FEEDBACK_DISCORD_WEBHOOK, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              content: `🛠️ **SYSTEM FEEDBACK / TRANSMISSION** 🛠️\n> **Message:** ${message}\n> **Timestamp:** ${new Date().toLocaleString()}`
+            })
+          });
+          
+          feedbackText.value = '';
+          sendHqBtn.innerText = "Transmitted. Daemon is on it.";
+          sendHqBtn.classList.replace('bg-white', 'bg-emerald-600');
+          sendHqBtn.classList.replace('text-black', 'text-white');
+          
+          setTimeout(() => {
+            closeModal('feedback-modal');
+            sendHqBtn.innerText = originalText;
+            sendHqBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+            sendHqBtn.classList.replace('bg-emerald-600', 'bg-white');
+            sendHqBtn.classList.replace('text-white', 'text-black');
+          }, 2000);
+
+        } catch (error) {
+          console.error("Transmission Error:", error);
+          sendHqBtn.innerText = "Connection Failed. Retry.";
+          setTimeout(() => {
+            sendHqBtn.innerText = originalText;
+            sendHqBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+          }, 3000);
+        }
+      });
+    }
+  </script>
 </body>
 </html>
