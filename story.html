@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Our Story | Attachment Anywhere</title>
+  <link rel="icon" type="image/png" href="brandbgrmv.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     ::-webkit-scrollbar { display: none; }
@@ -11,62 +12,77 @@
 </head>
 <body class="bg-[#f4f4f5] text-black font-sans antialiased selection:bg-black selection:text-white flex flex-col min-h-screen">
 
-  <!-- UNIVERSAL NAVIGATION BAR -->
+  <!-- ================= UNIVERSAL NAVIGATION BAR ================= -->
   <nav class="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 transition-all">
     <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
       <a href="index.html" class="flex items-center">
         <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-10 md:h-20 w-auto object-contain" />
       </a>
+      
+      <!-- Desktop Navigation Links -->
       <div class="hidden md:flex items-center gap-10">
         <div class="flex items-center gap-8">
-          <a href="index.html" class="text-sm font-bold uppercase tracking-widest text-black hover:text-gray-500 transition-colors">Home</a>
-          <a href="products.html" class="text-sm font-bold uppercase tracking-widest text-black hover:text-gray-500 transition-colors">Products</a>
-          <a href="story.html" class="text-sm font-bold uppercase tracking-widest text-black hover:text-gray-500 transition-colors">Story</a>
+          <a href="index.html" class="text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black transition-colors">Home</a>
+          <a href="products.html" class="text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black transition-colors">Products</a>
+          <a href="story.html" class="text-sm font-bold uppercase tracking-widest text-black border-b-2 border-black pb-1">Story</a>
         </div>
-        <button onclick="window.location.href='products.html'" class="bg-black text-white px-8 py-3 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] hover:scale-105 hover:bg-neutral-800 transition-all shadow-xl">
+        <button onclick="window.location.href='order.html'" class="bg-black text-white px-8 py-3 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] hover:scale-105 hover:bg-neutral-800 transition-all shadow-xl cursor-pointer">
           Order Now
         </button>
       </div>
-      <button class="md:hidden flex flex-col items-end gap-1.5 p-2" aria-label="Menu">
-        <span class="w-6 h-0.5 bg-black rounded-full"></span>
-        <span class="w-5 h-0.5 bg-black rounded-full"></span>
-        <span class="w-6 h-0.5 bg-black rounded-full"></span>
+
+      <!-- Mobile Hamburger Button -->
+      <button id="mobile-menu-btn" class="md:hidden flex flex-col items-end gap-1.5 p-2 focus:outline-none cursor-pointer" aria-label="Toggle Menu">
+        <span class="w-6 h-0.5 bg-black rounded-full transition-transform"></span>
+        <span class="w-5 h-0.5 bg-black rounded-full transition-opacity"></span>
+        <span class="w-6 h-0.5 bg-black rounded-full transition-transform"></span>
       </button>
+    </div>
+
+    <!-- Mobile Menu Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-neutral-200 px-6 py-6 flex flex-col gap-4">
+      <a href="index.html" class="text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Home</a>
+      <a href="products.html" class="text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Products</a>
+      <a href="story.html" class="text-xs font-bold uppercase tracking-widest text-black">Story</a>
+      <a href="order.html" class="bg-black text-white text-center py-3 rounded-xl text-xs font-bold uppercase tracking-widest mt-2">Order Now</a>
     </div>
   </nav>
 
   <div class="pt-24"></div> <!-- Top spacer -->
 
-  <!-- ==================== BRAND STORY MAIN ==================== -->
+  <!-- ================= BRAND STORY MAIN ================= -->
+  <main class="flex-grow">
     
     <!-- Hero Manifesto -->
-    <header class="text-center mb-20 pt-20">
-      <h1 class="text-5xl md:text-7xl font-black tracking-tight text-black dark:text-black mb-6 uppercase">
+    <header class="text-center mb-20 pt-16 md:pt-20 px-6">
+      <h1 class="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-black mb-6 uppercase">
         BUILT TO BE ICONIC
       </h1>
-      <p class="text-gray-500 max-w-2xl mx-auto text-lg leading-relaxed">
+      <p class="text-neutral-500 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed font-light">
         We built Attachment Anywhere to do exactly what it says. Our goal is to produce smart, premium products that can be placed in any environment. We design iconic touchpoints meant to be attached anywhere, making sure you always stand out.
       </p>
     </header>
 
-    <!-- Mission & Vision Split (UPDATED FROM NOTEBOOK) -->
-    <section class="border-y border-gray-200 dark:border-gray-800 bg-white dark:bg-[#050505]">
-      <div class="max-w-6xl mx-auto px-6 py-24 grid grid-cols-1 md:grid-cols-2 gap-16">
+    <!-- Mission & Vision Split -->
+    <section class="border-y border-neutral-200 bg-white">
+      <div class="max-w-6xl mx-auto px-6 py-20 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
         
         <!-- Mission -->
         <div>
-          <h2 class="text-xs font-mono text-gray-400 tracking-[0.2em] uppercase mb-4">Mission</h2>
-          <h3 class="text-3xl font-bold tracking-tight mb-4 text-black dark:text-white">To Elevate Your Identity.</h3>
-          <p class="text-gray-500 leading-relaxed text-sm">
+          <h2 class="text-xs font-mono text-neutral-400 tracking-[0.2em] uppercase mb-4">Mission</h2>
+          <h3 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4 text-black">To Elevate Your Identity.</h3>
+          <p class="text-neutral-500 leading-relaxed text-sm font-light">
             To elevate your personal style and digital presence. From NFC cards to detachable accessories, we build customizable and sustainable products designed to improve your lifestyle.
           </p>
         </div>
 
         <!-- Vision -->
         <div>
-          <h2 class="text-xs font-mono text-gray-400 tracking-[0.2em] uppercase mb-4">Vision</h2>
-          <h3 class="text-3xl font-bold tracking-tight mb-4 text-black dark:text-white">To be the Leading Lifestyle Brand.</h3>
-          <p class="text-gray-500 leading-relaxed text-sm">
+          <h2 class="text-xs font-mono text-neutral-400 tracking-[0.2em] uppercase mb-4">Vision</h2>
+          <h3 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4 text-black">To be the Leading Lifestyle Brand.</h3>
+          <p class="text-neutral-500 leading-relaxed text-sm font-light">
             To become the leading modern lifestyle brand in the country that connects physical aesthetics to digital. By 2027, we aim to produce more products for people to seamlessly carry, express, and share their identity anywhere.
           </p>
         </div>
@@ -77,40 +93,40 @@
     <section class="max-w-6xl mx-auto py-20 px-6">
       <!-- Section Header -->
       <div class="text-center mb-16">
-        <h2 class="text-4xl md:text-5xl font-black tracking-tight text-black dark:text-black mt-4 mb-6 uppercase">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-black mb-4 uppercase">
           Sustainable Development.
         </h2>
-        <p class="text-gray-500 max-w-2xl mx-auto text-lg">
+        <p class="text-neutral-500 max-w-2xl mx-auto text-base sm:text-lg font-light">
           We believe modern brands can scale responsibly. Our ecosystem aligns with the United Nations SDGs to build a smarter, more sustainable way to connect.
         </p>
       </div>
 
-      <!-- SDG Cards Grid (Minimalist Option 1) -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- SDG Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
         
         <!-- Card 09: Industry & Innovation -->
-        <div class="bg-gray-50 dark:bg-[#111] p-10 rounded-3xl border border-gray-100 dark:border-gray-800 hover:border-black dark:hover:border-white transition-colors duration-300">
-          <span class="text-xs font-mono tracking-widest text-gray-400 mb-3 block uppercase">SDG // 09</span>
-          <h3 class="text-xl font-bold mb-4 text-black dark:text-white">Industry & Innovation</h3>
-          <p class="text-gray-500 leading-relaxed">
+        <div class="bg-white p-8 sm:p-10 rounded-3xl border border-neutral-200 hover:border-black transition-colors duration-300 shadow-sm">
+          <span class="text-xs font-mono tracking-widest text-neutral-400 mb-3 block uppercase">SDG // 09</span>
+          <h3 class="text-lg font-bold mb-3 text-black">Industry & Innovation</h3>
+          <p class="text-neutral-500 text-sm leading-relaxed font-light">
             Smart infrastructure. We build seamless digital touchpoints that modernize how professionals and local businesses share their identity, pushing networking into the future.
           </p>
         </div>
 
         <!-- Card 12: Responsible Consumption -->
-        <div class="bg-gray-50 dark:bg-[#111] p-10 rounded-3xl border border-gray-100 dark:border-gray-800 hover:border-black dark:hover:border-white transition-colors duration-300">
-          <span class="text-xs font-mono tracking-widest text-gray-400 mb-3 block uppercase">SDG // 12</span>
-          <h3 class="text-xl font-bold mb-4 text-black dark:text-white">Responsible Consumption</h3>
-          <p class="text-gray-500 leading-relaxed">
+        <div class="bg-white p-8 sm:p-10 rounded-3xl border border-neutral-200 hover:border-black transition-colors duration-300 shadow-sm">
+          <span class="text-xs font-mono tracking-widest text-neutral-400 mb-3 block uppercase">SDG // 12</span>
+          <h3 class="text-lg font-bold mb-3 text-black">Responsible Consumption</h3>
+          <p class="text-neutral-500 text-sm leading-relaxed font-light">
             Built to last. One premium Attachment Anywhere piece is designed for a lifetime of taps, offering a highly durable alternative to single-use printed materials.
           </p>
         </div>
 
         <!-- Card 13: Climate Action -->
-        <div class="bg-gray-50 dark:bg-[#111] p-10 rounded-3xl border border-gray-100 dark:border-gray-800 hover:border-black dark:hover:border-white transition-colors duration-300">
-          <span class="text-xs font-mono tracking-widest text-gray-400 mb-3 block uppercase">SDG // 13</span>
-          <h3 class="text-xl font-bold mb-4 text-black dark:text-white">Climate Action</h3>
-          <p class="text-gray-500 leading-relaxed">
+        <div class="bg-white p-8 sm:p-10 rounded-3xl border border-neutral-200 hover:border-black transition-colors duration-300 shadow-sm">
+          <span class="text-xs font-mono tracking-widest text-neutral-400 mb-3 block uppercase">SDG // 13</span>
+          <h3 class="text-lg font-bold mb-3 text-black">Climate Action</h3>
+          <p class="text-neutral-500 text-sm leading-relaxed font-light">
             Greener connections. By transitioning to digital-first hardware, we help individuals and businesses naturally reduce their reliance on bulk printing and physical waste.
           </p>
         </div>
@@ -120,151 +136,153 @@
 
   </main>
 
-<!-- ==================== THE STREAMLINED HARDWARE FOOTER ==================== -->
-<footer class="w-full bg-black text-white pt-16 pb-16 px-6 md:px-12 lg:px-24 border-t border-neutral-900">
-  <div class="max-w-7xl mx-auto flex flex-col xl:flex-row justify-between items-center gap-10 xl:gap-0">
-    
-    <!-- LEFT: Logo -->
-    <div class="flex-shrink-0">
-      <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-24 md:h-32 object-contain invert opacity-95">
-    </div>
-
-    <!-- RIGHT: Everything in ONE ROW -->
-    <div class="flex flex-wrap items-center justify-center xl:justify-end gap-6 md:gap-8 w-full xl:w-auto">
+  <!-- ================= UNIVERSAL FOOTER ================= -->
+  <footer class="w-full bg-black text-white pt-16 pb-16 px-6 md:px-12 lg:px-24 border-t border-neutral-900 mt-auto">
+    <div class="max-w-7xl mx-auto flex flex-col xl:flex-row justify-between items-center gap-10 xl:gap-0">
       
-      <!-- Instagram -->
-      <a href="https://instagram.com/attachmentanywhere" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 border border-neutral-800 rounded-full px-5 py-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 hover:bg-white hover:text-black hover:border-white transition-all duration-300">
-        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-        Instagram
-      </a>
-
-      <!-- Messenger -->
-      <a href="https://m.me/attachmentanywhere" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 border border-neutral-800 rounded-full px-5 py-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 hover:bg-white hover:text-black hover:border-white transition-all duration-300">
-        <svg class="w-4 h-4" fill="currentColor" viewBox="0 2 24 24"><path d="M12 2C6.477 2 2 6.14 2 11.25c0 2.923 1.5 5.514 3.82 7.235V22l3.498-1.921c1.238.343 2.56.531 3.932.531 5.523 0 10-4.14 10-9.25S17.523 2 12 2zm1.094 12.383l-2.73-2.909-5.342 2.909 5.864-6.22 2.756 2.909 5.316-2.909-5.864 6.22z"/></svg>
-        Messenger
-      </a>
-
-      <!-- Divider -->
-      <div class="hidden md:block h-5 w-px bg-neutral-800"></div>
-
-      <!-- FAQ & Feedback -->
-      <button onclick="openModal('faq-modal')" class="text-sm text-neutral-400 font-medium hover:text-white transition-colors">FAQ</button>
-      <button onclick="openModal('feedback-modal')" class="text-sm text-neutral-400 font-medium hover:text-white transition-colors relative border-b border-transparent hover:border-white pb-0.5">
-        Feedback
-      </button>
-
-    </div>
-  </div>
-</footer>
-
-<!-- ==================== MODALS ==================== -->
-<!-- 1. FAQ MODAL -->
-<div id="faq-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-[100]">
-  <div class="bg-[#111] rounded-3xl p-6 max-w-md w-full border border-gray-800 shadow-2xl text-left relative">
-    <div class="flex justify-between items-center pb-3 border-b border-gray-800">
-      <h3 class="text-sm font-extrabold text-white uppercase tracking-wider">Frequently Asked Questions</h3>
-      <button onclick="closeModal('faq-modal')" class="text-gray-500 hover:text-white text-2xl px-2">&times;</button>
-    </div>
-    <div class="mt-4 space-y-4 text-sm max-h-[60vh] overflow-y-auto pr-1 text-gray-400">
-      <div>
-        <h4 class="font-bold text-white mb-1">Kailangan ba ng app para gumana?</h4>
-        <p>Hindi na. Isang tap lang sa modern smartphone, lalabas na agad ang profile mo.</p>
+      <!-- Brand Logo -->
+      <div class="flex-shrink-0">
+        <a href="index.html">
+          <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-24 md:h-32 object-contain invert opacity-95">
+        </a>
       </div>
-      <div>
-        <h4 class="font-bold text-white mb-1">Compatible ba sa iPhone at Android?</h4>
-        <p>Oo, gumagana ito sa lahat ng iPhone na may NFC at halos lahat ng modern Android devices.</p>
-      </div>
-      <div>
-        <h4 class="font-bold text-white mb-1">Paano mag-order?</h4>
-        <p>I-click lamang ang "Order Now" para masagutan ang aming system.</p>
-      </div>
-    </div>
-  </div>
-</div>
 
-<!-- 2. FEEDBACK MODAL (Direct to Discord) -->
-<div id="feedback-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-[100]">
-  <div class="bg-[#111] rounded-3xl p-8 max-w-md w-full border border-gray-800 shadow-2xl relative">
-    <button onclick="closeModal('feedback-modal')" class="absolute top-6 right-6 text-gray-600 hover:text-white text-2xl">&times;</button>
-    
-    <h3 class="text-xl font-black tracking-tight mb-2 text-white">Feedback</h3>
-    <p class="text-gray-500 text-sm mb-6">Leave a thought or suggestion. Daemon is listening.</p>
-    
-    <div class="flex flex-col gap-4">
-      <textarea id="feedback-text" rows="4" placeholder="Type your message here..." class="w-full bg-[#1a1a1a] border border-gray-800 rounded-xl p-4 text-white text-sm focus:outline-none focus:border-gray-500 resize-none"></textarea>
-      <button id="send-hq-btn" class="w-full bg-white text-black font-bold py-3 rounded-xl hover:bg-gray-200 transition-colors mt-2">Send to HQ</button>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== JAVASCRIPT FOR FOOTER & MODALS ==================== -->
-<script>
-  // Pambukas at Pansara ng mga Modal (FAQ & Feedback)
-  function openModal(id) {
-    const modal = document.getElementById(id);
-    if(modal) {
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-    }
-  }
-
-  function closeModal(id) {
-    const modal = document.getElementById(id);
-    if(modal) {
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-    }
-  }
-
-  // Discord Webhook Logic para sa System Feedback
-  const sendHqBtn = document.getElementById('send-hq-btn');
-  const feedbackText = document.getElementById('feedback-text');
-  
-  // Naka-set na dito yung mismong link mo
-  const FEEDBACK_DISCORD_WEBHOOK = 'https://discordapp.com/api/webhooks/1546951637086765127/M1OwcHGy82fSzta3WRHvQ4nKmGKQ7CVxsxilgKFAfbN66ser7rEDqjt8bBhtriuW9hVb';
-
-  if(sendHqBtn) {
-    sendHqBtn.addEventListener('click', async () => {
-      const message = feedbackText.value.trim();
-      if (!message) { alert("Boss, walang laman yung mensahe."); return; }
-
-      const originalText = sendHqBtn.innerText;
-      sendHqBtn.innerText = "Transmitting to HQ...";
-      sendHqBtn.classList.add('opacity-70', 'cursor-not-allowed');
-
-      try {
-        await fetch(FEEDBACK_DISCORD_WEBHOOK, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            content: `🛠️ **SYSTEM FEEDBACK / BUG REPORT** 🛠️\n> **Message:** ${message}\n> **Timestamp:** ${new Date().toLocaleString()}`
-          })
-        });
+      <!-- Links & Modal Triggers -->
+      <div class="flex flex-wrap items-center justify-center xl:justify-end gap-6 md:gap-8 w-full xl:w-auto">
         
-        feedbackText.value = '';
-        sendHqBtn.innerText = "Sent. Daemon is on it.";
-        sendHqBtn.classList.replace('bg-white', 'bg-emerald-600');
-        sendHqBtn.classList.replace('text-black', 'text-white');
-        
-        setTimeout(() => {
-          closeModal('feedback-modal');
-          sendHqBtn.innerText = originalText;
-          sendHqBtn.classList.remove('opacity-70', 'cursor-not-allowed');
-          sendHqBtn.classList.replace('bg-emerald-600', 'bg-white');
-          sendHqBtn.classList.replace('text-white', 'text-black');
-        }, 2000);
+        <!-- Instagram -->
+        <a href="https://instagram.com/attachmentanywhere" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 border border-neutral-800 rounded-full px-5 py-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 hover:bg-white hover:text-black hover:border-white transition-all duration-300">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          Instagram
+        </a>
 
-      } catch (error) {
-        console.error("Error:", error);
-        sendHqBtn.innerText = "Connection Failed. Try again.";
-        setTimeout(() => {
-          sendHqBtn.innerText = originalText;
-          sendHqBtn.classList.remove('opacity-70', 'cursor-not-allowed');
-        }, 3000);
+        <!-- Messenger -->
+        <a href="https://m.me/attachmentanywhere" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 border border-neutral-800 rounded-full px-5 py-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 hover:bg-white hover:text-black hover:border-white transition-all duration-300">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 2 24 24"><path d="M12 2C6.477 2 2 6.14 2 11.25c0 2.923 1.5 5.514 3.82 7.235V22l3.498-1.921c1.238.343 2.56.531 3.932.531 5.523 0 10-4.14 10-9.25S17.523 2 12 2zm1.094 12.383l-2.73-2.909-5.342 2.909 5.864-6.22 2.756 2.909 5.316-2.909-5.864 6.22z"/></svg>
+          Messenger
+        </a>
+
+        <div class="hidden md:block h-5 w-px bg-neutral-800"></div>
+
+        <!-- Modals Triggers -->
+        <button onclick="openModal('faq-modal')" class="text-sm text-neutral-400 font-medium hover:text-white transition-colors cursor-pointer">FAQ</button>
+        <button onclick="openModal('feedback-modal')" class="text-sm text-neutral-400 font-medium hover:text-white transition-colors relative border-b border-transparent hover:border-white pb-0.5 cursor-pointer">Feedback</button>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= MODALS ================= -->
+  <!-- 1. FAQ Modal -->
+  <div id="faq-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-[100]">
+    <div class="bg-[#111] rounded-3xl p-6 max-w-md w-full border border-gray-800 shadow-2xl text-left relative">
+      <div class="flex justify-between items-center pb-3 border-b border-gray-800">
+        <h3 class="text-sm font-extrabold text-white uppercase tracking-wider">Frequently Asked Questions</h3>
+        <button onclick="closeModal('faq-modal')" class="text-gray-500 hover:text-white text-2xl px-2 cursor-pointer">&times;</button>
+      </div>
+      <div class="mt-4 space-y-4 text-sm max-h-[60vh] overflow-y-auto pr-1 text-gray-400">
+        <div>
+          <h4 class="font-bold text-white mb-1">Do recipients need an app?</h4>
+          <p>No apps required. A single tap against any modern smartphone natively launches your profile.</p>
+        </div>
+        <div>
+          <h4 class="font-bold text-white mb-1">Is it compatible with iPhone and Android?</h4>
+          <p>Yes. Works natively with NFC-enabled iPhones and modern Android devices.</p>
+        </div>
+        <div>
+          <h4 class="font-bold text-white mb-1">How do I place an order?</h4>
+          <p>Select your desired hardware product in our catalog and click 'Proceed to Checkout'.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Feedback Modal -->
+  <div id="feedback-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-[100]">
+    <div class="bg-[#111] rounded-3xl p-8 max-w-md w-full border border-gray-800 shadow-2xl relative">
+      <button onclick="closeModal('feedback-modal')" class="absolute top-6 right-6 text-gray-600 hover:text-white text-2xl cursor-pointer">&times;</button>
+      
+      <h3 class="text-xl font-black tracking-tight mb-2 text-white">System Feedback</h3>
+      <p class="text-gray-500 text-sm mb-6">Leave a thought, bug report, or system suggestion. Daemon is listening.</p>
+      
+      <div class="flex flex-col gap-4">
+        <textarea id="feedback-text" rows="4" placeholder="Enter your transmission here..." class="w-full bg-[#1a1a1a] border border-gray-800 rounded-xl p-4 text-white text-sm focus:outline-none focus:border-gray-500 resize-none"></textarea>
+        <button id="send-hq-btn" class="w-full bg-white text-black font-bold py-3 rounded-xl hover:bg-gray-200 transition-colors mt-2 cursor-pointer">Transmit to HQ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CLIENT SCRIPTS ================= -->
+  <script>
+    // 1. Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (mobileMenuBtn && mobileMenu) {
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+
+    // 2. Modal Controls
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if(modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
       }
-    });
-  }
-</script>
+    }
 
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if(modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    // 3. Feedback Webhook via Serverless Function
+    const sendHqBtn = document.getElementById('send-hq-btn');
+    const feedbackText = document.getElementById('feedback-text');
+
+    if(sendHqBtn) {
+      sendHqBtn.addEventListener('click', async () => {
+        const message = feedbackText.value.trim();
+        if (!message) { alert("Please input a message before transmitting."); return; }
+
+        const originalText = sendHqBtn.innerText;
+        sendHqBtn.innerText = "Transmitting to HQ...";
+        sendHqBtn.classList.add('opacity-70', 'cursor-not-allowed');
+
+        try {
+          await fetch('/.netlify/functions/send-feedback', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: message })
+          });
+          
+          feedbackText.value = '';
+          sendHqBtn.innerText = "Transmitted. Daemon is on it.";
+          sendHqBtn.classList.replace('bg-white', 'bg-emerald-600');
+          sendHqBtn.classList.replace('text-black', 'text-white');
+          
+          setTimeout(() => {
+            closeModal('feedback-modal');
+            sendHqBtn.innerText = originalText;
+            sendHqBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+            sendHqBtn.classList.replace('bg-emerald-600', 'bg-white');
+            sendHqBtn.classList.replace('text-white', 'text-black');
+          }, 2000);
+
+        } catch (error) {
+          console.error("Transmission Error:", error);
+          sendHqBtn.innerText = "Connection Failed. Retry.";
+          setTimeout(() => {
+            sendHqBtn.innerText = originalText;
+            sendHqBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+          }, 3000);
+        }
+      });
+    }
+  </script>
 </body>
 </html>

@@ -35,8 +35,8 @@ exports.handler = async (event, context) => {
     }
 
     // 1. ENVIRONMENT CONFIGURATION
-    const PAYMONGO_SECRET_KEY = process.env.PAYMONGO_SECRET_KEY;
-    const ORDER_DISCORD_WEBHOOK = process.env.ORDER_DISCORD_WEBHOOK || 'https://discordapp.com/api/webhooks/1551507295513350255/JrBrOa8M83EKw6lueiAM2hEQPhgPDnuvSEQTEBKdpXeQNZBwZLVPM9ML-y22fYuF5KP7';
+const PAYMONGO_SECRET_KEY = process.env.PAYMONGO_SECRET_KEY;
+const ORDER_DISCORD_WEBHOOK = process.env.ORDER_DISCORD_WEBHOOK; 
 
     if (!PAYMONGO_SECRET_KEY) {
       console.error("Missing PAYMONGO_SECRET_KEY in Netlify environment variables.");
@@ -136,7 +136,7 @@ exports.handler = async (event, context) => {
             show_description: true,
             show_line_items: true,
             description: `Order for ${customer.name} - ${productName}`,
-            payment_method_types: ["gcash", "paymaya", "card"],
+            payment_method_types: ["card", "gcash", "paymaya", "qrph", "grab_pay"],
             line_items: lineItems,
             reference_number: `AA-${Date.now().toString().slice(-6)}`
           }
