@@ -1,115 +1,175 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const orderForm = document.getElementById('order-form'); 
-  const checkoutBtn = document.getElementById('checkout-btn'); 
+// netlify/functions/process-checkout.js
 
-  if(orderForm) {
-    orderForm.addEventListener('submit', async (e) => {
-      e.preventDefault(); 
+exports.handler = async (event, context) => {
+  // Only permit POST requests
+  if (event.httpMethod !== "POST") {
+    return {
+      statusCode: 405,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ error: "Method Not Allowed" })
+    };
+  }
 
-      // 1. Kunin ang form data
-      const formData = new FormData(orderForm);
-      const name = formData.get('name') || "Customer";
-      const email = formData.get('email') || "No Email";
-      const phone = formData.get('phone') || "No Phone";
-      const product = document.getElementById('productSelect').value;
+  try {
+    const data = JSON.parse(event.body || "{}");
+    const {
+      productId,
+      productName,
+      variant,
+      unitPrice,
+      quantity,
+      shippingMethod,
+      shippingFee,
+      totalAmount,
+      customer,
+      customization
+    } = data;
 
-      // 2. I-set ang presyo (Centavos)
-      let amount = 0;
-      let description = "";
-      
-      if (product === "executive") { 
-        amount = 120000; 
-        description = "Smart Executive Card"; 
-      } else if (product === "shield") { 
-        amount = 50000;  
-        description = "Google ReviewShield"; 
-      } else if (product === "hub") { 
-        amount = 250000; 
-        description = "Business Smart Hub"; 
+    // Basic validation
+    if (!customer?.name || !customer?.phone || !customer?.address || !totalAmount) {
+      return {
+        statusCode: 400,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ error: "Missing required order parameters." })
+      };
+    }
+
+    // 1. ENVIRONMENT CONFIGURATION
+    const PAYMONGO_SECRET_KEY = process.env.PAYMONGO_SECRET_KEY;
+    const ORDER_DISCORD_WEBHOOK = process.env.ORDER_DISCORD_WEBHOOK || 'https://discordapp.com/api/webhooks/1551507295513350255/JrBrOa8M83EKw6lueiAM2hEQPhgPDnuvSEQTEBKdpXeQNZBwZLVPM9ML-y22fYuF5KP7';
+
+    if (!PAYMONGO_SECRET_KEY) {
+      console.error("Missing PAYMONGO_SECRET_KEY in Netlify environment variables.");
+      return {
+        statusCode: 500,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ error: "Payment gateway key not configured." })
+      };
+    }
+
+    // 2. DISPATCH DISCORD ORDER NOTIFICATION
+    try {
+      // Format customization details into readable fields
+      let customFieldsText = "None specified";
+      if (customization && Object.keys(customization).length > 0) {
+        customFieldsText = Object.entries(customization)
+          .map(([key, val]) => `• **${key}:** ${Array.isArray(val) ? val.join(", ") : val || "N/A"}`)
+          .join("\n");
       }
 
-      if(amount === 0) {
-        alert("Boss, pumili muna ng produkto.");
-        return;
-      }
-
-      // 3. UI Update
-      const originalBtnText = checkoutBtn.innerText;
-      checkoutBtn.innerText = "Securing Payment...";
-      checkoutBtn.disabled = true;
-      checkoutBtn.classList.add('opacity-50');
-
-      // ==========================================
-      // SETUP NG MGA KEYS AT WEBHOOKS (PALITAN MO 'TO)
-      // ==========================================
-      const PAYMONGO_SECRET_KEY = process.env.PAYMONGO_SECRET_KEY; 
-      const ORDER_DISCORD_WEBHOOK = process.env.ORDER_DISCORD_WEBHOOK;
-      // ==========================================
-      
-      const encodedKey = btoa(PAYMONGO_SECRET_KEY); 
-
-      const options = {
-        method: 'POST',
-        headers: {
-          'accept': 'application/json',
-          'Content-Type': 'application/json',
-          'authorization': `Basic ${encodedKey}`
-        },
-        body: JSON.stringify({
-          data: {
-            attributes: {
-              send_email_receipt: true,
-              show_description: true,
-              show_line_items: true,
-              line_items: [{
-                  currency: 'PHP',
-                  amount: amount,
-                  description: description,
-                  name: description,
-                  quantity: 1
-              }],
-              payment_method_types: ['gcash', 'paymaya', 'card'],
-              description: 'Attachment Anywhere Order',
-              billing: { name: name, email: email, phone: phone }
-            }
+      const discordPayload = {
+        username: "Attachment HQ Dispatch",
+        avatar_url: "https://attachmentanywhere.com/brandbgrmv.png",
+        embeds: [
+          {
+            title: `💳 New Order Checkout Initiated: ${productName}`,
+            description: `A customer has proceeded to checkout. Payment session created.`,
+            color: 1226602, // Emerald/Green
+            fields: [
+              {
+                name: "Customer Details",
+                value: `**Name:** ${customer.name}\n**Phone:** ${customer.phone}\n**Address:** ${customer.address}`,
+                inline: false
+              },
+              {
+                name: "Order Breakdown",
+                value: `**Item:** ${productName} (${variant || "Standard"})\n**Qty:** ${quantity}\n**Subtotal:** ₱${(unitPrice * quantity).toLocaleString("en-US")}\n**Shipping:** ₱${shippingFee} (${shippingMethod})\n**Total Amount:** ₱${totalAmount.toLocaleString("en-US")}`,
+                inline: false
+              },
+              {
+                name: "Custom Hardware Specs",
+                value: customFieldsText.substring(0, 1000) || "Standard setup",
+                inline: false
+              }
+            ],
+            footer: {
+              text: `Attachment Anywhere Dispatch • System Daemon`
+            },
+            timestamp: new Date().toISOString()
           }
-        })
+        ]
       };
 
-      // 4. I-send sa PayMongo at Discord
-      try {
-        const response = await fetch('https://api.paymongo.com/v1/checkout_sessions', options);
-        const json = await response.json();
+      await fetch(ORDER_DISCORD_WEBHOOK, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(discordPayload)
+      });
+    } catch (discordErr) {
+      // Non-blocking: log error and proceed to checkout creation
+      console.error("Discord webhook dispatch error:", discordErr);
+    }
 
-        if (json.data && json.data.attributes && json.data.attributes.checkout_url) {
-          
-          // 🔥 BAGO MAG-REDIRECT, I-SEND SA DISCORD HQ 🔥
-          // Gumamit tayo ng .catch para kahit magloko ang Discord, tuloy pa rin ang bayad sa PayMongo
-          fetch(ORDER_DISCORD_WEBHOOK, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              content: `🚨 **NEW CHECKOUT INITIATED!** 🚨\n> **Product:** ${description}\n> **Customer:** ${name}\n> **Contact:** ${email} | ${phone}\n> **Amount:** ₱${amount/100}`
-            })
-          }).catch(err => console.error("Discord webhook failed:", err));
-
-          // JACKPOT! Redirect sa secure checkout page ni PayMongo
-          window.location.href = json.data.attributes.checkout_url;
-          
-        } else {
-          console.error("PayMongo Error:", json);
-          alert("May error sa payment gateway. I-check ang console.");
-          checkoutBtn.innerText = originalBtnText;
-          checkoutBtn.disabled = false;
-          checkoutBtn.classList.remove('opacity-50');
-        }
-      } catch (err) {
-        console.error("Fetch Error:", err);
-        alert("Internet connection error. Try again.");
-        checkoutBtn.innerText = originalBtnText;
-        checkoutBtn.disabled = false;
-        checkoutBtn.classList.remove('opacity-50');
+    // 3. COMPOSE PAYMONGO CHECKOUT SESSION
+    // Note: PayMongo calculates prices in centavos (PHP 1.00 = 100 centavos)
+    const lineItems = [
+      {
+        name: `${productName} (${variant || "Standard"})`,
+        amount: Math.round(Number(unitPrice) * 100),
+        currency: "PHP",
+        quantity: Number(quantity) || 1
       }
+    ];
+
+    // If shipping applies, add it as a dedicated line item
+    if (Number(shippingFee) > 0) {
+      lineItems.push({
+        name: `Shipping: ${shippingMethod || "Standard Delivery"}`,
+        amount: Math.round(Number(shippingFee) * 100),
+        currency: "PHP",
+        quantity: 1
+      });
+    }
+
+    const authHeader = Buffer.from(`${PAYMONGO_SECRET_KEY}:`).toString("base64");
+
+    const paymongoResponse = await fetch("https://api.paymongo.com/v1/checkout_sessions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Basic ${authHeader}`
+      },
+      body: JSON.stringify({
+        data: {
+          attributes: {
+            send_email_receipt: false,
+            show_description: true,
+            show_line_items: true,
+            description: `Order for ${customer.name} - ${productName}`,
+            payment_method_types: ["gcash", "paymaya", "card"],
+            line_items: lineItems,
+            reference_number: `AA-${Date.now().toString().slice(-6)}`
+          }
+        }
+      })
     });
+
+    const sessionData = await paymongoResponse.json();
+
+    if (!paymongoResponse.ok) {
+      console.error("PayMongo Session Error:", sessionData);
+      const errorMsg = sessionData.errors?.[0]?.detail || "Failed to create payment session with PayMongo.";
+      return {
+        statusCode: paymongoResponse.status,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ error: errorMsg })
+      };
+    }
+
+    const checkoutUrl = sessionData.data?.attributes?.checkout_url;
+
+    return {
+      statusCode: 200,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ checkoutUrl })
+    };
+
+  } catch (error) {
+    console.error("Internal Checkout Handler Error:", error);
+    return {
+      statusCode: 500,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ error: "Internal server error occurred." })
+    };
   }
-});
+};
