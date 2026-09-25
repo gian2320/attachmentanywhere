@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smippe // NFC Forge</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #f7f7f7; color: #111111; }
+    .font-mono { font-family: 'Space Mono', monospace; }
+    
+    /* Clean Input Reset for Light Mode */
+    input, select {
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+      transition: all 0.2s ease;
+      color: #000;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: #000000;
+      box-shadow: 0 0 0 1px #000000;
+    }
+  </style>
+</head>
+<body class="flex h-screen overflow-hidden selection:bg-black selection:text-white">
+
+  <!-- SIDEBAR (LIGHT MODE) -->
+  <aside class="w-64 bg-white border-r border-neutral-200 flex flex-col justify-between hidden md:flex z-20">
+    <div>
+      <div class="p-8 border-b border-neutral-200">
+        <h1 class="text-xl font-black uppercase tracking-tighter text-black">Meadhall<span class="text-neutral-400">.OS</span></h1>
+        <p class="text-[10px] font-mono text-neutral-400 tracking-[0.2em] mt-1 uppercase">Admin Access</p>
+      </div>
+      
+      <nav class="p-4 space-y-1 mt-4">
+        <!-- Inactive Links -->
+        <a href="aa-meadhall.html" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-neutral-500 hover:text-black hover:bg-neutral-50 rounded-lg transition-all">
+          Main Dashboard
+        </a>
+        <a href="hoard.html" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-neutral-500 hover:text-black hover:bg-neutral-50 rounded-lg transition-all">
+          Hoard (Inventory)
+        </a>
+        <a href="ceap.html" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-neutral-500 hover:text-black hover:bg-neutral-50 rounded-lg transition-all">
+          Ceap (Transactions)
+        </a>
+        
+        <!-- ACTIVE LINK: SMIPPE -->
+        <a href="smippe.html" class="relative flex items-center gap-3 px-4 py-3 text-sm font-bold text-black bg-neutral-100 rounded-lg transition-all">
+          <div class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-black rounded-r-md"></div>
+          Smippe (NFC Forge)
+        </a>
+        
+        <a href="lof.html" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-neutral-500 hover:text-black hover:bg-neutral-50 rounded-lg transition-all">
+          Lof (Reviews)
+        </a>
+        <a href="wordhord.html" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-neutral-500 hover:text-black hover:bg-neutral-50 rounded-lg transition-all">
+          Wordhord (Support)
+        </a>
+      </nav>
+    </div>
+
+    <!-- User / CEO Tag -->
+    <div class="p-6 border-t border-neutral-200 flex items-center gap-3">
+      <div class="w-8 h-8 rounded-full bg-black flex items-center justify-center text-white font-bold text-xs">G</div>
+      <div>
+        <p class="text-xs font-bold text-black uppercase tracking-wider">Gian</p>
+        <p class="text-[10px] text-neutral-400 font-mono">@g.attachmenz</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT AREA -->
+  <main class="flex-1 overflow-y-auto bg-[#f9fafb] p-8 md:p-12 relative">
+    
+    <!-- Header -->
+    <header class="mb-12 flex justify-between items-end">
+      <div>
+        <span class="text-xs font-mono tracking-[0.2em] text-neutral-400 uppercase mb-2 block">// MODULE: SMIPPE</span>
+        <h2 class="text-3xl font-bold text-black tracking-tight">NFC Tool Generator</h2>
+      </div>
+      <div class="hidden sm:block text-right">
+        <p class="text-[10px] font-mono text-neutral-400 uppercase">System Status</p>
+        <p class="text-sm font-bold text-green-600 flex items-center gap-2 justify-end">
+          <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Encoder Online
+        </p>
+      </div>
+    </header>
+
+    <!-- BENTO GRID LAYOUT -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- LEFT BOX: THE FORGE (Form) - Span 2 -->
+      <div class="lg:col-span-2 bg-white border border-neutral-200 p-8 rounded-2xl shadow-sm relative overflow-hidden">
+
+        <h3 class="text-lg font-bold text-black mb-6 flex items-center gap-2">
+          Hardware Configuration
+        </h3>
+
+        <form id="nfc-form" class="space-y-6 relative z-10" onsubmit="event.preventDefault(); forgeNFC();">
+          
+          <!-- Grid for inputs -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Client/Owner Name -->
+            <div class="flex flex-col gap-2">
+              <label class="text-[10px] font-mono text-neutral-500 uppercase tracking-widest">Profile Name</label>
+              <input type="text" id="clientName" required placeholder="e.g. John Doe / Badshot Coffee" 
+                     class="w-full text-sm text-black px-4 py-3 rounded-lg placeholder-neutral-300">
+            </div>
+
+            <!-- Hardware Type -->
+            <div class="flex flex-col gap-2">
+              <label class="text-[10px] font-mono text-neutral-500 uppercase tracking-widest">Hardware Type</label>
+              <select id="hardwareType" class="w-full text-sm text-black px-4 py-3 rounded-lg cursor-pointer">
+                <option value="AA-CARD">Premium Matte Card (NFC)</option>
+                <option value="AA-PATCH">Drop 001 Signature Patch</option>
+                <option value="AA-STAND">Cafe Counter Stand</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Target URL -->
+          <div class="flex flex-col gap-2">
+            <label class="text-[10px] font-mono text-neutral-500 uppercase tracking-widest">Destination URL</label>
+            <input type="url" id="targetUrl" required placeholder="https://attachmentanywhere.com/profile/..." 
+                   class="w-full text-sm text-black px-4 py-3 rounded-lg placeholder-neutral-300">
+            <p class="text-[10px] text-neutral-400 mt-1">This is where the NFC chip will redirect upon tap.</p>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" id="forgeBtn" class="w-full mt-4 bg-black text-white font-bold text-sm uppercase tracking-[0.15em] py-4 rounded-lg hover:bg-neutral-800 transition-all flex justify-center items-center gap-2 shadow-lg shadow-neutral-200">
+            <span>Forge New Profile</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+          </button>
+        </form>
+      </div>
+
+      <!-- RIGHT BOX: LIVE OUTPUT - Span 1 -->
+      <div class="bg-neutral-50 border border-neutral-200 p-8 rounded-2xl flex flex-col justify-between relative transition-colors">
+        
+        <div>
+          <h3 class="text-sm font-bold text-neutral-500 uppercase tracking-widest mb-8 border-b border-neutral-200 pb-4">Live Hardware Data</h3>
+          
+          <!-- Generated Serial -->
+          <div class="mb-6">
+            <p class="text-[10px] font-mono text-neutral-400 uppercase tracking-widest mb-1">Assigned Serial Code</p>
+            <p id="out-serial" class="font-mono text-2xl text-neutral-300 font-bold tracking-wider transition-colors">---- ---- ----</p>
+          </div>
+
+          <!-- Preview Details -->
+          <div class="space-y-4">
+            <div>
+              <p class="text-[10px] font-mono text-neutral-400 uppercase tracking-widest mb-1">Owner</p>
+              <p id="out-name" class="text-sm text-black font-medium truncate opacity-40">Awaiting input...</p>
+            </div>
+            <div>
+              <p class="text-[10px] font-mono text-neutral-400 uppercase tracking-widest mb-1">URL Target</p>
+              <p id="out-url" class="text-sm text-blue-600 font-medium truncate opacity-40">Awaiting input...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Status Indicator -->
+        <div id="write-status" class="mt-8 pt-4 border-t border-neutral-200 flex items-center justify-between opacity-50">
+          <span class="text-xs font-mono uppercase tracking-widest text-neutral-400">NFC Write Status</span>
+          <span class="text-xs font-bold text-neutral-500 bg-neutral-200 px-3 py-1 rounded-full">IDLE</span>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- THE JS MAGIC -->
+  <script>
+    function forgeNFC() {
+      const btn = document.getElementById('forgeBtn');
+      const name = document.getElementById('clientName').value;
+      const type = document.getElementById('hardwareType').value;
+      const url = document.getElementById('targetUrl').value;
+      
+      // UI State: Loading
+      btn.innerHTML = '<span class="animate-pulse">ENCODING DATA...</span>';
+      btn.classList.replace('bg-black', 'bg-neutral-300');
+      btn.classList.replace('text-white', 'text-neutral-500');
+      
+      // Simulate backend processing (1.5 seconds)
+      setTimeout(() => {
+        const randomHex = Math.random().toString(16).substr(2, 4).toUpperCase();
+        const serialCode = `${type}-${randomHex}`;
+        
+        // Update Output UI
+        const serialOut = document.getElementById('out-serial');
+        serialOut.innerText = serialCode;
+        serialOut.classList.replace('text-neutral-300', 'text-black'); // Changes to bold black
+        
+        const nameOut = document.getElementById('out-name');
+        nameOut.innerText = name;
+        nameOut.classList.remove('opacity-40');
+
+        const urlOut = document.getElementById('out-url');
+        urlOut.innerText = url;
+        urlOut.classList.remove('opacity-40');
+
+        // Update Status indicator
+        const statusBox = document.getElementById('write-status');
+        statusBox.classList.remove('opacity-50');
+        statusBox.innerHTML = `
+          <span class="text-xs font-mono uppercase tracking-widest text-neutral-500">NFC Write Status</span>
+          <span class="text-xs font-bold text-white bg-green-500 px-3 py-1 rounded-full shadow-md">READY TO TAP</span>
+        `;
+
+        // Revert Button
+        btn.innerHTML = `
+          <span>Forge Another Profile</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+        `;
+        btn.classList.replace('bg-neutral-300', 'bg-black');
+        btn.classList.replace('text-neutral-500', 'text-white');
+        
+        document.getElementById('nfc-form').reset();
+      }, 1500);
+    }
+  </script>
+
+</body>
+</html>
