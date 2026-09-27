@@ -28,7 +28,6 @@
         <div class="flex items-center gap-8">
           <a href="index.html" class="text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black transition-colors">Home</a>
           <a href="products.html" class="text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black transition-colors">Products</a>
-          <a href="story.html" class="text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black transition-colors">Story</a>
         </div>
         <button onclick="window.location.href='order.html'" class="bg-black text-white px-8 py-3 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] shadow-xl cursor-default">
           Order Now
@@ -47,7 +46,6 @@
     <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-neutral-200 px-6 py-6 flex flex-col gap-4">
       <a href="index.html" class="text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Home</a>
       <a href="products.html" class="text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Products</a>
-      <a href="story.html" class="text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Story</a>
       <a href="order.html" class="bg-black text-white text-center py-3 rounded-xl text-xs font-bold uppercase tracking-widest mt-2">Order Now</a>
     </div>
   </nav>
@@ -82,7 +80,7 @@
         <!-- PRODUCT & QUANTITY CONTROLS -->
         <div class="flex flex-col gap-4">
           <div>
-            <label class="block text-[10px] font-bold uppercase tracking-widest text-neutral-400 mb-2">Hardware Selection</label>
+            <label class="block text-[10px] font-bold uppercase tracking-widest text-neutral-400 mb-2">Smart Touchpoint Selection</label>
             <div class="relative">
               <select id="productSelect" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-2xl px-5 py-4 text-sm font-bold text-neutral-900 outline-none transition-colors appearance-none cursor-pointer">
                 <option value="executive" data-price="1200">Smart Executive Card (₱1,200)</option>
@@ -121,7 +119,7 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1">Full Name</label>
-              <input type="text" id="custName" required class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-xl px-4 py-3 text-sm text-neutral-900 outline-none transition-colors" placeholder="Gian Villanueva">
+              <input type="text" id="custName" required class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-xl px-4 py-3 text-sm text-neutral-900 outline-none transition-colors" placeholder="Attachment Anywhere Client">
             </div>
             <div>
               <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1">Phone Number</label>
@@ -200,6 +198,9 @@
 
       </form>
     </div>
+
+    <!-- IN-PAGE TOAST NOTIFICATION CONTAINER -->
+    <div id="toast-box" class="fixed bottom-6 right-6 z-[120] pointer-events-none flex flex-col gap-2"></div>
   </main>
 
   <!-- ================= UNIVERSAL FOOTER ================= -->
@@ -256,7 +257,7 @@
         </div>
         <div>
           <h4 class="font-bold text-white mb-1">How soon will my order ship?</h4>
-          <p>Hardware is pre-programmed, verified, and dispatched via courier within 24 to 48 hours of payment verification.</p>
+          <p>Each smart touchpoint is pre-programmed, verified, and dispatched via courier within 24 to 48 hours of payment verification.</p>
         </div>
       </div>
     </div>
@@ -303,6 +304,25 @@
         modal.classList.add('hidden');
         modal.classList.remove('flex');
       }
+    }
+
+    // In-app Toast Notification Container Helper (Zero browser alert calls)
+    function showToast(message, isSuccess = true) {
+      const box = document.getElementById('toast-box');
+      if (!box) return;
+      const toast = document.createElement('div');
+      toast.className = `px-4 py-3 rounded-2xl text-xs font-mono font-medium shadow-2xl border transition-all duration-300 transform translate-y-2 opacity-0 pointer-events-auto flex items-center gap-2 ${
+        isSuccess ? 'bg-black text-white border-neutral-700' : 'bg-red-950 text-red-200 border-red-800'
+      }`;
+      toast.innerHTML = `<span class="w-1.5 h-1.5 rounded-full ${isSuccess ? 'bg-emerald-400' : 'bg-red-400'}"></span> ${message}`;
+      box.appendChild(toast);
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      });
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
     }
 
     // 3. CART RETRIEVAL & PRICE CALCULATION
@@ -423,7 +443,7 @@
       const customerAddress = document.getElementById('custAddress').value.trim();
 
       if (!customerName || !customerPhone || !customerAddress) {
-        alert("Please provide your Full Name, Phone Number, and Complete Delivery Address.");
+        showToast("Please provide your Full Name, Phone Number, and Complete Delivery Address.", false);
         return;
       }
 
@@ -471,6 +491,45 @@
         customization: customDetails
       };
 
+      // Synchronize with Meadhall Operations Production Pipeline
+      try {
+        const storedOrders = JSON.parse(localStorage.getItem('attachment_meadhall_orders') || '[]');
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const refId = 'AA-' + Math.floor(100000 + Math.random() * 900000);
+        const yy = String(now.getFullYear()).slice(-2);
+        const mm = String(now.getMonth() + 1).padStart(2, '0');
+        const dd = String(now.getDate()).padStart(2, '0');
+        const randomPart = Math.floor(100000 + Math.random() * 900000);
+        const autoSerial = `${yy}${mm}${dd}${randomPart}`;
+        const targetRoute = `https://attachmentanywhere.com/c/${autoSerial}`;
+
+        const meadhallOrder = {
+          ref: refId,
+          date: `Today, ${timeStr}`,
+          customer: {
+            name: customerName,
+            phone: customerPhone,
+            address: customerAddress
+          },
+          product: orderPayload.productName,
+          variant: currentVariant,
+          qty: currentQty,
+          total: totalAmount,
+          shipping: `${selectedShipping.text} (+₱${shippingFee})`,
+          status: "Pending",
+          specs: {
+            ...customDetails,
+            targetUrl: targetRoute
+          }
+        };
+
+        storedOrders.unshift(meadhallOrder);
+        localStorage.setItem('attachment_meadhall_orders', JSON.stringify(storedOrders));
+      } catch (e) {
+        console.warn('Could not mirror order to Meadhall local storage:', e);
+      }
+
       paymongoBtnText.innerText = "Securing Checkout Gateway...";
       paymongoBtn.classList.add("opacity-70", "cursor-not-allowed");
       paymongoBtn.disabled = true;
@@ -488,42 +547,47 @@
           localStorage.removeItem('attachment_cart');
           window.location.href = data.checkoutUrl;
         } else {
-          alert(`Checkout failed: ${data.error || 'Please try again.'}`);
+          showToast(`Checkout failed: ${data.error || 'Please try again.'}`, false);
           paymongoBtnText.innerText = "Proceed to PayMongo";
           paymongoBtn.classList.remove("opacity-70", "cursor-not-allowed");
           paymongoBtn.disabled = false;
         }
       } catch (error) {
         console.error("PayMongo Error:", error);
-        alert("Something went wrong establishing payment link. Please check Netlify configuration.");
+        showToast("Something went wrong establishing payment link. Please check Netlify configuration.", false);
         paymongoBtnText.innerText = "Proceed to PayMongo";
         paymongoBtn.classList.remove("opacity-70", "cursor-not-allowed");
         paymongoBtn.disabled = false;
       }
     });
 
-    // 5. DISCORD FEEDBACK WEBHOOK
+    // 5. FEEDBACK HANDLER (Secure Serverless Route)
     const sendHqBtn = document.getElementById('send-hq-btn');
     const feedbackText = document.getElementById('feedback-text');
-    const FEEDBACK_DISCORD_WEBHOOK = 'https://discordapp.com/api/webhooks/1546951637086765127/M1OwcHGy82fSzta3WRHvQ4nKmGKQ7CVxsxilgKFAfbN66ser7rEDqjt8bBhtriuW9hVb';
 
     if(sendHqBtn) {
       sendHqBtn.addEventListener('click', async () => {
         const message = feedbackText.value.trim();
-        if (!message) { alert("Please input a message before transmitting."); return; }
+        if (!message) {
+          feedbackText.classList.add('border-red-500');
+          feedbackText.placeholder = 'Please enter your message before sending...';
+          feedbackText.focus();
+          return;
+        }
+        feedbackText.classList.remove('border-red-500');
 
         const originalText = sendHqBtn.innerText;
         sendHqBtn.innerText = "Transmitting to HQ...";
         sendHqBtn.classList.add('opacity-70', 'cursor-not-allowed');
 
         try {
-          await fetch(FEEDBACK_DISCORD_WEBHOOK, {
+          const res = await fetch('/.netlify/functions/send-feedback', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              content: `🛠️ **SYSTEM FEEDBACK / BUG REPORT** 🛠️\n> **Message:** ${message}\n> **Timestamp:** ${new Date().toLocaleString()}`
-            })
+            body: JSON.stringify({ message: message, page: 'Order Checkout' })
           });
+
+          if (!res.ok) throw new Error('Gateway response error');
           
           feedbackText.value = '';
           sendHqBtn.innerText = "Transmitted. Daemon is on it.";

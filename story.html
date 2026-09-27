@@ -249,18 +249,26 @@
     if(sendHqBtn) {
       sendHqBtn.addEventListener('click', async () => {
         const message = feedbackText.value.trim();
-        if (!message) { alert("Please input a message before transmitting."); return; }
+        if (!message) {
+          feedbackText.classList.add('border-red-500');
+          feedbackText.placeholder = 'Please enter your message before transmitting...';
+          feedbackText.focus();
+          return;
+        }
+        feedbackText.classList.remove('border-red-500');
 
         const originalText = sendHqBtn.innerText;
         sendHqBtn.innerText = "Transmitting to HQ...";
         sendHqBtn.classList.add('opacity-70', 'cursor-not-allowed');
 
         try {
-          await fetch('/.netlify/functions/send-feedback', {
+          const res = await fetch('/.netlify/functions/send-feedback', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: message })
+            body: JSON.stringify({ message: message, page: 'Brand Story' })
           });
+
+          if (!res.ok) throw new Error('Gateway response error');
           
           feedbackText.value = '';
           sendHqBtn.innerText = "Transmitted. Daemon is on it.";

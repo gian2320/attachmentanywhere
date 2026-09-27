@@ -80,8 +80,7 @@
       <div class="hidden md:flex items-center gap-10">
         <div class="flex items-center gap-8">
           <a href="index.html" class="text-sm font-bold uppercase tracking-widest text-black border-b-2 border-black pb-1">Home</a>
-          <a href="products.html" class="text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black transition-colors">Products</a>
-          <a href="story.html" class="text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black transition-colors">Story</a>
+          <a href="#products" class="text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black transition-colors">Products</a>
         </div>
         <button onclick="window.location.href='order.html'" class="bg-black text-white px-8 py-3 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] hover:scale-105 hover:bg-neutral-800 transition-all shadow-xl cursor-pointer">
           Order Now
@@ -99,8 +98,7 @@
     <!-- Mobile Menu Dropdown -->
     <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-neutral-200 px-6 py-6 flex flex-col gap-4">
       <a href="index.html" class="text-xs font-bold uppercase tracking-widest text-black">Home</a>
-      <a href="products.html" class="text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Products</a>
-      <a href="story.html" class="text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Story</a>
+      <a href="#products" class="text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Products</a>
       <a href="order.html" class="bg-black text-white text-center py-3 rounded-xl text-xs font-bold uppercase tracking-widest mt-2">Order Now</a>
     </div>
   </nav>
@@ -137,39 +135,44 @@
   </section>
 
   <!-- ================= CLIENT LOGO TICKER SECTION ================= -->
-  <section class="w-full bg-white py-12 md:py-16 relative overflow-hidden border-y border-neutral-200">
-    <p class="text-center text-[10px] font-mono tracking-[0.2em] uppercase text-neutral-400 mb-8">
+  <section class="w-full bg-[#0c0c0e] py-12 md:py-16 relative overflow-hidden border-y border-neutral-800">
+    <p class="text-center font-mono text-[10px] tracking-[0.25em] uppercase text-neutral-400 mb-8">
       Trusted By Local Businesses & Professionals
     </p>
 
     <!-- Side Gradient Fades -->
-    <div class="absolute inset-y-0 left-0 w-20 md:w-40 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-    <div class="absolute inset-y-0 right-0 w-20 md:w-40 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+    <div class="absolute inset-y-0 left-0 w-20 md:w-40 bg-gradient-to-r from-[#0c0c0e] to-transparent z-10 pointer-events-none"></div>
+    <div class="absolute inset-y-0 right-0 w-20 md:w-40 bg-gradient-to-l from-[#0c0c0e] to-transparent z-10 pointer-events-none"></div>
 
     <!-- Auto-Scrolling Logo Container -->
     <div class="flex overflow-hidden w-full">
       <div class="animate-logos flex items-center gap-16 md:gap-32 px-8">
         <!-- Set 1 -->
-        <h3 class="font-black text-xl md:text-2xl tracking-tighter text-neutral-300 uppercase whitespace-nowrap">Sushi Maki Rolls</h3>
-        <h3 class="font-black text-xl md:text-2xl tracking-tighter text-neutral-300 uppercase whitespace-nowrap">Mama Bean Coffee Club</h3>
-        <h3 class="font-black text-xl md:text-2xl tracking-tighter text-neutral-300 uppercase whitespace-nowrap">DYKTJ Auto Supply</h3>
+        <h3 class="font-black text-xl md:text-2xl tracking-tighter text-white/80 uppercase whitespace-nowrap">Sushi Maki Rolls</h3>
+        <h3 class="font-black text-xl md:text-2xl tracking-tighter text-white/80 uppercase whitespace-nowrap">Mama Bean Coffee Club</h3>
+        <h3 class="font-black text-xl md:text-2xl tracking-tighter text-white/80 uppercase whitespace-nowrap">DYKTJ Auto Supply</h3>
         <!-- Set 2 (Duplicate for Seamless Loop) -->
-        <h3 class="font-black text-xl md:text-2xl tracking-tighter text-neutral-300 uppercase whitespace-nowrap">Sushi Maki Rolls</h3>
-        <h3 class="font-black text-xl md:text-2xl tracking-tighter text-neutral-300 uppercase whitespace-nowrap">Mama Bean Coffee Club</h3>
-        <h3 class="font-black text-xl md:text-2xl tracking-tighter text-neutral-300 uppercase whitespace-nowrap">DYKTJ Auto Supply</h3>
+        <h3 class="font-black text-xl md:text-2xl tracking-tighter text-white/80 uppercase whitespace-nowrap">Sushi Maki Rolls</h3>
+        <h3 class="font-black text-xl md:text-2xl tracking-tighter text-white/80 uppercase whitespace-nowrap">Mama Bean Coffee Club</h3>
+        <h3 class="font-black text-xl md:text-2xl tracking-tighter text-white/80 uppercase whitespace-nowrap">DYKTJ Auto Supply</h3>
       </div>
     </div>
   </section>
 
-  <!-- ================= CATALOG GALLERY SECTION ================= -->
-  <section id="catalog" class="w-full bg-[#f4f4f5] py-20 md:py-28 overflow-hidden">
+  <!-- ================= BRAND STORY SECTION ================= -->
+  <section id="story" class="w-full bg-[#f4f4f5]">
     
-    <div class="max-w-7xl mx-auto px-6 md:px-12 mb-12 text-center">
-      <h2 class="text-3xl sm:text-5xl md:text-6xl font-black tracking-tighter leading-tight text-neutral-900">
-        ONE TAP.<br>ENDLESS POSSIBILITIES.
-      </h2>
-      <p class="text-neutral-500 text-sm mt-3">Tap any product to customize your configuration.</p>
-    </div>
+    <!-- Hero Manifesto -->
+    <header class="text-center mb-20 pt-16 md:pt-20 px-6">
+      <h1 class="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-black mb-6 uppercase">
+        BUILT TO BE ICONIC
+      </h1>
+      <p class="text-neutral-500 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed font-light">
+        We built Attachment Anywhere to do exactly what it says. Our goal is to produce smart, premium products that can be placed in any environment. We design iconic touchpoints meant to be attached anywhere, making sure you always stand out.
+      </p>
+    </header>
+
+  </section>
 
     <!-- Auto-Scrolling Card Gallery -->
     <div class="relative w-full flex overflow-hidden">
@@ -250,6 +253,53 @@
             </div>
           </div>
           <h3 class="text-xl font-bold tracking-tight px-2 text-neutral-900">Business Smart Hub</h3>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= UN SDG SUSTAINABILITY SECTION ================= -->
+  <section id="sustainability" class="w-full bg-[#f4f4f5] py-20 md:py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-black mb-4 uppercase">
+          Sustainable Development.
+        </h2>
+        <p class="text-neutral-500 max-w-2xl mx-auto text-base sm:text-lg font-light">
+          We believe modern brands can scale responsibly. Our ecosystem aligns with the United Nations SDGs to build a smarter, more sustainable way to connect.
+        </p>
+      </div>
+
+      <!-- SDG Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+        
+        <!-- Card 09: Industry & Innovation -->
+        <div class="bg-white p-8 sm:p-10 rounded-3xl border border-neutral-200 hover:border-black transition-colors duration-300 shadow-sm">
+          <span class="text-xs font-mono tracking-widest text-neutral-400 mb-3 block uppercase">SDG // 09</span>
+          <h3 class="text-lg font-bold mb-3 text-black">Industry & Innovation</h3>
+          <p class="text-neutral-500 text-sm leading-relaxed font-light">
+            Smart infrastructure. We build seamless digital touchpoints that modernize how professionals and local businesses share their identity, pushing networking into the future.
+          </p>
+        </div>
+
+        <!-- Card 12: Responsible Consumption -->
+        <div class="bg-white p-8 sm:p-10 rounded-3xl border border-neutral-200 hover:border-black transition-colors duration-300 shadow-sm">
+          <span class="text-xs font-mono tracking-widest text-neutral-400 mb-3 block uppercase">SDG // 12</span>
+          <h3 class="text-lg font-bold mb-3 text-black">Responsible Consumption</h3>
+          <p class="text-neutral-500 text-sm leading-relaxed font-light">
+            Built to last. One premium Attachment Anywhere piece is designed for a lifetime of taps, offering a highly durable alternative to single-use printed materials.
+          </p>
+        </div>
+
+        <!-- Card 13: Climate Action -->
+        <div class="bg-white p-8 sm:p-10 rounded-3xl border border-neutral-200 hover:border-black transition-colors duration-300 shadow-sm">
+          <span class="text-xs font-mono tracking-widest text-neutral-400 mb-3 block uppercase">SDG // 13</span>
+          <h3 class="text-lg font-bold mb-3 text-black">Climate Action</h3>
+          <p class="text-neutral-500 text-sm leading-relaxed font-light">
+            Greener connections. By transitioning to digital-first hardware, we help individuals and businesses naturally reduce their reliance on bulk printing and physical waste.
+          </p>
         </div>
 
       </div>

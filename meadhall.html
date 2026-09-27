@@ -1,0 +1,1910 @@
+/<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meadhall | Attachment Anywhere Operations</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Mobile PWA Standalone Meta Tags (iOS & Android Home Screen Web App) -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Meadhall HQ">
+  <meta name="theme-color" content="#0c0c0e">
+  <link rel="apple-touch-icon" href="brandbgrmv.png">
+  
+  <!-- Standalone Web App Manifest Data URI -->
+  <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Meadhall%20HQ%22%2C%22short_name%22%3A%22Meadhall%22%2C%22start_url%22%3A%22.%2Fmeadhall.html%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230c0c0e%22%2C%22theme_color%22%3A%22%230c0c0e%22%7D">
+  
+  <!-- Client-side QR Code Engine for Instant Mobile Dual-Read & iPhone Camera Verification -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    ::-webkit-scrollbar { display: none; }
+    details > summary { list-style: none; }
+    details > summary::-webkit-details-marker { display: none; }
+    .fade-in { animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes radarPulse {
+      0% { transform: scale(0.9); opacity: 0.9; }
+      50% { transform: scale(1.3); opacity: 0.3; }
+      100% { transform: scale(1.6); opacity: 0; }
+    }
+    .radar-ring {
+      animation: radarPulse 2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+    }
+  </style>
+</head>
+<body class="bg-[#f4f4f5] text-black font-sans antialiased selection:bg-black selection:text-white flex flex-col min-h-screen">
+
+  <!-- ================= DIRECT USERNAME & PASSCODE FOUNDER GATE ================= -->
+  <div id="auth-gate" class="fixed inset-0 z-[100] bg-[#0c0c0e] flex items-center justify-center p-4">
+    <div class="max-w-md w-full bg-[#151518] border border-neutral-800 rounded-3xl p-8 sm:p-10 shadow-2xl text-white relative">
+      <div class="flex items-center justify-between mb-8">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-white text-black font-black flex items-center justify-center text-xl tracking-tighter">
+            @
+          </div>
+          <div>
+            <span class="text-[10px] font-mono tracking-[0.25em] uppercase text-neutral-400 block">Restricted Environment</span>
+            <span class="text-sm font-black tracking-wider uppercase text-white">Meadhall Terminal Gate</span>
+          </div>
+        </div>
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+      </div>
+
+      <div class="space-y-6">
+        <div>
+          <p class="text-xs text-neutral-300 leading-relaxed">
+            Direct operator authentication. Sign in with your founder credentials to access the mobile NFC bench, serial registry, and hardware telemetry.
+          </p>
+        </div>
+
+        <form id="founder-login-form" onsubmit="handleDirectAuth(event)" class="space-y-4">
+          <div>
+            <label class="block text-[10px] font-mono uppercase tracking-widest text-neutral-400 mb-1.5">Operator Handle</label>
+            <input type="text" id="auth-username" required placeholder="aa.founder" autocomplete="username" class="w-full bg-[#1f1f24] border border-neutral-700/60 focus:border-white rounded-xl px-4 py-3.5 text-xs font-mono text-white outline-none transition-colors">
+          </div>
+
+          <div>
+            <label class="block text-[10px] font-mono uppercase tracking-widest text-neutral-400 mb-1.5">Passcode</label>
+            <input type="password" id="auth-password" required placeholder="••••••••••••" autocomplete="current-password" class="w-full bg-[#1f1f24] border border-neutral-700/60 focus:border-white rounded-xl px-4 py-3.5 text-xs font-mono text-white outline-none transition-colors">
+          </div>
+
+          <div class="flex items-center justify-between text-[11px] text-neutral-400 pt-1">
+            <label class="flex items-center gap-2 cursor-pointer select-none">
+              <input type="checkbox" id="auth-remember" checked class="rounded bg-[#1f1f24] border-neutral-700 text-white focus:ring-0">
+              <span>Stay signed in on this phone</span>
+            </label>
+            <span class="text-[10px] font-mono text-neutral-500">v3.4-Mobile</span>
+          </div>
+
+          <button type="submit" class="w-full bg-white text-black text-xs font-bold uppercase tracking-[0.2em] py-4 rounded-xl hover:bg-neutral-200 transition-all cursor-pointer shadow-lg active:scale-[0.99]">
+            Authorize Access &rarr;
+          </button>
+        </form>
+
+        <div id="auth-error-msg" class="hidden text-[11px] font-mono text-red-400 bg-red-950/40 border border-red-800/40 rounded-xl px-3 py-2.5">
+          Access Denied. Invalid operator handle or passcode.
+        </div>
+      </div>
+
+      <div class="border-t border-neutral-800/60 mt-6 pt-4 flex items-center justify-between text-[10px] font-mono text-neutral-500">
+        <span>Attachment Anywhere // Internal</span>
+        <span class="text-neutral-400">iOS & Android Standalone</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= UNIVERSAL NAVIGATION BAR ================= -->
+  <nav class="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 transition-all">
+    <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-10 md:h-20 w-auto object-contain" />
+        <span class="hidden sm:inline-block font-mono text-[10px] tracking-[0.25em] uppercase text-neutral-400 border-l border-neutral-300 pl-3">Meadhall HQ</span>
+      </a>
+      
+      <!-- Desktop Navigation Links & Operator Profile -->
+      <div class="hidden md:flex items-center gap-8">
+        <div class="flex items-center gap-6">
+          <a href="index.html" class="text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black transition-colors">Home</a>
+          <a href="products.html" class="text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black transition-colors">Products</a>
+          <a href="order.html" class="text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black transition-colors">Customer View</a>
+        </div>
+
+        <div class="flex items-center gap-3 pl-4 border-l border-neutral-200">
+          <div class="border border-neutral-300 bg-white text-neutral-800 px-3.5 py-2 rounded-full text-[10px] font-mono uppercase tracking-wider flex items-center gap-2 select-none shadow-sm">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            <span id="active-user-display">aa.founder</span>
+          </div>
+
+          <button onclick="lockFounderGate()" title="Lock Session" class="p-2 border border-neutral-300 hover:border-black rounded-full hover:bg-black hover:text-white transition-all cursor-pointer">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button id="mobile-menu-btn" class="md:hidden flex flex-col items-end gap-1.5 p-2 focus:outline-none cursor-pointer" aria-label="Toggle Menu">
+        <span class="w-6 h-0.5 bg-black rounded-full transition-transform"></span>
+        <span class="w-5 h-0.5 bg-black rounded-full transition-opacity"></span>
+        <span class="w-6 h-0.5 bg-black rounded-full transition-transform"></span>
+      </button>
+    </div>
+
+    <!-- Mobile Menu Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-neutral-200 px-6 py-6 flex flex-col gap-4">
+      <a href="index.html" class="text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Home</a>
+      <a href="products.html" class="text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Products</a>
+      <a href="order.html" class="text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Customer Order</a>
+      <div class="border-t border-neutral-200 pt-3 flex items-center justify-between">
+        <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Operator: aa.founder</span>
+        <button onclick="lockFounderGate()" class="text-xs font-bold uppercase text-red-600 tracking-wider">Lock Session</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="pt-24"></div> <!-- Header spacing -->
+
+  <!-- ================= MEADHALL OPERATIONS SUITE ================= -->
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-10">
+
+    <!-- SUB-HEADER: OPERATIONS STATUS BAR -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-neutral-300">
+      <div>
+        <div class="flex items-center gap-2 mb-1">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="text-[10px] font-mono uppercase tracking-[0.25em] text-neutral-500">Attachment Anywhere // Operations Command</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-neutral-900 uppercase">Meadhall Studio</h1>
+        <p class="text-xs text-neutral-500 mt-1">Native Web NFC encoder, serial lifecycle registry, and automated payload audit logs.</p>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2.5">
+        <button onclick="runSystemAudit()" class="border border-neutral-300 bg-white hover:border-black text-neutral-900 text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-xl transition-all cursor-pointer shadow-sm flex items-center gap-2">
+          <span id="audit-indicator" class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          Run System Audit
+        </button>
+        <button onclick="openSerialModal()" class="bg-black text-white text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-xl hover:bg-neutral-800 transition-all cursor-pointer shadow-sm flex items-center gap-2">
+          <span>+</span> New Serial Code
+        </button>
+        <button onclick="exportSerialRegistryCSV()" class="border border-neutral-300 bg-white hover:border-black text-neutral-800 text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-xl transition-all cursor-pointer shadow-sm">
+          Export Serials CSV
+        </button>
+      </div>
+    </div>
+
+    <!-- 1. OPERATIONAL TELEMETRY & AUDIT METRICS -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      
+      <div class="bg-white border border-neutral-200 p-6 rounded-3xl shadow-sm flex flex-col justify-between">
+        <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Gross Realized Value</span>
+        <div class="mt-4 flex items-baseline justify-between">
+          <span id="stat-revenue" class="text-3xl font-black tracking-tight text-neutral-900">₱0.00</span>
+          <span class="text-[11px] font-mono text-emerald-600 font-bold">100% Realized</span>
+        </div>
+      </div>
+
+      <div class="bg-white border border-neutral-200 p-6 rounded-3xl shadow-sm flex flex-col justify-between">
+        <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Registered Serial Codes</span>
+        <div class="mt-4 flex items-baseline justify-between">
+          <span id="stat-serials" class="text-3xl font-black tracking-tight text-neutral-900">0</span>
+          <span class="text-[11px] font-mono text-neutral-500">NFC Directory</span>
+        </div>
+      </div>
+
+      <div class="bg-white border border-neutral-200 p-6 rounded-3xl shadow-sm flex flex-col justify-between">
+        <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Hardware Audit Health</span>
+        <div class="mt-4 flex items-baseline justify-between">
+          <span id="stat-health" class="text-3xl font-black tracking-tight text-emerald-600">100%</span>
+          <span id="stat-health-label" class="text-[11px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md font-medium">0 Errors</span>
+        </div>
+      </div>
+
+      <div class="bg-white border border-neutral-200 p-6 rounded-3xl shadow-sm flex flex-col justify-between">
+        <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Awaiting Native Write</span>
+        <div class="mt-4 flex items-baseline justify-between">
+          <span id="stat-pending" class="text-3xl font-black tracking-tight text-amber-600">0</span>
+          <span class="text-[11px] font-mono text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md font-medium">To Program</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 2. MOBILE-NATIVE NFC BENCH & CHIP WRITER (ANDROID + IPHONE WORKFLOW) -->
+    <section class="bg-white border border-neutral-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-neutral-100 pb-5">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <h2 class="text-base font-black uppercase tracking-wider text-neutral-900">Mobile NFC Provisioning Suite</h2>
+          </div>
+          <p class="text-xs text-neutral-500 mt-1">
+            Engineered for physical hardware programming on both <strong>Android</strong> (Web NFC direct tap) and <strong>iPhone</strong> (Apple Shortcuts native automation & camera QR verification).
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <span id="platform-badge" class="px-3 py-1.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-neutral-100 text-neutral-700">
+            Detecting Mobile Device...
+          </span>
+          <button onclick="openIosShortcutGuide()" class="border border-neutral-300 hover:border-black text-neutral-700 text-[10px] font-mono uppercase px-3 py-1.5 rounded-full cursor-pointer transition-colors">
+            iPhone Guide
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- Left: URL Input & Actions -->
+        <div class="lg:col-span-8 space-y-4">
+          <div>
+            <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1.5">Target Destination Route / Direct URL</label>
+            <textarea id="encoder-input" rows="3" placeholder="https://attachmentanywhere.com/c/260906052304" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-2xl p-4 text-xs font-mono text-neutral-900 outline-none transition-colors resize-none"></textarea>
+          </div>
+
+          <!-- Cross-platform Action Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+            <button onclick="triggerNativeNfcWrite()" class="bg-black text-white text-xs font-bold uppercase tracking-wider py-3.5 rounded-xl hover:bg-neutral-800 transition-all cursor-pointer shadow-md flex items-center justify-center gap-2">
+              <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+              <span>Android Web NFC</span>
+            </button>
+            <button onclick="triggerIosShortcutWrite()" class="border border-neutral-300 hover:border-black bg-white text-neutral-900 text-xs font-bold uppercase tracking-wider py-3.5 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2 shadow-sm">
+              <svg class="w-4 h-4 text-neutral-800" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.65-.8 1.1-1.91.98-3.03-1 .04-2.17.67-2.85 1.47-.6.7-1.12 1.83-.98 2.92 1.11.09 2.2-.56 2.85-1.36z"/></svg>
+              <span>iPhone 1-Tap</span>
+            </button>
+            <button onclick="openQrPreview()" class="border border-neutral-300 hover:border-black text-neutral-800 text-xs font-bold uppercase tracking-wider py-3.5 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
+              <span>QR Verify</span>
+            </button>
+            <button onclick="copyFormattedNDEF()" class="border border-neutral-300 hover:border-black text-neutral-800 text-xs font-bold uppercase tracking-wider py-3.5 rounded-xl transition-all cursor-pointer">
+              Copy URL
+            </button>
+          </div>
+
+          <!-- Mobile Quick Tip -->
+          <div class="p-3 bg-neutral-50 rounded-xl border border-neutral-200/60 text-[11px] text-neutral-600 flex items-center justify-between">
+            <span class="font-mono">Tip: On iPhone or Android, tap "Share" &rarr; "Add to Home Screen" to install Meadhall as a standalone native app.</span>
+          </div>
+        </div>
+
+        <!-- Right: Real-time Payload & Memory Footprint -->
+        <div class="lg:col-span-4 bg-[#f4f4f5] p-5 rounded-2xl border border-neutral-200/60 space-y-3">
+          <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block">NDEF Record Diagnostics</span>
+
+          <div class="flex items-baseline justify-between text-xs">
+            <span class="text-neutral-500">Record Type:</span>
+            <span class="font-mono font-bold text-neutral-900">URI (W-Record)</span>
+          </div>
+
+          <div class="flex items-baseline justify-between text-xs">
+            <span class="text-neutral-500">Payload Size:</span>
+            <span id="payload-bytes" class="font-mono font-bold text-neutral-900">0 bytes</span>
+          </div>
+
+          <div class="flex items-baseline justify-between text-xs border-t border-neutral-200/60 pt-2">
+            <span class="text-neutral-500">NTAG Compatibility:</span>
+            <span id="chip-fit" class="font-mono font-bold text-emerald-600">Fits NTAG213 (144B)</span>
+          </div>
+
+          <div class="flex items-baseline justify-between text-xs border-t border-neutral-200/60 pt-2">
+            <span class="text-neutral-500">SSL Security:</span>
+            <span id="ssl-status" class="font-mono font-bold text-neutral-400">Pending URL</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 3. SERIAL CODES DIRECTORY -->
+    <section class="bg-white border border-neutral-200 rounded-3xl shadow-sm overflow-hidden flex flex-col">
+      <div class="p-6 border-b border-neutral-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+            <h2 class="text-base font-black uppercase tracking-wider text-neutral-900">NFC Serial Code Directory</h2>
+          </div>
+          <p class="text-xs text-neutral-500 mt-0.5">Template format: <code class="font-mono bg-neutral-100 px-1 py-0.5 rounded text-neutral-800">YYMMDD + 6 digits</code> mapped to direct customer routes.</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <input type="text" id="serial-search" oninput="renderSerialTable()" placeholder="Search serial, client, brand..." class="bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-xl px-3.5 py-2 text-xs text-neutral-900 outline-none w-56">
+          <button onclick="openSerialModal()" class="bg-black text-white text-xs font-bold uppercase tracking-wider px-3.5 py-2 rounded-xl hover:bg-neutral-800 transition-all cursor-pointer">
+            + Add Code
+          </button>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs">
+          <thead class="bg-[#fafafa] text-[10px] font-mono uppercase tracking-widest text-neutral-400 border-b border-neutral-100">
+            <tr>
+              <th class="py-4 px-6">Serial Code</th>
+              <th class="py-4 px-6">Client Name</th>
+              <th class="py-4 px-6">Brand / Enterprise</th>
+              <th class="py-4 px-6">Direct Routing URL</th>
+              <th class="py-4 px-6">Audit Status</th>
+              <th class="py-4 px-6 text-right">Bench Actions</th>
+            </tr>
+          </thead>
+          <tbody id="serials-table-body" class="divide-y divide-neutral-100 font-sans">
+            <!-- Dynamically populated rows -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 4. DUAL SECTION: ORDERS PIPELINE & AUDIT LOGS -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- LEFT: PRODUCTION DISPATCH PIPELINE (7 COLS) -->
+      <section class="lg:col-span-7 bg-white border border-neutral-200 rounded-3xl shadow-sm overflow-hidden flex flex-col">
+        <div class="p-6 border-b border-neutral-100 flex flex-col gap-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <h2 class="text-base font-black uppercase tracking-wider text-neutral-900">Production Dispatch Pipeline</h2>
+              </div>
+              <p class="text-xs text-neutral-500 mt-0.5">Real-time status tracking for hardware fulfillment.</p>
+            </div>
+
+            <div class="flex items-center gap-2 flex-wrap">
+              <button onclick="exportOrdersCSV()" class="border border-neutral-300 hover:border-black text-neutral-700 text-xs font-bold uppercase tracking-wider px-3 py-2 rounded-xl transition-all cursor-pointer flex items-center gap-1.5 shadow-sm" title="Export Orders to CSV">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                <span>CSV</span>
+              </button>
+              <button onclick="openOrderModal()" class="bg-black text-white text-xs font-bold uppercase tracking-wider px-3.5 py-2 rounded-xl hover:bg-neutral-800 transition-all cursor-pointer flex items-center gap-1.5 shadow-sm">
+                <span>+</span> Add Order
+              </button>
+            </div>
+          </div>
+
+          <!-- Status Filters & Search Bar -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-neutral-100">
+            <div class="flex items-center bg-[#f4f4f5] p-1 rounded-xl gap-1 overflow-x-auto">
+              <button onclick="setFilter('all')" class="filter-tab px-3 py-1.5 text-xs font-bold rounded-lg transition-all bg-white text-black shadow-sm flex items-center gap-1.5 whitespace-nowrap" data-filter="all">
+                <span>All</span>
+                <span id="count-all" class="text-[10px] font-mono px-1.5 py-0.2 bg-neutral-200 text-neutral-800 rounded-full font-bold">0</span>
+              </button>
+              <button onclick="setFilter('Pending')" class="filter-tab px-3 py-1.5 text-xs font-bold rounded-lg transition-all text-neutral-500 hover:text-black flex items-center gap-1.5 whitespace-nowrap" data-filter="Pending">
+                <span>To Encode</span>
+                <span id="count-pending" class="text-[10px] font-mono px-1.5 py-0.2 bg-amber-100 text-amber-800 rounded-full font-bold">0</span>
+              </button>
+              <button onclick="setFilter('Encoded')" class="filter-tab px-3 py-1.5 text-xs font-bold rounded-lg transition-all text-neutral-500 hover:text-black flex items-center gap-1.5 whitespace-nowrap" data-filter="Encoded">
+                <span>To Ship</span>
+                <span id="count-encoded" class="text-[10px] font-mono px-1.5 py-0.2 bg-sky-100 text-sky-800 rounded-full font-bold">0</span>
+              </button>
+              <button onclick="setFilter('Dispatched')" class="filter-tab px-3 py-1.5 text-xs font-bold rounded-lg transition-all text-neutral-500 hover:text-black flex items-center gap-1.5 whitespace-nowrap" data-filter="Dispatched">
+                <span>Dispatched</span>
+                <span id="count-dispatched" class="text-[10px] font-mono px-1.5 py-0.2 bg-neutral-200 text-neutral-700 rounded-full font-bold">0</span>
+              </button>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <input type="text" id="order-search" oninput="renderMeadhall()" placeholder="Search order, client, ref..." class="bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-xl px-3.5 py-1.5 text-xs text-neutral-900 outline-none w-full sm:w-48">
+              <button onclick="resetDemoOrders()" title="Restore Sample Demo Orders" class="text-neutral-400 hover:text-black text-xs font-mono p-1.5 rounded-lg border border-neutral-200 hover:border-neutral-400 cursor-pointer transition-colors">
+                ↻
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-[#fafafa] text-[10px] font-mono uppercase tracking-widest text-neutral-400 border-b border-neutral-100">
+              <tr>
+                <th class="py-4 px-6">Reference</th>
+                <th class="py-4 px-6">Customer</th>
+                <th class="py-4 px-6">Hardware</th>
+                <th class="py-4 px-6">Status</th>
+                <th class="py-4 px-6 text-right">Fulfillment Actions</th>
+              </tr>
+            </thead>
+            <tbody id="orders-table-body" class="divide-y divide-neutral-100 font-sans">
+              <!-- Dynamically populated rows -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- RIGHT: LIVE AUDIT & PROBLEM DETECTOR LOG (5 COLS) -->
+      <section class="lg:col-span-5 bg-white border border-neutral-200 rounded-3xl p-6 sm:p-7 shadow-sm space-y-5">
+        <div class="flex items-center justify-between border-b border-neutral-100 pb-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+              <h2 class="text-base font-black uppercase tracking-wider text-neutral-900">System Audit Trail</h2>
+            </div>
+            <p class="text-xs text-neutral-500 mt-0.5">Immutable record of chip writes, errors, and operator actions.</p>
+          </div>
+          <button onclick="clearAuditTrail()" class="text-[10px] font-mono text-neutral-400 hover:text-red-600 underline cursor-pointer">Clear</button>
+        </div>
+
+        <!-- Audit Stream List -->
+        <div id="audit-log-container" class="space-y-3 max-h-[380px] overflow-y-auto pr-1">
+          <!-- Dynamically populated audit log items -->
+        </div>
+
+        <!-- Issue Diagnostics Summary Box -->
+        <div class="p-4 rounded-2xl bg-[#fafafa] border border-neutral-200/80 space-y-2">
+          <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block">Automated Health Check</span>
+          <div id="audit-issues-summary" class="text-xs text-neutral-700 leading-relaxed font-mono">
+            Scanning system records...
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- 5. NATIVE WEB NFC SCANNING RADAR MODAL -->
+    <div id="nfc-radar-modal" class="fixed inset-0 bg-black/70 backdrop-blur-md hidden items-center justify-center p-4 z-[110]">
+      <div class="bg-[#151518] text-white rounded-3xl max-w-sm w-full p-8 shadow-2xl border border-neutral-800 text-center relative fade-in">
+        <button onclick="cancelNfcScan()" class="absolute top-5 right-5 text-neutral-400 hover:text-white text-2xl font-light cursor-pointer">&times;</button>
+        
+        <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Web NFC Direct Writer</span>
+        <h3 id="nfc-radar-title" class="text-xl font-black uppercase tracking-tight text-white mt-1">Ready to Write</h3>
+        <p id="nfc-radar-desc" class="text-xs text-neutral-400 mt-1">Hold the physical card against the back of your device antenna.</p>
+
+        <!-- Radar Pulse Graphic -->
+        <div class="relative w-36 h-36 mx-auto my-8 flex items-center justify-center">
+          <div class="absolute inset-0 rounded-full border border-emerald-500/40 radar-ring"></div>
+          <div class="absolute inset-4 rounded-full border border-emerald-500/60 radar-ring" style="animation-delay: 0.6s;"></div>
+          <div id="nfc-radar-icon" class="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-400 flex items-center justify-center text-emerald-400 transition-all duration-300">
+            <svg class="w-8 h-8 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+          </div>
+        </div>
+
+        <div class="p-3 bg-[#202026] rounded-xl text-left font-mono text-[11px] text-neutral-300 space-y-1 mb-4">
+          <div class="text-[9px] text-neutral-500 uppercase">Target Payload</div>
+          <div id="radar-target-url" class="truncate font-bold text-emerald-400">Loading...</div>
+        </div>
+
+        <button onclick="cancelNfcScan()" class="w-full border border-neutral-700 hover:border-white text-xs font-bold uppercase tracking-wider py-3 rounded-xl transition-all cursor-pointer">
+          Cancel Operation
+        </button>
+      </div>
+    </div>
+
+    <!-- 6. IPHONE NATIVE APPLE SHORTCUTS MODAL -->
+    <div id="ios-shortcut-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 z-[95]">
+      <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-neutral-200 relative fade-in">
+        <button onclick="closeModal('ios-shortcut-modal')" class="absolute top-6 right-6 text-neutral-400 hover:text-black text-2xl font-light cursor-pointer">&times;</button>
+        
+        <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">iOS Native Provisioning</span>
+        <h3 class="text-xl font-black tracking-tight text-neutral-900 mt-1">iPhone 1-Tap NFC Writer</h3>
+        <p class="text-xs text-neutral-500 mt-1">Apple restricts Web NFC inside Safari. Use the built-in iOS Shortcuts app to write NFC chips with zero third-party downloads.</p>
+
+        <div class="mt-5 space-y-3 text-xs text-neutral-700 font-sans">
+          <div class="p-3 bg-neutral-50 rounded-xl border border-neutral-200/60">
+            <strong class="font-bold text-black block mb-0.5">Step 1: One-time Shortcut Setup</strong>
+            <span>Open your iPhone <strong>Shortcuts</strong> app &rarr; Create new Shortcut &rarr; Add Action <em>"Write NFC"</em> &rarr; Set Input to <em>"Shortcut Input"</em>. Name it: <code class="font-mono font-bold text-black bg-neutral-200 px-1.5 py-0.5 rounded">AA NFC Writer</code></span>
+          </div>
+
+          <div class="p-3 bg-neutral-50 rounded-xl border border-neutral-200/60">
+            <strong class="font-bold text-black block mb-0.5">Step 2: Trigger Write from Meadhall</strong>
+            <span>Tap the <strong>"iPhone 1-Tap"</strong> button anytime. Meadhall transmits the target URL directly into iOS to program the card instantly.</span>
+          </div>
+        </div>
+
+        <div class="mt-6 flex flex-col gap-2">
+          <button onclick="launchShortcutDirect()" class="w-full bg-black text-white text-xs font-bold uppercase tracking-wider py-3.5 rounded-xl hover:bg-neutral-800 cursor-pointer shadow-md">
+            Launch Shortcut Now
+          </button>
+          <button onclick="copyFormattedNDEF()" class="w-full border border-neutral-300 text-neutral-800 text-xs font-bold uppercase tracking-wider py-3 rounded-xl hover:border-black cursor-pointer">
+            Copy Raw Payload Only
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. INSTANT QR CODE VERIFICATION MODAL (IPHONE CAMERA TEST) -->
+    <div id="qr-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 z-[95]">
+      <div class="bg-white rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl border border-neutral-200 text-center relative fade-in">
+        <button onclick="closeModal('qr-modal')" class="absolute top-6 right-6 text-neutral-400 hover:text-black text-2xl font-light cursor-pointer">&times;</button>
+        
+        <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Visual Verification</span>
+        <h3 class="text-xl font-black tracking-tight text-neutral-900 mt-1">Dual-Read QR Preview</h3>
+        <p class="text-xs text-neutral-500 mt-1">Point your iPhone or Android camera to test this redirect route immediately.</p>
+
+        <div id="qrcode-canvas" class="my-6 flex justify-center p-4 bg-white border border-neutral-200 rounded-2xl shadow-inner min-h-[220px] items-center">
+          <!-- Dynamically generated QR Code -->
+        </div>
+
+        <div class="p-2.5 bg-neutral-100 rounded-xl text-neutral-700 font-mono text-[10px] truncate mb-4" id="qr-modal-url">
+          Loading...
+        </div>
+
+        <button onclick="closeModal('qr-modal')" class="w-full bg-black text-white text-xs font-bold uppercase tracking-wider py-3 rounded-xl hover:bg-neutral-800 cursor-pointer">
+          Done
+        </button>
+      </div>
+    </div>
+
+    <!-- 8. NEW SERIAL CODE MODAL -->
+    <div id="serial-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 z-[90]">
+      <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-neutral-200 relative fade-in">
+        <button onclick="closeSerialModal()" class="absolute top-6 right-6 text-neutral-400 hover:text-black text-2xl font-light cursor-pointer">&times;</button>
+        
+        <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">NFC Directory</span>
+        <h3 class="text-xl font-black tracking-tight text-neutral-900 mt-1">Allocate New Serial</h3>
+        <p class="text-xs text-neutral-500 mt-1">Generate an individual hardware code mapped directly to a client destination URL.</p>
+
+        <form onsubmit="saveNewSerial(event)" class="mt-6 space-y-4">
+          <div>
+            <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1">Client Name</label>
+            <input type="text" id="serial-client" required placeholder="e.g. Gian Christian Villanueva" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-xl px-4 py-2.5 text-xs text-neutral-900 outline-none">
+          </div>
+
+          <div>
+            <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1">Brand / Enterprise</label>
+            <input type="text" id="serial-brand" required placeholder="e.g. Attachment Anywhere" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-xl px-4 py-2.5 text-xs text-neutral-900 outline-none">
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500">Hardware Serial Code</label>
+              <button type="button" onclick="regenerateSerialValue()" class="text-[10px] font-mono text-neutral-500 hover:text-black underline cursor-pointer">Regenerate</button>
+            </div>
+            <input type="text" id="serial-code-val" required class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-xl px-4 py-2.5 text-xs font-mono font-bold text-neutral-900 outline-none">
+          </div>
+
+          <div>
+            <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1">Target Redirection Route</label>
+            <input type="url" id="serial-target-url" required placeholder="https://attachmentanywhere.com/c/..." class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-xl px-4 py-2.5 text-xs font-mono text-neutral-900 outline-none">
+          </div>
+
+          <div class="pt-2">
+            <button type="submit" class="w-full bg-black text-white text-xs font-bold uppercase tracking-wider py-3.5 rounded-xl hover:bg-neutral-800 transition-all cursor-pointer shadow-md">
+              Save Serial Code to Registry
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 9. MANUAL ORDER INTAKE MODAL -->
+    <div id="order-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 z-[90]">
+      <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-neutral-200 relative fade-in max-h-[90vh] overflow-y-auto">
+        <button onclick="closeOrderModal()" class="absolute top-6 right-6 text-neutral-400 hover:text-black text-2xl font-light cursor-pointer">&times;</button>
+        
+        <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Order Intake Command</span>
+        <h3 class="text-xl font-black tracking-tight text-neutral-900 mt-1">Manual Order Entry</h3>
+        <p class="text-xs text-neutral-500 mt-1">Record direct orders received via Messenger, Instagram, or in-person clients.</p>
+
+        <form onsubmit="saveManualOrder(event)" class="mt-6 space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1">Customer Full Name</label>
+              <input type="text" id="order-cust-name" required placeholder="e.g. Maria Santos" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-xl px-3.5 py-2.5 text-xs text-neutral-900 outline-none">
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1">Phone Number</label>
+              <input type="text" id="order-cust-phone" required placeholder="e.g. 0917 123 4567" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-xl px-3.5 py-2.5 text-xs text-neutral-900 outline-none">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1">Delivery Address</label>
+            <input type="text" id="order-cust-address" required placeholder="Unit, Street, Barangay, City, Province" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-xl px-3.5 py-2.5 text-xs text-neutral-900 outline-none">
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="sm:col-span-2">
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1">Hardware Product</label>
+              <select id="order-prod-select" onchange="updateManualOrderDefaults()" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-xl px-3 py-2.5 text-xs text-neutral-900 outline-none">
+                <option value="Smart Executive Card">Smart Executive Card (₱1,250)</option>
+                <option value="Google ReviewShield™">Google ReviewShield™ (₱1,500)</option>
+                <option value="Custom Digital Hub">Custom Digital Hub (₱2,450)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1">Quantity</label>
+              <input type="number" id="order-prod-qty" min="1" value="1" oninput="updateManualOrderTotal()" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-xl px-3 py-2.5 text-xs font-mono text-neutral-900 outline-none">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1">Variant / Style</label>
+              <input type="text" id="order-prod-variant" value="Original Design" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-xl px-3.5 py-2.5 text-xs text-neutral-900 outline-none">
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1">Shipping Method</label>
+              <select id="order-cust-shipping" onchange="updateManualOrderTotal()" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-xl px-3.5 py-2.5 text-xs text-neutral-900 outline-none">
+                <option value="J&T Express (+₱50)" data-fee="50">J&T Express (+₱50)</option>
+                <option value="Lalamove (+₱150)" data-fee="150">Lalamove Same-day (+₱150)</option>
+                <option value="In-Store Pickup (+₱0)" data-fee="0">In-Store Pickup (₱0)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1">Total Amount (₱)</label>
+              <input type="number" id="order-prod-total" value="1300" required class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-xl px-3.5 py-2.5 text-xs font-mono font-bold text-neutral-900 outline-none">
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1">Initial Status</label>
+              <select id="order-prod-status" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-xl px-3.5 py-2.5 text-xs font-bold text-neutral-900 outline-none">
+                <option value="Pending">Pending (To Encode)</option>
+                <option value="Encoded">Encoded (To Ship)</option>
+                <option value="Dispatched">Dispatched</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500">Target Hardware Route URL</label>
+              <button type="button" onclick="generateManualOrderRoute()" class="text-[10px] font-mono text-neutral-500 hover:text-black underline cursor-pointer">Generate Route</button>
+            </div>
+            <input type="url" id="order-target-url" required placeholder="https://attachmentanywhere.com/c/..." class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-xl px-3.5 py-2.5 text-xs font-mono text-neutral-900 outline-none">
+          </div>
+
+          <div>
+            <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1">Operator Notes / Profile Specs (Optional)</label>
+            <textarea id="order-prod-specs" rows="2" placeholder="e.g. LinkedIn + Instagram channels; custom UV logo on front" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-xl p-3 text-xs text-neutral-900 outline-none resize-none"></textarea>
+          </div>
+
+          <div class="pt-3">
+            <button type="submit" class="w-full bg-black text-white text-xs font-bold uppercase tracking-wider py-3.5 rounded-xl hover:bg-neutral-800 transition-all cursor-pointer shadow-md">
+              Create &amp; Add to Pipeline
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 8. CUSTOMER HARDWARE SPECIFICATION MODAL -->
+    <div id="spec-drawer" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 z-[90]">
+      <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-neutral-200 relative fade-in">
+        <button onclick="closeSpecDrawer()" class="absolute top-6 right-6 text-neutral-400 hover:text-black text-2xl font-light cursor-pointer">&times;</button>
+        
+        <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Order Inspection</span>
+        <h3 id="drawer-title" class="text-xl font-black tracking-tight text-neutral-900 mt-1">AA-000000</h3>
+
+        <div class="mt-6 space-y-4 text-xs">
+          <div class="p-4 rounded-2xl bg-[#f4f4f5]">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block mb-1">Customer Logistics</span>
+            <div id="drawer-customer" class="text-neutral-900 leading-relaxed font-medium">Name & Address</div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-[#f4f4f5]">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block mb-1">Hardware Parameters</span>
+            <div id="drawer-product" class="text-neutral-900 font-semibold">Product info</div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-[#f4f4f5]">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block mb-1">Custom Digital Profile Specifications</span>
+            <pre id="drawer-specs" class="text-neutral-700 whitespace-pre-wrap font-sans text-xs leading-relaxed">No specs noted.</pre>
+          </div>
+        </div>
+
+        <div class="mt-6 flex gap-3">
+          <button id="drawer-send-to-encoder" class="flex-1 bg-black text-white text-xs font-bold uppercase tracking-wider py-3 rounded-xl hover:bg-neutral-800 transition-all cursor-pointer">
+            Send URL to NFC Studio
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- IN-PAGE TOAST NOTIFICATION CONTAINER -->
+    <div id="toast-box" class="fixed bottom-6 right-6 z-[120] pointer-events-none flex flex-col gap-2"></div>
+
+  </main>
+
+  <!-- ================= UNIVERSAL FOOTER ================= -->
+  <footer class="w-full bg-black text-white pt-16 pb-16 px-6 md:px-12 lg:px-24 border-t border-neutral-900 mt-auto">
+    <div class="max-w-7xl mx-auto flex flex-col xl:flex-row justify-between items-center gap-10 xl:gap-0">
+      
+      <!-- Brand Logo -->
+      <div class="flex-shrink-0">
+        <a href="index.html">
+          <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-24 md:h-32 object-contain invert opacity-95">
+        </a>
+      </div>
+
+      <!-- Links & Modals Triggers -->
+      <div class="flex flex-wrap items-center justify-center xl:justify-end gap-6 md:gap-8 w-full xl:w-auto">
+        <a href="https://instagram.com/attachmentanywhere" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 border border-neutral-800 rounded-full px-5 py-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 hover:bg-white hover:text-black hover:border-white transition-all duration-300">
+          Instagram
+        </a>
+        <a href="https://m.me/attachmentanywhere" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 border border-neutral-800 rounded-full px-5 py-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 hover:bg-white hover:text-black hover:border-white transition-all duration-300">
+          Messenger
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // 1. MODAL CONTROLS & IN-APP TOAST SYSTEM (Zero alert() calls)
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if(modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if(modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    // Audio & Haptic Feedback Synthesizer for tactile mobile hardware feel
+    function triggerMobileFeedback(isSuccess = true) {
+      // Haptics (supported on Android and iOS webviews)
+      if (navigator.vibrate) {
+        navigator.vibrate(isSuccess ? [35, 50, 35] : [100, 50, 100]);
+      }
+
+      // Synthesize clean audio terminal chirp
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = isSuccess ? 'sine' : 'sawtooth';
+        osc.frequency.setValueAtTime(isSuccess ? 880 : 220, audioCtx.currentTime);
+        if (isSuccess) {
+          osc.frequency.exponentialRampToValueAtTime(1320, audioCtx.currentTime + 0.12);
+        }
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.16);
+      } catch (e) {
+        // AudioContext silent fallback
+      }
+    }
+
+    function showToast(message, isSuccess = true) {
+      const box = document.getElementById('toast-box');
+      if (!box) return;
+
+      triggerMobileFeedback(isSuccess);
+
+      const toast = document.createElement('div');
+      toast.className = `px-4 py-3 rounded-2xl text-xs font-mono font-medium shadow-2xl border transition-all duration-300 transform translate-y-2 opacity-0 pointer-events-auto flex items-center gap-2 ${
+        isSuccess ? 'bg-black text-white border-neutral-700' : 'bg-red-950 text-red-200 border-red-800'
+      }`;
+      toast.innerHTML = `<span class="w-1.5 h-1.5 rounded-full ${isSuccess ? 'bg-emerald-400' : 'bg-red-400'}"></span> ${message}`;
+      
+      box.appendChild(toast);
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    // 2. DIRECT FOUNDER CREDENTIAL GATE (aa.founder // g.attachmenzceo)
+    const AUTH_SESSION_KEY = 'aa_meadhall_operator_session';
+    const VALID_USER = 'aa.founder';
+    const VALID_PASS = 'g.attachmenzceo';
+
+    function checkAuthGate() {
+      const gate = document.getElementById('auth-gate');
+      const savedSession = localStorage.getItem(AUTH_SESSION_KEY) || sessionStorage.getItem(AUTH_SESSION_KEY);
+      
+      if (savedSession === VALID_USER) {
+        gate.classList.add('hidden');
+        document.getElementById('active-user-display').innerText = VALID_USER;
+      } else {
+        gate.classList.remove('hidden');
+      }
+    }
+
+    function handleDirectAuth(e) {
+      e.preventDefault();
+      const user = document.getElementById('auth-username').value.trim();
+      const pass = document.getElementById('auth-password').value.trim();
+      const remember = document.getElementById('auth-remember').checked;
+      const errBox = document.getElementById('auth-error-msg');
+
+      if (user === VALID_USER && pass === VALID_PASS) {
+        if (remember) {
+          localStorage.setItem(AUTH_SESSION_KEY, VALID_USER);
+        } else {
+          sessionStorage.setItem(AUTH_SESSION_KEY, VALID_USER);
+        }
+
+        errBox.classList.add('hidden');
+        document.getElementById('auth-gate').classList.add('hidden');
+        document.getElementById('active-user-display').innerText = VALID_USER;
+        logAuditTrail('AUTH_LOGIN_SUCCESS', `Operator authorized: ${VALID_USER}`, 'success');
+        showToast('Authorized. Welcome to Meadhall Command.');
+      } else {
+        errBox.classList.remove('hidden');
+        logAuditTrail('AUTH_FAILED_ATTEMPT', `Failed login attempt for user: ${user}`, 'error');
+        showToast('Access Denied. Check credentials.', false);
+      }
+    }
+
+    function lockFounderGate() {
+      localStorage.removeItem(AUTH_SESSION_KEY);
+      sessionStorage.removeItem(AUTH_SESSION_KEY);
+      document.getElementById('auth-username').value = '';
+      document.getElementById('auth-password').value = '';
+      document.getElementById('auth-gate').classList.remove('hidden');
+      logAuditTrail('AUTH_LOCK', 'Terminal locked by operator.');
+      showToast('Meadhall terminal locked.');
+    }
+
+    // 3. CROSS-PLATFORM MOBILE NFC PROVISIONING
+    let activeNdefAbortController = null;
+    let nfcSessionTimeoutId = null;
+
+    // Haptic & Audio Synthesis Engine (Native Zero-Dependency)
+    function triggerNfcHaptic(pattern = [80, 40, 120]) {
+      if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+        try { navigator.vibrate(pattern); } catch (e) {}
+      }
+    }
+
+    function playNfcTone(type = 'success') {
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        const ctx = new AudioCtx();
+        if (ctx.state === 'suspended') { ctx.resume(); }
+
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        if (type === 'success') {
+          // Futuristic dual-tone chime (880Hz -> 1320Hz)
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(880, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(1320, ctx.currentTime + 0.1);
+          gain.gain.setValueAtTime(0.15, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.28);
+          osc.start(ctx.currentTime);
+          osc.stop(ctx.currentTime + 0.28);
+        } else {
+          // Warning descending buzzer (320Hz -> 160Hz)
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(320, ctx.currentTime);
+          osc.frequency.linearRampToValueAtTime(160, ctx.currentTime + 0.22);
+          gain.gain.setValueAtTime(0.2, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
+          osc.start(ctx.currentTime);
+          osc.stop(ctx.currentTime + 0.25);
+        }
+      } catch (e) {}
+    }
+
+    function resetNfcRadarUI() {
+      const title = document.getElementById('nfc-radar-title');
+      const desc = document.getElementById('nfc-radar-desc');
+      const icon = document.getElementById('nfc-radar-icon');
+      if (title) title.innerText = 'Ready to Write';
+      if (desc) desc.innerText = 'Hold the physical card against the back of your device antenna.';
+      if (icon) {
+        icon.className = 'w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-400 flex items-center justify-center text-emerald-400 transition-all duration-300';
+        icon.innerHTML = `<svg class="w-8 h-8 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>`;
+      }
+    }
+
+    function detectMobilePlatform() {
+      const badge = document.getElementById('platform-badge');
+      const ua = navigator.userAgent || navigator.vendor || window.opera;
+      const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+      const isAndroid = /android/i.test(ua);
+
+      if (isIOS) {
+        badge.innerText = 'Apple iOS Detected (iPhone)';
+        badge.className = 'px-3 py-1.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-neutral-900 text-white';
+      } else if (isAndroid && 'NDEFReader' in window) {
+        badge.innerText = 'Android Web NFC Active';
+        badge.className = 'px-3 py-1.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200';
+      } else if ('NDEFReader' in window) {
+        badge.innerText = 'Web NFC API Ready';
+        badge.className = 'px-3 py-1.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200';
+      } else {
+        badge.innerText = 'Mobile Browser Active';
+        badge.className = 'px-3 py-1.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-neutral-100 text-neutral-600';
+      }
+    }
+
+    // Android Web NFC Direct Tap (Optimized High-Performance Engine)
+    async function triggerNativeNfcWrite() {
+      let rawUrl = encoderInput.value.trim();
+      if (!rawUrl) {
+        showToast('Please specify a destination URL first.', false);
+        return;
+      }
+
+      // Auto-Protocol Normalization & Syntax Validation
+      if (!/^https?:\/\//i.test(rawUrl)) {
+        rawUrl = 'https://' + rawUrl;
+        encoderInput.value = rawUrl;
+        updateFootprint();
+      }
+
+      try {
+        new URL(rawUrl);
+      } catch (e) {
+        showToast('Invalid URL syntax. Please enter a valid route.', false);
+        return;
+      }
+
+      if (!('NDEFReader' in window)) {
+        showToast('Direct Web NFC requires Chrome on an NFC-enabled Android phone. On iPhone, use "iPhone 1-Tap".', false);
+        return;
+      }
+
+      // Cancel any existing session before starting
+      if (activeNdefAbortController) {
+        activeNdefAbortController.abort();
+        activeNdefAbortController = null;
+      }
+      if (nfcSessionTimeoutId) {
+        clearTimeout(nfcSessionTimeoutId);
+        nfcSessionTimeoutId = null;
+      }
+
+      try {
+        resetNfcRadarUI();
+        document.getElementById('radar-target-url').innerText = rawUrl;
+        openModal('nfc-radar-modal');
+
+        activeNdefAbortController = new AbortController();
+        const signal = activeNdefAbortController.signal;
+
+        // Auto-Timeout: Cancel after 45 seconds to preserve battery and avoid hanging locks
+        nfcSessionTimeoutId = setTimeout(() => {
+          if (activeNdefAbortController) {
+            cancelNfcScan();
+            showToast('NFC scan session timed out. Tap button to retry.', false);
+            logAuditTrail('NFC_TIMEOUT', `Hardware scan timed out for ${rawUrl}`, 'warning');
+          }
+        }, 45000);
+
+        const ndef = new NDEFReader();
+
+        // Optimized Write: Force overwrite: true to cleanly replace existing or dirty NTAG blocks
+        await ndef.write({
+          records: [{ recordType: 'url', data: rawUrl }]
+        }, { signal, overwrite: true });
+
+        // Clear timeout upon success
+        if (nfcSessionTimeoutId) {
+          clearTimeout(nfcSessionTimeoutId);
+          nfcSessionTimeoutId = null;
+        }
+
+        // Tactile Haptics & Audio Tone Feedback
+        triggerNfcHaptic([90, 40, 140]);
+        playNfcTone('success');
+
+        // Visual Success Feedback in Modal
+        const title = document.getElementById('nfc-radar-title');
+        const desc = document.getElementById('nfc-radar-desc');
+        const icon = document.getElementById('nfc-radar-icon');
+        if (title) title.innerText = 'Card Encoded!';
+        if (desc) desc.innerText = 'Payload successfully written to physical media.';
+        if (icon) {
+          icon.className = 'w-16 h-16 rounded-full bg-emerald-500 border-2 border-white flex items-center justify-center text-white scale-110 shadow-[0_0_30px_rgba(16,185,129,0.8)] transition-all duration-300';
+          icon.innerHTML = `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>`;
+        }
+
+        logAuditTrail('CHIP_WRITE_SUCCESS', `Direct Web NFC write complete: ${rawUrl}`, 'success');
+        showToast(`✓ Hardware encoded successfully with ${rawUrl}`);
+        updateSerialWriteStatus(rawUrl);
+
+        setTimeout(() => {
+          cancelNfcScan();
+        }, 1200);
+
+      } catch (error) {
+        if (nfcSessionTimeoutId) {
+          clearTimeout(nfcSessionTimeoutId);
+          nfcSessionTimeoutId = null;
+        }
+
+        if (error.name === 'AbortError') return;
+
+        triggerNfcHaptic([180, 80, 180]);
+        playNfcTone('error');
+        cancelNfcScan();
+
+        let friendlyError = error.message;
+        if (error.name === 'NotAllowedError') {
+          friendlyError = 'NFC is disabled in system settings or browser permission was denied. Turn ON NFC in Android Settings.';
+        } else if (error.name === 'NotSupportedError') {
+          friendlyError = 'Web NFC is not supported on this device/browser.';
+        } else if (error.name === 'NetworkError' || error.message.toLowerCase().includes('transfer')) {
+          friendlyError = 'Chip connection lost. Hold the card steady against the device antenna for 1-2 seconds.';
+        }
+
+        logAuditTrail('CHIP_WRITE_ERROR', `NFC write failure: ${friendlyError}`, 'error');
+        showToast(`NFC Write Error: ${friendlyError}`, false);
+      }
+    }
+
+    function cancelNfcScan() {
+      if (nfcSessionTimeoutId) {
+        clearTimeout(nfcSessionTimeoutId);
+        nfcSessionTimeoutId = null;
+      }
+      if (activeNdefAbortController) {
+        activeNdefAbortController.abort();
+        activeNdefAbortController = null;
+      }
+      resetNfcRadarUI();
+      closeModal('nfc-radar-modal');
+    }
+
+    // iPhone (iOS) Native 1-Tap Shortcut Workflow
+    function openIosShortcutGuide() {
+      openModal('ios-shortcut-modal');
+    }
+
+    function triggerIosShortcutWrite() {
+      const targetUrl = encoderInput.value.trim();
+      if (!targetUrl) {
+        showToast('Please enter a target URL first.', false);
+        return;
+      }
+      // Copy URL first so it's guaranteed in clipboard
+      copySerialURL(targetUrl, false);
+      // Trigger native Apple Shortcuts scheme
+      launchShortcutDirect();
+    }
+
+    function launchShortcutDirect() {
+      const targetUrl = encoderInput.value.trim();
+      if (!targetUrl) return;
+      const shortcutUrl = `shortcuts://run-shortcut?name=AA%20NFC%20Writer&input=${encodeURIComponent(targetUrl)}`;
+      window.location.href = shortcutUrl;
+      showToast('Transmitting payload to iOS NFC writer...');
+      logAuditTrail('IOS_NFC_TRIGGER', `Launched iPhone shortcut for ${targetUrl}`);
+    }
+
+    // Dynamic QR Generator for Instant Phone Camera Testing
+    function openQrPreview() {
+      const targetUrl = encoderInput.value.trim();
+      if (!targetUrl) {
+        showToast('Please load a URL to generate QR.', false);
+        return;
+      }
+
+      const qrContainer = document.getElementById('qrcode-canvas');
+      qrContainer.innerHTML = '';
+      document.getElementById('qr-modal-url').innerText = targetUrl;
+
+      if (window.QRCode) {
+        new QRCode(qrContainer, {
+          text: targetUrl,
+          width: 180,
+          height: 180,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H
+        });
+      } else {
+        qrContainer.innerHTML = `<span class="text-xs text-neutral-400">QR Engine initializing...</span>`;
+      }
+
+      openModal('qr-modal');
+      showToast('QR verification preview loaded.');
+    }
+
+    // 4. AUTOMATED DIAGNOSTICS & AUDIT TRAIL LOGGING
+    const AUDIT_STORAGE_KEY = 'attachment_meadhall_audit_logs';
+
+    function getAuditLogs() {
+      const data = localStorage.getItem(AUDIT_STORAGE_KEY);
+      return data ? JSON.parse(data) : [];
+    }
+
+    function logAuditTrail(action, details, severity = 'info') {
+      const logs = getAuditLogs();
+      const operator = sessionStorage.getItem(AUTH_SESSION_KEY) || 'system';
+      const entry = {
+        id: `LOG-${Date.now()}`,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+        date: new Date().toLocaleDateString(),
+        operator,
+        action,
+        details,
+        severity
+      };
+      logs.unshift(entry);
+      localStorage.setItem(AUDIT_STORAGE_KEY, JSON.stringify(logs.slice(0, 50))); // Keep last 50
+      renderAuditLogs();
+      runSystemAudit();
+    }
+
+    function clearAuditTrail() {
+      localStorage.removeItem(AUDIT_STORAGE_KEY);
+      renderAuditLogs();
+      showToast('Audit trail cleared.');
+    }
+
+    function renderAuditLogs() {
+      const logs = getAuditLogs();
+      const container = document.getElementById('audit-log-container');
+      container.innerHTML = '';
+
+      if (logs.length === 0) {
+        container.innerHTML = `<div class="p-6 text-center text-neutral-400 font-mono text-xs">No audit logs recorded yet.</div>`;
+        return;
+      }
+
+      logs.forEach(log => {
+        let badgeColor = 'bg-blue-50 text-blue-700';
+        if (log.severity === 'success') badgeColor = 'bg-emerald-50 text-emerald-700';
+        if (log.severity === 'warning') badgeColor = 'bg-amber-50 text-amber-700';
+        if (log.severity === 'error') badgeColor = 'bg-red-50 text-red-700';
+
+        const item = document.createElement('div');
+        item.className = 'p-3 rounded-xl bg-neutral-50 border border-neutral-200/60 text-xs font-mono space-y-1';
+        item.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider ${badgeColor}">${log.action}</span>
+            <span class="text-[10px] text-neutral-400">${log.timestamp}</span>
+          </div>
+          <p class="text-neutral-800 text-[11px] font-sans break-words">${log.details}</p>
+          <div class="text-[9px] text-neutral-400">Operator: ${log.operator}</div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function runSystemAudit() {
+      const serials = getSerials();
+      const issues = [];
+
+      // Check 1: NTAG213 Overflow (URLs exceeding 144 bytes)
+      serials.forEach(s => {
+        const bytes = s.targetUrl.length + 5;
+        if (bytes > 144) {
+          issues.push(`Serial ${s.serial}: Payload (${bytes}B) exceeds NTAG213 limit (144B). Requires NTAG215.`);
+        }
+        if (!s.targetUrl.startsWith('https://')) {
+          issues.push(`Serial ${s.serial}: Insecure protocol (${s.targetUrl.split(':')[0]}). HTTPS mandatory.`);
+        }
+      });
+
+      // Check 2: Duplicate Serials
+      const serialCodes = serials.map(s => s.serial);
+      const duplicates = serialCodes.filter((item, index) => serialCodes.indexOf(item) !== index);
+      if (duplicates.length > 0) {
+        issues.push(`Duplicate serial code detected in registry: ${duplicates.join(', ')}`);
+      }
+
+      // Update UI displays
+      const healthNumber = document.getElementById('stat-health');
+      const healthLabel = document.getElementById('stat-health-label');
+      const issuesBox = document.getElementById('audit-issues-summary');
+      const auditIndicator = document.getElementById('audit-indicator');
+
+      if (issues.length === 0) {
+        healthNumber.innerText = '100%';
+        healthNumber.className = 'text-3xl font-black tracking-tight text-emerald-600';
+        healthLabel.innerText = '0 Errors';
+        healthLabel.className = 'text-[11px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md font-medium';
+        auditIndicator.className = 'w-2 h-2 rounded-full bg-emerald-500';
+        issuesBox.innerHTML = `<span class="text-emerald-700 font-bold">✓ Zero diagnostic faults detected. All serials fit standard NTAG213 chips and use secure HTTPS.</span>`;
+      } else {
+        const score = Math.max(0, 100 - (issues.length * 15));
+        healthNumber.innerText = `${score}%`;
+        healthNumber.className = 'text-3xl font-black tracking-tight text-amber-600';
+        healthLabel.innerText = `${issues.length} Alert${issues.length > 1 ? 's' : ''}`;
+        healthLabel.className = 'text-[11px] font-mono text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md font-medium';
+        auditIndicator.className = 'w-2 h-2 rounded-full bg-amber-500 animate-pulse';
+        issuesBox.innerHTML = issues.map(iss => `<div class="text-red-700 mb-1">• ${iss}</div>`).join('');
+      }
+    }
+
+    // 5. SERIAL CODE REGISTRY ENGINE
+    const SERIALS_STORAGE_KEY = 'attachment_meadhall_serials';
+
+    const defaultSerials = [
+      {
+        serial: "260906052304",
+        client: "Gian Christian Villanueva",
+        brand: "Attachment Anywhere",
+        targetUrl: "https://attachmentanywhere.com/c/260906052304",
+        date: "2026-09-06",
+        encoded: true
+      },
+      {
+        serial: "260919153138",
+        client: "Sophia De Guzman",
+        brand: "Atelier Manila",
+        targetUrl: "https://attachmentanywhere.com/c/260919153138",
+        date: "2026-09-19",
+        encoded: false
+      },
+      {
+        serial: "260908072401",
+        client: "Mama Bean Coffee Club",
+        brand: "Mama Bean Hospitality",
+        targetUrl: "https://attachmentanywhere.com/c/260908072401",
+        date: "2026-09-08",
+        encoded: true
+      }
+    ];
+
+    function getSerials() {
+      const data = localStorage.getItem(SERIALS_STORAGE_KEY);
+      return data ? JSON.parse(data) : defaultSerials;
+    }
+
+    function saveSerials(serials) {
+      localStorage.setItem(SERIALS_STORAGE_KEY, JSON.stringify(serials));
+      renderSerialTable();
+      runSystemAudit();
+    }
+
+    function generateSerialTemplate() {
+      const now = new Date();
+      const yy = String(now.getFullYear()).slice(-2);
+      const mm = String(now.getMonth() + 1).padStart(2, '0');
+      const dd = String(now.getDate()).padStart(2, '0');
+      const randomPart = Math.floor(100000 + Math.random() * 900000);
+      return `${yy}${mm}${dd}${randomPart}`;
+    }
+
+    function openSerialModal() {
+      const generated = generateSerialTemplate();
+      document.getElementById('serial-client').value = '';
+      document.getElementById('serial-brand').value = '';
+      document.getElementById('serial-code-val').value = generated;
+      document.getElementById('serial-target-url').value = `https://attachmentanywhere.com/c/${generated}`;
+      openModal('serial-modal');
+    }
+
+    function closeSerialModal() {
+      closeModal('serial-modal');
+    }
+
+    function regenerateSerialValue() {
+      const newCode = generateSerialTemplate();
+      document.getElementById('serial-code-val').value = newCode;
+      document.getElementById('serial-target-url').value = `https://attachmentanywhere.com/c/${newCode}`;
+    }
+
+    document.getElementById('serial-code-val').addEventListener('input', (e) => {
+      const val = e.target.value.trim();
+      document.getElementById('serial-target-url').value = `https://attachmentanywhere.com/c/${val}`;
+    });
+
+    function saveNewSerial(e) {
+      e.preventDefault();
+      const client = document.getElementById('serial-client').value.trim();
+      const brand = document.getElementById('serial-brand').value.trim();
+      const serial = document.getElementById('serial-code-val').value.trim();
+      const targetUrl = document.getElementById('serial-target-url').value.trim();
+
+      const serials = getSerials();
+      const existing = serials.find(s => s.serial === serial);
+      if (existing) {
+        showToast('Serial code already exists in directory.', false);
+        return;
+      }
+
+      const now = new Date();
+      const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+
+      serials.unshift({
+        serial,
+        client,
+        brand,
+        targetUrl,
+        date: dateStr,
+        encoded: false
+      });
+
+      saveSerials(serials);
+      closeSerialModal();
+      logAuditTrail('SERIAL_REGISTERED', `Allocated serial ${serial} for ${brand}`);
+      showToast(`Serial ${serial} allocated.`);
+    }
+
+    function renderSerialTable() {
+      const serials = getSerials();
+      const query = (document.getElementById('serial-search')?.value || '').toLowerCase();
+      const tbody = document.getElementById('serials-table-body');
+      tbody.innerHTML = '';
+
+      document.getElementById('stat-serials').innerText = serials.length;
+
+      const filtered = serials.filter(s => 
+        s.serial.toLowerCase().includes(query) ||
+        s.client.toLowerCase().includes(query) ||
+        s.brand.toLowerCase().includes(query) ||
+        s.targetUrl.toLowerCase().includes(query)
+      );
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="py-10 text-center text-neutral-400 font-mono text-xs">No matching serial codes found.</td></tr>`;
+        return;
+      }
+
+      filtered.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-[#fafafa] transition-colors";
+        
+        const bytes = item.targetUrl.length + 5;
+        const fitsNtag213 = bytes <= 144;
+
+        tr.innerHTML = `
+          <td class="py-4 px-6 font-mono font-bold text-neutral-900">
+            ${item.serial}
+          </td>
+          <td class="py-4 px-6 font-medium text-neutral-900">
+            ${item.client}
+          </td>
+          <td class="py-4 px-6 text-neutral-600 font-semibold">
+            ${item.brand}
+          </td>
+          <td class="py-4 px-6 font-mono text-[11px] text-neutral-500 max-w-xs truncate" title="${item.targetUrl}">
+            <a href="${item.targetUrl}" target="_blank" class="hover:text-black hover:underline">${item.targetUrl}</a>
+          </td>
+          <td class="py-4 px-6">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold ${fitsNtag213 ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}">
+              ${fitsNtag213 ? 'NTAG213 (OK)' : 'NTAG215 REQ'}
+            </span>
+          </td>
+          <td class="py-4 px-6 text-right space-x-2">
+            <button onclick="quickWriteSerial('${item.targetUrl}')" class="text-[11px] font-bold text-emerald-700 hover:text-emerald-900 bg-emerald-50 hover:bg-emerald-100 px-2 py-0.5 rounded-md transition-colors cursor-pointer inline-flex items-center gap-1" title="Write directly via Web NFC">
+              <span>⚡</span> Write
+            </button>
+            <button onclick="sendSerialToStudio('${item.targetUrl}')" class="text-[11px] font-bold text-neutral-800 hover:text-black underline cursor-pointer" title="Load into Web NFC Studio">
+              Load
+            </button>
+            <button onclick="copySerialURL('${item.targetUrl}')" class="text-[11px] font-bold text-neutral-800 hover:text-black underline cursor-pointer">
+              Copy
+            </button>
+            <button onclick="deleteSerial('${item.serial}')" class="text-[11px] font-bold text-neutral-300 hover:text-red-600 transition-colors cursor-pointer">
+              &times;
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function quickWriteSerial(url) {
+      encoderInput.value = url;
+      updateFootprint();
+      triggerNativeNfcWrite();
+    }
+
+    function sendSerialToStudio(url) {
+      encoderInput.value = url;
+      updateFootprint();
+      encoderInput.scrollIntoView({ behavior: 'smooth' });
+      showToast('Loaded serial route into Web NFC Studio.');
+    }
+
+    function copySerialURL(url, notify = true) {
+      const tempInput = document.createElement('input');
+      tempInput.value = url;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      tempInput.remove();
+      if (notify) showToast('NFC URL copied to clipboard.');
+    }
+
+    function updateSerialWriteStatus(url) {
+      const serials = getSerials();
+      const match = serials.find(s => s.targetUrl === url);
+      if (match) {
+        match.encoded = true;
+        saveSerials(serials);
+      }
+
+      // Auto-advance matching order in production dispatch pipeline
+      const orders = getOrders();
+      let orderUpdated = false;
+      orders.forEach(order => {
+        if (order.specs && order.specs.targetUrl === url && order.status === 'Pending') {
+          order.status = 'Encoded';
+          orderUpdated = true;
+          logAuditTrail('ORDER_AUTO_ENCODED', `Order ${order.ref} automatically marked as Encoded via NFC tap`, 'success');
+        }
+      });
+      if (orderUpdated) {
+        saveOrders(orders);
+      }
+    }
+
+    function deleteSerial(serial) {
+      let serials = getSerials().filter(s => s.serial !== serial);
+      saveSerials(serials);
+      logAuditTrail('SERIAL_DELETED', `Deleted serial ${serial}`, 'warning');
+      showToast(`Serial ${serial} deleted.`);
+    }
+
+    function exportSerialRegistryCSV() {
+      const serials = getSerials();
+      let csv = "data:text/csv;charset=utf-8,Serial Code,Client Name,Brand,Target Route URL,Date Created,Encoded\n";
+      serials.forEach(s => {
+        csv += `"${s.serial}","${s.client}","${s.brand}","${s.targetUrl}","${s.date}","${s.encoded ? 'YES' : 'NO'}"\n`;
+      });
+      const encodedUri = encodeURI(csv);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `attachment_serials_registry_${Date.now()}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      logAuditTrail('CSV_EXPORT', 'Exported serial registry to Google Sheets CSV');
+      showToast('Serials CSV exported.');
+    }
+
+    // 6. ORDER PIPELINE & INSPECTION DRAWER
+    const ORDERS_STORAGE_KEY = 'attachment_meadhall_orders';
+
+    const defaultSeedOrders = [
+      {
+        ref: "AA-841920",
+        date: "Today, 11:20 AM",
+        customer: {
+          name: "James Danniel Villanueva",
+          phone: "0917 889 4412",
+          address: "Unit 402, Victoria Tower, Santa Cruz, Manila"
+        },
+        product: "Smart Executive Card",
+        variant: "Original Design",
+        qty: 1,
+        total: 1250,
+        shipping: "J&T Express (+₱50)",
+        status: "Pending",
+        specs: {
+          profileName: "James D. Villanueva",
+          profession: "Senior Underwriter // Pioneer Insurance",
+          channels: ["LinkedIn", "Instagram", "Messenger"],
+          targetUrl: "https://attachmentanywhere.com/c/260906052304"
+        }
+      },
+      {
+        ref: "AA-592811",
+        date: "Yesterday",
+        customer: {
+          name: "Mama Bean Coffee Club",
+          phone: "0998 112 9090",
+          address: "Branch 01, MacArthur Hwy, San Fernando, Pampanga"
+        },
+        product: "Google ReviewShield™",
+        variant: "Custom Standee",
+        qty: 2,
+        total: 1550,
+        shipping: "J&T Express (+₱50)",
+        status: "Encoded",
+        specs: {
+          targetUrl: "https://attachmentanywhere.com/c/260908072401"
+        }
+      }
+    ];
+
+    function getOrders() {
+      const data = localStorage.getItem(ORDERS_STORAGE_KEY);
+      return data ? JSON.parse(data) : defaultSeedOrders;
+    }
+
+    function saveOrders(orders) {
+      localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(orders));
+      renderMeadhall();
+    }
+
+    let activeFilter = 'all';
+
+    function setFilter(filter) {
+      activeFilter = filter;
+      document.querySelectorAll('.filter-tab').forEach(tab => {
+        if(tab.getAttribute('data-filter') === filter) {
+          tab.className = "filter-tab px-3 py-1.5 text-xs font-bold rounded-lg transition-all bg-white text-black shadow-sm flex items-center gap-1.5 whitespace-nowrap";
+        } else {
+          tab.className = "filter-tab px-3 py-1.5 text-xs font-bold rounded-lg transition-all text-neutral-500 hover:text-black flex items-center gap-1.5 whitespace-nowrap";
+        }
+      });
+      renderMeadhall();
+    }
+
+    function renderMeadhall() {
+      const orders = getOrders();
+      const query = (document.getElementById('order-search')?.value || '').toLowerCase().trim();
+      const tbody = document.getElementById('orders-table-body');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      let totalRev = 0;
+      let pendingCount = 0;
+      let encodedCount = 0;
+      let dispatchedCount = 0;
+
+      orders.forEach(order => {
+        totalRev += Number(order.total) || 0;
+        if(order.status === 'Pending') pendingCount++;
+        else if(order.status === 'Encoded') encodedCount++;
+        else if(order.status === 'Dispatched') dispatchedCount++;
+      });
+
+      document.getElementById('stat-revenue').innerText = `₱${totalRev.toLocaleString('en-US')}.00`;
+      document.getElementById('stat-pending').innerText = pendingCount;
+      if (document.getElementById('count-all')) document.getElementById('count-all').innerText = orders.length;
+      if (document.getElementById('count-pending')) document.getElementById('count-pending').innerText = pendingCount;
+      if (document.getElementById('count-encoded')) document.getElementById('count-encoded').innerText = encodedCount;
+      if (document.getElementById('count-dispatched')) document.getElementById('count-dispatched').innerText = dispatchedCount;
+
+      let filtered = activeFilter === 'all' 
+        ? orders 
+        : orders.filter(o => o.status === activeFilter);
+
+      if (query) {
+        filtered = filtered.filter(o => 
+          (o.ref && o.ref.toLowerCase().includes(query)) ||
+          (o.customer && o.customer.name && o.customer.name.toLowerCase().includes(query)) ||
+          (o.customer && o.customer.phone && o.customer.phone.toLowerCase().includes(query)) ||
+          (o.customer && o.customer.address && o.customer.address.toLowerCase().includes(query)) ||
+          (o.product && o.product.toLowerCase().includes(query)) ||
+          (o.specs && o.specs.targetUrl && o.specs.targetUrl.toLowerCase().includes(query))
+        );
+      }
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="py-10 text-center text-neutral-400 font-mono text-xs">No matching orders found.</td></tr>`;
+        return;
+      }
+
+      filtered.forEach(order => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-[#fafafa] transition-colors";
+
+        let badgeStyles = "bg-neutral-100 text-neutral-700";
+        if(order.status === 'Pending') badgeStyles = "bg-amber-50 text-amber-800 border border-amber-200/60";
+        if(order.status === 'Encoded') badgeStyles = "bg-sky-50 text-sky-800 border border-sky-200/60";
+        if(order.status === 'Dispatched') badgeStyles = "bg-emerald-50 text-emerald-800 border border-emerald-200/60";
+
+        const hasTargetUrl = order.specs && order.specs.targetUrl;
+
+        tr.innerHTML = `
+          <td class="py-4 px-6 font-mono font-bold text-neutral-900 cursor-pointer" onclick="openSpecDrawer('${order.ref}')">
+            ${order.ref}
+          </td>
+          <td class="py-4 px-6 cursor-pointer" onclick="openSpecDrawer('${order.ref}')">
+            <span class="font-bold text-neutral-900 block">${order.customer.name}</span>
+            <span class="text-[11px] text-neutral-500">${order.customer.phone}</span>
+          </td>
+          <td class="py-4 px-6">
+            <span class="font-medium text-neutral-900 block">${order.product}</span>
+            <span class="text-[11px] text-neutral-500">${order.variant} (${order.qty}x) • ₱${order.total}</span>
+          </td>
+          <td class="py-4 px-6">
+            <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider ${badgeStyles}">
+              ${order.status}
+            </span>
+          </td>
+          <td class="py-4 px-6 text-right space-x-1.5 whitespace-nowrap">
+            ${hasTargetUrl ? `
+              <button onclick="quickWriteOrder('${order.ref}')" class="text-[11px] font-bold text-emerald-700 hover:text-emerald-900 bg-emerald-50 hover:bg-emerald-100 px-2 py-0.5 rounded-md transition-colors cursor-pointer inline-flex items-center gap-1" title="Tap to encode this card via Web NFC">
+                <span>⚡</span> Encode
+              </button>
+              <button onclick="sendOrderToStudio('${order.ref}')" class="text-[11px] font-bold text-neutral-700 hover:text-black underline cursor-pointer" title="Load into Web NFC Studio">
+                Load
+              </button>
+            ` : ''}
+            <button onclick="cycleStatus('${order.ref}')" class="text-[11px] font-bold text-neutral-700 hover:text-black underline cursor-pointer" title="Advance status">
+              ${order.status === 'Pending' ? 'Mark Encoded' : order.status === 'Encoded' ? 'Mark Dispatched' : 'Reset'}
+            </button>
+            <button onclick="openSpecDrawer('${order.ref}')" class="text-[11px] font-bold text-neutral-700 hover:text-black underline cursor-pointer" title="View customer specs">
+              Inspect
+            </button>
+            <button onclick="deleteOrder('${order.ref}')" class="text-[11px] font-bold text-neutral-300 hover:text-red-600 transition-colors cursor-pointer px-1" title="Delete order">
+              &times;
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function cycleStatus(ref) {
+      const orders = getOrders();
+      const target = orders.find(o => o.ref === ref);
+      if (target) {
+        if (target.status === 'Pending') target.status = 'Encoded';
+        else if (target.status === 'Encoded') target.status = 'Dispatched';
+        else target.status = 'Pending';
+        saveOrders(orders);
+        logAuditTrail('ORDER_STATUS_CYCLE', `Order ${ref} set to ${target.status}`);
+        showToast(`Order ${ref} status: ${target.status}.`);
+      }
+    }
+
+    // MANUAL ORDER INTAKE CONTROLS
+    function openOrderModal() {
+      const generatedSerial = generateSerialTemplate();
+      document.getElementById('order-cust-name').value = '';
+      document.getElementById('order-cust-phone').value = '';
+      document.getElementById('order-cust-address').value = '';
+      document.getElementById('order-prod-select').value = 'Smart Executive Card';
+      document.getElementById('order-prod-variant').value = 'Original Design';
+      document.getElementById('order-prod-qty').value = 1;
+      document.getElementById('order-cust-shipping').value = 'J&T Express (+₱50)';
+      document.getElementById('order-prod-total').value = 1300;
+      document.getElementById('order-prod-status').value = 'Pending';
+      document.getElementById('order-target-url').value = `https://attachmentanywhere.com/c/${generatedSerial}`;
+      document.getElementById('order-prod-specs').value = '';
+      openModal('order-modal');
+    }
+
+    function closeOrderModal() {
+      closeModal('order-modal');
+    }
+
+    function updateManualOrderDefaults() {
+      const sel = document.getElementById('order-prod-select').value;
+      if (sel.includes('Executive')) {
+        document.getElementById('order-prod-variant').value = 'Original Design';
+      } else if (sel.includes('ReviewShield')) {
+        document.getElementById('order-prod-variant').value = 'Custom Standee';
+      } else {
+        document.getElementById('order-prod-variant').value = 'Custom Enterprise Hub';
+      }
+      updateManualOrderTotal();
+    }
+
+    function updateManualOrderTotal() {
+      const prodSel = document.getElementById('order-prod-select').value;
+      let unitPrice = 1250;
+      if (prodSel.includes('ReviewShield')) unitPrice = 1500;
+      if (prodSel.includes('Hub')) unitPrice = 2450;
+
+      const qty = Math.max(1, parseInt(document.getElementById('order-prod-qty').value) || 1);
+      const shipSel = document.getElementById('order-cust-shipping');
+      const fee = Number(shipSel.options[shipSel.selectedIndex]?.getAttribute('data-fee')) || 0;
+
+      document.getElementById('order-prod-total').value = (unitPrice * qty) + fee;
+    }
+
+    function generateManualOrderRoute() {
+      const serial = generateSerialTemplate();
+      document.getElementById('order-target-url').value = `https://attachmentanywhere.com/c/${serial}`;
+    }
+
+    function saveManualOrder(e) {
+      e.preventDefault();
+      const customerName = document.getElementById('order-cust-name').value.trim();
+      const customerPhone = document.getElementById('order-cust-phone').value.trim();
+      const customerAddress = document.getElementById('order-cust-address').value.trim();
+      const product = document.getElementById('order-prod-select').value;
+      const variant = document.getElementById('order-prod-variant').value.trim();
+      const qty = parseInt(document.getElementById('order-prod-qty').value) || 1;
+      const shipping = document.getElementById('order-cust-shipping').value;
+      const total = Number(document.getElementById('order-prod-total').value) || 0;
+      const status = document.getElementById('order-prod-status').value;
+      const targetUrl = document.getElementById('order-target-url').value.trim();
+      const notes = document.getElementById('order-prod-specs').value.trim();
+
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const ref = 'AA-' + Math.floor(100000 + Math.random() * 900000);
+
+      const newOrder = {
+        ref: ref,
+        date: `Today, ${timeStr}`,
+        customer: {
+          name: customerName,
+          phone: customerPhone,
+          address: customerAddress
+        },
+        product: product,
+        variant: variant,
+        qty: qty,
+        total: total,
+        shipping: shipping,
+        status: status,
+        specs: {
+          notes: notes || undefined,
+          targetUrl: targetUrl
+        }
+      };
+
+      const orders = getOrders();
+      orders.unshift(newOrder);
+      saveOrders(orders);
+      closeOrderModal();
+      logAuditTrail('ORDER_MANUAL_CREATED', `Order ${ref} created for ${customerName} (${product})`, 'success');
+      showToast(`Order ${ref} created and queued.`);
+    }
+
+    function quickWriteOrder(ref) {
+      const orders = getOrders();
+      const order = orders.find(o => o.ref === ref);
+      if (!order || !order.specs || !order.specs.targetUrl) {
+        showToast('No target URL associated with this order.', false);
+        return;
+      }
+      encoderInput.value = order.specs.targetUrl;
+      updateFootprint();
+      triggerNativeNfcWrite();
+    }
+
+    function sendOrderToStudio(ref) {
+      const orders = getOrders();
+      const order = orders.find(o => o.ref === ref);
+      if (!order || !order.specs || !order.specs.targetUrl) {
+        showToast('No target URL associated with this order.', false);
+        return;
+      }
+      encoderInput.value = order.specs.targetUrl;
+      updateFootprint();
+      encoderInput.scrollIntoView({ behavior: 'smooth' });
+      showToast(`Order ${ref} route loaded into Web NFC Studio.`);
+    }
+
+    function deleteOrder(ref) {
+      let orders = getOrders().filter(o => o.ref !== ref);
+      saveOrders(orders);
+      logAuditTrail('ORDER_DELETED', `Order ${ref} deleted from pipeline.`, 'warning');
+      showToast(`Order ${ref} deleted.`);
+    }
+
+    function exportOrdersCSV() {
+      const orders = getOrders();
+      let csv = "data:text/csv;charset=utf-8,Reference,Date,Customer Name,Phone,Address,Product,Variant,Quantity,Total,Shipping,Status,Target URL\n";
+      orders.forEach(o => {
+        const url = (o.specs && o.specs.targetUrl) ? o.specs.targetUrl : '';
+        csv += `"${o.ref}","${o.date}","${o.customer?.name || ''}","${o.customer?.phone || ''}","${(o.customer?.address || '').replace(/"/g, '""')}","${o.product}","${o.variant}","${o.qty}","${o.total}","${o.shipping}","${o.status}","${url}"\n`;
+      });
+      const encodedUri = encodeURI(csv);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `attachment_orders_dispatch_${Date.now()}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      logAuditTrail('CSV_ORDERS_EXPORT', 'Exported production orders pipeline to CSV');
+      showToast('Orders CSV exported.');
+    }
+
+    function resetDemoOrders() {
+      localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(defaultSeedOrders));
+      renderMeadhall();
+      logAuditTrail('ORDERS_DEMO_RESTORED', 'Restored default demo orders in dispatch pipeline.');
+      showToast('Restored default demo orders.');
+    }
+
+    // MOBILE DRAWER HANDLER
+    function initMobileMenu() {
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+        });
+      }
+    }
+
+    // 7. FOOTPRINT & SPEC DRAWER
+    const encoderInput = document.getElementById('encoder-input');
+    const payloadBytes = document.getElementById('payload-bytes');
+    const chipFit = document.getElementById('chip-fit');
+    const sslStatus = document.getElementById('ssl-status');
+
+    encoderInput.addEventListener('input', updateFootprint);
+
+    function updateFootprint() {
+      const url = encoderInput.value.trim();
+      const bytes = url.length ? url.length + 5 : 0;
+      payloadBytes.innerText = `${bytes} bytes`;
+
+      if (url.startsWith('https://')) {
+        sslStatus.innerText = 'HTTPS Secure';
+        sslStatus.className = 'font-mono font-bold text-emerald-600';
+      } else if (url.startsWith('http://')) {
+        sslStatus.innerText = 'HTTP Insecure';
+        sslStatus.className = 'font-mono font-bold text-red-600';
+      } else {
+        sslStatus.innerText = 'Pending URL';
+        sslStatus.className = 'font-mono font-bold text-neutral-400';
+      }
+
+      if (bytes === 0) {
+        chipFit.innerText = "No URI Loaded";
+        chipFit.className = "font-mono font-bold text-neutral-400";
+      } else if (bytes <= 144) {
+        chipFit.innerText = "Fits NTAG213 (144B)";
+        chipFit.className = "font-mono font-bold text-emerald-600";
+      } else if (bytes <= 504) {
+        chipFit.innerText = "Requires NTAG215 (504B)";
+        chipFit.className = "font-mono font-bold text-sky-600";
+      } else {
+        chipFit.innerText = "Requires NTAG216 (888B)";
+        chipFit.className = "font-mono font-bold text-amber-600";
+      }
+    }
+
+    function copyFormattedNDEF() {
+      const val = encoderInput.value.trim();
+      if (!val) {
+        showToast('Please enter a target URL.', false);
+        return;
+      }
+      copySerialURL(val);
+    }
+
+    function testTargetURL() {
+      let val = encoderInput.value.trim();
+      if (!val) return;
+      if (!val.startsWith('http://') && !val.startsWith('https://')) val = 'https://' + val;
+      window.open(val, '_blank');
+    }
+
+    let activeInspectedUrl = '';
+
+    function openSpecDrawer(ref) {
+      const orders = getOrders();
+      const order = orders.find(o => o.ref === ref);
+      if (!order) return;
+
+      document.getElementById('drawer-title').innerText = `${order.ref} // ${order.product}`;
+      document.getElementById('drawer-customer').innerHTML = `
+        <strong>${order.customer.name}</strong> • ${order.customer.phone}<br>
+        <span class="text-neutral-500">${order.customer.address}</span>
+      `;
+      document.getElementById('drawer-product').innerText = `${order.product} (${order.variant}) • ${order.qty} Unit(s)`;
+
+      let formattedSpecs = "Standard format";
+      if (order.specs) {
+        formattedSpecs = Object.entries(order.specs)
+          .map(([k, v]) => `${k.toUpperCase()}: ${Array.isArray(v) ? v.join(", ") : v}`)
+          .join("\n");
+        activeInspectedUrl = order.specs.targetUrl || '';
+      }
+
+      document.getElementById('drawer-specs').innerText = formattedSpecs;
+      openModal('spec-drawer');
+    }
+
+    function closeSpecDrawer() {
+      closeModal('spec-drawer');
+    }
+
+    document.getElementById('drawer-send-to-encoder').addEventListener('click', () => {
+      if (activeInspectedUrl) {
+        encoderInput.value = activeInspectedUrl;
+        updateFootprint();
+        closeSpecDrawer();
+        showToast('Order route loaded into Web NFC Studio.');
+      } else {
+        showToast('No target route found on this order.', false);
+      }
+    });
+
+    // INITIAL MOUNT
+    initMobileMenu();
+    checkAuthGate();
+    detectMobilePlatform();
+    renderSerialTable();
+    renderMeadhall();
+    renderAuditLogs();
+    runSystemAudit();
+    updateFootprint();
+  </script>
+</body>
+</html>
