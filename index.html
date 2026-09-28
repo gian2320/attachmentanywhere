@@ -7,6 +7,9 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="alternate icon" type="image/png" href="favicon.png">
   
+  <!-- Three.js (r128) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -14,29 +17,6 @@
     /* Clean aesthetics & remove default scrollbars */
     ::-webkit-scrollbar { display: none; }
     body { -webkit-tap-highlight-color: transparent; }
-
-    /* 3D Auto-Flip Card Animation */
-    @keyframes flip3d {
-      0% { transform: perspective(1000px) rotateY(0deg) rotateX(10deg); }
-      50% { transform: perspective(1000px) rotateY(180deg) rotateX(-10deg); }
-      100% { transform: perspective(1000px) rotateY(360deg) rotateX(10deg); }
-    }
-    .animate-3d-flip {
-      animation: flip3d 12s infinite linear;
-      transform-style: preserve-3d;
-      position: relative;
-    }
-    .card-face {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 1rem;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    }
-    .card-back {
-      transform: rotateY(180deg);
-    }
 
     /* Client Logos Marquee */
     @keyframes scroll-logos {
@@ -76,66 +56,54 @@
         <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-10 md:h-20 w-auto object-contain" />
       </a>
       
-      <!-- Desktop Menu -->
-      <div class="hidden md:flex items-center gap-10">
-        <div class="flex items-center gap-8">
-          <a href="index.html" class="text-sm font-bold uppercase tracking-widest text-black border-b-2 border-black pb-1">Home</a>
-          <a href="#products" class="text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black transition-colors">Products</a>
-        </div>
-        <button onclick="window.location.href='order.html'" class="bg-black text-white px-8 py-3 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] hover:scale-105 hover:bg-neutral-800 transition-all shadow-xl cursor-pointer">
-          Order Now
-        </button>
+      <!-- Streamlined Action Cluster: Home & Cart -->
+      <div class="flex items-center gap-6 sm:gap-8">
+        <a href="index.html" class="text-xs sm:text-sm font-bold uppercase tracking-widest text-black hover:opacity-60 transition-opacity">
+          Home
+        </a>
+        <a href="order.html" class="relative bg-black text-white hover:bg-neutral-800 transition-all p-2.5 rounded-full flex items-center justify-center shadow-xs" aria-label="Cart">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span class="nav-cart-badge absolute -top-1 -right-1 bg-white text-black border border-neutral-200 text-[9px] font-mono font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-xs">0</span>
+        </a>
       </div>
-
-      <!-- Mobile Hamburger Button -->
-      <button id="mobile-menu-btn" class="md:hidden flex flex-col items-end gap-1.5 p-2 focus:outline-none cursor-pointer" aria-label="Toggle Menu">
-        <span class="w-6 h-0.5 bg-black rounded-full transition-transform"></span>
-        <span class="w-5 h-0.5 bg-black rounded-full transition-opacity"></span>
-        <span class="w-6 h-0.5 bg-black rounded-full transition-transform"></span>
-      </button>
-    </div>
-
-    <!-- Mobile Menu Dropdown -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-neutral-200 px-6 py-6 flex flex-col gap-4">
-      <a href="index.html" class="text-xs font-bold uppercase tracking-widest text-black">Home</a>
-      <a href="#products" class="text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Products</a>
-      <a href="order.html" class="bg-black text-white text-center py-3 rounded-xl text-xs font-bold uppercase tracking-widest mt-2">Order Now</a>
     </div>
   </nav>
 
   <div class="pt-24"></div> <!-- Header Spacer -->
 
-  <!-- ================= HERO SECTION ================= -->
-  <section class="relative min-h-[85vh] w-full flex flex-col items-center justify-center overflow-hidden bg-[#fbfbfd] px-4 py-16 md:py-24">
-    
-    <!-- BACKGROUND: Auto-Moving 3D Card -->
-    <div class="absolute inset-0 flex items-center justify-center z-0 opacity-20 md:opacity-35 pointer-events-none mt-6">
-      <div class="animate-3d-flip w-[300px] h-[190px] sm:w-[380px] sm:h-[240px] md:w-[580px] md:h-[365px]">
-        <img src="card-design.png" alt="Front Design" class="card-face object-cover">
-        <img src="card-back.png" alt="Back Design" class="card-face card-back object-cover">
-      </div>
-    </div>
-
-    <!-- FOREGROUND: Clean Massive Typography -->
-    <div class="relative z-10 text-center flex flex-col items-center max-w-5xl">
-      <h1 class="text-[3.2rem] sm:text-[5.5rem] md:text-[7.5rem] lg:text-[9.5rem] font-black tracking-tighter leading-[0.88] text-black">
-        ATTACHMENT<br>ANYWHERE
-      </h1>
+  <!-- ================= 2. HERO SECTION: BUILT TO BE ICONIC + 3D SHOWCASE ================= -->
+  <section id="hero" class="relative w-full min-h-[calc(100vh-6rem)] flex items-center justify-center overflow-hidden bg-[#fbfbfd] px-6 py-12 md:py-20 border-b border-neutral-200">
+    <div class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
       
-      <p class="mt-6 md:mt-8 text-base sm:text-xl md:text-2xl font-light text-neutral-600 max-w-xl">
-        The last business card you will ever hand out.
-      </p>
+      <!-- LEFT COLUMN: Brand Statement & Typography (lg:col-span-6) -->
+      <div class="lg:col-span-6 flex flex-col items-start text-left lg:pr-6">
+        
+        <!-- Headline: BUILT TO BE ICONIC -->
+        <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-black tracking-tight uppercase leading-[0.92] text-black mb-6">
+          BUILT TO BE<br><span class="text-neutral-400">ICONIC.</span>
+        </h1>
 
-      <div class="mt-10 flex items-center gap-4">
-        <a href="products.html" class="bg-black text-white px-8 py-4 rounded-full font-bold text-xs uppercase tracking-[0.2em] hover:bg-neutral-800 hover:scale-105 transition-all shadow-xl">
-          Explore Products &rarr;
-        </a>
+        <!-- Manifesto / Story Paragraph -->
+        <p class="text-neutral-600 text-base sm:text-lg md:text-xl font-light leading-relaxed max-w-xl mb-8">
+          We make premium NFC products. Designed to be attached anywhere, making sure you always stand out.
+        </p>
+
       </div>
+
+      <!-- RIGHT COLUMN: 3D Smart Card Canvas (lg:col-span-6) -->
+      <div id="card-3d-container" class="lg:col-span-6 relative w-full h-[420px] sm:h-[480px] md:h-[540px] lg:h-[580px] flex items-center justify-center">
+        <canvas id="webgl-card-canvas" class="w-full h-full block cursor-default"></canvas>
+      </div>
+
     </div>
   </section>
 
-  <!-- ================= CLIENT LOGO TICKER SECTION ================= -->
-  <section class="w-full bg-[#0c0c0e] py-12 md:py-16 relative overflow-hidden border-y border-neutral-800">
+  <!-- ================= 3. CLIENT LOGO TICKER SECTION (BELOW HERO) ================= -->
+  <section class="w-full bg-[#0c0c0e] py-12 md:py-16 relative overflow-hidden border-b border-neutral-800">
     <p class="text-center font-mono text-[10px] tracking-[0.25em] uppercase text-neutral-400 mb-8">
       Trusted By Local Businesses & Professionals
     </p>
@@ -158,22 +126,9 @@
       </div>
     </div>
   </section>
-
-  <!-- ================= BRAND STORY SECTION ================= -->
-  <section id="story" class="w-full bg-[#f4f4f5]">
     
-    <!-- Hero Manifesto -->
-    <header class="text-center mb-20 pt-16 md:pt-20 px-6">
-      <h1 class="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-black mb-6 uppercase">
-        BUILT TO BE ICONIC
-      </h1>
-      <p class="text-neutral-500 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed font-light">
-        We built Attachment Anywhere to do exactly what it says. Our goal is to produce smart, premium products that can be placed in any environment. We design iconic touchpoints meant to be attached anywhere, making sure you always stand out.
-      </p>
-    </header>
-
-  </section>
-
+  <!-- ================= 5. PRODUCTS / CATALOG GALLERY SECTION ================= -->
+  <section id="products" class="w-full bg-[#f4f4f5] pt-16 md:pt-24 pb-24">
     <!-- Auto-Scrolling Card Gallery -->
     <div class="relative w-full flex overflow-hidden">
       <div class="animate-gallery gap-6 md:gap-8 px-4">
@@ -265,10 +220,10 @@
       <!-- Section Header -->
       <div class="text-center mb-16">
         <h2 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-black mb-4 uppercase">
-          Sustainable Development.
+          Sustainable Development
         </h2>
         <p class="text-neutral-500 max-w-2xl mx-auto text-base sm:text-lg font-light">
-          We believe modern brands can scale responsibly. Our ecosystem aligns with the United Nations SDGs to build a smarter, more sustainable way to connect.
+          We believe modern brands can scale responsibly. Attachment Anywhere aligns with the United Nations SDGs to build a smarter, more sustainable way to connect.
         </p>
       </div>
 
@@ -280,7 +235,7 @@
           <span class="text-xs font-mono tracking-widest text-neutral-400 mb-3 block uppercase">SDG // 09</span>
           <h3 class="text-lg font-bold mb-3 text-black">Industry & Innovation</h3>
           <p class="text-neutral-500 text-sm leading-relaxed font-light">
-            Smart infrastructure. We build seamless digital touchpoints that modernize how professionals and local businesses share their identity, pushing networking into the future.
+            Smart infrastructure. We build modern products that simplify how professionals and local businesses share their identity, pushing networking into the future.
           </p>
         </div>
 
@@ -337,7 +292,6 @@
         <!-- FAQ & Feedback -->
         <button onclick="openModal('faq-modal')" class="text-sm text-neutral-400 font-medium hover:text-white transition-colors cursor-pointer">FAQ</button>
         <button onclick="openModal('feedback-modal')" class="text-sm text-neutral-400 font-medium hover:text-white transition-colors relative border-b border-transparent hover:border-white pb-0.5 cursor-pointer">Feedback</button>
-
       </div>
     </div>
   </footer>
@@ -367,31 +321,39 @@
     </div>
   </div>
 
-  <!-- 2. FEEDBACK MODAL (Direct to Discord) -->
+  <!-- 2. FEEDBACK MODAL -->
   <div id="feedback-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-[100]">
     <div class="bg-[#111] rounded-3xl p-8 max-w-md w-full border border-gray-800 shadow-2xl relative">
       <button onclick="closeModal('feedback-modal')" class="absolute top-6 right-6 text-gray-600 hover:text-white text-2xl cursor-pointer">&times;</button>
       
-      <h3 class="text-xl font-black tracking-tight mb-2 text-white">System Feedback</h3>
-      <p class="text-gray-500 text-sm mb-6">Leave a thought, bug report, or system suggestion. Daemon is listening.</p>
+      <h3 class="text-xl font-bold tracking-tight mb-2 text-white">Send Feedback</h3>
+      <p class="text-gray-400 text-xs mb-6 font-light leading-relaxed">Have a question, custom inquiry, or feedback for our team? Send us a direct note.</p>
       
       <div class="flex flex-col gap-4">
-        <textarea id="feedback-text" rows="4" placeholder="Enter your transmission here..." class="w-full bg-[#1a1a1a] border border-gray-800 rounded-xl p-4 text-white text-sm focus:outline-none focus:border-gray-500 resize-none"></textarea>
-        <button id="send-hq-btn" class="w-full bg-white text-black font-bold py-3 rounded-xl hover:bg-gray-200 transition-colors mt-2 cursor-pointer">Transmit to HQ</button>
+        <textarea id="feedback-text" rows="4" placeholder="Write your message here..." class="w-full bg-[#1a1a1a] border border-gray-800 rounded-xl p-4 text-white text-sm focus:outline-none focus:border-gray-500 resize-none"></textarea>
+        <button id="send-hq-btn" class="w-full bg-white text-black font-bold text-xs uppercase tracking-widest py-3.5 rounded-full hover:bg-gray-200 transition-colors mt-2 cursor-pointer">Send Message</button>
       </div>
     </div>
   </div>
 
   <!-- ================= SCRIPTS ================= -->
   <script>
-    // Mobile Menu Toggle
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    if (mobileMenuBtn && mobileMenu) {
-      mobileMenuBtn.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-      });
-    }
+    // Cart Badge Live Sync
+    (function updateNavCartBadge() {
+      const badge = document.querySelector('.nav-cart-badge');
+      if (!badge) return;
+      try {
+        const raw = localStorage.getItem('attachment_cart');
+        if (raw) {
+          const item = JSON.parse(raw);
+          badge.textContent = item.quantity || 1;
+        } else {
+          badge.textContent = '0';
+        }
+      } catch (e) {
+        badge.textContent = '0';
+      }
+    })();
 
     // Modal Visibility Helpers
     function openModal(id) {
@@ -429,31 +391,31 @@
       }
     }
 
-    // Discord Feedback Webhook Handler
+    // Secure Netlify Feedback Handler (GitGuardian Compliant)
     const sendHqBtn = document.getElementById('send-hq-btn');
     const feedbackText = document.getElementById('feedback-text');
-    const FEEDBACK_DISCORD_WEBHOOK = 'https://discordapp.com/api/webhooks/1546951637086765127/M1OwcHGy82fSzta3WRHvQ4nKmGKQ7CVxsxilgKFAfbN66ser7rEDqjt8bBhtriuW9hVb';
 
-    if(sendHqBtn) {
+    if(sendHqBtn && feedbackText) {
       sendHqBtn.addEventListener('click', async () => {
         const message = feedbackText.value.trim();
-        if (!message) { alert("Please input a message before transmitting."); return; }
+        if (!message) { alert("Please input a message before sending."); return; }
 
         const originalText = sendHqBtn.innerText;
-        sendHqBtn.innerText = "Transmitting to HQ...";
+        sendHqBtn.innerText = "Sending...";
         sendHqBtn.classList.add('opacity-70', 'cursor-not-allowed');
 
         try {
-          await fetch(FEEDBACK_DISCORD_WEBHOOK, {
+          await fetch('/.netlify/functions/process-feedback', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              content: `🛠️ **SYSTEM FEEDBACK / TRANSMISSION** 🛠️\n> **Message:** ${message}\n> **Timestamp:** ${new Date().toLocaleString()}`
+              rating: 5,
+              message: message
             })
           });
           
           feedbackText.value = '';
-          sendHqBtn.innerText = "Transmitted. Daemon is on it.";
+          sendHqBtn.innerText = "Thank you! Message sent.";
           sendHqBtn.classList.replace('bg-white', 'bg-emerald-600');
           sendHqBtn.classList.replace('text-black', 'text-white');
           
@@ -463,11 +425,11 @@
             sendHqBtn.classList.remove('opacity-70', 'cursor-not-allowed');
             sendHqBtn.classList.replace('bg-emerald-600', 'bg-white');
             sendHqBtn.classList.replace('text-white', 'text-black');
-          }, 2000);
+          }, 2200);
 
         } catch (error) {
-          console.error("Transmission Error:", error);
-          sendHqBtn.innerText = "Connection Failed. Retry.";
+          console.error("Submission Error:", error);
+          sendHqBtn.innerText = "Error sending. Please retry.";
           setTimeout(() => {
             sendHqBtn.innerText = originalText;
             sendHqBtn.classList.remove('opacity-70', 'cursor-not-allowed');
@@ -475,6 +437,553 @@
         }
       });
     }
+
+    // =======================================================
+    // THREE.JS AUTOMATIC 3D SMART CARD SHOWCASE (SPLIT HERO)
+    // =======================================================
+    (function init3DCardExperience() {
+      const canvas = document.getElementById('webgl-card-canvas');
+      const container = document.getElementById('card-3d-container');
+      const heroSection = document.getElementById('hero');
+      if (!canvas || !container || !heroSection || typeof THREE === 'undefined') return;
+
+      // 1. Scene, Camera, Renderer
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 50);
+
+      function updateDimensions() {
+        const w = container.clientWidth || 500;
+        const h = container.clientHeight || 500;
+        camera.aspect = w / h;
+        camera.position.z = w < 480 ? 5.2 : (w < 768 ? 4.8 : 4.3);
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      }
+
+      const renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        antialias: true,
+        alpha: true,
+        powerPreference: "high-performance"
+      });
+      renderer.setClearColor(0x000000, 0); // Transparent canvas for clean white hero background
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.05;
+      renderer.outputEncoding = THREE.sRGBEncoding;
+      updateDimensions();
+
+      // 2. Studio Lighting & Specular Highlights (Calibrated for White Gallery Atmosphere)
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.65);
+      scene.add(ambientLight);
+
+      const keyLight = new THREE.DirectionalLight(0xffffff, 1.8);
+      keyLight.position.set(4, 5, 5);
+      scene.add(keyLight);
+
+      const rimLightLeft = new THREE.DirectionalLight(0x99bbff, 1.3);
+      rimLightLeft.position.set(-5, 0, -4);
+      scene.add(rimLightLeft);
+
+      const rimLightRight = new THREE.DirectionalLight(0xffeedd, 1.3);
+      rimLightRight.position.set(5, 2, -4);
+      scene.add(rimLightRight);
+
+      // Specular sheen light that sweeps across the card face as it rotates
+      const sheenLight = new THREE.DirectionalLight(0xffffff, 1.6);
+      sheenLight.position.set(0, 3, 5);
+      scene.add(sheenLight);
+
+      // 3. Card Proportions (ISO/IEC 7810 ID-1 standard)
+      const cardW = 3.37;
+      const cardH = 2.125;
+      const radius = 0.14;
+      const plateDepth = 0.012; // 0.012 depth per face, 0.024 total thickness (~0.8mm)
+
+      function createCardShape(w, h, r) {
+        const s = new THREE.Shape();
+        const x = -w / 2, y = -h / 2;
+        s.moveTo(x + r, y);
+        s.lineTo(x + w - r, y);
+        s.quadraticCurveTo(x + w, y, x + w, y + r);
+        s.lineTo(x + w, y + h - r);
+        s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+        s.lineTo(x + r, y + h);
+        s.quadraticCurveTo(x, y + h, x, y + h - r);
+        s.lineTo(x, y + r);
+        s.quadraticCurveTo(x, y, x + r, y);
+        return s;
+      }
+
+      const plateGeo = new THREE.ExtrudeGeometry(createCardShape(cardW, cardH, radius), {
+        depth: plateDepth,
+        bevelEnabled: true,
+        bevelSegments: 3,
+        steps: 1,
+        bevelSize: 0.008,
+        bevelThickness: 0.008
+      });
+      plateGeo.center();
+
+      // Normalize UV mapping across geometry bounding box so textures fit the card face edge-to-edge
+      function normalizeCardUVs(geometry) {
+        geometry.computeBoundingBox();
+        const box = geometry.boundingBox;
+        const sizeX = box.max.x - box.min.x;
+        const sizeY = box.max.y - box.min.y;
+        const pos = geometry.attributes.position;
+        const uvs = geometry.attributes.uv;
+
+        for (let i = 0; i < uvs.count; i++) {
+          const x = pos.getX(i);
+          const y = pos.getY(i);
+          uvs.setXY(i, (x - box.min.x) / sizeX, (y - box.min.y) / sizeY);
+        }
+        uvs.needsUpdate = true;
+      }
+      normalizeCardUVs(plateGeo);
+
+      // 4. Authentic Physical Matte Black Texture Processor
+      function loadMatteBlackTexture(url, onReady) {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          const cvs = document.createElement('canvas');
+          cvs.width = img.width;
+          cvs.height = img.height;
+          const ctx = cvs.getContext('2d');
+          ctx.drawImage(img, 0, 0);
+
+          const imgData = ctx.getImageData(0, 0, cvs.width, cvs.height);
+          const d = imgData.data;
+
+          // Remap dark charcoal background down to genuine physical matte black (#070709)
+          // while preserving crisp white logos, typography, contactless icon, and QR code
+          for (let i = 0; i < d.length; i += 4) {
+            const lum = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+            if (lum < 55) {
+              const f = Math.max(0, (lum - 15) / 40);
+              d[i] = Math.round(7 + f * 6);
+              d[i + 1] = Math.round(7 + f * 6);
+              d[i + 2] = Math.round(9 + f * 7);
+            } else {
+              d[i] = Math.min(255, Math.round(d[i] * 1.05));
+              d[i + 1] = Math.min(255, Math.round(d[i] * 1.05));
+              d[i + 2] = Math.min(255, Math.round(d[i] * 1.05));
+            }
+          }
+          ctx.putImageData(imgData, 0, 0);
+
+          const tex = new THREE.CanvasTexture(cvs);
+          tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+          tex.generateMipmaps = true;
+          tex.minFilter = THREE.LinearMipmapLinearFilter;
+          tex.magFilter = THREE.LinearFilter;
+          tex.wrapS = THREE.ClampToEdgeWrapping;
+          tex.wrapT = THREE.ClampToEdgeWrapping;
+          tex.encoding = THREE.sRGBEncoding;
+          if (onReady) onReady(tex);
+        };
+        img.src = url;
+      }
+
+      // 5. Monolithic Dual-Sided Smart Card Assembly (No Chip on Front!)
+      const cardGroup = new THREE.Group();
+      scene.add(cardGroup);
+
+      // Precision CNC milled dark titanium edge material
+      const edgeMat = new THREE.MeshStandardMaterial({
+        color: 0x141418,
+        roughness: 0.32,
+        metalness: 0.85
+      });
+
+      // Front Face (Authentic card-design.png - Flawless matte black, zero chip)
+      const frontMat = new THREE.MeshPhysicalMaterial({
+        color: 0xffffff,
+        roughness: 0.48,
+        metalness: 0.08,
+        clearcoat: 0.05,
+        clearcoatRoughness: 0.2
+      });
+      const frontMesh = new THREE.Mesh(plateGeo, [frontMat, edgeMat]);
+      frontMesh.position.z = 0.007;
+      cardGroup.add(frontMesh);
+
+      loadMatteBlackTexture('card-design.png', (tex) => {
+        frontMat.map = tex;
+        frontMat.needsUpdate = true;
+      });
+
+      // Back Face (Authentic nfc-back.png - Contactless wave & tap instructions)
+      const backMat = new THREE.MeshPhysicalMaterial({
+        color: 0xffffff,
+        roughness: 0.48,
+        metalness: 0.08,
+        clearcoat: 0.05,
+        clearcoatRoughness: 0.2
+      });
+      const backMesh = new THREE.Mesh(plateGeo, [backMat, edgeMat]);
+      backMesh.position.z = -0.007;
+      backMesh.rotation.y = Math.PI; // Orient so contactless tap icon & text read unmirrored
+      cardGroup.add(backMesh);
+
+      loadMatteBlackTexture('nfc-back.png', (tex) => {
+        backMat.map = tex;
+        backMat.needsUpdate = true;
+      });
+
+      // 6. Dynamic Ground Contact Shadow on White Studio Surface
+      const shadowCanvas = document.createElement('canvas');
+      shadowCanvas.width = 256;
+      shadowCanvas.height = 256;
+      const sCtx = shadowCanvas.getContext('2d');
+      const sGrad = sCtx.createRadialGradient(128, 128, 10, 128, 128, 120);
+      sGrad.addColorStop(0, 'rgba(0, 0, 0, 0.35)');
+      sGrad.addColorStop(0.35, 'rgba(0, 0, 0, 0.20)');
+      sGrad.addColorStop(0.7, 'rgba(0, 0, 0, 0.05)');
+      sGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      sCtx.fillStyle = sGrad;
+      sCtx.fillRect(0, 0, 256, 256);
+
+      const shadowTex = new THREE.CanvasTexture(shadowCanvas);
+      const shadowPlane = new THREE.Mesh(
+        new THREE.PlaneGeometry(4.4, 2.2),
+        new THREE.MeshBasicMaterial({
+          map: shadowTex,
+          transparent: true,
+          opacity: 0.5,
+          depthWrite: false
+        })
+      );
+      shadowPlane.rotation.x = -Math.PI / 2;
+      shadowPlane.position.y = -1.55;
+      scene.add(shadowPlane);
+
+      // 7. Interactive Magnetic Cursor Tilt & Motion Choreography
+      let targetMouseX = 0, targetMouseY = 0;
+      let smoothMouseX = 0, smoothMouseY = 0;
+
+      heroSection.addEventListener('mousemove', (e) => {
+        const rect = heroSection.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        targetMouseX = (e.clientX - cx) / (rect.width / 2);
+        targetMouseY = (e.clientY - cy) / (rect.height / 2);
+      }, { passive: true });
+
+      heroSection.addEventListener('mouseleave', () => {
+        targetMouseX = 0;
+        targetMouseY = 0;
+      });
+
+      // 8. Automatic Cinematic Showcase Loop
+      const clock = new THREE.Clock();
+      let isVisible = true;
+      const observer = new IntersectionObserver(([entry]) => {
+        isVisible = entry.isIntersecting;
+      }, { threshold: 0.05 });
+      observer.observe(heroSection);
+
+      function animate() {
+        requestAnimationFrame(animate);
+        if (!isVisible) return;
+
+        const elapsedTime = clock.getElapsedTime();
+
+        // Smooth mouse damping
+        smoothMouseX += (targetMouseX - smoothMouseX) * 0.05;
+        smoothMouseY += (targetMouseY - smoothMouseY) * 0.05;
+
+        // Compound organic harmonic levitation
+        const floatY = Math.sin(elapsedTime * 1.1) * 0.07 + Math.sin(elapsedTime * 2.2) * 0.02;
+        cardGroup.position.y = floatY;
+
+        // Synchronize ground shadow with levitation
+        shadowPlane.scale.set(1.0 + floatY * 0.6, 1.0 + floatY * 0.6, 1.0);
+        shadowPlane.material.opacity = 0.5 - floatY * 0.2;
+
+        // Silky continuous 360° turntable presentation
+        const baseAngle = elapsedTime * 0.42;
+        cardGroup.rotation.y = baseAngle + (smoothMouseX * 0.28);
+        cardGroup.rotation.x = 0.12 + Math.sin(elapsedTime * 0.75) * 0.04 + (-smoothMouseY * 0.2);
+        cardGroup.rotation.z = Math.cos(elapsedTime * 0.9) * 0.025;
+
+        // Dynamic light sweep that tracks rotation to create luxury metallic gleam
+        sheenLight.position.x = Math.sin(baseAngle) * 4.0;
+        sheenLight.position.z = Math.cos(baseAngle) * 4.0 + 2.0;
+
+        renderer.render(scene, camera);
+      }
+      requestAnimationFrame(animate);
+
+      // Resize Listener
+      window.addEventListener('resize', updateDimensions);
+      window.addEventListener('orientationchange', updateDimensions);
+    })();
+
+    // =========================================================================
+    // 3D HARDWARE STAGE (EXPLODED VIEW & MOTION SYNC)
+    // =========================================================================
+    (function initHardwareStage3D() {
+      const canvas = document.getElementById('hardware-stage-canvas');
+      const stage = document.getElementById('hardware-stage');
+      const bgText = document.getElementById('hardware-bg-text');
+      const telemetry = document.getElementById('telemetry-overlay');
+      const btnDefault = document.getElementById('cam-default-btn');
+      const btnExploded = document.getElementById('cam-exploded-btn');
+
+      if (!canvas || !stage || typeof THREE === 'undefined') return;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 100);
+      camera.position.set(0, 0, 6.2);
+
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.1;
+
+      // Studio Lighting: Warm amber key, cool ambient fill, metallic sheen
+      const ambient = new THREE.AmbientLight(0x1a2230, 0.55);
+      scene.add(ambient);
+
+      const keyLight = new THREE.DirectionalLight(0xff7a00, 2.4);
+      keyLight.position.set(4, 5, 4);
+      scene.add(keyLight);
+
+      const rimLight = new THREE.DirectionalLight(0xd0e4f5, 1.8);
+      rimLight.position.set(-4, 2, -4);
+      scene.add(rimLight);
+
+      const emberFill = new THREE.DirectionalLight(0xffaa33, 1.2);
+      emberFill.position.set(-2, -3, 3);
+      scene.add(emberFill);
+
+      // Hierarchical Assembly
+      const stageGroup = new THREE.Group();
+      scene.add(stageGroup);
+
+      const cardAssembly = new THREE.Group();
+      stageGroup.add(cardAssembly);
+
+      const frontGroup = new THREE.Group();
+      const antennaGroup = new THREE.Group();
+      const backGroup = new THREE.Group();
+
+      cardAssembly.add(frontGroup);
+      cardAssembly.add(antennaGroup);
+      cardAssembly.add(backGroup);
+
+      // Shape Helper
+      function createCardShape(w, h, r) {
+        const s = new THREE.Shape();
+        const x = -w / 2, y = -h / 2;
+        s.moveTo(x + r, y);
+        s.lineTo(x + w - r, y);
+        s.quadraticCurveTo(x + w, y, x + w, y + r);
+        s.lineTo(x + w, y + h - r);
+        s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+        s.lineTo(x + r, y + h);
+        s.quadraticCurveTo(x, y + h, x, y + h - r);
+        s.lineTo(x, y + r);
+        s.quadraticCurveTo(x, y, x + r, y);
+        return s;
+      }
+
+      const cardW = 3.37, cardH = 2.125, radius = 0.14;
+      const cardShape = createCardShape(cardW, cardH, radius);
+
+      // Layer 1: Front Outer Casing
+      const casingGeo = new THREE.ExtrudeGeometry(cardShape, {
+        depth: 0.016,
+        bevelEnabled: true,
+        bevelSegments: 3,
+        steps: 1,
+        bevelSize: 0.008,
+        bevelThickness: 0.008
+      });
+      casingGeo.center();
+
+      const frontMat = new THREE.MeshPhysicalMaterial({
+        color: 0x0c0c0f,
+        roughness: 0.38,
+        metalness: 0.15,
+        clearcoat: 0.12,
+        clearcoatRoughness: 0.25
+      });
+      const edgeMat = new THREE.MeshStandardMaterial({
+        color: 0x222226,
+        roughness: 0.3,
+        metalness: 0.85
+      });
+
+      const frontMesh = new THREE.Mesh(casingGeo, [frontMat, edgeMat]);
+      frontGroup.add(frontMesh);
+
+      // Layer 2: Copper Antenna Trace Matrix + Central Silicon Die
+      const polyimideGeo = new THREE.PlaneGeometry(cardW - 0.15, cardH - 0.15);
+      const polyimideMat = new THREE.MeshStandardMaterial({
+        color: 0x160c04,
+        roughness: 0.5,
+        metalness: 0.1,
+        transparent: true,
+        opacity: 0.9,
+        side: THREE.DoubleSide
+      });
+      const polyimideMesh = new THREE.Mesh(polyimideGeo, polyimideMat);
+      antennaGroup.add(polyimideMesh);
+
+      // Concentric Copper Trace Coils (6 loops)
+      for (let l = 0; l < 6; l++) {
+        const inset = 0.1 + l * 0.045;
+        const lw = cardW - inset * 2;
+        const lh = cardH - inset * 2;
+        const loopShape = createCardShape(lw, lh, Math.max(0.04, radius - inset * 0.5));
+        const edgeGeo = new THREE.EdgesGeometry(new THREE.ShapeGeometry(loopShape));
+        const copperCoil = new THREE.LineSegments(edgeGeo, new THREE.LineBasicMaterial({
+          color: 0xdf7c38,
+          linewidth: 2
+        }));
+        copperCoil.position.z = 0.002;
+        antennaGroup.add(copperCoil);
+      }
+
+      // Central Silicon Microchip Die
+      const dieGeo = new THREE.BoxGeometry(0.3, 0.3, 0.035);
+      const dieMat = new THREE.MeshStandardMaterial({
+        color: 0x111116,
+        roughness: 0.15,
+        metalness: 0.92
+      });
+      const chipDie = new THREE.Mesh(dieGeo, dieMat);
+      chipDie.position.z = 0.015;
+      antennaGroup.add(chipDie);
+
+      // Solder bond pads
+      const padGeo = new THREE.BoxGeometry(0.06, 0.04, 0.02);
+      const padMat = new THREE.MeshStandardMaterial({ color: 0xddcc88, metalness: 0.95, roughness: 0.2 });
+      [[-0.1, 0.12], [0.1, 0.12], [-0.1, -0.12], [0.1, -0.12]].forEach(([px, py]) => {
+        const pad = new THREE.Mesh(padGeo, padMat);
+        pad.position.set(px, py, 0.025);
+        antennaGroup.add(pad);
+      });
+
+      // Layer 3: Rear Chassis
+      const backMat = new THREE.MeshPhysicalMaterial({
+        color: 0x0c0c0f,
+        roughness: 0.45,
+        metalness: 0.2
+      });
+      const backMesh = new THREE.Mesh(casingGeo, [backMat, edgeMat]);
+      backMesh.rotation.y = Math.PI;
+      backGroup.add(backMesh);
+
+      // Interaction State
+      let manualExploded = false;
+      let targetExplosion = 0;
+      let currentExplosion = 0;
+      let mouseX = 0, mouseY = 0;
+      let smoothMouseX = 0, smoothMouseY = 0;
+
+      window.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+        mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+      }, { passive: true });
+
+      if (btnDefault && btnExploded) {
+        btnDefault.addEventListener('click', () => {
+          manualExploded = false;
+          btnDefault.className = 'px-4 py-2 rounded-full text-[10px] font-mono uppercase tracking-wider bg-white text-black font-bold transition-all cursor-pointer';
+          btnExploded.className = 'px-4 py-2 rounded-full text-[10px] font-mono uppercase tracking-wider text-neutral-400 hover:text-white transition-all cursor-pointer';
+        });
+        btnExploded.addEventListener('click', () => {
+          manualExploded = true;
+          btnExploded.className = 'px-4 py-2 rounded-full text-[10px] font-mono uppercase tracking-wider bg-white text-black font-bold transition-all cursor-pointer';
+          btnDefault.className = 'px-4 py-2 rounded-full text-[10px] font-mono uppercase tracking-wider text-neutral-400 hover:text-white transition-all cursor-pointer';
+        });
+      }
+
+      // Performance: Intersection Observer to pause rendering when offscreen
+      let isStageVisible = false;
+      const observer = new IntersectionObserver(([entry]) => {
+        isStageVisible = entry.isIntersecting;
+      }, { threshold: 0.01 });
+      observer.observe(stage);
+
+      function handleResize() {
+        const w = canvas.clientWidth || window.innerWidth;
+        const h = canvas.clientHeight || window.innerHeight;
+        camera.aspect = w / h;
+        camera.position.z = w < 640 ? 7.2 : 5.8;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+      }
+      window.addEventListener('resize', handleResize);
+      handleResize();
+
+      const clock = new THREE.Clock();
+      function animate() {
+        requestAnimationFrame(animate);
+        if (!isStageVisible) return;
+
+        const t = clock.getElapsedTime();
+
+        // Calculate Scroll Progress within stage runway
+        const rect = stage.getBoundingClientRect();
+        const scrollProgress = THREE.MathUtils.clamp(-rect.top / (rect.height - window.innerHeight), 0, 1);
+
+        // Parallax background text
+        if (bgText) {
+          bgText.style.transform = 'translateY(' + ((scrollProgress - 0.5) * 80) + 'px)';
+        }
+
+        // Determine target explosion (30% to 70% scroll milestone)
+        if (manualExploded) {
+          targetExplosion = 1.0;
+        } else {
+          if (scrollProgress >= 0.25 && scrollProgress <= 0.75) {
+            targetExplosion = Math.sin(((scrollProgress - 0.25) / 0.5) * Math.PI);
+          } else {
+            targetExplosion = 0;
+          }
+        }
+
+        currentExplosion += (targetExplosion - currentExplosion) * 0.08;
+
+        // Explode layers along Z-axis
+        const explodeDist = currentExplosion * 1.6;
+        frontGroup.position.z = explodeDist;
+        antennaGroup.position.z = 0;
+        backGroup.position.z = -explodeDist;
+
+        // Telemetry HUD opacity fade
+        if (telemetry) {
+          telemetry.style.opacity = currentExplosion > 0.15 ? String(Math.min(1, (currentExplosion - 0.15) * 2)) : '0';
+        }
+
+        // Smooth Mouse follow with lerping
+        smoothMouseX += (mouseX - smoothMouseX) * 0.05;
+        smoothMouseY += (mouseY - smoothMouseY) * 0.05;
+
+        // Presentation Rotation & Dynamics
+        const baseRotationY = (scrollProgress * Math.PI * 1.5) + (t * 0.15) + (smoothMouseX * 0.4);
+        const explodedTiltX = currentExplosion * 0.45 + (smoothMouseY * 0.25);
+        const explodedAngleY = currentExplosion * 0.65;
+
+        cardAssembly.rotation.y = baseRotationY + explodedAngleY;
+        cardAssembly.rotation.x = 0.2 + explodedTiltX;
+        cardAssembly.rotation.z = Math.sin(t * 0.8) * 0.03 + (currentExplosion * 0.15);
+
+        // Dynamic light orbit creates warm amber specular reflections
+        keyLight.position.x = Math.cos(t * 0.6) * 4.5;
+        keyLight.position.z = Math.sin(t * 0.6) * 4.5 + 3.0;
+
+        renderer.render(scene, camera);
+      }
+      requestAnimationFrame(animate);
+    })();
   </script>
 </body>
 </html>

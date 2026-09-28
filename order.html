@@ -23,30 +23,20 @@
         <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-10 md:h-20 w-auto object-contain" />
       </a>
       
-      <!-- Desktop Navigation Links -->
-      <div class="hidden md:flex items-center gap-10">
-        <div class="flex items-center gap-8">
-          <a href="index.html" class="text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black transition-colors">Home</a>
-          <a href="products.html" class="text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black transition-colors">Products</a>
-        </div>
-        <button onclick="window.location.href='order.html'" class="bg-black text-white px-8 py-3 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] shadow-xl cursor-default">
-          Order Now
-        </button>
+      <!-- Streamlined Action Cluster: Home & Cart -->
+      <div class="flex items-center gap-6 sm:gap-8">
+        <a href="index.html" class="text-xs sm:text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black hover:opacity-80 transition-all">
+          Home
+        </a>
+        <a href="order.html" class="relative bg-black text-white hover:bg-neutral-800 transition-all p-2.5 rounded-full flex items-center justify-center shadow-xs" aria-label="Cart">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span class="nav-cart-badge absolute -top-1 -right-1 bg-white text-black border border-neutral-200 text-[9px] font-mono font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-xs">0</span>
+        </a>
       </div>
-
-      <!-- Mobile Hamburger Button -->
-      <button id="mobile-menu-btn" class="md:hidden flex flex-col items-end gap-1.5 p-2 focus:outline-none cursor-pointer" aria-label="Toggle Menu">
-        <span class="w-6 h-0.5 bg-black rounded-full transition-transform"></span>
-        <span class="w-5 h-0.5 bg-black rounded-full transition-opacity"></span>
-        <span class="w-6 h-0.5 bg-black rounded-full transition-transform"></span>
-      </button>
-    </div>
-
-    <!-- Mobile Menu Dropdown -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-neutral-200 px-6 py-6 flex flex-col gap-4">
-      <a href="index.html" class="text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Home</a>
-      <a href="products.html" class="text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Products</a>
-      <a href="order.html" class="bg-black text-white text-center py-3 rounded-xl text-xs font-bold uppercase tracking-widest mt-2">Order Now</a>
     </div>
   </nav>
 
@@ -80,7 +70,7 @@
         <!-- PRODUCT & QUANTITY CONTROLS -->
         <div class="flex flex-col gap-4">
           <div>
-            <label class="block text-[10px] font-bold uppercase tracking-widest text-neutral-400 mb-2">Smart Touchpoint Selection</label>
+            <label class="block text-[10px] font-bold uppercase tracking-widest text-neutral-400 mb-2">Product Selection</label>
             <div class="relative">
               <select id="productSelect" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-2xl px-5 py-4 text-sm font-bold text-neutral-900 outline-none transition-colors appearance-none cursor-pointer">
                 <option value="executive" data-price="1200">Smart Executive Card (₱1,200)</option>
@@ -257,37 +247,46 @@
         </div>
         <div>
           <h4 class="font-bold text-white mb-1">How soon will my order ship?</h4>
-          <p>Each smart touchpoint is pre-programmed, verified, and dispatched via courier within 24 to 48 hours of payment verification.</p>
+          <p>Each order is pre-programmed, verified, and dispatched via courier within 24 to 48 hours of payment verification.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 2. FEEDBACK MODAL (Direct to Discord) -->
+  <!-- 2. FEEDBACK MODAL -->
   <div id="feedback-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-[100]">
     <div class="bg-[#111] rounded-3xl p-8 max-w-md w-full border border-gray-800 shadow-2xl relative">
       <button onclick="closeModal('feedback-modal')" class="absolute top-6 right-6 text-gray-600 hover:text-white text-2xl cursor-pointer">&times;</button>
       
-      <h3 class="text-xl font-black tracking-tight mb-2 text-white">System Feedback</h3>
-      <p class="text-gray-500 text-sm mb-6">Leave a thought or suggestion. Daemon is listening.</p>
+      <h3 class="text-xl font-bold tracking-tight mb-2 text-white">Send Feedback</h3>
+      <p class="text-gray-400 text-xs mb-6 font-light leading-relaxed">Have a question, custom inquiry, or feedback for our team? Send us a direct note.</p>
       
       <div class="flex flex-col gap-4">
-        <textarea id="feedback-text" rows="4" placeholder="Type your message here..." class="w-full bg-[#1a1a1a] border border-gray-800 rounded-xl p-4 text-white text-sm focus:outline-none focus:border-gray-500 resize-none"></textarea>
-        <button id="send-hq-btn" class="w-full bg-white text-black font-bold py-3 rounded-xl hover:bg-gray-200 transition-colors mt-2 cursor-pointer">Send to HQ</button>
+        <textarea id="feedback-text" rows="4" placeholder="Write your message here..." class="w-full bg-[#1a1a1a] border border-gray-800 rounded-xl p-4 text-white text-sm focus:outline-none focus:border-gray-500 resize-none"></textarea>
+        <button id="send-hq-btn" class="w-full bg-white text-black font-bold text-xs uppercase tracking-widest py-3.5 rounded-full hover:bg-gray-200 transition-colors mt-2 cursor-pointer">Send Message</button>
       </div>
     </div>
   </div>
 
   <!-- ================= JAVASCRIPT ================= -->
   <script>
-    // 1. MOBILE MENU TOGGLE
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    if (mobileMenuBtn && mobileMenu) {
-      mobileMenuBtn.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-      });
+    // 1. CART BADGE LIVE SYNC
+    function updateNavCartBadge() {
+      const badge = document.querySelector('.nav-cart-badge');
+      if (!badge) return;
+      try {
+        const raw = localStorage.getItem('attachment_cart');
+        if (raw) {
+          const item = JSON.parse(raw);
+          badge.textContent = item.quantity || 1;
+        } else {
+          badge.textContent = '0';
+        }
+      } catch (e) {
+        badge.textContent = '0';
+      }
     }
+    updateNavCartBadge();
 
     // 2. MODAL CONTROLS
     function openModal(id) {
@@ -545,6 +544,7 @@
 
         if (response.ok && data.checkoutUrl) {
           localStorage.removeItem('attachment_cart');
+          updateNavCartBadge();
           window.location.href = data.checkoutUrl;
         } else {
           showToast(`Checkout failed: ${data.error || 'Please try again.'}`, false);
@@ -577,20 +577,18 @@
         feedbackText.classList.remove('border-red-500');
 
         const originalText = sendHqBtn.innerText;
-        sendHqBtn.innerText = "Transmitting to HQ...";
+        sendHqBtn.innerText = "Sending...";
         sendHqBtn.classList.add('opacity-70', 'cursor-not-allowed');
 
         try {
-          const res = await fetch('/.netlify/functions/send-feedback', {
+          const res = await fetch('/.netlify/functions/process-feedback', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: message, page: 'Order Checkout' })
+            body: JSON.stringify({ rating: 5, message: message })
           });
 
-          if (!res.ok) throw new Error('Gateway response error');
-          
           feedbackText.value = '';
-          sendHqBtn.innerText = "Transmitted. Daemon is on it.";
+          sendHqBtn.innerText = "Thank you! Message sent.";
           sendHqBtn.classList.replace('bg-white', 'bg-emerald-600');
           sendHqBtn.classList.replace('text-black', 'text-white');
           
@@ -600,7 +598,7 @@
             sendHqBtn.classList.remove('opacity-70', 'cursor-not-allowed');
             sendHqBtn.classList.replace('bg-emerald-600', 'bg-white');
             sendHqBtn.classList.replace('text-white', 'text-black');
-          }, 2000);
+          }, 2200);
 
         } catch (error) {
           console.error("Error:", error);
