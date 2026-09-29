@@ -493,6 +493,8 @@
       // Synchronize with Meadhall Operations Production Pipeline
       try {
         const storedOrders = JSON.parse(localStorage.getItem('attachment_meadhall_orders') || '[]');
+        const storedSerials = JSON.parse(localStorage.getItem('attachment_meadhall_serials') || '[]');
+        const storedAudit = JSON.parse(localStorage.getItem('attachment_meadhall_audit_logs') || '[]');
         const now = new Date();
         const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         const refId = 'AA-' + Math.floor(100000 + Math.random() * 900000);
@@ -523,8 +525,30 @@
           }
         };
 
+        // Mirror Order
         storedOrders.unshift(meadhallOrder);
         localStorage.setItem('attachment_meadhall_orders', JSON.stringify(storedOrders));
+
+        // Mirror Serial Entry (Awaiting Hardware Write)
+        const brandName = customDetails?.company || customDetails?.businessName || customDetails?.brand || "Attachment Anywhere";
+        storedSerials.unshift({
+          serial: autoSerial,
+          client: customerName,
+          brand: brandName,
+          targetUrl: targetRoute,
+          localUrl: `aa${autoSerial}.html`,
+          lastWritten: "Pending",
+          status: "Pending Write"
+        });
+        localStorage.setItem('attachment_meadhall_serials', JSON.stringify(storedSerials));
+
+        // Mirror Audit Log Entry
+        storedAudit.unshift({
+          timestamp: timeStr,
+          action: 'ORDER_SUBMITTED',
+          details: `Order ${refId} (${orderPayload.productName}) submitted by ${customerName} (₱${totalAmount.toLocaleString('en-US')})`
+        });
+        localStorage.setItem('attachment_meadhall_audit_logs', JSON.stringify(storedAudit.slice(0, 150)));
       } catch (e) {
         console.warn('Could not mirror order to Meadhall local storage:', e);
       }
