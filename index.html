@@ -2,7 +2,7 @@
 <html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Attachment Anywhere</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="alternate icon" type="image/png" href="favicon.png">
@@ -45,23 +45,23 @@
   </style>
 </head>
 
-<body class="bg-[#f4f4f5] text-black font-sans antialiased selection:bg-black selection:text-white flex flex-col min-h-screen">
+<body class="bg-[#f4f4f5] text-black font-sans antialiased selection:bg-black selection:text-white flex flex-col min-h-screen overflow-x-hidden">
 
-  <!-- ================= UNIVERSAL NAVIGATION BAR ================= -->
-  <nav class="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 transition-all">
-    <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+  <!-- Navigation Bar -->
+  <nav class="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 transition-all pt-[env(safe-area-inset-top)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 sm:h-24 flex items-center justify-between">
       
       <!-- Brand Logo -->
-      <a href="index.html" class="flex items-center">
-        <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-10 md:h-20 w-auto object-contain" />
+      <a href="index.html" class="flex items-center min-h-[44px]">
+        <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-9 sm:h-12 md:h-16 w-auto object-contain" />
       </a>
       
       <!-- Streamlined Action Cluster: Home & Cart -->
-      <div class="flex items-center gap-6 sm:gap-8">
-        <a href="index.html" class="text-xs sm:text-sm font-bold uppercase tracking-widest text-black hover:opacity-60 transition-opacity">
+      <div class="flex items-center gap-4 sm:gap-8">
+        <a href="index.html" class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center text-xs sm:text-sm font-bold uppercase tracking-widest text-black hover:opacity-60 transition-opacity">
           Home
         </a>
-        <a href="order.html" class="relative bg-black text-white hover:bg-neutral-800 transition-all p-2.5 rounded-full flex items-center justify-center shadow-xs" aria-label="Cart">
+        <a href="order.html" class="relative min-h-[44px] min-w-[44px] bg-black text-white hover:bg-neutral-800 transition-all p-2.5 rounded-full inline-flex items-center justify-center shadow-xs" aria-label="Cart">
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
             <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
             <line x1="3" y1="6" x2="21" y2="6"/>
@@ -73,53 +73,49 @@
     </div>
   </nav>
 
-  <div class="pt-24"></div> <!-- Header Spacer -->
+  <div class="pt-20 sm:pt-24"></div>
 
-  <!-- ================= 2. HERO SECTION: BUILT TO BE ICONIC + 3D SHOWCASE ================= -->
-  <section id="hero" class="relative w-full min-h-[calc(100vh-6rem)] flex items-center justify-center overflow-hidden bg-[#fbfbfd] px-6 py-12 md:py-20 border-b border-neutral-200">
-    <div class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
+  <!-- Hero Section: Brand Statement & 3D Stage -->
+  <section id="hero" class="relative w-full min-h-[calc(100vh-5rem)] sm:min-h-[calc(100vh-6rem)] flex items-center justify-center overflow-hidden bg-[#fbfbfd] px-4 sm:px-6 py-10 sm:py-12 md:py-20 border-b border-neutral-200">
+    <div class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-8 items-center relative z-10">
       
-      <!-- LEFT COLUMN: Brand Statement & Typography (lg:col-span-6) -->
+      <!-- Brand Statement & Typography -->
       <div class="lg:col-span-6 flex flex-col items-start text-left lg:pr-6">
-        
-        <!-- Headline: BUILT TO BE ICONIC -->
-        <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-black tracking-tight uppercase leading-[0.92] text-black mb-6">
+        <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight uppercase leading-[0.92] text-black mb-4 sm:mb-6 break-words">
           BUILT TO BE<br><span class="text-neutral-400">ICONIC.</span>
         </h1>
 
-        <!-- Manifesto / Story Paragraph -->
-        <p class="text-neutral-600 text-base sm:text-lg md:text-xl font-light leading-relaxed max-w-xl mb-8">
-          We make premium NFC products. Designed to be attached anywhere, making sure you always stand out.
+        <p class="text-neutral-600 text-sm sm:text-base md:text-lg lg:text-xl font-light leading-relaxed max-w-xl mb-6 sm:mb-8">
+          We manufacture precision NFC cards and contactless counter hardware. Engineered to replace disposable paper and give modern brands a permanent physical-to-digital touchpoint.
         </p>
 
+        <div class="flex flex-wrap items-center gap-3">
+          <a href="#products" class="bg-black text-white px-7 py-3.5 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-neutral-800 transition-all min-h-[48px] inline-flex items-center justify-center">
+            Explore Catalog
+          </a>
+          <a href="order.html" class="border border-neutral-300 bg-white text-black px-7 py-3.5 rounded-xl text-xs font-bold uppercase tracking-widest hover:border-black transition-all min-h-[48px] inline-flex items-center justify-center">
+            Configure Card
+          </a>
+        </div>
       </div>
 
-      <!-- RIGHT COLUMN: 3D Smart Card Canvas (lg:col-span-6) -->
-      <div id="card-3d-container" class="lg:col-span-6 relative w-full h-[420px] sm:h-[480px] md:h-[540px] lg:h-[580px] flex items-center justify-center">
-        <canvas id="webgl-card-canvas" class="w-full h-full block cursor-default"></canvas>
+      <!-- 3D Smart Card Canvas Stage -->
+      <div id="card-3d-container" class="lg:col-span-6 relative w-full h-[340px] sm:h-[460px] md:h-[520px] lg:h-[580px] flex items-center justify-center touch-pan-y">
+        <canvas id="webgl-card-canvas" class="w-full h-full block cursor-default touch-pan-y"></canvas>
       </div>
 
     </div>
   </section>
 
-  <!-- ================= 3. CLIENT LOGO TICKER SECTION (BELOW HERO) ================= -->
+  <!-- Client Ticker Section -->
   <section class="w-full bg-[#0c0c0e] py-12 md:py-16 relative overflow-hidden border-b border-neutral-800">
-    <p class="text-center font-mono text-[10px] tracking-[0.25em] uppercase text-neutral-400 mb-8">
-      Trusted By Local Businesses & Professionals
+    <p class="text-center font-mono text-[10px] tracking-[0.25em] uppercase text-neutral-300 mb-8 font-medium">
+      Featured Client Installations & Businesses
     </p>
-
-    <!-- Side Gradient Fades -->
-    <div class="absolute inset-y-0 left-0 w-20 md:w-40 bg-gradient-to-r from-[#0c0c0e] to-transparent z-10 pointer-events-none"></div>
-    <div class="absolute inset-y-0 right-0 w-20 md:w-40 bg-gradient-to-l from-[#0c0c0e] to-transparent z-10 pointer-events-none"></div>
 
     <!-- Auto-Scrolling Logo Container -->
     <div class="flex overflow-hidden w-full">
       <div class="animate-logos flex items-center gap-16 md:gap-32 px-8">
-        <!-- Set 1 -->
-        <h3 class="font-black text-xl md:text-2xl tracking-tighter text-white/80 uppercase whitespace-nowrap">Sushi Maki Rolls</h3>
-        <h3 class="font-black text-xl md:text-2xl tracking-tighter text-white/80 uppercase whitespace-nowrap">Mama Bean Coffee Club</h3>
-        <h3 class="font-black text-xl md:text-2xl tracking-tighter text-white/80 uppercase whitespace-nowrap">DYKTJ Auto Supply</h3>
-        <!-- Set 2 (Duplicate for Seamless Loop) -->
         <h3 class="font-black text-xl md:text-2xl tracking-tighter text-white/80 uppercase whitespace-nowrap">Sushi Maki Rolls</h3>
         <h3 class="font-black text-xl md:text-2xl tracking-tighter text-white/80 uppercase whitespace-nowrap">Mama Bean Coffee Club</h3>
         <h3 class="font-black text-xl md:text-2xl tracking-tighter text-white/80 uppercase whitespace-nowrap">DYKTJ Auto Supply</h3>
@@ -127,20 +123,19 @@
     </div>
   </section>
     
-  <!-- ================= 5. PRODUCTS / CATALOG GALLERY SECTION ================= -->
+  <!-- Catalog Gallery Section -->
   <section id="products" class="w-full bg-[#f4f4f5] pt-16 md:pt-24 pb-24">
     <!-- Auto-Scrolling Card Gallery -->
     <div class="relative w-full flex overflow-hidden">
       <div class="animate-gallery gap-6 md:gap-8 px-4">
         
-        <!-- SET 1 -->
         <!-- Product 1: Executive Card -->
         <div class="flex flex-col group cursor-pointer w-[280px] sm:w-[350px] md:w-[420px] shrink-0" onclick="window.location.href='products.html#executive'">
           <div class="relative w-full h-[380px] sm:h-[480px] rounded-3xl overflow-hidden mb-4 bg-white border border-neutral-200 flex items-center justify-center p-8">
-            <img src="card-design.png" alt="Smart Executive Card" class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105 drop-shadow-[0_20px_30px_rgba(0,0,0,0.2)]">
-            <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-[2px]">
-              <span class="bg-black text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest shadow-2xl flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                View Product &rarr;
+            <img src="card-design.png" alt="Smart Executive Card" class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105">
+            <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+              <span class="bg-black text-white px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-widest border border-neutral-700 shadow-xs flex items-center justify-center transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                View Executive Card
               </span>
             </div>
           </div>
@@ -150,10 +145,10 @@
         <!-- Product 2: ReviewShield -->
         <div class="flex flex-col group cursor-pointer w-[280px] sm:w-[350px] md:w-[420px] shrink-0" onclick="window.location.href='products.html#reviewshield'">
           <div class="relative w-full h-[380px] sm:h-[480px] rounded-3xl overflow-hidden mb-4 bg-white border border-neutral-200 flex items-center justify-center p-8">
-            <img src="GOOGLE REVIEW.jpg" alt="ReviewShield Card" class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105 drop-shadow-[0_20px_30px_rgba(0,0,0,0.2)]">
-            <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-[2px]">
-              <span class="bg-black text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest shadow-2xl flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                View Product &rarr;
+            <img src="GOOGLE REVIEW.jpg" alt="ReviewShield Card" class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105">
+            <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+              <span class="bg-black text-white px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-widest border border-neutral-700 shadow-xs flex items-center justify-center transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                View ReviewShield&trade;
               </span>
             </div>
           </div>
@@ -163,47 +158,10 @@
         <!-- Product 3: Business Hub -->
         <div class="flex flex-col group cursor-pointer w-[280px] sm:w-[350px] md:w-[420px] shrink-0" onclick="window.location.href='products.html#hub'">
           <div class="relative w-full h-[380px] sm:h-[480px] rounded-3xl overflow-hidden mb-4 bg-white border border-neutral-200 flex items-center justify-center p-8">
-            <img src="DIGITAL HUB.jpg" alt="Business Smart Hub" class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105 drop-shadow-[0_20px_30px_rgba(0,0,0,0.2)]">
-            <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-[2px]">
-              <span class="bg-black text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest shadow-2xl flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                View Product &rarr;
-              </span>
-            </div>
-          </div>
-          <h3 class="text-xl font-bold tracking-tight px-2 text-neutral-900">Business Smart Hub</h3>
-        </div>
-
-        <!-- SET 2 (Loop duplicate) -->
-        <div class="flex flex-col group cursor-pointer w-[280px] sm:w-[350px] md:w-[420px] shrink-0" onclick="window.location.href='products.html#executive'">
-          <div class="relative w-full h-[380px] sm:h-[480px] rounded-3xl overflow-hidden mb-4 bg-white border border-neutral-200 flex items-center justify-center p-8">
-            <img src="card-design.png" alt="Smart Executive Card" class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105 drop-shadow-[0_20px_30px_rgba(0,0,0,0.2)]">
-            <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-[2px]">
-              <span class="bg-black text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest shadow-2xl flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                View Product &rarr;
-              </span>
-            </div>
-          </div>
-          <h3 class="text-xl font-bold tracking-tight px-2 text-neutral-900">Smart Executive Card</h3>
-        </div>
-
-        <div class="flex flex-col group cursor-pointer w-[280px] sm:w-[350px] md:w-[420px] shrink-0" onclick="window.location.href='products.html#reviewshield'">
-          <div class="relative w-full h-[380px] sm:h-[480px] rounded-3xl overflow-hidden mb-4 bg-white border border-neutral-200 flex items-center justify-center p-8">
-            <img src="GOOGLE REVIEW.jpg" alt="ReviewShield Card" class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105 drop-shadow-[0_20px_30px_rgba(0,0,0,0.2)]">
-            <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-[2px]">
-              <span class="bg-black text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest shadow-2xl flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                View Product &rarr;
-              </span>
-            </div>
-          </div>
-          <h3 class="text-xl font-bold tracking-tight px-2 text-neutral-900">ReviewShield&trade;</h3>
-        </div>
-
-        <div class="flex flex-col group cursor-pointer w-[280px] sm:w-[350px] md:w-[420px] shrink-0" onclick="window.location.href='products.html#hub'">
-          <div class="relative w-full h-[380px] sm:h-[480px] rounded-3xl overflow-hidden mb-4 bg-white border border-neutral-200 flex items-center justify-center p-8">
-            <img src="DIGITAL HUB.jpg" alt="Business Smart Hub" class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105 drop-shadow-[0_20px_30px_rgba(0,0,0,0.2)]">
-            <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-[2px]">
-              <span class="bg-black text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest shadow-2xl flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                View Product &rarr;
+            <img src="DIGITAL HUB.jpg" alt="Business Smart Hub" class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105">
+            <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+              <span class="bg-black text-white px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-widest border border-neutral-700 shadow-xs flex items-center justify-center transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                View Business Smart Hub
               </span>
             </div>
           </div>
@@ -214,7 +172,7 @@
     </div>
   </section>
 
-  <!-- ================= UN SDG SUSTAINABILITY SECTION ================= -->
+  <!-- UN SDG Sustainability Section -->
   <section id="sustainability" class="w-full bg-[#f4f4f5] py-20 md:py-24 px-6">
     <div class="max-w-6xl mx-auto">
       <!-- Section Header -->
@@ -235,7 +193,7 @@
           <span class="text-xs font-mono tracking-widest text-neutral-400 mb-3 block uppercase">SDG // 09</span>
           <h3 class="text-lg font-bold mb-3 text-black">Industry & Innovation</h3>
           <p class="text-neutral-500 text-sm leading-relaxed font-light">
-            Smart infrastructure. We build modern products that simplify how professionals and local businesses share their identity, pushing networking into the future.
+            Smart infrastructure. We engineer NFC hardware that replaces disposable paper business cards, modernizing how professionals and local businesses exchange contact information.
           </p>
         </div>
 
@@ -261,28 +219,28 @@
     </div>
   </section>
 
-  <!-- ================= UNIVERSAL FOOTER ================= -->
-  <footer class="w-full bg-black text-white pt-16 pb-16 px-6 md:px-12 lg:px-24 border-t border-neutral-900 mt-auto">
+  <!-- Universal Footer -->
+  <footer class="w-full bg-black text-white pt-16 pb-[calc(2.5rem+env(safe-area-inset-bottom))] px-6 md:px-12 lg:px-24 border-t border-neutral-900 mt-auto">
     <div class="max-w-7xl mx-auto flex flex-col xl:flex-row justify-between items-center gap-10 xl:gap-0">
       
       <!-- Logo -->
       <div class="flex-shrink-0">
-        <a href="index.html">
-          <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-24 md:h-32 object-contain invert opacity-95">
+        <a href="index.html" class="inline-block min-h-[44px]">
+          <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-20 sm:h-24 md:h-32 object-contain invert opacity-95">
         </a>
       </div>
 
       <!-- Links & Modals Triggers -->
-      <div class="flex flex-wrap items-center justify-center xl:justify-end gap-6 md:gap-8 w-full xl:w-auto">
+      <div class="flex flex-wrap items-center justify-center xl:justify-end gap-4 sm:gap-6 md:gap-8 w-full xl:w-auto">
         
         <!-- Instagram -->
-        <a href="https://instagram.com/attachmentanywhere" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 border border-neutral-800 rounded-full px-5 py-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 hover:bg-white hover:text-black hover:border-white transition-all duration-300">
+        <a href="https://instagram.com/attachmentanywhere" target="_blank" rel="noopener noreferrer" class="min-h-[44px] flex items-center gap-2 border border-neutral-800 rounded-full px-5 py-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 hover:bg-white hover:text-black hover:border-white active:scale-95 transition-all duration-300">
           <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
           Instagram
         </a>
 
         <!-- Messenger -->
-        <a href="https://m.me/attachmentanywhere" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 border border-neutral-800 rounded-full px-5 py-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 hover:bg-white hover:text-black hover:border-white transition-all duration-300">
+        <a href="https://m.me/attachmentanywhere" target="_blank" rel="noopener noreferrer" class="min-h-[44px] flex items-center gap-2 border border-neutral-800 rounded-full px-5 py-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 hover:bg-white hover:text-black hover:border-white active:scale-95 transition-all duration-300">
           <svg class="w-4 h-4" fill="currentColor" viewBox="0 2 24 24"><path d="M12 2C6.477 2 2 6.14 2 11.25c0 2.923 1.5 5.514 3.82 7.235V22l3.498-1.921c1.238.343 2.56.531 3.932.531 5.523 0 10-4.14 10-9.25S17.523 2 12 2zm1.094 12.383l-2.73-2.909-5.342 2.909 5.864-6.22 2.756 2.909 5.316-2.909-5.864 6.22z"/></svg>
           Messenger
         </a>
@@ -290,19 +248,19 @@
         <div class="hidden md:block h-5 w-px bg-neutral-800"></div>
 
         <!-- FAQ & Feedback -->
-        <button onclick="openModal('faq-modal')" class="text-sm text-neutral-400 font-medium hover:text-white transition-colors cursor-pointer">FAQ</button>
-        <button onclick="openModal('feedback-modal')" class="text-sm text-neutral-400 font-medium hover:text-white transition-colors relative border-b border-transparent hover:border-white pb-0.5 cursor-pointer">Feedback</button>
+        <button onclick="openModal('faq-modal')" class="min-h-[44px] px-2 text-sm text-neutral-400 font-medium hover:text-white transition-colors cursor-pointer">FAQ</button>
+        <button onclick="openModal('feedback-modal')" class="min-h-[44px] px-2 text-sm text-neutral-400 font-medium hover:text-white transition-colors relative border-b border-transparent hover:border-white pb-0.5 cursor-pointer">Feedback</button>
       </div>
     </div>
   </footer>
 
-  <!-- ================= MODALS ================= -->
+  <!-- Modals -->
   <!-- 1. FAQ MODAL -->
-  <div id="faq-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-[100]">
+  <div id="faq-modal" class="fixed inset-0 bg-black/85 hidden items-center justify-center p-4 z-[100]">
     <div class="bg-[#111] rounded-3xl p-6 max-w-md w-full border border-gray-800 shadow-2xl text-left relative">
       <div class="flex justify-between items-center pb-3 border-b border-gray-800">
         <h3 class="text-sm font-extrabold text-white uppercase tracking-wider">Frequently Asked Questions</h3>
-        <button onclick="closeModal('faq-modal')" class="text-gray-500 hover:text-white text-2xl px-2 cursor-pointer">&times;</button>
+        <button onclick="closeModal('faq-modal')" class="min-h-[44px] min-w-[44px] flex items-center justify-center text-gray-500 hover:text-white text-2xl cursor-pointer">&times;</button>
       </div>
       <div class="mt-4 space-y-4 text-sm max-h-[60vh] overflow-y-auto pr-1 text-gray-400">
         <div>
@@ -322,21 +280,21 @@
   </div>
 
   <!-- 2. FEEDBACK MODAL -->
-  <div id="feedback-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-[100]">
-    <div class="bg-[#111] rounded-3xl p-8 max-w-md w-full border border-gray-800 shadow-2xl relative">
-      <button onclick="closeModal('feedback-modal')" class="absolute top-6 right-6 text-gray-600 hover:text-white text-2xl cursor-pointer">&times;</button>
+  <div id="feedback-modal" class="fixed inset-0 bg-black/85 hidden items-center justify-center p-4 z-[100]">
+    <div class="bg-[#111] rounded-3xl p-6 sm:p-8 max-w-md w-full border border-gray-800 shadow-2xl relative">
+      <button onclick="closeModal('feedback-modal')" class="absolute top-4 right-4 min-h-[44px] min-w-[44px] flex items-center justify-center text-gray-400 hover:text-white text-2xl cursor-pointer">&times;</button>
       
       <h3 class="text-xl font-bold tracking-tight mb-2 text-white">Send Feedback</h3>
       <p class="text-gray-400 text-xs mb-6 font-light leading-relaxed">Have a question, custom inquiry, or feedback for our team? Send us a direct note.</p>
       
       <div class="flex flex-col gap-4">
-        <textarea id="feedback-text" rows="4" placeholder="Write your message here..." class="w-full bg-[#1a1a1a] border border-gray-800 rounded-xl p-4 text-white text-sm focus:outline-none focus:border-gray-500 resize-none"></textarea>
-        <button id="send-hq-btn" class="w-full bg-white text-black font-bold text-xs uppercase tracking-widest py-3.5 rounded-full hover:bg-gray-200 transition-colors mt-2 cursor-pointer">Send Message</button>
+        <textarea id="feedback-text" rows="4" placeholder="Write your message here..." class="w-full bg-[#1a1a1a] border border-gray-800 rounded-xl p-4 text-white text-[16px] sm:text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus:border-gray-500 resize-none"></textarea>
+        <button id="send-hq-btn" class="w-full min-h-[48px] bg-white text-black font-bold text-xs uppercase tracking-widest py-3.5 rounded-xl hover:bg-gray-200 active:scale-[0.98] transition-all mt-2 cursor-pointer shadow-sm">Send Message</button>
       </div>
     </div>
   </div>
 
-  <!-- ================= SCRIPTS ================= -->
+  <!-- Scripts -->
   <script>
     // Cart Badge Live Sync
     (function updateNavCartBadge() {
@@ -352,6 +310,18 @@
         }
       } catch (e) {
         badge.textContent = '0';
+      }
+    })();
+
+    // Dynamic Marquee Cloning for Infinite CSS Loops
+    (function initDynamicMarquees() {
+      const logos = document.querySelector('.animate-logos');
+      if (logos && logos.children.length > 0) {
+        logos.innerHTML += logos.innerHTML;
+      }
+      const gallery = document.querySelector('.animate-gallery');
+      if (gallery && gallery.children.length > 0) {
+        gallery.innerHTML += gallery.innerHTML;
       }
     })();
 
@@ -372,25 +342,6 @@
       }
     }
 
-    // Impact Modal Controls
-    function toggleImpactModal() {
-      const modal = document.getElementById('impact-modal');
-      const content = document.getElementById('impact-modal-content');
-      const isHidden = modal.classList.contains('opacity-0');
-
-      if (isHidden) {
-        document.body.style.overflow = 'hidden';
-        modal.classList.remove('opacity-0', 'pointer-events-none');
-        content.classList.remove('scale-95');
-        content.classList.add('scale-100');
-      } else {
-        document.body.style.overflow = '';
-        modal.classList.add('opacity-0', 'pointer-events-none');
-        content.classList.remove('scale-100');
-        content.classList.add('scale-95');
-      }
-    }
-
     // Secure Netlify Feedback Handler (GitGuardian Compliant)
     const sendHqBtn = document.getElementById('send-hq-btn');
     const feedbackText = document.getElementById('feedback-text');
@@ -398,7 +349,13 @@
     if(sendHqBtn && feedbackText) {
       sendHqBtn.addEventListener('click', async () => {
         const message = feedbackText.value.trim();
-        if (!message) { alert("Please input a message before sending."); return; }
+        if (!message) {
+          feedbackText.classList.add('border-red-500');
+          feedbackText.placeholder = 'Please enter your message before sending...';
+          feedbackText.focus();
+          return;
+        }
+        feedbackText.classList.remove('border-red-500');
 
         const originalText = sendHqBtn.innerText;
         sendHqBtn.innerText = "Sending...";
@@ -438,9 +395,7 @@
       });
     }
 
-    // =======================================================
-    // THREE.JS AUTOMATIC 3D SMART CARD SHOWCASE (SPLIT HERO)
-    // =======================================================
+    // Three.js 3D smart card showcase (split hero)
     (function init3DCardExperience() {
       const canvas = document.getElementById('webgl-card-canvas');
       const container = document.getElementById('card-3d-container');
@@ -747,269 +702,6 @@
       // Resize Listener
       window.addEventListener('resize', updateDimensions);
       window.addEventListener('orientationchange', updateDimensions);
-    })();
-
-    // =========================================================================
-    // 3D HARDWARE STAGE (EXPLODED VIEW & MOTION SYNC)
-    // =========================================================================
-    (function initHardwareStage3D() {
-      const canvas = document.getElementById('hardware-stage-canvas');
-      const stage = document.getElementById('hardware-stage');
-      const bgText = document.getElementById('hardware-bg-text');
-      const telemetry = document.getElementById('telemetry-overlay');
-      const btnDefault = document.getElementById('cam-default-btn');
-      const btnExploded = document.getElementById('cam-exploded-btn');
-
-      if (!canvas || !stage || typeof THREE === 'undefined') return;
-
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 100);
-      camera.position.set(0, 0, 6.2);
-
-      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-      renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.1;
-
-      // Studio Lighting: Warm amber key, cool ambient fill, metallic sheen
-      const ambient = new THREE.AmbientLight(0x1a2230, 0.55);
-      scene.add(ambient);
-
-      const keyLight = new THREE.DirectionalLight(0xff7a00, 2.4);
-      keyLight.position.set(4, 5, 4);
-      scene.add(keyLight);
-
-      const rimLight = new THREE.DirectionalLight(0xd0e4f5, 1.8);
-      rimLight.position.set(-4, 2, -4);
-      scene.add(rimLight);
-
-      const emberFill = new THREE.DirectionalLight(0xffaa33, 1.2);
-      emberFill.position.set(-2, -3, 3);
-      scene.add(emberFill);
-
-      // Hierarchical Assembly
-      const stageGroup = new THREE.Group();
-      scene.add(stageGroup);
-
-      const cardAssembly = new THREE.Group();
-      stageGroup.add(cardAssembly);
-
-      const frontGroup = new THREE.Group();
-      const antennaGroup = new THREE.Group();
-      const backGroup = new THREE.Group();
-
-      cardAssembly.add(frontGroup);
-      cardAssembly.add(antennaGroup);
-      cardAssembly.add(backGroup);
-
-      // Shape Helper
-      function createCardShape(w, h, r) {
-        const s = new THREE.Shape();
-        const x = -w / 2, y = -h / 2;
-        s.moveTo(x + r, y);
-        s.lineTo(x + w - r, y);
-        s.quadraticCurveTo(x + w, y, x + w, y + r);
-        s.lineTo(x + w, y + h - r);
-        s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-        s.lineTo(x + r, y + h);
-        s.quadraticCurveTo(x, y + h, x, y + h - r);
-        s.lineTo(x, y + r);
-        s.quadraticCurveTo(x, y, x + r, y);
-        return s;
-      }
-
-      const cardW = 3.37, cardH = 2.125, radius = 0.14;
-      const cardShape = createCardShape(cardW, cardH, radius);
-
-      // Layer 1: Front Outer Casing
-      const casingGeo = new THREE.ExtrudeGeometry(cardShape, {
-        depth: 0.016,
-        bevelEnabled: true,
-        bevelSegments: 3,
-        steps: 1,
-        bevelSize: 0.008,
-        bevelThickness: 0.008
-      });
-      casingGeo.center();
-
-      const frontMat = new THREE.MeshPhysicalMaterial({
-        color: 0x0c0c0f,
-        roughness: 0.38,
-        metalness: 0.15,
-        clearcoat: 0.12,
-        clearcoatRoughness: 0.25
-      });
-      const edgeMat = new THREE.MeshStandardMaterial({
-        color: 0x222226,
-        roughness: 0.3,
-        metalness: 0.85
-      });
-
-      const frontMesh = new THREE.Mesh(casingGeo, [frontMat, edgeMat]);
-      frontGroup.add(frontMesh);
-
-      // Layer 2: Copper Antenna Trace Matrix + Central Silicon Die
-      const polyimideGeo = new THREE.PlaneGeometry(cardW - 0.15, cardH - 0.15);
-      const polyimideMat = new THREE.MeshStandardMaterial({
-        color: 0x160c04,
-        roughness: 0.5,
-        metalness: 0.1,
-        transparent: true,
-        opacity: 0.9,
-        side: THREE.DoubleSide
-      });
-      const polyimideMesh = new THREE.Mesh(polyimideGeo, polyimideMat);
-      antennaGroup.add(polyimideMesh);
-
-      // Concentric Copper Trace Coils (6 loops)
-      for (let l = 0; l < 6; l++) {
-        const inset = 0.1 + l * 0.045;
-        const lw = cardW - inset * 2;
-        const lh = cardH - inset * 2;
-        const loopShape = createCardShape(lw, lh, Math.max(0.04, radius - inset * 0.5));
-        const edgeGeo = new THREE.EdgesGeometry(new THREE.ShapeGeometry(loopShape));
-        const copperCoil = new THREE.LineSegments(edgeGeo, new THREE.LineBasicMaterial({
-          color: 0xdf7c38,
-          linewidth: 2
-        }));
-        copperCoil.position.z = 0.002;
-        antennaGroup.add(copperCoil);
-      }
-
-      // Central Silicon Microchip Die
-      const dieGeo = new THREE.BoxGeometry(0.3, 0.3, 0.035);
-      const dieMat = new THREE.MeshStandardMaterial({
-        color: 0x111116,
-        roughness: 0.15,
-        metalness: 0.92
-      });
-      const chipDie = new THREE.Mesh(dieGeo, dieMat);
-      chipDie.position.z = 0.015;
-      antennaGroup.add(chipDie);
-
-      // Solder bond pads
-      const padGeo = new THREE.BoxGeometry(0.06, 0.04, 0.02);
-      const padMat = new THREE.MeshStandardMaterial({ color: 0xddcc88, metalness: 0.95, roughness: 0.2 });
-      [[-0.1, 0.12], [0.1, 0.12], [-0.1, -0.12], [0.1, -0.12]].forEach(([px, py]) => {
-        const pad = new THREE.Mesh(padGeo, padMat);
-        pad.position.set(px, py, 0.025);
-        antennaGroup.add(pad);
-      });
-
-      // Layer 3: Rear Chassis
-      const backMat = new THREE.MeshPhysicalMaterial({
-        color: 0x0c0c0f,
-        roughness: 0.45,
-        metalness: 0.2
-      });
-      const backMesh = new THREE.Mesh(casingGeo, [backMat, edgeMat]);
-      backMesh.rotation.y = Math.PI;
-      backGroup.add(backMesh);
-
-      // Interaction State
-      let manualExploded = false;
-      let targetExplosion = 0;
-      let currentExplosion = 0;
-      let mouseX = 0, mouseY = 0;
-      let smoothMouseX = 0, smoothMouseY = 0;
-
-      window.addEventListener('mousemove', (e) => {
-        mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-        mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
-      }, { passive: true });
-
-      if (btnDefault && btnExploded) {
-        btnDefault.addEventListener('click', () => {
-          manualExploded = false;
-          btnDefault.className = 'px-4 py-2 rounded-full text-[10px] font-mono uppercase tracking-wider bg-white text-black font-bold transition-all cursor-pointer';
-          btnExploded.className = 'px-4 py-2 rounded-full text-[10px] font-mono uppercase tracking-wider text-neutral-400 hover:text-white transition-all cursor-pointer';
-        });
-        btnExploded.addEventListener('click', () => {
-          manualExploded = true;
-          btnExploded.className = 'px-4 py-2 rounded-full text-[10px] font-mono uppercase tracking-wider bg-white text-black font-bold transition-all cursor-pointer';
-          btnDefault.className = 'px-4 py-2 rounded-full text-[10px] font-mono uppercase tracking-wider text-neutral-400 hover:text-white transition-all cursor-pointer';
-        });
-      }
-
-      // Performance: Intersection Observer to pause rendering when offscreen
-      let isStageVisible = false;
-      const observer = new IntersectionObserver(([entry]) => {
-        isStageVisible = entry.isIntersecting;
-      }, { threshold: 0.01 });
-      observer.observe(stage);
-
-      function handleResize() {
-        const w = canvas.clientWidth || window.innerWidth;
-        const h = canvas.clientHeight || window.innerHeight;
-        camera.aspect = w / h;
-        camera.position.z = w < 640 ? 7.2 : 5.8;
-        camera.updateProjectionMatrix();
-        renderer.setSize(w, h);
-      }
-      window.addEventListener('resize', handleResize);
-      handleResize();
-
-      const clock = new THREE.Clock();
-      function animate() {
-        requestAnimationFrame(animate);
-        if (!isStageVisible) return;
-
-        const t = clock.getElapsedTime();
-
-        // Calculate Scroll Progress within stage runway
-        const rect = stage.getBoundingClientRect();
-        const scrollProgress = THREE.MathUtils.clamp(-rect.top / (rect.height - window.innerHeight), 0, 1);
-
-        // Parallax background text
-        if (bgText) {
-          bgText.style.transform = 'translateY(' + ((scrollProgress - 0.5) * 80) + 'px)';
-        }
-
-        // Determine target explosion (30% to 70% scroll milestone)
-        if (manualExploded) {
-          targetExplosion = 1.0;
-        } else {
-          if (scrollProgress >= 0.25 && scrollProgress <= 0.75) {
-            targetExplosion = Math.sin(((scrollProgress - 0.25) / 0.5) * Math.PI);
-          } else {
-            targetExplosion = 0;
-          }
-        }
-
-        currentExplosion += (targetExplosion - currentExplosion) * 0.08;
-
-        // Explode layers along Z-axis
-        const explodeDist = currentExplosion * 1.6;
-        frontGroup.position.z = explodeDist;
-        antennaGroup.position.z = 0;
-        backGroup.position.z = -explodeDist;
-
-        // Telemetry HUD opacity fade
-        if (telemetry) {
-          telemetry.style.opacity = currentExplosion > 0.15 ? String(Math.min(1, (currentExplosion - 0.15) * 2)) : '0';
-        }
-
-        // Smooth Mouse follow with lerping
-        smoothMouseX += (mouseX - smoothMouseX) * 0.05;
-        smoothMouseY += (mouseY - smoothMouseY) * 0.05;
-
-        // Presentation Rotation & Dynamics
-        const baseRotationY = (scrollProgress * Math.PI * 1.5) + (t * 0.15) + (smoothMouseX * 0.4);
-        const explodedTiltX = currentExplosion * 0.45 + (smoothMouseY * 0.25);
-        const explodedAngleY = currentExplosion * 0.65;
-
-        cardAssembly.rotation.y = baseRotationY + explodedAngleY;
-        cardAssembly.rotation.x = 0.2 + explodedTiltX;
-        cardAssembly.rotation.z = Math.sin(t * 0.8) * 0.03 + (currentExplosion * 0.15);
-
-        // Dynamic light orbit creates warm amber specular reflections
-        keyLight.position.x = Math.cos(t * 0.6) * 4.5;
-        keyLight.position.z = Math.sin(t * 0.6) * 4.5 + 3.0;
-
-        renderer.render(scene, camera);
-      }
-      requestAnimationFrame(animate);
     })();
   </script>
 </body>

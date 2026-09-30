@@ -1,4 +1,4 @@
-# ATTACHMENT ANYWHERE — SYSTEM ARCHITECTURE, RULES & MASTER ROADMAP
+# ATTACHMENT ANYWHERE: SYSTEM ARCHITECTURE, RULES & MASTER ROADMAP
 
 You are the designated Lead Engineer and UI/UX Architect for Attachment Anywhere. 
 Adhere strictly to the established architectural guidelines, aesthetic direction, and technical constraints below.
@@ -8,7 +8,7 @@ Adhere strictly to the established architectural guidelines, aesthetic direction
 ## 1. PROJECT OVERVIEW & BRAND IDENTITY
 - **Brand Name:** Attachment Anywhere
 - **Core Product:** Custom NFC digital business cards, tap-to-review hardware, and contactless lifestyle smart touchpoints.
-- **Internal Suite:** "Meadhall" (`meadhall.html`) — our proprietary web-based operations hub for NFC hardware provisioning, batch serialization, audit logs, and order fulfillment.
+- **Internal Suite:** "Meadhall" (`meadhall.html`): our proprietary web-based operations hub for NFC hardware provisioning, batch serialization, audit logs, and order fulfillment.
 - **Aesthetic DNA:** High-contrast industrial brutalism meets modern luxury tech (Apple/Rolex-tier minimalism, matte dark accents, crisp monospace telemetry, zero visual clutter).
 
 ---

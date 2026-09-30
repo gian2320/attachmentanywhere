@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Meadhall Operations // Attachment Anywhere</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -32,9 +32,9 @@
     }
   </style>
 </head>
-<body class="bg-[#f4f4f5] text-neutral-900 font-sans antialiased selection:bg-black selection:text-white flex flex-col min-h-screen">
+<body class="bg-[#f4f4f5] text-neutral-900 font-sans antialiased selection:bg-black selection:text-white flex flex-col min-h-screen overflow-x-hidden">
 
-  <!-- ================= MEADHALL BOOT SPLASH SCREEN ================= -->
+  <!-- Meadhall Boot Splash Screen -->
   <div id="meadhall-boot-screen" class="fixed inset-0 z-[9999] flex items-center justify-center bg-[#08080a] transition-opacity duration-700 pointer-events-auto">
     <div class="w-40 sm:w-52 max-w-[70vw]">
       <video 
@@ -49,7 +49,7 @@
     </div>
   </div>
 
-  <!-- ================= FOUNDER AUTH GATE ================= -->
+  <!-- Founder Auth Gate -->
   <div id="auth-gate" class="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center p-6 select-none">
     <div class="w-full max-w-xs flex flex-col items-center text-center space-y-6 fade-in">
       
@@ -72,11 +72,11 @@
             placeholder="Passcode" 
             autocomplete="current-password" 
             autofocus 
-            class="w-full bg-[#f4f4f5] border border-neutral-200 focus:border-black rounded-full px-5 py-3.5 text-xs text-neutral-900 text-center outline-none transition-all placeholder:text-neutral-400 font-mono tracking-widest"
+            class="w-full bg-[#f4f4f5] border border-neutral-200 focus:border-black focus-visible:ring-2 focus-visible:ring-neutral-900 rounded-xl px-5 py-3.5 text-[16px] sm:text-xs text-neutral-900 text-center outline-none transition-all placeholder:text-neutral-400 font-mono tracking-widest"
           />
         </div>
 
-        <button type="submit" class="w-full bg-black text-white text-xs font-bold uppercase tracking-widest py-3.5 rounded-full hover:bg-neutral-800 transition-all cursor-pointer shadow-xs">
+        <button type="submit" class="w-full min-h-[48px] bg-black text-white text-xs font-bold uppercase tracking-widest py-3.5 rounded-xl hover:bg-neutral-800 active:scale-[0.98] transition-all cursor-pointer shadow-xs flex items-center justify-center">
           Enter
         </button>
 
@@ -88,12 +88,12 @@
     </div>
   </div>
 
-  <!-- ================= NAVIGATION BAR ================= -->
-  <nav class="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 transition-all">
-    <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+  <!-- Navigation Bar -->
+  <nav class="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 transition-all pt-[env(safe-area-inset-top)]">
+    <div class="max-w-7xl mx-auto px-6 h-20 sm:h-24 flex items-center justify-between">
       
       <!-- Brand Logo -->
-      <a href="index.html" class="flex items-center gap-4">
+      <a href="index.html" class="flex items-center gap-4 min-h-[44px]">
         <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-10 md:h-16 w-auto object-contain" />
         <span class="hidden sm:inline-block font-mono text-[10px] tracking-[0.25em] uppercase text-neutral-400 border-l border-neutral-300 pl-4">Operations Studio</span>
       </a>
@@ -101,25 +101,25 @@
       <!-- Desktop Navigation Links & Operator Profile -->
       <div class="hidden md:flex items-center gap-8">
         <div class="flex items-center gap-6">
-          <a href="index.html" class="text-xs sm:text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black hover:opacity-80 transition-all">Home</a>
-          <a href="products.html" class="text-xs sm:text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black hover:opacity-80 transition-all">Products</a>
-          <a href="order.html" class="text-xs sm:text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black hover:opacity-80 transition-all">Customer View</a>
+          <a href="index.html" class="min-h-[44px] flex items-center text-xs sm:text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black active:opacity-60 transition-all">Home</a>
+          <a href="products.html" class="min-h-[44px] flex items-center text-xs sm:text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black active:opacity-60 transition-all">Products</a>
+          <a href="order.html" class="min-h-[44px] flex items-center text-xs sm:text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black active:opacity-60 transition-all">Customer View</a>
         </div>
 
         <div class="flex items-center gap-3 pl-4 border-l border-neutral-200">
-          <div class="border border-neutral-200 bg-neutral-50 text-neutral-800 px-3.5 py-1.5 rounded-full text-[10px] font-mono uppercase tracking-wider flex items-center gap-2 select-none shadow-xs">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <div class="border border-neutral-200 bg-neutral-50 text-neutral-800 px-3.5 py-1.5 rounded-md text-[10px] font-mono uppercase tracking-wider flex items-center gap-2 select-none shadow-xs">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
             <span id="active-user-display" class="font-bold">aa.founder</span>
           </div>
 
-          <button onclick="lockFounderGate()" title="Lock Session" class="p-2 border border-neutral-200 hover:border-black rounded-full bg-white text-neutral-600 hover:text-black transition-all cursor-pointer shadow-xs">
+          <button onclick="lockFounderGate()" title="Lock Session" class="w-9 h-9 border border-neutral-200 hover:border-black rounded-lg bg-white text-neutral-600 hover:text-black active:scale-95 transition-all cursor-pointer shadow-xs flex items-center justify-center">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
           </button>
         </div>
       </div>
 
       <!-- Mobile Hamburger Button -->
-      <button id="mobile-menu-btn" class="md:hidden flex flex-col items-end gap-1.5 p-2 focus:outline-none cursor-pointer" aria-label="Toggle Menu">
+      <button id="mobile-menu-btn" class="md:hidden w-11 h-11 flex flex-col items-center justify-center gap-1.5 p-2 focus:outline-none cursor-pointer" aria-label="Toggle Menu">
         <span class="w-6 h-0.5 bg-neutral-900 transition-transform"></span>
         <span class="w-5 h-0.5 bg-neutral-900 transition-opacity"></span>
         <span class="w-6 h-0.5 bg-neutral-900 transition-transform"></span>
@@ -127,20 +127,20 @@
     </div>
 
     <!-- Mobile Menu Dropdown -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-neutral-200 px-6 py-6 flex flex-col gap-4 font-mono shadow-xl">
-      <a href="index.html" class="text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Home</a>
-      <a href="products.html" class="text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Products</a>
-      <a href="order.html" class="text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Customer View</a>
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-neutral-200 px-6 py-6 flex flex-col gap-3 font-mono shadow-xl">
+      <a href="index.html" class="min-h-[44px] flex items-center text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Home</a>
+      <a href="products.html" class="min-h-[44px] flex items-center text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Products</a>
+      <a href="order.html" class="min-h-[44px] flex items-center text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Customer View</a>
       <div class="border-t border-neutral-200 pt-3 flex items-center justify-between">
         <span class="text-[10px] uppercase tracking-widest text-neutral-500">Operator: aa.founder</span>
-        <button onclick="lockFounderGate()" class="text-xs font-bold uppercase text-black hover:underline tracking-wider">Lock Session</button>
+        <button onclick="lockFounderGate()" class="min-h-[44px] flex items-center text-xs font-bold uppercase text-black hover:underline tracking-wider">Lock Session</button>
       </div>
     </div>
   </nav>
 
-  <div class="pt-24"></div> <!-- Header spacing -->
+  <div class="pt-[calc(5rem+env(safe-area-inset-top))] sm:pt-[calc(6rem+env(safe-area-inset-top))]"></div> <!-- Header spacing -->
 
-  <!-- ================= MEADHALL OPERATIONS SUITE ================= -->
+  <!-- Meadhall Operations Suite -->
   <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-8 pb-20">
 
     <!-- SUB-HEADER: OPERATIONS STATUS BAR -->
@@ -151,21 +151,21 @@
       </div>
 
       <div class="flex flex-wrap items-center gap-2.5">
-        <button onclick="syncBrandWebsiteData()" title="Synchronize with live brand website clients and catalog" class="border border-neutral-200 bg-white hover:border-black text-neutral-700 hover:text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-full transition-all cursor-pointer flex items-center gap-2 shadow-xs">
+        <button onclick="syncBrandWebsiteData()" title="Synchronize with live brand website clients and catalog" class="border border-neutral-200 bg-white hover:border-black text-neutral-700 hover:text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-xl transition-all cursor-pointer flex items-center gap-2 shadow-xs">
           <svg class="w-3.5 h-3.5 text-neutral-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
           </svg>
           <span>Sync Brand Data</span>
         </button>
-        <button onclick="runSystemAudit()" class="border border-neutral-200 bg-white hover:border-black text-neutral-700 hover:text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-full transition-all cursor-pointer flex items-center gap-2 shadow-xs">
+        <button onclick="runSystemAudit()" class="border border-neutral-200 bg-white hover:border-black text-neutral-700 hover:text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-xl transition-all cursor-pointer flex items-center gap-2 shadow-xs">
           <span id="audit-indicator" class="w-2 h-2 rounded-full bg-emerald-500"></span>
           <span>Run Audit</span>
         </button>
-        <button onclick="openSerialModal()" class="bg-black text-white text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded-full hover:bg-neutral-800 transition-all cursor-pointer flex items-center gap-1.5 shadow-sm">
+        <button onclick="openSerialModal()" class="bg-black text-white text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded-xl hover:bg-neutral-800 transition-all cursor-pointer flex items-center gap-1.5 shadow-sm">
           <span class="text-sm leading-none">&plus;</span>
           <span>New Serial</span>
         </button>
-        <button onclick="exportSerialRegistryCSV()" class="border border-neutral-200 bg-white hover:border-black text-neutral-700 hover:text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-full transition-all cursor-pointer shadow-xs">
+        <button onclick="exportSerialRegistryCSV()" class="border border-neutral-200 bg-white hover:border-black text-neutral-700 hover:text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-xl transition-all cursor-pointer shadow-xs">
           Export CSV
         </button>
       </div>
@@ -175,34 +175,34 @@
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       
       <div class="bg-white border border-neutral-200/80 p-6 rounded-2xl flex flex-col justify-between shadow-xs">
-        <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-400 font-medium">Gross Realized Value</span>
+        <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-600 font-medium">Gross Realized Value</span>
         <div class="mt-4 flex items-baseline justify-between">
           <span id="stat-revenue" class="text-3xl sm:text-4xl font-black tracking-tight text-neutral-900">₱0.00</span>
-          <span class="text-[10px] font-mono text-neutral-400 uppercase">Gross</span>
+          <span class="text-[10px] font-mono text-neutral-500 uppercase">Gross</span>
         </div>
       </div>
 
       <div class="bg-white border border-neutral-200/80 p-6 rounded-2xl flex flex-col justify-between shadow-xs">
-        <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-400 font-medium">Registered Serials</span>
+        <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-600 font-medium">Registered Serials</span>
         <div class="mt-4 flex items-baseline justify-between">
           <span id="stat-serials" class="text-3xl sm:text-4xl font-black tracking-tight text-neutral-900">0</span>
-          <span class="text-[10px] font-mono text-neutral-400 uppercase">Active</span>
+          <span class="text-[10px] font-mono text-neutral-500 uppercase">Active</span>
         </div>
       </div>
 
       <div class="bg-white border border-neutral-200/80 p-6 rounded-2xl flex flex-col justify-between shadow-xs">
-        <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-400 font-medium">Audit Status</span>
+        <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-600 font-medium">Audit Status</span>
         <div class="mt-4 flex items-baseline justify-between">
           <span id="stat-health" class="text-3xl sm:text-4xl font-black tracking-tight text-neutral-900">100%</span>
-          <span id="stat-health-label" class="text-[10px] font-mono text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full font-bold">0 Errors</span>
+          <span id="stat-health-label" class="text-[10px] font-mono text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-md font-bold">0 Errors</span>
         </div>
       </div>
 
       <div class="bg-white border border-neutral-200/80 p-6 rounded-2xl flex flex-col justify-between shadow-xs">
-        <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-400 font-medium">Awaiting Write</span>
+        <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-600 font-medium">Awaiting Write</span>
         <div class="mt-4 flex items-baseline justify-between">
           <span id="stat-pending" class="text-3xl sm:text-4xl font-black tracking-tight text-neutral-900">0</span>
-          <span class="text-[10px] font-mono text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-full font-bold">Queue</span>
+          <span class="text-[10px] font-mono text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-md font-bold">Queue</span>
         </div>
       </div>
 
@@ -211,10 +211,6 @@
     <!-- 1B. GEMINI BRAND OPERATIONS COPILOT -->
     <section id="gemini-copilot-section" class="bg-gradient-to-b from-[#0f1015] via-[#0b0c10] to-[#07080a] text-white rounded-3xl p-6 sm:p-8 border border-neutral-800 shadow-2xl relative overflow-hidden space-y-5">
       
-      <!-- Subtle Ambient Glow -->
-      <div class="absolute -top-24 -left-24 w-80 h-80 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="absolute -bottom-24 -right-24 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
       <!-- Header with Gemini Star -->
       <div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-neutral-800/80 pb-4">
         <div class="flex items-center gap-3">
@@ -229,7 +225,7 @@
             <div class="flex items-center gap-2">
               <h2 class="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-2">
                 Meadhall Copilot
-                <span class="text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-sky-950/80 border border-sky-800/60 text-sky-300">Gemini</span>
+                <span class="text-[10px] font-mono font-medium px-2 py-0.5 rounded-md bg-sky-950/80 border border-sky-800/60 text-sky-300">Gemini</span>
               </h2>
             </div>
             <p class="text-xs text-neutral-400 mt-0.5">
@@ -239,7 +235,7 @@
         </div>
 
         <div class="flex items-center gap-2 text-xs text-neutral-400">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
           <span class="font-mono text-[11px] text-neutral-300">Operational</span>
         </div>
       </div>
@@ -262,17 +258,17 @@
             </div>
             <!-- Suggestion Pills -->
             <div class="flex flex-wrap gap-2 pt-0.5">
-              <button type="button" onclick="sendGeminiPrompt('Set card price to 1450')" class="text-xs bg-[#16171f] hover:bg-[#1f202b] border border-neutral-700/60 hover:border-sky-500/50 text-neutral-300 hover:text-white px-3 py-1.5 rounded-full transition-all cursor-pointer flex items-center gap-1.5">
-                <span class="text-sky-400">✦</span> Set card price to ₱1,450
+              <button type="button" onclick="sendGeminiPrompt('Set card price to 1450')" class="text-xs bg-[#16171f] hover:bg-[#1f202b] border border-neutral-700/60 hover:border-sky-500/50 text-neutral-300 hover:text-white px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 font-mono">
+                <span class="text-sky-400 font-bold">&gt;&gt;</span> Set card price to ₱1,450
               </button>
-              <button type="button" onclick="sendGeminiPrompt('How much is total realized value?')" class="text-xs bg-[#16171f] hover:bg-[#1f202b] border border-neutral-700/60 hover:border-sky-500/50 text-neutral-300 hover:text-white px-3 py-1.5 rounded-full transition-all cursor-pointer flex items-center gap-1.5">
-                <span class="text-sky-400">✦</span> Total realized value
+              <button type="button" onclick="sendGeminiPrompt('How much is total realized value?')" class="text-xs bg-[#16171f] hover:bg-[#1f202b] border border-neutral-700/60 hover:border-sky-500/50 text-neutral-300 hover:text-white px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 font-mono">
+                <span class="text-sky-400 font-bold">&gt;&gt;</span> Total realized value
               </button>
-              <button type="button" onclick="sendGeminiPrompt('Add 50 NTAG213 chips')" class="text-xs bg-[#16171f] hover:bg-[#1f202b] border border-neutral-700/60 hover:border-sky-500/50 text-neutral-300 hover:text-white px-3 py-1.5 rounded-full transition-all cursor-pointer flex items-center gap-1.5">
-                <span class="text-sky-400">✦</span> Restock 50 chips
+              <button type="button" onclick="sendGeminiPrompt('Add 50 NTAG213 chips')" class="text-xs bg-[#16171f] hover:bg-[#1f202b] border border-neutral-700/60 hover:border-sky-500/50 text-neutral-300 hover:text-white px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 font-mono">
+                <span class="text-sky-400 font-bold">&gt;&gt;</span> Restock 50 chips
               </button>
-              <button type="button" onclick="sendGeminiPrompt('Telemetry check')" class="text-xs bg-[#16171f] hover:bg-[#1f202b] border border-neutral-700/60 hover:border-sky-500/50 text-neutral-300 hover:text-white px-3 py-1.5 rounded-full transition-all cursor-pointer flex items-center gap-1.5">
-                <span class="text-sky-400">✦</span> System health report
+              <button type="button" onclick="sendGeminiPrompt('Telemetry check')" class="text-xs bg-[#16171f] hover:bg-[#1f202b] border border-neutral-700/60 hover:border-sky-500/50 text-neutral-300 hover:text-white px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 font-mono">
+                <span class="text-sky-400 font-bold">&gt;&gt;</span> System health report
               </button>
             </div>
           </div>
@@ -286,8 +282,8 @@
           <svg class="w-5 h-5 text-sky-400 shrink-0" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 2C12 7.52285 7.52285 12 2 12C7.52285 12 12 16.4772 12 22C12 16.4772 16.4772 12 22 12C16.4772 12 12 7.52285 12 2Z" />
           </svg>
-          <input type="text" id="gemini-input" placeholder="Ask Gemini Copilot to set card price, adjust inventory, or check sales..." class="bg-transparent border-none text-white text-xs sm:text-sm focus:outline-none flex-1 placeholder-neutral-500" autocomplete="off" spellcheck="false">
-          <button type="submit" id="gemini-send-btn" class="w-9 h-9 rounded-xl bg-white hover:bg-neutral-200 text-black flex items-center justify-center transition-all cursor-pointer shrink-0 shadow-md">
+          <input type="text" id="gemini-input" placeholder="Ask Gemini Copilot to set card price, adjust inventory, or check sales..." class="bg-transparent border-none text-white text-[16px] sm:text-sm focus:outline-none flex-1 placeholder-neutral-500" autocomplete="off" spellcheck="false">
+          <button type="submit" id="gemini-send-btn" class="w-9 h-9 rounded-xl bg-white hover:bg-neutral-200 active:scale-95 text-black flex items-center justify-center transition-all cursor-pointer shrink-0 shadow-md">
             <svg class="w-4 h-4 transform rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <line x1="12" y1="19" x2="12" y2="5"></line>
               <polyline points="5 12 12 5 19 12"></polyline>
@@ -323,7 +319,7 @@
         <div class="flex items-center gap-2.5">
           <input type="file" id="qc-logo-upload" accept="image/png,image/jpeg,image/webp,image/svg+xml" class="hidden" onchange="handleCustomLogoUpload(event)">
           
-          <button type="button" onclick="document.getElementById('qc-logo-upload').click()" class="px-3.5 py-1.5 rounded-full bg-white text-black hover:bg-neutral-200 text-xs font-mono font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5">
+          <button type="button" onclick="document.getElementById('qc-logo-upload').click()" class="min-h-[44px] px-4 py-2 rounded-xl bg-white text-black hover:bg-neutral-200 active:scale-95 text-xs font-mono font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5">
             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
               <polyline points="17 8 12 3 7 8"/>
@@ -332,7 +328,7 @@
             Upload Client Logo
           </button>
           
-          <button type="button" onclick="resetClientLogo()" class="px-3 py-1.5 rounded-full border border-neutral-700 bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white text-xs font-mono font-bold transition-all cursor-pointer">
+          <button type="button" onclick="resetClientLogo()" class="min-h-[44px] px-3.5 py-2 rounded-xl border border-neutral-700 bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white active:scale-95 text-xs font-mono font-bold transition-all cursor-pointer flex items-center justify-center">
             Reset Logo
           </button>
         </div>
@@ -347,7 +343,7 @@
             FRONT
           </div>
           
-          <div class="w-full max-w-[420px] aspect-[85.6/53.98] rounded-[16px] bg-[#191a1d] border border-neutral-700/60 shadow-2xl relative overflow-hidden flex flex-col items-center justify-between p-6 select-none transition-all mx-auto">
+          <div class="w-full max-w-sm sm:max-w-[420px] aspect-[85.6/53.98] rounded-2xl bg-[#191a1d] border border-neutral-700/60 shadow-2xl relative overflow-hidden flex flex-col items-center justify-between p-4 sm:p-6 select-none transition-all mx-auto">
             <!-- Concentric Subtle Rings -->
             <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 420 265" fill="none">
               <circle cx="210" cy="115" r="18" stroke="rgba(255,255,255,0.04)" stroke-width="1.5" />
@@ -384,30 +380,30 @@
             BACK
           </div>
 
-          <div class="w-full max-w-[420px] aspect-[85.6/53.98] rounded-[16px] bg-[#191a1d] border border-neutral-700/60 shadow-2xl relative overflow-hidden flex flex-col justify-between p-5 sm:p-6 select-none transition-all mx-auto">
+          <div class="w-full max-w-sm sm:max-w-[420px] aspect-[85.6/53.98] rounded-2xl bg-[#191a1d] border border-neutral-700/60 shadow-2xl relative overflow-hidden flex flex-col justify-between p-4 sm:p-6 select-none transition-all mx-auto">
             
             <!-- Main Content Area -->
-            <div class="flex items-center justify-between gap-3 h-full">
+            <div class="flex items-center justify-between gap-2.5 sm:gap-3 h-full">
               <!-- Left Instructions -->
               <div class="space-y-1.5 text-left flex-1 min-w-0 pr-1">
-                <div class="text-xs sm:text-sm font-bold tracking-wider text-white uppercase font-sans mb-2">
+                <div class="text-xs sm:text-sm font-bold tracking-wider text-white uppercase font-sans mb-1.5 sm:mb-2">
                   HOW TO TAP
                 </div>
-                <div class="text-[10px] sm:text-xs text-neutral-300 leading-snug">
+                <div class="text-[9.5px] sm:text-xs text-neutral-300 leading-snug">
                   <span class="font-semibold text-white">APPLE:</span> Tap top edge
                 </div>
-                <div class="text-[10px] sm:text-xs text-neutral-300 leading-snug">
+                <div class="text-[9.5px] sm:text-xs text-neutral-300 leading-snug">
                   <span class="font-semibold text-white">ANDROID:</span> Tap center back
                 </div>
-                <div class="text-[9.5px] sm:text-[10.5px] font-bold text-white pt-2 leading-snug">
+                <div class="text-[9px] sm:text-[10.5px] font-bold text-white pt-1 sm:pt-2 leading-snug">
                   Make sure NFC is turned ON in Settings
                 </div>
               </div>
 
               <!-- Right Graphics: Phone Tap & Dynamic QR -->
-              <div class="flex items-center gap-2.5 shrink-0">
+              <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
                 <!-- Phone Tap Icon -->
-                <svg class="w-11 h-11 sm:w-13 sm:h-13 text-white shrink-0" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+                <svg class="w-10 h-10 sm:w-13 sm:h-13 text-white shrink-0" viewBox="0 0 100 100" fill="none" stroke="currentColor">
                   <circle cx="68" cy="50" r="30" stroke-width="2.5" />
                   <path d="M 64 32 A 20 20 0 0 1 64 68" stroke-width="2.5" stroke-linecap="round" />
                   <path d="M 56 40 A 11 11 0 0 1 56 60" stroke-width="2.5" stroke-linecap="round" />
@@ -421,7 +417,7 @@
 
                 <!-- Dynamic QR Badge -->
                 <div class="p-1 bg-white rounded-md shadow-md shrink-0">
-                  <div id="qc-mockup-qrcode" class="w-[56px] h-[56px] sm:w-[64px] sm:h-[64px] flex items-center justify-center overflow-hidden"></div>
+                  <div id="qc-mockup-qrcode" class="w-[52px] h-[52px] sm:w-[64px] sm:h-[64px] flex items-center justify-center overflow-hidden"></div>
                 </div>
               </div>
             </div>
@@ -443,25 +439,25 @@
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-neutral-800 pb-5">
         <div>
           <div class="flex items-center gap-3">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
             <h2 class="text-base sm:text-lg font-bold tracking-tight text-white uppercase">Hardware NFC Writer</h2>
           </div>
           <p class="text-xs text-neutral-400 mt-1">Encode physical cards with verified target URLs via Android (Web NFC) or iPhone (Shortcuts).</p>
         </div>
 
         <div class="flex flex-wrap items-center gap-2.5">
-          <span id="platform-badge" class="px-3.5 py-1.5 rounded-full text-[10px] font-mono uppercase tracking-wider bg-neutral-900 border border-neutral-800 text-neutral-300">
+          <span id="platform-badge" class="px-3.5 py-1.5 rounded-md text-[10px] font-mono uppercase tracking-wider bg-neutral-900 border border-neutral-800 text-neutral-300">
             Detecting Device...
           </span>
           <!-- Tactile Hardware Mode Toggle [ REAL NFC | SIMULATOR ] -->
-          <div class="inline-flex items-center bg-[#141418] p-1 rounded-full border border-neutral-800 font-mono text-[10px]">
-            <button type="button" id="btn-mode-real" onclick="setHwMode('real')" class="px-3 py-1 rounded-full text-neutral-400 hover:text-white transition-all font-bold cursor-pointer">REAL NFC</button>
-            <button type="button" id="btn-mode-sim" onclick="setHwMode('sim')" class="px-3 py-1 rounded-full bg-white text-black font-bold transition-all shadow-xs cursor-pointer">SIMULATOR</button>
+          <div class="inline-flex items-center bg-[#141418] p-1 rounded-lg border border-neutral-800 font-mono text-[10px]">
+            <button type="button" id="btn-mode-real" onclick="setHwMode('real')" class="px-3 py-1 rounded-md text-neutral-400 hover:text-white transition-all font-bold cursor-pointer">REAL NFC</button>
+            <button type="button" id="btn-mode-sim" onclick="setHwMode('sim')" class="px-3 py-1 rounded-md bg-white text-black font-bold transition-all shadow-xs cursor-pointer">SIMULATOR</button>
           </div>
-          <button type="button" id="btn-test-collision" onclick="testSimulateCollision()" title="Simulate duplicate physical tag tap to verify collision interceptor" class="hidden text-[10px] font-mono border border-amber-600/70 bg-amber-950/40 text-amber-300 hover:bg-amber-900/60 px-3 py-1.5 rounded-full transition-all cursor-pointer">
+          <button type="button" id="btn-test-collision" onclick="testSimulateCollision()" title="Simulate duplicate physical tag tap to verify collision interceptor" class="hidden text-[10px] font-mono border border-amber-600/70 bg-amber-950/40 text-amber-300 hover:bg-amber-900/60 px-3 py-1.5 rounded-lg transition-all cursor-pointer">
             Test Collision
           </button>
-          <button onclick="openIosShortcutGuide()" class="border border-neutral-700 hover:border-white bg-neutral-900 text-neutral-300 hover:text-white text-[10px] font-mono uppercase px-3 py-1.5 rounded-full cursor-pointer transition-colors">
+          <button onclick="openIosShortcutGuide()" class="border border-neutral-700 hover:border-white bg-neutral-900 text-neutral-300 hover:text-white text-[10px] font-mono uppercase px-3 py-1.5 rounded-lg cursor-pointer transition-colors">
             iPhone Guide
           </button>
         </div>
@@ -474,12 +470,12 @@
           <!-- Batch Burner Telemetry Bar (revealed when active) -->
           <div id="batch-progress-bar" class="hidden p-3.5 bg-[#141418] border border-neutral-800 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono">
             <div class="flex items-center gap-2.5">
-              <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+              <span class="w-2 h-2 rounded-full bg-amber-400"></span>
               <span id="batch-progress-text" class="text-neutral-200 font-bold uppercase tracking-wider text-[11px]">BATCH PROGRESS: [ 0 / 10 COMPLETED ]</span>
             </div>
             <div class="flex items-center gap-2">
               <span id="batch-target-client" class="text-[10px] text-neutral-400 truncate max-w-[200px]">Client: Ready</span>
-              <button onclick="skipBatchItem()" class="text-[10px] text-neutral-400 hover:text-white underline cursor-pointer">Skip &rarr;</button>
+              <button onclick="skipBatchItem()" class="text-[10px] text-neutral-400 hover:text-white underline cursor-pointer">Skip</button>
             </div>
           </div>
 
@@ -488,29 +484,29 @@
               <label class="block text-[10px] font-mono uppercase tracking-wider text-neutral-400">Destination Routing URL</label>
               <span id="hw-active-mode-label" class="text-[10px] font-mono text-emerald-400 uppercase font-bold tracking-wider">● EMULATOR READY</span>
             </div>
-            <textarea id="encoder-input" rows="3" placeholder="https://attachmentanywhere.com/c/aa260906052304" class="w-full bg-[#141418] border border-neutral-800 focus:border-white rounded-2xl p-4 text-xs font-mono text-emerald-400 outline-none transition-colors resize-none placeholder:text-neutral-600"></textarea>
+            <textarea id="encoder-input" rows="3" placeholder="https://attachmentanywhere.com/c/aa260906052304" class="w-full bg-[#141418] border border-neutral-800 focus:border-white focus-visible:ring-2 focus-visible:ring-white rounded-2xl p-4 text-[16px] sm:text-xs font-mono text-emerald-400 outline-none transition-colors resize-none placeholder:text-neutral-600"></textarea>
             <input type="hidden" id="targetUrlInput">
           </div>
 
           <!-- Action Buttons -->
           <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
-            <button id="btn-nfc-write" onclick="triggerNativeNfcWrite()" class="col-span-2 sm:col-span-1 lg:col-span-2 bg-white text-black text-xs font-mono font-bold uppercase tracking-wider py-3.5 px-3 rounded-full hover:bg-neutral-200 transition-all cursor-pointer flex items-center justify-center gap-2 shadow-sm">
+            <button id="btn-nfc-write" onclick="triggerNativeNfcWrite()" class="col-span-2 sm:col-span-1 lg:col-span-2 min-h-[44px] bg-white text-black text-xs font-mono font-bold uppercase tracking-wider py-3.5 px-3 rounded-xl hover:bg-neutral-200 active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-2 shadow-sm">
               <svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
               <span id="btn-nfc-write-label">WRITE (SIMULATOR)</span>
             </button>
-            <button onclick="triggerChipInspection()" title="Inspect physical NFC tag UID and payload" class="border border-neutral-700 hover:border-white bg-[#141418] text-neutral-200 text-xs font-mono uppercase tracking-wider py-3.5 px-2 rounded-full transition-all cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap">
+            <button onclick="triggerChipInspection()" title="Inspect physical NFC tag UID and payload" class="min-h-[44px] border border-neutral-700 hover:border-white bg-[#141418] text-neutral-200 text-xs font-mono uppercase tracking-wider py-3.5 px-2 rounded-xl active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap">
               <span>INSPECT/READ</span>
             </button>
-            <button id="btn-batch-toggle" onclick="toggleBatchBurner()" title="Batch auto-advance encoder" class="border border-neutral-700 hover:border-white bg-[#141418] text-neutral-200 text-xs font-mono uppercase tracking-wider py-3.5 px-2 rounded-full transition-all cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap">
+            <button id="btn-batch-toggle" onclick="toggleBatchBurner()" title="Batch auto-advance encoder" class="min-h-[44px] border border-neutral-700 hover:border-white bg-[#141418] text-neutral-200 text-xs font-mono uppercase tracking-wider py-3.5 px-2 rounded-xl active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap">
               <span id="btn-batch-label">BATCH BURNER</span>
             </button>
-            <button onclick="triggerIosShortcutWrite()" class="border border-neutral-700 hover:border-white bg-[#141418] text-neutral-200 text-xs font-mono uppercase tracking-wider py-3.5 px-2 rounded-full transition-all cursor-pointer flex items-center justify-center gap-1">
+            <button onclick="triggerIosShortcutWrite()" class="min-h-[44px] border border-neutral-700 hover:border-white bg-[#141418] text-neutral-200 text-xs font-mono uppercase tracking-wider py-3.5 px-2 rounded-xl active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1">
               <span>iPhone</span>
             </button>
-            <button onclick="openQrPreview()" class="border border-neutral-700 hover:border-white bg-[#141418] text-neutral-200 text-xs font-mono uppercase tracking-wider py-3.5 px-2 rounded-full transition-all cursor-pointer flex items-center justify-center gap-1">
+            <button onclick="openQrPreview()" class="min-h-[44px] border border-neutral-700 hover:border-white bg-[#141418] text-neutral-200 text-xs font-mono uppercase tracking-wider py-3.5 px-2 rounded-xl active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1">
               <span>QR</span>
             </button>
-            <button onclick="copyFormattedNDEF()" class="border border-neutral-700 hover:border-white bg-[#141418] text-neutral-200 text-xs font-mono uppercase tracking-wider py-3.5 px-2 rounded-full transition-all cursor-pointer">
+            <button onclick="copyFormattedNDEF()" class="min-h-[44px] border border-neutral-700 hover:border-white bg-[#141418] text-neutral-200 text-xs font-mono uppercase tracking-wider py-3.5 px-2 rounded-xl active:scale-95 transition-all cursor-pointer flex items-center justify-center">
               Copy URL
             </button>
           </div>
@@ -520,7 +516,7 @@
         <div class="lg:col-span-4 bg-[#141418] border border-neutral-800 p-5 rounded-2xl space-y-3 font-mono text-xs">
           <div class="border-b border-neutral-800 pb-2.5 flex items-center justify-between">
             <span class="text-[10px] uppercase tracking-widest text-neutral-400 font-bold">Chip Diagnostics</span>
-            <span id="hw-mode-chip-badge" class="text-[9px] uppercase px-2 py-0.5 rounded-full bg-neutral-800 text-neutral-300">Telemetry</span>
+            <span id="hw-mode-chip-badge" class="text-[9px] uppercase px-2 py-0.5 rounded-sm bg-neutral-800 text-neutral-300">Telemetry</span>
           </div>
 
           <div class="flex items-baseline justify-between text-xs">
@@ -564,31 +560,31 @@
         <div>
           <div class="flex items-center gap-2.5">
             <h2 class="text-lg font-black uppercase tracking-tight text-neutral-900">Hardware Serial Directory</h2>
-            <span class="text-[10px] font-mono uppercase px-3 py-1 rounded-full border border-neutral-200 bg-neutral-50 text-neutral-600 font-bold">Interactive Ledger</span>
+            <span class="text-[10px] font-mono uppercase px-3 py-1 rounded-md border border-neutral-200 bg-neutral-50 text-neutral-600 font-bold">Interactive Ledger</span>
           </div>
           <p class="text-xs text-neutral-500 mt-1">Verified client hardware records. Select any row or click "LOAD TO BURNER" to prime the hardware writer.</p>
         </div>
 
         <div class="flex flex-wrap items-center gap-2.5">
-          <input type="text" id="serial-search" oninput="renderSerialTable()" placeholder="Search serial, client, brand..." class="bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-full px-4 py-2.5 text-xs font-mono text-neutral-900 outline-none w-52 sm:w-64 placeholder:text-neutral-400">
-          <button onclick="openRawOrderModal()" title="Paste raw order notes or DM text to automatically parse and ingest" class="border border-neutral-300 hover:border-black bg-white hover:bg-neutral-50 text-neutral-800 text-xs font-mono font-bold uppercase tracking-wider px-3.5 py-2.5 rounded-full transition-all cursor-pointer whitespace-nowrap shadow-xs flex items-center gap-1.5">
+          <input type="text" id="serial-search" oninput="renderSerialTable()" placeholder="Search serial, client, brand..." class="bg-[#f4f4f5] border border-transparent focus:border-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-900 rounded-xl px-4 py-2.5 text-[16px] sm:text-xs font-mono text-neutral-900 outline-none w-full sm:w-64 placeholder:text-neutral-400 min-h-[44px]">
+          <button onclick="openRawOrderModal()" title="Paste raw order notes or DM text to automatically parse and ingest" class="min-h-[44px] border border-neutral-300 hover:border-black bg-white hover:bg-neutral-50 active:scale-95 text-neutral-800 text-xs font-mono font-bold uppercase tracking-wider px-3.5 py-2.5 rounded-xl transition-all cursor-pointer whitespace-nowrap shadow-xs flex items-center gap-1.5">
             <svg class="w-3.5 h-3.5 text-neutral-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
               <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
             </svg>
             <span>Paste Raw Order</span>
           </button>
-          <button onclick="openSerialModal()" class="bg-black text-white text-xs font-mono font-bold uppercase tracking-wider px-4 py-2.5 rounded-full hover:bg-neutral-800 transition-all cursor-pointer whitespace-nowrap shadow-xs">
+          <button onclick="openSerialModal()" class="min-h-[44px] bg-black text-white text-xs font-mono font-bold uppercase tracking-wider px-4 py-2.5 rounded-xl hover:bg-neutral-800 active:scale-95 transition-all cursor-pointer whitespace-nowrap shadow-xs flex items-center justify-center">
             &plus; New Serial
           </button>
         </div>
       </div>
 
       <!-- Precision Interactive Data Grid with Sticky Header & CSV Drag-and-Drop Container -->
-      <div id="univer-ledger" class="overflow-x-auto max-h-[500px] overflow-y-auto relative transition-all duration-200">
+      <div id="univer-ledger" class="overflow-x-auto overscroll-x-contain touch-pan-x -mx-4 px-4 sm:mx-0 sm:px-0 max-h-[500px] overflow-y-auto relative transition-all duration-200">
         <!-- Visual Drag-and-Drop Overlay -->
-        <div id="ledger-drop-overlay" class="absolute inset-0 bg-[#08080a]/92 backdrop-blur-sm border-2 border-dashed border-emerald-400 rounded-2xl z-20 hidden flex-col items-center justify-center p-6 text-center pointer-events-none transition-all">
-          <svg class="w-10 h-10 text-emerald-400 mb-2 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div id="ledger-drop-overlay" class="absolute inset-0 bg-[#08080a]/95 border-2 border-dashed border-emerald-400 rounded-2xl z-20 hidden flex-col items-center justify-center p-6 text-center pointer-events-none transition-all">
+          <svg class="w-10 h-10 text-emerald-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
           </svg>
           <div class="text-sm font-mono font-bold text-white uppercase tracking-wider">DROP CSV TO MERGE RECORDS</div>
@@ -626,10 +622,10 @@
             </div>
 
             <div class="flex items-center gap-2">
-              <button onclick="exportOrdersCSV()" class="border border-neutral-200 bg-white hover:border-black text-neutral-700 hover:text-black text-xs font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full transition-all cursor-pointer shadow-xs" title="Export Orders to CSV">
+              <button onclick="exportOrdersCSV()" class="border border-neutral-200 bg-white hover:border-black text-neutral-700 hover:text-black text-xs font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-xl transition-all cursor-pointer shadow-xs" title="Export Orders to CSV">
                 CSV
               </button>
-              <button onclick="openOrderModal()" class="bg-black text-white text-xs font-bold uppercase tracking-wider px-4 py-1.5 rounded-full hover:bg-neutral-800 transition-all cursor-pointer shadow-xs">
+              <button onclick="openOrderModal()" class="bg-black text-white text-xs font-bold uppercase tracking-wider px-4 py-1.5 rounded-xl hover:bg-neutral-800 transition-all cursor-pointer shadow-xs">
                 &plus; Add Order
               </button>
             </div>
@@ -637,24 +633,24 @@
 
           <!-- Filters & Search -->
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-neutral-100">
-            <div class="flex items-center bg-neutral-100 p-1 rounded-full gap-1 overflow-x-auto">
-              <button onclick="setFilter('all')" class="filter-tab px-3 py-1.5 text-xs font-mono font-bold rounded-full transition-all bg-black text-white shadow-xs" data-filter="all">
+            <div class="flex items-center bg-neutral-100 p-1 rounded-lg gap-1 overflow-x-auto">
+              <button onclick="setFilter('all')" class="filter-tab px-3 py-1.5 text-xs font-mono font-bold rounded-md transition-all bg-black text-white shadow-xs" data-filter="all">
                 <span>All (<span id="count-all">0</span>)</span>
               </button>
-              <button onclick="setFilter('Pending')" class="filter-tab px-3 py-1.5 text-xs font-mono rounded-full transition-all text-neutral-500 hover:text-black hover:bg-neutral-200/60" data-filter="Pending">
+              <button onclick="setFilter('Pending')" class="filter-tab px-3 py-1.5 text-xs font-mono rounded-md transition-all text-neutral-500 hover:text-black hover:bg-neutral-200/60" data-filter="Pending">
                 <span>Pending (<span id="count-pending">0</span>)</span>
               </button>
-              <button onclick="setFilter('Encoded')" class="filter-tab px-3 py-1.5 text-xs font-mono rounded-full transition-all text-neutral-500 hover:text-black hover:bg-neutral-200/60" data-filter="Encoded">
+              <button onclick="setFilter('Encoded')" class="filter-tab px-3 py-1.5 text-xs font-mono rounded-md transition-all text-neutral-500 hover:text-black hover:bg-neutral-200/60" data-filter="Encoded">
                 <span>Encoded (<span id="count-encoded">0</span>)</span>
               </button>
-              <button onclick="setFilter('Dispatched')" class="filter-tab px-3 py-1.5 text-xs font-mono rounded-full transition-all text-neutral-500 hover:text-black hover:bg-neutral-200/60" data-filter="Dispatched">
+              <button onclick="setFilter('Dispatched')" class="filter-tab px-3 py-1.5 text-xs font-mono rounded-md transition-all text-neutral-500 hover:text-black hover:bg-neutral-200/60" data-filter="Dispatched">
                 <span>Dispatched (<span id="count-dispatched">0</span>)</span>
               </button>
             </div>
 
             <div class="flex items-center gap-2">
-              <input type="text" id="order-search" oninput="renderMeadhall()" placeholder="Search orders..." class="bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-full px-4 py-1.5 text-xs font-mono text-neutral-900 outline-none w-full sm:w-44 placeholder:text-neutral-400">
-              <button onclick="resetDemoOrders()" title="Restore Sample Demo Orders" class="text-neutral-400 hover:text-black text-xs font-mono p-1.5 rounded-full border border-neutral-200 hover:border-black cursor-pointer transition-colors">
+              <input type="text" id="order-search" oninput="renderMeadhall()" placeholder="Search orders..." class="bg-[#f4f4f5] border border-transparent focus:border-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-900 rounded-xl px-4 py-2 text-[16px] sm:text-xs font-mono text-neutral-900 outline-none w-full sm:w-44 placeholder:text-neutral-400 min-h-[40px]">
+              <button onclick="resetDemoOrders()" title="Restore Sample Demo Orders" class="text-neutral-400 hover:text-black text-xs font-mono p-2 w-9 h-9 flex items-center justify-center rounded-lg border border-neutral-200 hover:border-black cursor-pointer transition-colors active:scale-95">
                 ↻
               </button>
             </div>
@@ -703,11 +699,10 @@
     </div>
 
     <!-- 5. WEB NFC SCANNING MODAL -->
-    <div id="nfc-radar-modal" class="fixed inset-0 bg-black/60 backdrop-blur-md hidden items-center justify-center p-4 z-[110]">
+    <div id="nfc-radar-modal" class="fixed inset-0 bg-black/85 hidden items-center justify-center p-4 z-[110]">
       <div class="bg-white text-neutral-900 rounded-3xl max-w-sm w-full p-8 border border-neutral-100 text-center relative fade-in shadow-2xl">
         <button onclick="cancelNfcScan()" class="absolute top-5 right-5 text-neutral-400 hover:text-black text-2xl font-light cursor-pointer">&times;</button>
         
-        <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block">Web NFC</span>
         <h3 id="nfc-radar-title" class="text-xl font-black uppercase tracking-tight text-neutral-900 mt-1">Ready to Write</h3>
         <p id="nfc-radar-desc" class="text-xs text-neutral-500 mt-1">Hold the physical card against your phone antenna.</p>
 
@@ -730,30 +725,29 @@
           <div class="flex justify-between items-center"><span class="text-neutral-400 font-bold uppercase text-[9px]">Memory Footprint:</span><span id="inspect-mem-val" class="font-bold text-emerald-700 font-mono">--</span></div>
         </div>
 
-        <button onclick="cancelNfcScan()" class="w-full border border-neutral-200 hover:border-black bg-neutral-100 text-xs font-mono uppercase tracking-wider py-3 rounded-full transition-all cursor-pointer font-bold">
+        <button onclick="cancelNfcScan()" class="w-full border border-neutral-200 hover:border-black bg-neutral-100 text-xs font-mono uppercase tracking-wider py-3 rounded-xl transition-all cursor-pointer font-bold">
           Cancel
         </button>
       </div>
     </div>
 
     <!-- 5B. DEDICATED CHIP INSPECTION MODAL -->
-    <div id="chip-inspect-modal" class="fixed inset-0 bg-black/60 backdrop-blur-md hidden items-center justify-center p-4 z-[110]">
+    <div id="chip-inspect-modal" class="fixed inset-0 bg-black/85 hidden items-center justify-center p-4 z-[110]">
       <div class="bg-white text-neutral-900 rounded-3xl max-w-md w-full p-8 border border-neutral-100 relative fade-in shadow-2xl space-y-5">
         <button onclick="closeModal('chip-inspect-modal')" class="absolute top-5 right-5 text-neutral-400 hover:text-black text-2xl font-light cursor-pointer">&times;</button>
 
         <div class="flex items-center justify-between pb-3 border-b border-neutral-100">
           <div>
-            <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block mb-0.5">Hardware Interrogation</span>
             <h3 class="text-lg font-black uppercase tracking-tight text-neutral-900">NFC Tag Inspector</h3>
           </div>
-          <span id="inspect-status-badge" class="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider font-bold bg-blue-50 text-blue-700 border border-blue-200">
+          <span id="inspect-status-badge" class="px-3 py-1 rounded-md text-[10px] font-mono uppercase tracking-wider font-bold bg-blue-50 text-blue-700 border border-blue-200">
             Awaiting Tag
           </span>
         </div>
 
         <!-- Scanning Radar Visual -->
         <div id="inspect-scanner-visual" class="py-4 flex flex-col items-center justify-center text-center">
-          <div id="inspect-radar-ring" class="w-20 h-20 rounded-full border-2 border-blue-500/40 flex items-center justify-center text-blue-600 bg-blue-50/50 animate-pulse transition-all">
+          <div id="inspect-radar-ring" class="w-20 h-20 rounded-full border-2 border-blue-500/40 flex items-center justify-center text-blue-600 bg-blue-50/50 transition-all">
             <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
           </div>
           <p id="inspect-scanner-hint" class="text-xs font-mono text-neutral-500 mt-3">Hold physical NFC card against rear antenna...</p>
@@ -763,7 +757,7 @@
         <div id="inspect-details-panel" class="bg-[#0c0c0e] text-white p-5 rounded-2xl border border-neutral-800 space-y-2.5 font-mono text-xs">
           <div class="flex justify-between items-center pb-2 border-b border-neutral-800">
             <span class="text-[10px] text-neutral-400 uppercase tracking-widest font-bold">CHIP TELEMETRY</span>
-            <span id="inspect-chip-type" class="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-neutral-800 text-neutral-300">NXP NTAG213</span>
+            <span id="inspect-chip-type" class="text-[10px] uppercase font-bold px-2 py-0.5 rounded-sm bg-neutral-800 text-neutral-300">NXP NTAG213</span>
           </div>
 
           <div class="flex justify-between items-center text-xs">
@@ -796,16 +790,16 @@
 
         <!-- Action Triggers -->
         <div class="grid grid-cols-2 gap-2 pt-1 font-mono">
-          <button id="btn-inspect-load-burner" onclick="loadInspectedUrlToBurner()" class="bg-black text-white text-xs font-bold uppercase tracking-wider py-3 px-3 rounded-full hover:bg-neutral-800 transition-all cursor-pointer flex items-center justify-center gap-1 shadow-xs whitespace-nowrap">
+          <button id="btn-inspect-load-burner" onclick="loadInspectedUrlToBurner()" class="bg-black text-white text-xs font-bold uppercase tracking-wider py-3 px-3 rounded-xl hover:bg-neutral-800 transition-all cursor-pointer flex items-center justify-center gap-1 shadow-xs whitespace-nowrap">
             <span>Load to Burner</span>
           </button>
-          <button id="btn-inspect-test-url" onclick="testInspectedUrl()" class="border border-neutral-200 hover:border-black bg-white text-neutral-800 text-xs font-bold uppercase tracking-wider py-3 px-3 rounded-full transition-all cursor-pointer flex items-center justify-center gap-1 whitespace-nowrap">
-            <span>Test Route &rarr;</span>
+          <button id="btn-inspect-test-url" onclick="testInspectedUrl()" class="border border-neutral-200 hover:border-black bg-white text-neutral-800 text-xs font-bold uppercase tracking-wider py-3 px-3 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1 whitespace-nowrap">
+            <span>Test Route</span>
           </button>
-          <button onclick="rearmTagInspection()" class="border border-neutral-200 hover:border-black bg-neutral-50 text-neutral-700 text-xs font-bold uppercase tracking-wider py-2.5 rounded-full transition-all cursor-pointer">
+          <button onclick="rearmTagInspection()" class="border border-neutral-200 hover:border-black bg-neutral-50 text-neutral-700 text-xs font-bold uppercase tracking-wider py-2.5 rounded-lg transition-all cursor-pointer">
             Scan Another
           </button>
-          <button onclick="closeModal('chip-inspect-modal')" class="border border-neutral-200 hover:border-black bg-neutral-50 text-neutral-700 text-xs font-bold uppercase tracking-wider py-2.5 rounded-full transition-all cursor-pointer">
+          <button onclick="closeModal('chip-inspect-modal')" class="border border-neutral-200 hover:border-black bg-neutral-50 text-neutral-700 text-xs font-bold uppercase tracking-wider py-2.5 rounded-lg transition-all cursor-pointer">
             Close
           </button>
         </div>
@@ -813,18 +807,17 @@
     </div>
 
     <!-- 6. IPHONE SHORTCUTS MODAL -->
-    <div id="ios-shortcut-modal" class="fixed inset-0 bg-black/60 backdrop-blur-md hidden items-center justify-center p-4 z-[95]">
+    <div id="ios-shortcut-modal" class="fixed inset-0 bg-black/85 hidden items-center justify-center p-4 z-[95]">
       <div class="bg-white text-neutral-900 rounded-3xl max-w-md w-full p-8 border border-neutral-100 relative fade-in shadow-2xl">
         <button onclick="closeModal('ios-shortcut-modal')" class="absolute top-6 right-6 text-neutral-400 hover:text-black text-2xl font-light cursor-pointer">&times;</button>
         
-        <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block">iOS Integration</span>
         <h3 class="text-xl font-black text-neutral-900 mt-1">iPhone 1-Tap NFC</h3>
         <p class="text-xs text-neutral-500 mt-1">Program NFC cards on iPhone using Apple's built-in Shortcuts app.</p>
 
         <div class="mt-5 space-y-2.5 text-xs font-sans text-neutral-700">
           <div class="p-4 bg-neutral-50 rounded-2xl border border-neutral-200">
             <strong class="font-bold text-neutral-900 block mb-1">1. Setup Shortcut (Once)</strong>
-            <span class="text-neutral-600">Open Shortcuts &rarr; Add Action <em>"Write NFC"</em> &rarr; Set Input to <em>"Shortcut Input"</em>. Name: <code class="font-bold text-black bg-white px-2 py-0.5 rounded-full border border-neutral-200">AA NFC Writer</code></span>
+            <span class="text-neutral-600">Open Shortcuts, tap Add Action <em>"Write NFC"</em>, and set Input to <em>"Shortcut Input"</em>. Name: <code class="font-bold text-black bg-white px-2 py-0.5 rounded-md border border-neutral-200">AA NFC Writer</code></span>
           </div>
 
           <div class="p-4 bg-neutral-50 rounded-2xl border border-neutral-200">
@@ -834,10 +827,10 @@
         </div>
 
         <div class="mt-6 flex flex-col gap-2.5 font-mono">
-          <button onclick="launchShortcutDirect()" class="w-full bg-black text-white text-xs font-bold uppercase tracking-wider py-3.5 rounded-full hover:bg-neutral-800 cursor-pointer shadow-xs">
+          <button onclick="launchShortcutDirect()" class="w-full bg-black text-white text-xs font-bold uppercase tracking-wider py-3.5 rounded-xl hover:bg-neutral-800 cursor-pointer shadow-xs">
             Launch Shortcut Now
           </button>
-          <button onclick="copyFormattedNDEF()" class="w-full border border-neutral-200 bg-white text-neutral-700 text-xs uppercase tracking-wider py-3 rounded-full hover:border-black cursor-pointer font-bold">
+          <button onclick="copyFormattedNDEF()" class="w-full border border-neutral-200 bg-white text-neutral-700 text-xs uppercase tracking-wider py-3 rounded-xl hover:border-black cursor-pointer font-bold">
             Copy Raw URL
           </button>
         </div>
@@ -845,11 +838,10 @@
     </div>
 
     <!-- 7. QR CODE MODAL -->
-    <div id="qr-modal" class="fixed inset-0 bg-black/60 backdrop-blur-md hidden items-center justify-center p-4 z-[95]">
+    <div id="qr-modal" class="fixed inset-0 bg-black/85 hidden items-center justify-center p-4 z-[95]">
       <div class="bg-white text-neutral-900 rounded-3xl max-w-sm w-full p-8 border border-neutral-100 text-center relative fade-in shadow-2xl">
         <button onclick="closeModal('qr-modal')" class="absolute top-6 right-6 text-neutral-400 hover:text-black text-2xl font-light cursor-pointer">&times;</button>
         
-        <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block">QR Verification</span>
         <h3 class="text-xl font-black text-neutral-900 mt-1">Verification QR</h3>
         <p class="text-xs text-neutral-500 mt-1">Scan with camera to test redirect URL.</p>
 
@@ -861,47 +853,46 @@
           Loading...
         </div>
 
-        <button onclick="closeModal('qr-modal')" class="w-full bg-black text-white font-mono text-xs font-bold uppercase tracking-wider py-3.5 rounded-full hover:bg-neutral-800 cursor-pointer shadow-xs">
+        <button onclick="closeModal('qr-modal')" class="w-full bg-black text-white font-mono text-xs font-bold uppercase tracking-wider py-3.5 rounded-xl hover:bg-neutral-800 cursor-pointer shadow-xs">
           Done
         </button>
       </div>
     </div>
 
     <!-- 8. NEW SERIAL MODAL -->
-    <div id="serial-modal" class="fixed inset-0 bg-black/60 backdrop-blur-md hidden items-center justify-center p-4 z-[90]">
-      <div class="bg-white text-neutral-900 rounded-3xl max-w-md w-full p-8 border border-neutral-100 relative fade-in shadow-2xl">
-        <button onclick="closeSerialModal()" class="absolute top-6 right-6 text-neutral-400 hover:text-black text-2xl font-light cursor-pointer">&times;</button>
+    <div id="serial-modal" class="fixed inset-0 bg-black/85 hidden items-center justify-center p-4 z-[90]">
+      <div class="bg-white text-neutral-900 rounded-3xl max-w-md w-full p-6 sm:p-8 border border-neutral-100 relative fade-in shadow-2xl">
+        <button onclick="closeSerialModal()" class="absolute top-5 right-5 w-11 h-11 flex items-center justify-center text-neutral-400 hover:text-black active:scale-95 text-2xl font-light cursor-pointer" aria-label="Close modal">&times;</button>
         
-        <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block">Hardware Registry</span>
         <h3 class="text-xl font-black text-neutral-900 mt-1">Register New Serial</h3>
         <p class="text-xs text-neutral-500 mt-1">Map hardware serial to customer destination URL.</p>
 
         <form onsubmit="saveNewSerial(event)" class="mt-6 space-y-4 text-xs">
           <div>
             <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1.5">Client Name</label>
-            <input type="text" id="serial-client" required placeholder="e.g. Gian Christian Villanueva" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-2xl px-4 py-3 text-neutral-900 outline-none font-medium">
+            <input type="text" id="serial-client" required placeholder="e.g. Gian Christian Villanueva" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-900 rounded-2xl px-4 py-3 text-[16px] sm:text-xs text-neutral-900 outline-none font-medium">
           </div>
 
           <div>
             <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1.5">Brand / Entity</label>
-            <input type="text" id="serial-brand" required placeholder="e.g. Attachment Anywhere" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-2xl px-4 py-3 text-neutral-900 outline-none font-medium">
+            <input type="text" id="serial-brand" required placeholder="e.g. Attachment Anywhere" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-900 rounded-2xl px-4 py-3 text-[16px] sm:text-xs text-neutral-900 outline-none font-medium">
           </div>
 
           <div>
             <div class="flex items-center justify-between mb-1.5">
               <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500">Serial Code</label>
-              <button type="button" onclick="regenerateSerialValue()" class="text-[10px] font-mono text-neutral-400 hover:text-black underline cursor-pointer">Regenerate</button>
+              <button type="button" onclick="regenerateSerialValue()" class="text-[10px] font-mono text-neutral-400 hover:text-black underline cursor-pointer min-h-[36px] inline-flex items-center">Regenerate</button>
             </div>
-            <input type="text" id="serial-code-val" required class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-2xl px-4 py-3 font-mono font-bold text-neutral-900 outline-none">
+            <input type="text" id="serial-code-val" required class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-900 rounded-2xl px-4 py-3 font-mono font-bold text-[16px] sm:text-xs text-neutral-900 outline-none">
           </div>
 
           <div>
             <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1.5">Target Route URL</label>
-            <input type="url" id="serial-target-url" required placeholder="https://attachmentanywhere.com/c/..." class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-2xl px-4 py-3 font-mono text-neutral-900 outline-none">
+            <input type="url" id="serial-target-url" required placeholder="https://attachmentanywhere.com/c/..." class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-900 rounded-2xl px-4 py-3 font-mono text-[16px] sm:text-xs text-neutral-900 outline-none">
           </div>
 
           <div class="pt-2">
-            <button type="submit" class="w-full bg-black text-white text-xs font-bold uppercase tracking-wider py-4 rounded-full hover:bg-neutral-800 transition-all cursor-pointer shadow-xs">
+            <button type="submit" class="w-full min-h-[48px] bg-black text-white text-xs font-bold uppercase tracking-wider py-3.5 rounded-xl hover:bg-neutral-800 active:scale-[0.98] transition-all cursor-pointer shadow-xs flex items-center justify-center">
               Save Serial
             </button>
           </div>
@@ -910,14 +901,14 @@
     </div>
 
     <!-- 8B. SMART CLIPBOARD / RAW ORDER INGESTION MODAL -->
-    <div id="raw-order-modal" class="fixed inset-0 bg-black/75 backdrop-blur-md hidden items-center justify-center p-4 z-[95]">
+    <div id="raw-order-modal" class="fixed inset-0 bg-black/85 hidden items-center justify-center p-4 z-[95]">
       <div class="bg-[#0c0c0e] text-white rounded-3xl max-w-lg w-full p-6 sm:p-8 border border-neutral-800 relative fade-in shadow-2xl space-y-5">
-        <button onclick="closeModal('raw-order-modal')" class="absolute top-6 right-6 text-neutral-400 hover:text-white text-2xl font-light cursor-pointer">&times;</button>
+        <button onclick="closeModal('raw-order-modal')" class="absolute top-5 right-5 w-11 h-11 flex items-center justify-center text-neutral-400 hover:text-white active:scale-95 text-2xl font-light cursor-pointer" aria-label="Close modal">&times;</button>
         
         <div>
           <div class="flex items-center gap-2">
             <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-            <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Tactical Ingestion Engine</span>
+            <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Tactical Ingestion</span>
           </div>
           <h3 class="text-lg sm:text-xl font-bold uppercase tracking-tight text-white mt-1">Paste Raw Order</h3>
           <p class="text-xs text-neutral-400 mt-1">
@@ -929,9 +920,9 @@
           <div>
             <div class="flex justify-between items-center mb-1.5">
               <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-400">Raw Order Text</label>
-              <button type="button" onclick="pasteFromClipboardToRawInput()" class="text-[10px] text-sky-400 hover:text-sky-300 underline cursor-pointer">Paste from Clipboard</button>
+              <button type="button" onclick="pasteFromClipboardToRawInput()" class="text-[10px] text-sky-400 hover:text-sky-300 underline cursor-pointer min-h-[36px] inline-flex items-center">Paste from Clipboard</button>
             </div>
-            <textarea id="raw-order-input" rows="5" oninput="handleRawOrderInput(this.value)" placeholder="Name: Gian Christian Villanueva&#10;Phone: 0917-123-4567&#10;Brand: Attachment Anywhere&#10;URL: https://attachmentanywhere.com/c/gian" class="w-full bg-[#141418] border border-neutral-800 focus:border-white rounded-2xl p-4 text-xs font-mono text-emerald-400 outline-none transition-colors resize-none placeholder:text-neutral-600"></textarea>
+            <textarea id="raw-order-input" rows="5" oninput="handleRawOrderInput(this.value)" placeholder="Name: Gian Christian Villanueva&#10;Phone: 0917-123-4567&#10;Brand: Attachment Anywhere&#10;URL: https://attachmentanywhere.com/c/gian" class="w-full bg-[#141418] border border-neutral-800 focus:border-white focus-visible:ring-2 focus-visible:ring-white rounded-2xl p-4 text-[16px] sm:text-xs font-mono text-emerald-400 outline-none transition-colors resize-none placeholder:text-neutral-600"></textarea>
           </div>
 
           <!-- Live Parsed Telemetry Readout -->
@@ -965,10 +956,10 @@
           </div>
 
           <div class="flex items-center gap-3 pt-2">
-            <button type="button" onclick="commitRawOrderToLedger()" class="flex-1 bg-white hover:bg-neutral-200 text-black text-xs font-bold uppercase tracking-wider py-3.5 rounded-full transition-all cursor-pointer shadow-sm text-center">
+            <button type="button" onclick="commitRawOrderToLedger()" class="flex-1 min-h-[44px] bg-white hover:bg-neutral-200 text-black text-xs font-bold uppercase tracking-wider py-3 px-4 rounded-xl active:scale-[0.98] transition-all cursor-pointer shadow-sm text-center flex items-center justify-center">
               Ingest & Prime Burner
             </button>
-            <button type="button" onclick="closeModal('raw-order-modal')" class="px-5 py-3.5 rounded-full border border-neutral-700 bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white text-xs font-bold transition-all cursor-pointer">
+            <button type="button" onclick="closeModal('raw-order-modal')" class="min-h-[44px] px-5 py-3 rounded-xl border border-neutral-700 bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white active:scale-95 text-xs font-bold transition-all cursor-pointer flex items-center justify-center">
               Cancel
             </button>
           </div>
@@ -977,11 +968,10 @@
     </div>
 
     <!-- 9. MANUAL ORDER INTAKE MODAL -->
-    <div id="order-modal" class="fixed inset-0 bg-black/60 backdrop-blur-md hidden items-center justify-center p-4 z-[90]">
+    <div id="order-modal" class="fixed inset-0 bg-black/85 hidden items-center justify-center p-4 z-[90]">
       <div class="bg-white text-neutral-900 rounded-3xl max-w-lg w-full p-8 border border-neutral-100 relative fade-in max-h-[90vh] overflow-y-auto shadow-2xl">
-        <button onclick="closeOrderModal()" class="absolute top-6 right-6 text-neutral-400 hover:text-black text-2xl font-light cursor-pointer">&times;</button>
+        <button onclick="closeOrderModal()" class="w-11 h-11 flex items-center justify-center absolute top-4 right-4 text-neutral-400 hover:text-black active:scale-95 text-2xl font-light cursor-pointer" aria-label="Close modal">&times;</button>
         
-        <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block">Fulfillment Queue</span>
         <h3 class="text-xl font-black text-neutral-900 mt-1">Manual Order Entry</h3>
         <p class="text-xs text-neutral-500 mt-1">Record direct orders from Messenger, Instagram, or in-person clients.</p>
 
@@ -989,23 +979,23 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1.5">Customer Name</label>
-              <input type="text" id="order-cust-name" required placeholder="e.g. Maria Santos" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-2xl px-4 py-3 text-neutral-900 outline-none font-medium">
+              <input type="text" id="order-cust-name" required placeholder="e.g. Full Name" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-900 rounded-2xl px-4 py-3 text-[16px] sm:text-xs text-neutral-900 outline-none font-medium min-h-[44px]">
             </div>
             <div>
               <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1.5">Phone</label>
-              <input type="text" id="order-cust-phone" required placeholder="e.g. 0917 123 4567" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-2xl px-4 py-3 text-neutral-900 outline-none font-mono">
+              <input type="text" id="order-cust-phone" required placeholder="e.g. 0917 123 4567" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-900 rounded-2xl px-4 py-3 text-[16px] sm:text-xs text-neutral-900 outline-none font-mono min-h-[44px]">
             </div>
           </div>
 
           <div>
             <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1.5">Address</label>
-            <input type="text" id="order-cust-address" required placeholder="Unit, Street, Barangay, City, Province" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-2xl px-4 py-3 text-neutral-900 outline-none font-medium">
+            <input type="text" id="order-cust-address" required placeholder="Unit, Street, Barangay, City, Province" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-900 rounded-2xl px-4 py-3 text-[16px] sm:text-xs text-neutral-900 outline-none font-medium min-h-[44px]">
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div class="sm:col-span-2">
               <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1.5">Product</label>
-              <select id="order-prod-select" onchange="updateManualOrderDefaults()" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-2xl px-4 py-3 text-neutral-900 outline-none font-medium">
+              <select id="order-prod-select" onchange="updateManualOrderDefaults()" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-900 rounded-2xl px-4 py-3 text-[16px] sm:text-xs text-neutral-900 outline-none font-medium min-h-[44px]">
                 <option value="Smart Executive Card">Smart Executive Card (₱1,200)</option>
                 <option value="Google ReviewShield™">Google ReviewShield™ (₱500)</option>
                 <option value="Digital Hub Touchpoint">Digital Hub Touchpoint (₱2,500)</option>
@@ -1013,18 +1003,18 @@
             </div>
             <div>
               <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1.5">Quantity</label>
-              <input type="number" id="order-prod-qty" min="1" value="1" oninput="updateManualOrderTotal()" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-2xl px-4 py-3 text-neutral-900 outline-none font-bold">
+              <input type="number" id="order-prod-qty" min="1" value="1" oninput="updateManualOrderTotal()" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-900 rounded-2xl px-4 py-3 text-[16px] sm:text-xs text-neutral-900 outline-none font-bold min-h-[44px]">
             </div>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1.5">Variant</label>
-              <input type="text" id="order-prod-variant" value="Original Design" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-2xl px-4 py-3 text-neutral-900 outline-none font-medium">
+              <input type="text" id="order-prod-variant" value="Original Design" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-900 rounded-2xl px-4 py-3 text-[16px] sm:text-xs text-neutral-900 outline-none font-medium min-h-[44px]">
             </div>
             <div>
               <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1.5">Shipping</label>
-              <select id="order-cust-shipping" onchange="updateManualOrderTotal()" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-2xl px-4 py-3 text-neutral-900 outline-none font-medium">
+              <select id="order-cust-shipping" onchange="updateManualOrderTotal()" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-900 rounded-2xl px-4 py-3 text-[16px] sm:text-xs text-neutral-900 outline-none font-medium min-h-[44px]">
                 <option value="Standard Metro Manila (+₱80)" data-fee="80">Standard Metro Manila (+₱80)</option>
                 <option value="Provincial Delivery (+₱150)" data-fee="150">Provincial Delivery (+₱150)</option>
                 <option value="Express Courier (+₱200)" data-fee="200">Express Courier (+₱200)</option>
@@ -1036,11 +1026,11 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1.5">Total (₱)</label>
-              <input type="number" id="order-prod-total" value="1300" required class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-2xl px-4 py-3 font-bold text-neutral-900 outline-none">
+              <input type="number" id="order-prod-total" value="1300" required class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-900 rounded-2xl px-4 py-3 font-bold text-[16px] sm:text-xs text-neutral-900 outline-none min-h-[44px]">
             </div>
             <div>
               <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1.5">Status</label>
-              <select id="order-prod-status" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-2xl px-4 py-3 text-neutral-900 outline-none font-medium">
+              <select id="order-prod-status" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-900 rounded-2xl px-4 py-3 text-[16px] sm:text-xs text-neutral-900 outline-none font-medium min-h-[44px]">
                 <option value="Pending">Pending (To Encode)</option>
                 <option value="Encoded">Encoded (To Ship)</option>
                 <option value="Dispatched">Dispatched</option>
@@ -1051,18 +1041,18 @@
           <div>
             <div class="flex items-center justify-between mb-1.5">
               <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500">Target Route URL</label>
-              <button type="button" onclick="generateManualOrderRoute()" class="text-[10px] font-mono text-neutral-400 hover:text-black underline cursor-pointer">Generate</button>
+              <button type="button" onclick="generateManualOrderRoute()" class="text-[10px] font-mono text-neutral-400 hover:text-black underline cursor-pointer p-1">Generate</button>
             </div>
-            <input type="url" id="order-target-url" required placeholder="https://attachmentanywhere.com/c/..." class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-2xl px-4 py-3 font-mono text-neutral-900 outline-none">
+            <input type="url" id="order-target-url" required placeholder="https://attachmentanywhere.com/c/..." class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-900 rounded-2xl px-4 py-3 font-mono text-[16px] sm:text-xs text-neutral-900 outline-none min-h-[44px]">
           </div>
 
           <div>
             <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1.5">Notes / Specs (Optional)</label>
-            <textarea id="order-prod-specs" rows="2" placeholder="e.g. LinkedIn + Instagram channels; custom UV logo on front" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-2xl p-3 text-neutral-900 outline-none resize-none font-medium"></textarea>
+            <textarea id="order-prod-specs" rows="2" placeholder="e.g. LinkedIn + Instagram channels; custom UV logo on front" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-900 rounded-2xl p-3 text-[16px] sm:text-xs text-neutral-900 outline-none resize-none font-medium min-h-[70px]"></textarea>
           </div>
 
           <div class="pt-2">
-            <button type="submit" class="w-full bg-black text-white text-xs font-bold uppercase tracking-wider py-4 rounded-full hover:bg-neutral-800 transition-all cursor-pointer shadow-xs">
+            <button type="submit" class="w-full min-h-[48px] bg-black text-white text-xs font-bold uppercase tracking-wider py-4 rounded-xl hover:bg-neutral-800 active:scale-[0.99] transition-all cursor-pointer shadow-xs flex items-center justify-center">
               Save Order
             </button>
           </div>
@@ -1071,11 +1061,10 @@
     </div>
 
     <!-- 10. SPEC DRAWER -->
-    <div id="spec-drawer" class="fixed inset-0 bg-black/60 backdrop-blur-md hidden items-center justify-center p-4 z-[90]">
+    <div id="spec-drawer" class="fixed inset-0 bg-black/85 hidden items-center justify-center p-4 z-[90]">
       <div class="bg-white text-neutral-900 rounded-3xl max-w-lg w-full p-8 border border-neutral-100 relative fade-in shadow-2xl">
-        <button onclick="closeSpecDrawer()" class="absolute top-6 right-6 text-neutral-400 hover:text-black text-2xl font-light cursor-pointer">&times;</button>
+        <button onclick="closeSpecDrawer()" class="w-11 h-11 flex items-center justify-center absolute top-4 right-4 text-neutral-400 hover:text-black active:scale-95 text-2xl font-light cursor-pointer" aria-label="Close drawer">&times;</button>
         
-        <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block">Order Specification</span>
         <h3 id="drawer-title" class="text-xl font-black tracking-tight text-neutral-900 mt-1">AA-000000</h3>
 
         <div class="mt-6 space-y-3.5 text-xs">
@@ -1096,15 +1085,15 @@
         </div>
 
         <div class="mt-6 flex gap-3">
-          <button id="drawer-send-to-encoder" class="flex-1 bg-black text-white text-xs font-bold uppercase tracking-wider py-3.5 rounded-full hover:bg-neutral-800 transition-all cursor-pointer shadow-xs">
+          <button id="drawer-send-to-encoder" class="flex-1 min-h-[48px] bg-black text-white text-xs font-bold uppercase tracking-wider py-3.5 rounded-xl hover:bg-neutral-800 active:scale-[0.99] transition-all cursor-pointer shadow-xs flex items-center justify-center">
             Load into NFC Writer
           </button>
         </div>
       </div>
     </div>
 
-    <!-- GLOBAL ERGONOMIC HOTKEY CHEAT RIBBON -->
-    <div id="hotkey-ribbon" class="fixed bottom-0 inset-x-0 z-[100] bg-[#08080a]/95 backdrop-blur-md border-t border-[#1f242d] py-2 px-4 flex items-center justify-center gap-3 sm:gap-6 text-[10px] sm:text-[11px] font-mono text-neutral-400 select-none shadow-2xl">
+    <!-- GLOBAL ERGONOMIC HOTKEY CHEAT RIBBON (Hidden on touch/mobile) -->
+    <div id="hotkey-ribbon" class="fixed bottom-0 inset-x-0 z-[100] bg-[#08080a]/95 backdrop-blur-md border-t border-[#1f242d] py-2 px-4 hidden md:flex items-center justify-center gap-3 sm:gap-6 text-[10px] sm:text-[11px] font-mono text-neutral-400 select-none shadow-2xl">
       <div class="flex items-center gap-1.5">
         <kbd class="px-1.5 py-0.5 rounded bg-[#14151a] border border-neutral-700 text-white font-bold text-[9px] sm:text-[10px] shadow-xs">SPACE</kbd>
         <span class="text-neutral-300">WRITE</span>
@@ -1126,8 +1115,8 @@
 
   </main>
 
-  <!-- ================= FOOTER ================= -->
-  <footer class="w-full bg-black text-white pt-16 pb-16 px-6 md:px-12 lg:px-24 border-t border-neutral-900 mt-auto">
+  <!-- Footer -->
+  <footer class="w-full bg-black text-white pt-16 pb-[calc(4rem+env(safe-area-inset-bottom))] px-6 md:px-12 lg:px-24 border-t border-neutral-900 mt-auto">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6 text-xs font-mono">
       <div class="flex items-center gap-4">
         <a href="index.html">
@@ -1137,10 +1126,10 @@
       </div>
 
       <div class="flex items-center gap-5">
-        <a href="https://instagram.com/attachmentanywhere" target="_blank" rel="noopener noreferrer" class="hover:text-white text-neutral-400 transition-colors">
+        <a href="https://instagram.com/attachmentanywhere" target="_blank" rel="noopener noreferrer" class="min-h-[44px] min-w-[44px] inline-flex items-center hover:text-white text-neutral-400 transition-colors">
           Instagram
         </a>
-        <a href="https://m.me/attachmentanywhere" target="_blank" rel="noopener noreferrer" class="hover:text-white text-neutral-400 transition-colors">
+        <a href="https://m.me/attachmentanywhere" target="_blank" rel="noopener noreferrer" class="min-h-[44px] min-w-[44px] inline-flex items-center hover:text-white text-neutral-400 transition-colors">
           Messenger
         </a>
       </div>
@@ -1148,9 +1137,7 @@
   </footer>
 
   <script>
-    // =========================================================================
-    // 0. MEADHALL BOOT SPLASH SCREEN DISMISS CONTROLLER
-    // =========================================================================
+    // Boot splash screen dismiss controller
     (function initMeadhallBootScreen() {
       const bootScreen = document.getElementById('meadhall-boot-screen');
       if (!bootScreen) return;
@@ -1314,7 +1301,7 @@
       let borderStyle = 'border-neutral-800 bg-black text-white';
 
       if (isCollision) {
-        dotColor = 'bg-amber-400 animate-pulse';
+        dotColor = 'bg-amber-400';
         borderStyle = 'border-amber-500/80 bg-[#161208] text-amber-200 shadow-xl shadow-amber-500/10';
       }
 
@@ -1471,8 +1458,8 @@
         if (!('NDEFReader' in window)) {
           showToast('Web NFC is not supported in this browser. Running via Simulator is recommended.', false);
         }
-        if (btnReal) btnReal.className = "px-3 py-1 rounded-full bg-white text-black font-bold transition-all shadow-xs cursor-pointer";
-        if (btnSim) btnSim.className = "px-3 py-1 rounded-full text-neutral-400 hover:text-white transition-all font-bold cursor-pointer";
+        if (btnReal) btnReal.className = "px-3 py-1 rounded-lg bg-white text-black font-bold transition-all shadow-xs cursor-pointer";
+        if (btnSim) btnSim.className = "px-3 py-1 rounded-lg text-neutral-400 hover:text-white transition-all font-bold cursor-pointer";
         if (modeLabel) {
           modeLabel.innerText = "● REAL NFC ACTIVE";
           modeLabel.className = "text-[10px] font-mono text-emerald-400 uppercase font-bold tracking-wider";
@@ -1480,8 +1467,8 @@
         if (writeLabel) writeLabel.innerText = "WRITE NFC";
         if (chipBadge) chipBadge.innerText = "NFC Hardware";
       } else {
-        if (btnSim) btnSim.className = "px-3 py-1 rounded-full bg-white text-black font-bold transition-all shadow-xs cursor-pointer";
-        if (btnReal) btnReal.className = "px-3 py-1 rounded-full text-neutral-400 hover:text-white transition-all font-bold cursor-pointer";
+        if (btnSim) btnSim.className = "px-3 py-1 rounded-lg bg-white text-black font-bold transition-all shadow-xs cursor-pointer";
+        if (btnReal) btnReal.className = "px-3 py-1 rounded-lg text-neutral-400 hover:text-white transition-all font-bold cursor-pointer";
         if (modeLabel) {
           modeLabel.innerText = "● EMULATOR READY";
           modeLabel.className = "text-[10px] font-mono text-amber-400 uppercase font-bold tracking-wider";
@@ -1509,19 +1496,19 @@
 
       if (isIOS) {
         badge.innerText = 'iOS (iPhone)';
-        badge.className = 'px-3.5 py-1.5 rounded-full text-[10px] font-mono uppercase tracking-wider bg-neutral-900 border border-neutral-800 text-neutral-300';
+        badge.className = 'px-3.5 py-1.5 rounded-md text-[10px] font-mono uppercase tracking-wider bg-neutral-900 border border-neutral-800 text-neutral-300';
         setHwMode('sim');
       } else if (isAndroid && 'NDEFReader' in window) {
         badge.innerText = 'Android Web NFC';
-        badge.className = 'px-3.5 py-1.5 rounded-full text-[10px] font-mono uppercase tracking-wider bg-neutral-900 border border-neutral-800 text-emerald-400 font-bold';
+        badge.className = 'px-3.5 py-1.5 rounded-md text-[10px] font-mono uppercase tracking-wider bg-neutral-900 border border-neutral-800 text-emerald-400 font-bold';
         setHwMode('real');
       } else if ('NDEFReader' in window) {
         badge.innerText = 'Web NFC Ready';
-        badge.className = 'px-3.5 py-1.5 rounded-full text-[10px] font-mono uppercase tracking-wider bg-neutral-900 border border-neutral-800 text-emerald-400 font-bold';
+        badge.className = 'px-3.5 py-1.5 rounded-md text-[10px] font-mono uppercase tracking-wider bg-neutral-900 border border-neutral-800 text-emerald-400 font-bold';
         setHwMode('real');
       } else {
         badge.innerText = 'DESKTOP MODE // EMULATOR READY';
-        badge.className = 'px-3.5 py-1.5 rounded-full text-[10px] font-mono uppercase tracking-wider bg-neutral-900 border border-neutral-800 text-amber-400 font-bold';
+        badge.className = 'px-3.5 py-1.5 rounded-md text-[10px] font-mono uppercase tracking-wider bg-neutral-900 border border-neutral-800 text-amber-400 font-bold';
         setHwMode('sim');
       }
     }
@@ -1567,7 +1554,7 @@
         if (title) title.innerText = 'Simulating Card Tap...';
         if (desc) desc.innerText = 'STATUS: AWAITING CONTACT // BRING CARD TO REAR SENSOR';
         if (icon) {
-          icon.className = 'w-20 h-20 rounded-full border-2 border-amber-400 flex items-center justify-center text-amber-400 transition-all bg-neutral-50 animate-pulse';
+          icon.className = 'w-20 h-20 rounded-full border-2 border-amber-400 flex items-center justify-center text-amber-400 transition-all bg-neutral-50';
         }
 
         activeNdefAbortController = new AbortController();
@@ -1777,7 +1764,7 @@
           isBatchBurnerActive = false;
           return;
         }
-        if (btn) btn.className = "border border-amber-500 bg-amber-950/80 text-amber-300 text-xs font-mono uppercase tracking-wider py-3.5 px-2 rounded-full transition-all cursor-pointer flex items-center justify-center gap-1.5 font-bold shadow-xs";
+        if (btn) btn.className = "border border-amber-500 bg-amber-950/80 text-amber-300 text-xs font-mono uppercase tracking-wider py-3.5 px-2 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 font-bold shadow-xs";
         if (btnLabel) btnLabel.innerText = "Batch: ON";
         if (bar) bar.classList.remove('hidden');
 
@@ -1787,7 +1774,7 @@
         showToast(`Batch Burner Engaged (Card ${batchIndex + 1} of ${serials.length}).`);
         logAuditTrail('BATCH_START', `Batch encoding started at card #${batchIndex + 1}`);
       } else {
-        if (btn) btn.className = "border border-neutral-700 hover:border-white bg-[#141418] text-neutral-200 text-xs font-mono uppercase tracking-wider py-3.5 px-2 rounded-full transition-all cursor-pointer flex items-center justify-center gap-1.5";
+        if (btn) btn.className = "border border-neutral-700 hover:border-white bg-[#141418] text-neutral-200 text-xs font-mono uppercase tracking-wider py-3.5 px-2 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5";
         if (btnLabel) btnLabel.innerText = "Batch: OFF";
         if (bar) bar.classList.add('hidden');
         showToast('Batch Burner disengaged.');
@@ -1821,7 +1808,7 @@
       if (batchIndex < serials.length) {
         loadBatchItem(batchIndex);
         const nextItem = serials[batchIndex];
-        showToast(`Batch Advanced &rarr; Card #${batchIndex + 1}: ${nextItem.name}`);
+        showToast(`Batch Advanced: Card #${batchIndex + 1}: ${nextItem.name}`);
       } else {
         finishBatchBurner();
       }
@@ -1845,7 +1832,7 @@
       const bar = document.getElementById('batch-progress-bar');
       const btn = document.getElementById('btn-batch-toggle');
       const btnLabel = document.getElementById('btn-batch-label');
-      if (btn) btn.className = "border border-neutral-700 hover:border-white bg-[#141418] text-neutral-200 text-xs font-mono uppercase tracking-wider py-3.5 px-2 rounded-full transition-all cursor-pointer flex items-center justify-center gap-1.5";
+      if (btn) btn.className = "border border-neutral-700 hover:border-white bg-[#141418] text-neutral-200 text-xs font-mono uppercase tracking-wider py-3.5 px-2 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5";
       if (btnLabel) btnLabel.innerText = "Batch: OFF";
       if (bar) bar.classList.add('hidden');
       showToast('Batch Complete: All serial cards processed!');
@@ -1890,12 +1877,12 @@
 
       // Reset UI to Scanning State
       if (badge) {
-        badge.className = "px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider font-bold bg-blue-50 text-blue-700 border border-blue-200 animate-pulse";
+        badge.className = "px-3 py-1 rounded-md text-[10px] font-mono uppercase tracking-wider font-bold bg-blue-50 text-blue-700 border border-blue-200";
         badge.innerText = hardwareMode === 'sim' ? "SIMULATOR ACTIVE" : "AWAITING TAG";
       }
 
       if (ring) {
-        ring.className = "w-20 h-20 rounded-full border-2 border-blue-500/50 flex items-center justify-center text-blue-600 bg-blue-50/50 animate-pulse transition-all";
+        ring.className = "w-20 h-20 rounded-full border-2 border-blue-500/50 flex items-center justify-center text-blue-600 bg-blue-50/50 transition-all";
         ring.innerHTML = `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>`;
       }
 
@@ -1999,7 +1986,7 @@
           playHwErrorBuzz();
           showToast('NFC antenna read error. Reposition physical card.', false);
           if (badge) {
-            badge.className = "px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider font-bold bg-red-50 text-red-700 border border-red-200";
+            badge.className = "px-3 py-1 rounded-md text-[10px] font-mono uppercase tracking-wider font-bold bg-red-50 text-red-700 border border-red-200";
             badge.innerText = "Antenna Error";
           }
         };
@@ -2010,7 +1997,7 @@
         playHwErrorBuzz();
         showToast(`Scan error: ${err.message || err}`, false);
         if (badge) {
-          badge.className = "px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider font-bold bg-red-50 text-red-700 border border-red-200";
+          badge.className = "px-3 py-1 rounded-md text-[10px] font-mono uppercase tracking-wider font-bold bg-red-50 text-red-700 border border-red-200";
           badge.innerText = "Scan Aborted";
         }
       }
@@ -2034,7 +2021,7 @@
       const btnTest = document.getElementById('btn-inspect-test-url');
 
       if (badge) {
-        badge.className = "px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider font-bold bg-emerald-50 text-emerald-700 border border-emerald-200";
+        badge.className = "px-3 py-1 rounded-md text-[10px] font-mono uppercase tracking-wider font-bold bg-emerald-50 text-emerald-700 border border-emerald-200";
         badge.innerText = "TAG VERIFIED OK";
       }
 
@@ -2297,7 +2284,7 @@
         healthNumber.innerText = '100%';
         healthNumber.className = 'text-3xl sm:text-4xl font-black tracking-tight text-neutral-900';
         healthLabel.innerText = '0 Errors';
-        healthLabel.className = 'text-[10px] font-mono text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full font-bold';
+        healthLabel.className = 'text-[10px] font-mono text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-md font-bold';
         auditIndicator.className = 'w-2 h-2 rounded-full bg-emerald-500';
         issuesBox.innerHTML = `<span class="text-neutral-700">All hardware serials match NTAG213 specifications and enforce HTTPS routing.</span>`;
       } else {
@@ -2305,7 +2292,7 @@
         healthNumber.innerText = `${score}%`;
         healthNumber.className = 'text-3xl sm:text-4xl font-black tracking-tight text-neutral-900';
         healthLabel.innerText = `${issues.length} Issue${issues.length > 1 ? 's' : ''}`;
-        healthLabel.className = 'text-[10px] font-mono text-red-700 bg-red-50 border border-red-200 px-2.5 py-0.5 rounded-full font-bold';
+        healthLabel.className = 'text-[10px] font-mono text-red-700 bg-red-50 border border-red-200 px-2.5 py-0.5 rounded-md font-bold';
         auditIndicator.className = 'w-2 h-2 rounded-full bg-red-500';
         issuesBox.innerHTML = issues.map(iss => `<div class="text-red-700 mb-0.5">• ${iss}</div>`).join('');
       }
@@ -2590,8 +2577,8 @@
         const isPending = (item.status || '').toUpperCase() === 'PENDING';
         
         const statusBadge = isPending
-          ? `<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-amber-50 text-amber-700 border border-amber-200"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>PENDING</span>`
-          : `<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>ACTIVE</span>`;
+          ? `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] font-semibold bg-amber-50 text-amber-700 border border-amber-200"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>PENDING</span>`
+          : `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>ACTIVE</span>`;
 
         tr.onclick = (e) => {
           if (e.target.closest('button') || e.target.closest('a')) return;
@@ -2614,7 +2601,7 @@
             <a href="${displayUrl}" target="_blank" onclick="event.stopPropagation()" class="text-neutral-500 hover:text-black underline decoration-neutral-300 underline-offset-2 transition-colors">${targetUrl}</a>
           </td>
           <td class="py-3.5 px-4 whitespace-nowrap">
-            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono text-neutral-600 border border-neutral-200 bg-neutral-50">
+            <span class="px-2 py-0.5 rounded-md text-[10px] font-mono text-neutral-600 border border-neutral-200 bg-neutral-50">
               ${chipType}
             </span>
           </td>
@@ -2622,13 +2609,13 @@
             ${statusBadge}
           </td>
           <td class="py-3.5 px-6 text-right space-x-1.5 whitespace-nowrap">
-            <button onclick="event.stopPropagation(); loadSerialToBurner('${targetUrl}', '${clientName.replace(/'/g, "\\'")}', '${item.serial}')" class="text-[10px] font-mono font-bold uppercase tracking-wider bg-black text-white hover:bg-neutral-800 px-3 py-1.5 rounded-full transition-all cursor-pointer inline-flex items-center gap-1 shadow-xs">
+            <button onclick="event.stopPropagation(); loadSerialToBurner('${targetUrl}', '${clientName.replace(/'/g, "\\'")}', '${item.serial}')" class="text-[10px] font-mono font-bold uppercase tracking-wider bg-black text-white hover:bg-neutral-800 px-2.5 py-1.5 rounded-md transition-all cursor-pointer inline-flex items-center gap-1 shadow-xs">
               <span>LOAD TO BURNER</span>
             </button>
-            <button onclick="event.stopPropagation(); quickWriteSerial('${targetUrl}')" title="Trigger Web NFC Write" class="text-[10px] font-mono text-neutral-600 hover:text-black border border-neutral-200 hover:border-black bg-white px-2.5 py-1 rounded-full transition-colors cursor-pointer">
+            <button onclick="event.stopPropagation(); quickWriteSerial('${targetUrl}')" title="Trigger Web NFC Write" class="text-[10px] font-mono text-neutral-600 hover:text-black border border-neutral-200 hover:border-black bg-white px-2 py-1 rounded-md transition-colors cursor-pointer">
               Write
             </button>
-            <button onclick="event.stopPropagation(); copySerialURL('${targetUrl}')" title="Copy Target URL" class="text-[10px] font-mono text-neutral-500 hover:text-black border border-neutral-200 hover:border-black bg-white px-2.5 py-1 rounded-full transition-colors cursor-pointer">
+            <button onclick="event.stopPropagation(); copySerialURL('${targetUrl}')" title="Copy Target URL" class="text-[10px] font-mono text-neutral-500 hover:text-black border border-neutral-200 hover:border-black bg-white px-2 py-1 rounded-md transition-colors cursor-pointer">
               Copy
             </button>
             <button onclick="event.stopPropagation(); deleteSerial('${item.serial}')" title="Delete Serial" class="text-xs text-neutral-400 hover:text-red-600 px-2 py-1 transition-colors cursor-pointer">
@@ -2692,9 +2679,7 @@
       logAuditTrail('EXPORT_CSV', `Exported ${serials.length} serials.`);
     }
 
-    // =========================================================================
-    // 5B. GLOBAL ERGONOMIC HOTKEYS ENGINE
-    // =========================================================================
+    // Global ergonomic hotkeys
     let currentLedgerIndex = -1;
 
     function cycleNextLedgerRecord() {
@@ -2811,9 +2796,7 @@
       });
     }
 
-    // =========================================================================
-    // 5C. SMART CLIPBOARD / RAW ORDER INGESTION ENGINE
-    // =========================================================================
+    // Smart clipboard / raw order ingestion
     function generateNextSerialId() {
       const now = new Date();
       const yy = String(now.getFullYear()).slice(-2);
@@ -2992,9 +2975,7 @@
       logAuditTrail('RAW_INGEST', `Ingested order for ${newRecord.name} (${newRecord.brand}) - SN: ${newRecord.serial}`);
     }
 
-    // =========================================================================
-    // 5D. CSV DRAG-AND-DROP INGESTION ENGINE
-    // =========================================================================
+    // CSV drag-and-drop ingestion
     function parseCsvLine(text) {
       const result = [];
       let cur = '';
@@ -3322,9 +3303,9 @@
       activeFilter = filter;
       document.querySelectorAll('.filter-tab').forEach(tab => {
         if (tab.dataset.filter === filter) {
-          tab.className = "filter-tab px-3 py-1.5 text-xs font-mono font-bold rounded-full transition-all bg-black text-white shadow-xs";
+          tab.className = "filter-tab px-3 py-1.5 text-xs font-mono font-bold rounded-md transition-all bg-black text-white shadow-xs";
         } else {
-          tab.className = "filter-tab px-3 py-1.5 text-xs font-mono rounded-full transition-all text-neutral-500 hover:text-black hover:bg-neutral-200/60";
+          tab.className = "filter-tab px-3 py-1.5 text-xs font-mono rounded-md transition-all text-neutral-500 hover:text-black hover:bg-neutral-200/60";
         }
       });
       renderMeadhall();
@@ -3399,13 +3380,13 @@
             <span class="font-sans text-[11px] text-neutral-500">${order.variant} (${order.qty}x) • ₱${order.total}</span>
           </td>
           <td class="py-3.5 px-6">
-            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider inline-flex items-center gap-1.5 ${badgeStyles}">
+            <span class="px-2 py-0.5 rounded-md text-[10px] font-mono uppercase tracking-wider inline-flex items-center gap-1.5 ${badgeStyles}">
               ${order.status}
             </span>
           </td>
           <td class="py-3.5 px-6 text-right space-x-2 whitespace-nowrap">
             ${hasTargetUrl ? `
-              <button onclick="quickWriteOrder('${order.ref}')" class="text-[10px] font-mono font-bold uppercase tracking-wider text-black bg-neutral-100 hover:bg-neutral-200 px-2.5 py-1 rounded-full transition-colors cursor-pointer" title="Write to card">
+              <button onclick="quickWriteOrder('${order.ref}')" class="text-[10px] font-mono font-bold uppercase tracking-wider text-black bg-neutral-100 hover:bg-neutral-200 px-2 py-1 rounded-md transition-colors cursor-pointer" title="Write to card">
                 Encode
               </button>
             ` : ''}
@@ -3791,9 +3772,7 @@
       }
     });
 
-    // =========================================================================
-    // CARD DESIGN & MOCKUP PREVIEW ENGINE
-    // =========================================================================
+    // Card design and mockup preview
     let qcQrInstance = null;
 
     function handleCustomLogoUpload(event) {
@@ -3892,9 +3871,7 @@
     // Safety stubs
     function setQcFormFactor() {}
     function toggleQcXray() {}
-    // =========================================================================
-    // MEADHALL OPERATIONS COPILOT ENGINE (GEMINI-POWERED)
-    // =========================================================================
+    // Meadhall operations copilot engine
     const CONFIG_STORAGE_KEY = 'aa_meadhall_config';
 
     function getMeadhallConfig() {
@@ -4005,7 +3982,7 @@
         updateManualOrderTotal();
         logAuditTrail('PRICE_UPDATE', `Executive card price set to ₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}.`);
         showToast(`Executive Card price set to ₱${newPrice.toLocaleString()}`);
-        appendGeminiMessage('gemini', `✦ Updated! The **Executive Card** price is now **₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}**.\n\nAll subsequent manual order calculations will automatically use this rate.`);
+        appendGeminiMessage('gemini', `>> Updated: The **Executive Card** price is now **₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}**.\n\nAll subsequent manual order calculations will automatically use this rate.`);
         return;
       }
 
@@ -4017,7 +3994,7 @@
         updateManualOrderTotal();
         logAuditTrail('PRICE_UPDATE', `Velcro patch price set to ₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}.`);
         showToast(`Tactical Patch price set to ₱${newPrice.toLocaleString()}`);
-        appendGeminiMessage('gemini', `✦ Done! The **Velcro Tactical Patch** price has been updated to **₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}**.`);
+        appendGeminiMessage('gemini', `>> Done: The **Velcro Tactical Patch** price has been updated to **₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}**.`);
         return;
       }
 
@@ -4029,7 +4006,7 @@
         updateManualOrderTotal();
         logAuditTrail('PRICE_UPDATE', `Countertop puck price set to ₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}.`);
         showToast(`Countertop Puck price set to ₱${newPrice.toLocaleString()}`);
-        appendGeminiMessage('gemini', `✦ Done! The **Countertop Acrylic Puck** price is now **₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}**.`);
+        appendGeminiMessage('gemini', `>> Done: The **Countertop Acrylic Puck** price is now **₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}**.`);
         return;
       }
 
@@ -4041,7 +4018,7 @@
         updateManualOrderTotal();
         logAuditTrail('PRICE_UPDATE', `ReviewShield price set to ₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}.`);
         showToast(`ReviewShield price set to ₱${newPrice.toLocaleString()}`);
-        appendGeminiMessage('gemini', `✦ Done! The **ReviewShield** price has been updated to **₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}**.`);
+        appendGeminiMessage('gemini', `>> Done: The **ReviewShield** price has been updated to **₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}**.`);
         return;
       }
 
@@ -4053,7 +4030,7 @@
         updateManualOrderTotal();
         logAuditTrail('PRICE_UPDATE', `Hub price set to ₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}.`);
         showToast(`Smart Hub price set to ₱${newPrice.toLocaleString()}`);
-        appendGeminiMessage('gemini', `✦ Done! The **Smart Hub** price is now **₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}**.`);
+        appendGeminiMessage('gemini', `>> Done: The **Smart Hub** price is now **₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}**.`);
         return;
       }
 
@@ -4071,7 +4048,7 @@
         saveMeadhallConfig(cfg);
         logAuditTrail('INVENTORY_ADJUST', `Restocked +${qty} units of ${key.toUpperCase()}. Current: ${cfg.inventory[key]}`);
         showToast(`Inventory updated: +${qty} ${key.toUpperCase()}`);
-        appendGeminiMessage('gemini', `✦ Inventory Restocked! Added **+${qty} units** to **${key.toUpperCase()}**. Your available stock is now **${cfg.inventory[key]} units**.`);
+        appendGeminiMessage('gemini', `>> Inventory Restocked: Added **+${qty} units** to **${key.toUpperCase()}**. Your available stock is now **${cfg.inventory[key]} units**.`);
         return;
       }
 
@@ -4088,7 +4065,7 @@
         saveMeadhallConfig(cfg);
         logAuditTrail('INVENTORY_ADJUST', `Deducted -${qty} units of ${key.toUpperCase()}. Current: ${cfg.inventory[key]}`);
         showToast(`Inventory deducted: -${qty} ${key.toUpperCase()}`);
-        appendGeminiMessage('gemini', `✦ Stock Deducted. Deducted **-${qty} units** from **${key.toUpperCase()}**. Current remaining: **${cfg.inventory[key]} units**.`);
+        appendGeminiMessage('gemini', `>> Stock Deducted: Deducted **-${qty} units** from **${key.toUpperCase()}**. Current remaining: **${cfg.inventory[key]} units**.`);
         return;
       }
 
@@ -4134,28 +4111,28 @@
         }
         logAuditTrail('REGISTER_SERIAL', `Registered serial ${serialCode} to ${clientName} (${brandName}).`);
         showToast(`Serial ${serialCode} registered.`);
-        appendGeminiMessage('gemini', `✦ Client Registered!\n• **Client:** ${clientName}\n• **Brand:** ${brandName}\n• **Serial:** ${serialCode}\n• **NFC Target:** ${newRecord.url}\n\nThe directory table and card mockup review below have been synchronized with this card.`);
+        appendGeminiMessage('gemini', `>> Client Registered:\n• **Client:** ${clientName}\n• **Brand:** ${brandName}\n• **Serial:** ${serialCode}\n• **NFC Target:** ${newRecord.url}\n\nThe directory table and card mockup review below have been synchronized with this card.`);
         return;
       }
 
       // 5. SALES METRICS & REVENUE INQUIRY
       if (/(how\s+much|what\s+is|show|get|display).*?(realized\s+value|revenue|sales|gross)/i.test(query)) {
         const dispatched = orders.filter(o => o.status === 'Dispatched').length;
-        appendGeminiMessage('gemini', `✦ Financial Summary:\n• **Gross Realized Value:** ${currentRevenue}\n• **Dispatched Orders:** ${dispatched}\n• **Total Orders in Pipeline:** ${orders.length}`);
+        appendGeminiMessage('gemini', `>> Financial Summary:\n• **Gross Realized Value:** ${currentRevenue}\n• **Dispatched Orders:** ${dispatched}\n• **Total Orders in Pipeline:** ${orders.length}`);
         return;
       }
 
       // 6. SERIALS & ACTIVE CARDS INQUIRY
       if (/(show|get|count|how\s+many).*?(cards?|serials?)/i.test(query)) {
         const activeCount = serials.filter(s => s.status === 'ACTIVE').length;
-        appendGeminiMessage('gemini', `✦ Hardware Registry:\n• **Active Registered Serials:** ${activeCount}\n• **Total Provisioned Units:** ${serials.length}\n• **Latest Record:** ${serials[0] ? `${serials[0].client} (${serials[0].serial})` : 'None'}`);
+        appendGeminiMessage('gemini', `>> Hardware Registry:\n• **Active Registered Serials:** ${activeCount}\n• **Total Provisioned Units:** ${serials.length}\n• **Latest Record:** ${serials[0] ? `${serials[0].client} (${serials[0].serial})` : 'None'}`);
         return;
       }
 
       // 7. TELEMETRY CHECK / STATUS SUMMARY
       if (/(telemetry|system\s+status|health|status|audit\s+check)/i.test(query)) {
         const activeCount = serials.filter(s => s.status === 'ACTIVE').length;
-        appendGeminiMessage('gemini', `✦ System Health Status: **NOMINAL**\n• **Gross Realized Value:** ${currentRevenue}\n• **Active Cards:** ${activeCount} registered\n• **Orders in Queue:** ${orders.length}\n• **NTAG213 Chips:** ${cfg.inventory.ntag213 || 0} units\n• **Executive Card Price:** ₱${(cfg.pricing.card || 1200).toLocaleString('en-US', { minimumFractionDigits: 2 })}`);
+        appendGeminiMessage('gemini', `>> System Health Status: **NOMINAL**\n• **Gross Realized Value:** ${currentRevenue}\n• **Active Cards:** ${activeCount} registered\n• **Orders in Queue:** ${orders.length}\n• **NTAG213 Chips:** ${cfg.inventory.ntag213 || 0} units\n• **Executive Card Price:** ₱${(cfg.pricing.card || 1200).toLocaleString('en-US', { minimumFractionDigits: 2 })}`);
         return;
       }
 
