@@ -34,6 +34,21 @@
 </head>
 <body class="bg-[#f4f4f5] text-neutral-900 font-sans antialiased selection:bg-black selection:text-white flex flex-col min-h-screen">
 
+  <!-- ================= MEADHALL BOOT SPLASH SCREEN ================= -->
+  <div id="meadhall-boot-screen" class="fixed inset-0 z-[9999] flex items-center justify-center bg-[#08080a] transition-opacity duration-700 pointer-events-auto">
+    <div class="w-40 sm:w-52 max-w-[70vw]">
+      <video 
+        id="loaderCatVideo" 
+        src="Loader cat.webm" 
+        autoplay 
+        muted 
+        playsinline 
+        loop 
+        class="w-full h-auto object-contain select-none pointer-events-none"
+      ></video>
+    </div>
+  </div>
+
   <!-- ================= FOUNDER AUTH GATE ================= -->
   <div id="auth-gate" class="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center p-6 select-none">
     <div class="w-full max-w-xs flex flex-col items-center text-center space-y-6 fade-in">
@@ -126,7 +141,7 @@
   <div class="pt-24"></div> <!-- Header spacing -->
 
   <!-- ================= MEADHALL OPERATIONS SUITE ================= -->
-  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-8">
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-8 pb-20">
 
     <!-- SUB-HEADER: OPERATIONS STATUS BAR -->
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-neutral-200">
@@ -193,6 +208,236 @@
 
     </section>
 
+    <!-- 1B. GEMINI BRAND OPERATIONS COPILOT -->
+    <section id="gemini-copilot-section" class="bg-gradient-to-b from-[#0f1015] via-[#0b0c10] to-[#07080a] text-white rounded-3xl p-6 sm:p-8 border border-neutral-800 shadow-2xl relative overflow-hidden space-y-5">
+      
+      <!-- Subtle Ambient Glow -->
+      <div class="absolute -top-24 -left-24 w-80 h-80 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -right-24 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Header with Gemini Star -->
+      <div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-neutral-800/80 pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-sky-400 via-indigo-500 to-purple-500 p-0.5 shadow-lg shadow-sky-500/20 flex items-center justify-center shrink-0">
+            <div class="w-full h-full bg-[#0a0b0e] rounded-[14px] flex items-center justify-center">
+              <svg class="w-5 h-5 text-sky-400" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C12 7.52285 7.52285 12 2 12C7.52285 12 12 16.4772 12 22C12 16.4772 16.4772 12 22 12C16.4772 12 12 7.52285 12 2Z" />
+              </svg>
+            </div>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-2">
+                Meadhall Copilot
+                <span class="text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-sky-950/80 border border-sky-800/60 text-sky-300">Gemini</span>
+              </h2>
+            </div>
+            <p class="text-xs text-neutral-400 mt-0.5">
+              Ask to update card pricing, check sales metrics, manage chip stock, or register clients.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 text-xs text-neutral-400">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="font-mono text-[11px] text-neutral-300">Operational</span>
+        </div>
+      </div>
+
+      <!-- Conversational Chat Stream (Gemini Vibe) -->
+      <div id="gemini-chat-stream" class="relative z-10 space-y-4 max-h-[340px] overflow-y-auto pr-1">
+        
+        <!-- Welcome Bubble -->
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-xl bg-gradient-to-br from-sky-400 to-indigo-500 p-0.5 shrink-0 mt-0.5">
+            <div class="w-full h-full bg-[#0a0b0e] rounded-[10px] flex items-center justify-center">
+              <svg class="w-3.5 h-3.5 text-sky-400" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C12 7.52285 7.52285 12 2 12C7.52285 12 12 16.4772 12 22C12 16.4772 16.4772 12 22 12C16.4772 12 12 7.52285 12 2Z" />
+              </svg>
+            </div>
+          </div>
+          <div class="flex-1 space-y-2.5">
+            <div class="bg-[#121318] border border-neutral-800 rounded-2xl rounded-tl-sm px-4 py-3 text-xs sm:text-sm text-neutral-200 leading-relaxed max-w-2xl shadow-sm">
+              Hello! I'm your operations assistant. What would you like to update or review today?
+            </div>
+            <!-- Suggestion Pills -->
+            <div class="flex flex-wrap gap-2 pt-0.5">
+              <button type="button" onclick="sendGeminiPrompt('Set card price to 1450')" class="text-xs bg-[#16171f] hover:bg-[#1f202b] border border-neutral-700/60 hover:border-sky-500/50 text-neutral-300 hover:text-white px-3 py-1.5 rounded-full transition-all cursor-pointer flex items-center gap-1.5">
+                <span class="text-sky-400">✦</span> Set card price to ₱1,450
+              </button>
+              <button type="button" onclick="sendGeminiPrompt('How much is total realized value?')" class="text-xs bg-[#16171f] hover:bg-[#1f202b] border border-neutral-700/60 hover:border-sky-500/50 text-neutral-300 hover:text-white px-3 py-1.5 rounded-full transition-all cursor-pointer flex items-center gap-1.5">
+                <span class="text-sky-400">✦</span> Total realized value
+              </button>
+              <button type="button" onclick="sendGeminiPrompt('Add 50 NTAG213 chips')" class="text-xs bg-[#16171f] hover:bg-[#1f202b] border border-neutral-700/60 hover:border-sky-500/50 text-neutral-300 hover:text-white px-3 py-1.5 rounded-full transition-all cursor-pointer flex items-center gap-1.5">
+                <span class="text-sky-400">✦</span> Restock 50 chips
+              </button>
+              <button type="button" onclick="sendGeminiPrompt('Telemetry check')" class="text-xs bg-[#16171f] hover:bg-[#1f202b] border border-neutral-700/60 hover:border-sky-500/50 text-neutral-300 hover:text-white px-3 py-1.5 rounded-full transition-all cursor-pointer flex items-center gap-1.5">
+                <span class="text-sky-400">✦</span> System health report
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Signature Gemini Prompt Bar -->
+      <div class="relative z-10 pt-2 border-t border-neutral-800/80">
+        <form onsubmit="handleGeminiSubmit(event)" class="bg-[#121318] border border-neutral-700 focus-within:border-sky-500/80 rounded-2xl p-1.5 pl-4 flex items-center gap-3 transition-all shadow-lg focus-within:shadow-sky-500/10">
+          <svg class="w-5 h-5 text-sky-400 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C12 7.52285 7.52285 12 2 12C7.52285 12 12 16.4772 12 22C12 16.4772 16.4772 12 22 12C16.4772 12 12 7.52285 12 2Z" />
+          </svg>
+          <input type="text" id="gemini-input" placeholder="Ask Gemini Copilot to set card price, adjust inventory, or check sales..." class="bg-transparent border-none text-white text-xs sm:text-sm focus:outline-none flex-1 placeholder-neutral-500" autocomplete="off" spellcheck="false">
+          <button type="submit" id="gemini-send-btn" class="w-9 h-9 rounded-xl bg-white hover:bg-neutral-200 text-black flex items-center justify-center transition-all cursor-pointer shrink-0 shadow-md">
+            <svg class="w-4 h-4 transform rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="19" x2="12" y2="5"></line>
+              <polyline points="5 12 12 5 19 12"></polyline>
+            </svg>
+          </button>
+        </form>
+      </div>
+
+    </section>
+
+    <!-- 1C. CARD DESIGN & MOCKUP PREVIEW -->
+    <section id="hardware-qc-dock" class="bg-[#0c0c0e] text-white rounded-3xl p-6 sm:p-8 border border-neutral-800 shadow-xl space-y-6">
+      
+      <!-- Hidden DOM fields for script compatibility -->
+      <div class="hidden" aria-hidden="true">
+        <span id="qcBrandText"></span>
+        <span id="qcNameText"></span>
+        <span id="qcSerialText"></span>
+      </div>
+
+      <!-- Dock Control Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-neutral-800 pb-5">
+        <div>
+          <h2 class="text-sm sm:text-base font-mono font-bold tracking-tight text-white uppercase flex items-center gap-2.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            CARD DESIGN & MOCKUP PREVIEW
+          </h2>
+          <p class="text-xs text-neutral-400 mt-1">
+            Physical card preview with client logo support and dynamic QR backup code.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2.5">
+          <input type="file" id="qc-logo-upload" accept="image/png,image/jpeg,image/webp,image/svg+xml" class="hidden" onchange="handleCustomLogoUpload(event)">
+          
+          <button type="button" onclick="document.getElementById('qc-logo-upload').click()" class="px-3.5 py-1.5 rounded-full bg-white text-black hover:bg-neutral-200 text-xs font-mono font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            Upload Client Logo
+          </button>
+          
+          <button type="button" onclick="resetClientLogo()" class="px-3 py-1.5 rounded-full border border-neutral-700 bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white text-xs font-mono font-bold transition-all cursor-pointer">
+            Reset Logo
+          </button>
+        </div>
+      </div>
+
+      <!-- Mockup Grid (Front & Back) -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-start">
+        
+        <!-- FRONT FACE -->
+        <div class="flex flex-col items-center space-y-3">
+          <div class="text-[11px] font-mono uppercase tracking-wider text-neutral-400 font-semibold">
+            FRONT
+          </div>
+          
+          <div class="w-full max-w-[420px] aspect-[85.6/53.98] rounded-[16px] bg-[#191a1d] border border-neutral-700/60 shadow-2xl relative overflow-hidden flex flex-col items-center justify-between p-6 select-none transition-all mx-auto">
+            <!-- Concentric Subtle Rings -->
+            <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 420 265" fill="none">
+              <circle cx="210" cy="115" r="18" stroke="rgba(255,255,255,0.04)" stroke-width="1.5" />
+              <circle cx="210" cy="115" r="32" stroke="rgba(255,255,255,0.04)" stroke-width="1.5" />
+              <circle cx="210" cy="115" r="46" stroke="rgba(255,255,255,0.045)" stroke-width="1.5" />
+              <circle cx="210" cy="115" r="60" stroke="rgba(255,255,255,0.05)" stroke-width="1.5" />
+              <circle cx="210" cy="115" r="74" stroke="rgba(255,255,255,0.055)" stroke-width="1.5" />
+              <circle cx="210" cy="115" r="88" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" />
+              <circle cx="210" cy="115" r="102" stroke="rgba(255,255,255,0.055)" stroke-width="1.5" />
+              <circle cx="210" cy="115" r="116" stroke="rgba(255,255,255,0.05)" stroke-width="1.5" />
+              <circle cx="210" cy="115" r="130" stroke="rgba(255,255,255,0.04)" stroke-width="1.5" />
+            </svg>
+
+            <!-- Spacer for top balance -->
+            <div class="h-2"></div>
+
+            <!-- Card Center: Logo Only -->
+            <div class="relative z-10 my-auto py-2 text-center flex flex-col items-center justify-center">
+              <img id="qc-card-front-logo" src="brandbgrmv.png" alt="Card Logo" class="max-h-12 sm:max-h-14 max-w-[190px] sm:max-w-[210px] object-contain drop-shadow-md select-none transition-all duration-300">
+            </div>
+
+            <!-- Card Bottom: Authentic Tap Callout -->
+            <div class="relative z-10 text-center pb-2">
+              <div class="text-xs sm:text-sm font-bold tracking-widest text-white uppercase font-sans">
+                TAP YOUR PHONE
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BACK FACE -->
+        <div class="flex flex-col items-center space-y-3">
+          <div class="text-[11px] font-mono uppercase tracking-wider text-neutral-400 font-semibold">
+            BACK
+          </div>
+
+          <div class="w-full max-w-[420px] aspect-[85.6/53.98] rounded-[16px] bg-[#191a1d] border border-neutral-700/60 shadow-2xl relative overflow-hidden flex flex-col justify-between p-5 sm:p-6 select-none transition-all mx-auto">
+            
+            <!-- Main Content Area -->
+            <div class="flex items-center justify-between gap-3 h-full">
+              <!-- Left Instructions -->
+              <div class="space-y-1.5 text-left flex-1 min-w-0 pr-1">
+                <div class="text-xs sm:text-sm font-bold tracking-wider text-white uppercase font-sans mb-2">
+                  HOW TO TAP
+                </div>
+                <div class="text-[10px] sm:text-xs text-neutral-300 leading-snug">
+                  <span class="font-semibold text-white">APPLE:</span> Tap top edge
+                </div>
+                <div class="text-[10px] sm:text-xs text-neutral-300 leading-snug">
+                  <span class="font-semibold text-white">ANDROID:</span> Tap center back
+                </div>
+                <div class="text-[9.5px] sm:text-[10.5px] font-bold text-white pt-2 leading-snug">
+                  Make sure NFC is turned ON in Settings
+                </div>
+              </div>
+
+              <!-- Right Graphics: Phone Tap & Dynamic QR -->
+              <div class="flex items-center gap-2.5 shrink-0">
+                <!-- Phone Tap Icon -->
+                <svg class="w-11 h-11 sm:w-13 sm:h-13 text-white shrink-0" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+                  <circle cx="68" cy="50" r="30" stroke-width="2.5" />
+                  <path d="M 64 32 A 20 20 0 0 1 64 68" stroke-width="2.5" stroke-linecap="round" />
+                  <path d="M 56 40 A 11 11 0 0 1 56 60" stroke-width="2.5" stroke-linecap="round" />
+                  <g transform="translate(32, 48) rotate(-45) translate(-14, -24)">
+                    <rect x="0" y="0" width="28" height="48" rx="5" stroke-width="2.5" fill="#191a1d" />
+                    <line x1="8" y1="5" x2="20" y2="5" stroke-width="2" stroke-linecap="round" />
+                    <line x1="11" y1="43" x2="17" y2="43" stroke-width="2" stroke-linecap="round" />
+                    <text x="14" y="27" text-anchor="middle" fill="currentColor" stroke="none" font-size="7" font-family="sans-serif" font-weight="bold" letter-spacing="0.5">NFC</text>
+                  </g>
+                </svg>
+
+                <!-- Dynamic QR Badge -->
+                <div class="p-1 bg-white rounded-md shadow-md shrink-0">
+                  <div id="qc-mockup-qrcode" class="w-[56px] h-[56px] sm:w-[64px] sm:h-[64px] flex items-center justify-center overflow-hidden"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bottom Right Small Brand Mark -->
+            <div class="flex items-center justify-end pt-1">
+              <img src="brandbgrmv.png" alt="Logo" class="h-2.5 sm:h-3 opacity-60 object-contain">
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
     <!-- 2. NFC WRITER (CARD PROGRAMMING BENCH) -->
     <section id="provisioning-suite" class="bg-[#0c0c0e] text-white rounded-3xl p-7 sm:p-9 border border-neutral-800 shadow-xl space-y-6 transition-all duration-300">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-neutral-800 pb-5">
@@ -213,6 +458,9 @@
             <button type="button" id="btn-mode-real" onclick="setHwMode('real')" class="px-3 py-1 rounded-full text-neutral-400 hover:text-white transition-all font-bold cursor-pointer">REAL NFC</button>
             <button type="button" id="btn-mode-sim" onclick="setHwMode('sim')" class="px-3 py-1 rounded-full bg-white text-black font-bold transition-all shadow-xs cursor-pointer">SIMULATOR</button>
           </div>
+          <button type="button" id="btn-test-collision" onclick="testSimulateCollision()" title="Simulate duplicate physical tag tap to verify collision interceptor" class="hidden text-[10px] font-mono border border-amber-600/70 bg-amber-950/40 text-amber-300 hover:bg-amber-900/60 px-3 py-1.5 rounded-full transition-all cursor-pointer">
+            Test Collision
+          </button>
           <button onclick="openIosShortcutGuide()" class="border border-neutral-700 hover:border-white bg-neutral-900 text-neutral-300 hover:text-white text-[10px] font-mono uppercase px-3 py-1.5 rounded-full cursor-pointer transition-colors">
             iPhone Guide
           </button>
@@ -321,16 +569,31 @@
           <p class="text-xs text-neutral-500 mt-1">Verified client hardware records. Select any row or click "LOAD TO BURNER" to prime the hardware writer.</p>
         </div>
 
-        <div class="flex items-center gap-2.5">
-          <input type="text" id="serial-search" oninput="renderSerialTable()" placeholder="Search serial, client, brand..." class="bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-full px-4 py-2.5 text-xs font-mono text-neutral-900 outline-none w-64 placeholder:text-neutral-400">
+        <div class="flex flex-wrap items-center gap-2.5">
+          <input type="text" id="serial-search" oninput="renderSerialTable()" placeholder="Search serial, client, brand..." class="bg-[#f4f4f5] border border-transparent focus:border-neutral-900 rounded-full px-4 py-2.5 text-xs font-mono text-neutral-900 outline-none w-52 sm:w-64 placeholder:text-neutral-400">
+          <button onclick="openRawOrderModal()" title="Paste raw order notes or DM text to automatically parse and ingest" class="border border-neutral-300 hover:border-black bg-white hover:bg-neutral-50 text-neutral-800 text-xs font-mono font-bold uppercase tracking-wider px-3.5 py-2.5 rounded-full transition-all cursor-pointer whitespace-nowrap shadow-xs flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-neutral-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+              <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+            </svg>
+            <span>Paste Raw Order</span>
+          </button>
           <button onclick="openSerialModal()" class="bg-black text-white text-xs font-mono font-bold uppercase tracking-wider px-4 py-2.5 rounded-full hover:bg-neutral-800 transition-all cursor-pointer whitespace-nowrap shadow-xs">
             &plus; New Serial
           </button>
         </div>
       </div>
 
-      <!-- Precision Interactive Data Grid with Sticky Header -->
-      <div class="overflow-x-auto max-h-[500px] overflow-y-auto">
+      <!-- Precision Interactive Data Grid with Sticky Header & CSV Drag-and-Drop Container -->
+      <div id="univer-ledger" class="overflow-x-auto max-h-[500px] overflow-y-auto relative transition-all duration-200">
+        <!-- Visual Drag-and-Drop Overlay -->
+        <div id="ledger-drop-overlay" class="absolute inset-0 bg-[#08080a]/92 backdrop-blur-sm border-2 border-dashed border-emerald-400 rounded-2xl z-20 hidden flex-col items-center justify-center p-6 text-center pointer-events-none transition-all">
+          <svg class="w-10 h-10 text-emerald-400 mb-2 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+          </svg>
+          <div class="text-sm font-mono font-bold text-white uppercase tracking-wider">DROP CSV TO MERGE RECORDS</div>
+          <p class="text-xs font-mono text-emerald-400/80 mt-1">Parses Serial, Name, Brand, and Routing URL without page reload</p>
+        </div>
         <table class="w-full text-left text-xs font-mono border-collapse">
           <thead class="sticky top-0 z-10 bg-neutral-50 text-[10px] uppercase tracking-widest text-neutral-500 border-b border-neutral-200 shadow-xs">
             <tr>
@@ -646,6 +909,73 @@
       </div>
     </div>
 
+    <!-- 8B. SMART CLIPBOARD / RAW ORDER INGESTION MODAL -->
+    <div id="raw-order-modal" class="fixed inset-0 bg-black/75 backdrop-blur-md hidden items-center justify-center p-4 z-[95]">
+      <div class="bg-[#0c0c0e] text-white rounded-3xl max-w-lg w-full p-6 sm:p-8 border border-neutral-800 relative fade-in shadow-2xl space-y-5">
+        <button onclick="closeModal('raw-order-modal')" class="absolute top-6 right-6 text-neutral-400 hover:text-white text-2xl font-light cursor-pointer">&times;</button>
+        
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Tactical Ingestion Engine</span>
+          </div>
+          <h3 class="text-lg sm:text-xl font-bold uppercase tracking-tight text-white mt-1">Paste Raw Order</h3>
+          <p class="text-xs text-neutral-400 mt-1">
+            Paste unformatted order text, DM, or SMS. Parses Name, Phone, Brand, and Target URL into a verified hardware serial.
+          </p>
+        </div>
+
+        <div class="space-y-4 text-xs font-mono">
+          <div>
+            <div class="flex justify-between items-center mb-1.5">
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-400">Raw Order Text</label>
+              <button type="button" onclick="pasteFromClipboardToRawInput()" class="text-[10px] text-sky-400 hover:text-sky-300 underline cursor-pointer">Paste from Clipboard</button>
+            </div>
+            <textarea id="raw-order-input" rows="5" oninput="handleRawOrderInput(this.value)" placeholder="Name: Gian Christian Villanueva&#10;Phone: 0917-123-4567&#10;Brand: Attachment Anywhere&#10;URL: https://attachmentanywhere.com/c/gian" class="w-full bg-[#141418] border border-neutral-800 focus:border-white rounded-2xl p-4 text-xs font-mono text-emerald-400 outline-none transition-colors resize-none placeholder:text-neutral-600"></textarea>
+          </div>
+
+          <!-- Live Parsed Telemetry Readout -->
+          <div class="p-4 bg-[#111216] border border-neutral-800/80 rounded-2xl space-y-2 text-[11px]">
+            <div class="text-[10px] uppercase font-bold tracking-wider text-neutral-400 border-b border-neutral-800 pb-1.5 flex items-center justify-between">
+              <span>Extracted Metadata Preview</span>
+              <span id="raw-parse-status" class="text-neutral-500">Awaiting input</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2 pt-1 text-neutral-300">
+              <div>
+                <span class="text-neutral-500 text-[10px] block">NAME:</span>
+                <span id="preview-raw-name" class="font-bold text-white truncate block">--</span>
+              </div>
+              <div>
+                <span class="text-neutral-500 text-[10px] block">PHONE:</span>
+                <span id="preview-raw-phone" class="font-bold text-emerald-400 truncate block">--</span>
+              </div>
+              <div>
+                <span class="text-neutral-500 text-[10px] block">BRAND / ENTITY:</span>
+                <span id="preview-raw-brand" class="font-bold text-white truncate block">--</span>
+              </div>
+              <div>
+                <span class="text-neutral-500 text-[10px] block">GENERATED SERIAL:</span>
+                <span id="preview-raw-serial" class="font-bold text-sky-400 truncate block">--</span>
+              </div>
+            </div>
+            <div class="pt-1.5 border-t border-neutral-800/60">
+              <span class="text-neutral-500 text-[10px] block">ROUTING URL:</span>
+              <span id="preview-raw-url" class="font-bold text-neutral-300 truncate block">--</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3 pt-2">
+            <button type="button" onclick="commitRawOrderToLedger()" class="flex-1 bg-white hover:bg-neutral-200 text-black text-xs font-bold uppercase tracking-wider py-3.5 rounded-full transition-all cursor-pointer shadow-sm text-center">
+              Ingest & Prime Burner
+            </button>
+            <button type="button" onclick="closeModal('raw-order-modal')" class="px-5 py-3.5 rounded-full border border-neutral-700 bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white text-xs font-bold transition-all cursor-pointer">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- 9. MANUAL ORDER INTAKE MODAL -->
     <div id="order-modal" class="fixed inset-0 bg-black/60 backdrop-blur-md hidden items-center justify-center p-4 z-[90]">
       <div class="bg-white text-neutral-900 rounded-3xl max-w-lg w-full p-8 border border-neutral-100 relative fade-in max-h-[90vh] overflow-y-auto shadow-2xl">
@@ -773,8 +1103,26 @@
       </div>
     </div>
 
+    <!-- GLOBAL ERGONOMIC HOTKEY CHEAT RIBBON -->
+    <div id="hotkey-ribbon" class="fixed bottom-0 inset-x-0 z-[100] bg-[#08080a]/95 backdrop-blur-md border-t border-[#1f242d] py-2 px-4 flex items-center justify-center gap-3 sm:gap-6 text-[10px] sm:text-[11px] font-mono text-neutral-400 select-none shadow-2xl">
+      <div class="flex items-center gap-1.5">
+        <kbd class="px-1.5 py-0.5 rounded bg-[#14151a] border border-neutral-700 text-white font-bold text-[9px] sm:text-[10px] shadow-xs">SPACE</kbd>
+        <span class="text-neutral-300">WRITE</span>
+      </div>
+      <span class="text-neutral-700">|</span>
+      <div class="flex items-center gap-1.5">
+        <kbd class="px-1.5 py-0.5 rounded bg-[#14151a] border border-neutral-700 text-white font-bold text-[9px] sm:text-[10px] shadow-xs">↓ / ↑</kbd>
+        <span class="text-neutral-300">CYCLE RECORDS</span>
+      </div>
+      <span class="text-neutral-700">|</span>
+      <div class="flex items-center gap-1.5">
+        <kbd class="px-1.5 py-0.5 rounded bg-[#14151a] border border-neutral-700 text-white font-bold text-[9px] sm:text-[10px] shadow-xs">ESC</kbd>
+        <span class="text-neutral-300">RESET</span>
+      </div>
+    </div>
+
     <!-- IN-PAGE TOAST NOTIFICATION CONTAINER -->
-    <div id="toast-box" class="fixed bottom-6 right-6 z-[120] pointer-events-none flex flex-col gap-2"></div>
+    <div id="toast-box" class="fixed bottom-12 right-6 z-[120] pointer-events-none flex flex-col gap-2"></div>
 
   </main>
 
@@ -800,6 +1148,40 @@
   </footer>
 
   <script>
+    // =========================================================================
+    // 0. MEADHALL BOOT SPLASH SCREEN DISMISS CONTROLLER
+    // =========================================================================
+    (function initMeadhallBootScreen() {
+      const bootScreen = document.getElementById('meadhall-boot-screen');
+      if (!bootScreen) return;
+
+      let isDismissed = false;
+
+      function dismissBootScreen() {
+        if (isDismissed) return;
+        isDismissed = true;
+
+        bootScreen.classList.add('opacity-0', 'pointer-events-none');
+        setTimeout(() => {
+          bootScreen.style.display = 'none';
+        }, 700);
+
+        window.removeEventListener('click', dismissBootScreen);
+        window.removeEventListener('keydown', dismissBootScreen);
+      }
+
+      // Early dismiss on click or keypress
+      window.addEventListener('click', dismissBootScreen, { once: true });
+      window.addEventListener('keydown', dismissBootScreen, { once: true });
+
+      // Clean screen visible for exactly 1.8 seconds (or load + 800ms)
+      setTimeout(dismissBootScreen, 1800);
+
+      window.addEventListener('load', () => {
+        setTimeout(dismissBootScreen, 800);
+      }, { once: true });
+    })();
+
     // 1. MODAL CONTROLS & IN-APP TOAST SYSTEM (Zero alert() calls)
     function openModal(id) {
       const modal = document.getElementById(id);
@@ -911,15 +1293,34 @@
       }
     }
 
-    function showToast(message, isSuccess = true) {
+    function showToast(message, isSuccess = true, type = null) {
       const box = document.getElementById('toast-box');
       if (!box) return;
 
-      triggerMobileFeedback(isSuccess);
+      const isCollision = type === 'amber' || (typeof message === 'string' && message.includes('DUPLICATE DETECTED'));
+
+      if (navigator.vibrate) {
+        navigator.vibrate(isCollision ? [120, 80, 200] : (isSuccess ? [40, 60, 120] : [100, 50, 100]));
+      }
+      if (isCollision) {
+        playHwErrorBuzz(); // 220Hz alert tone
+      } else if (isSuccess) {
+        playHwSuccessChime();
+      } else {
+        playHwErrorBuzz();
+      }
+
+      let dotColor = isSuccess ? 'bg-emerald-400' : 'bg-red-400';
+      let borderStyle = 'border-neutral-800 bg-black text-white';
+
+      if (isCollision) {
+        dotColor = 'bg-amber-400 animate-pulse';
+        borderStyle = 'border-amber-500/80 bg-[#161208] text-amber-200 shadow-xl shadow-amber-500/10';
+      }
 
       const toast = document.createElement('div');
-      toast.className = 'px-5 py-3 rounded-2xl text-xs font-mono shadow-xl border transition-all duration-200 transform translate-y-2 opacity-0 pointer-events-auto flex items-center gap-2.5 bg-black text-white border-neutral-800';
-      toast.innerHTML = `<span class="w-2 h-2 rounded-full ${isSuccess ? 'bg-emerald-400' : 'bg-red-400'}"></span><span>${message}</span>`;
+      toast.className = `px-5 py-3 rounded-2xl text-xs font-mono shadow-xl border transition-all duration-200 transform translate-y-2 opacity-0 pointer-events-auto flex items-center gap-2.5 ${borderStyle}`;
+      toast.innerHTML = `<span class="w-2 h-2 rounded-full shrink-0 ${dotColor}"></span><span class="leading-snug">${message}</span>`;
       box.appendChild(toast);
 
       requestAnimationFrame(() => {
@@ -929,7 +1330,7 @@
       setTimeout(() => {
         toast.classList.add('opacity-0', 'translate-y-1');
         setTimeout(() => toast.remove(), 250);
-      }, 3000);
+      }, isCollision ? 4500 : 3000);
     }
 
     // 2. FOUNDER AUTH & SESSION
@@ -1040,6 +1441,11 @@
       }
     }
 
+    // IN-MEMORY SESSION REGISTRY (DUPLICATE UID COLLISION INTERCEPTOR)
+    let sessionEncodedUIDs = [];
+    window.sessionEncodedUIDs = sessionEncodedUIDs;
+    let lastSimulatedUid = null;
+
     let hardwareMode = 'sim'; // 'real' | 'sim'
     let isBatchBurnerActive = false;
     let batchIndex = 0;
@@ -1048,9 +1454,18 @@
       hardwareMode = mode;
       const btnReal = document.getElementById('btn-mode-real');
       const btnSim = document.getElementById('btn-mode-sim');
+      const btnCollision = document.getElementById('btn-test-collision');
       const modeLabel = document.getElementById('hw-active-mode-label');
       const writeLabel = document.getElementById('btn-nfc-write-label');
       const chipBadge = document.getElementById('hw-mode-chip-badge');
+
+      if (btnCollision) {
+        if (mode === 'sim') {
+          btnCollision.classList.remove('hidden');
+        } else {
+          btnCollision.classList.add('hidden');
+        }
+      }
 
       if (mode === 'real') {
         if (!('NDEFReader' in window)) {
@@ -1074,6 +1489,16 @@
         if (writeLabel) writeLabel.innerText = "WRITE (SIMULATOR)";
         if (chipBadge) chipBadge.innerText = "Simulated IC";
       }
+    }
+
+    function testSimulateCollision() {
+      if (hardwareMode !== 'sim') setHwMode('sim');
+      if (sessionEncodedUIDs.length === 0) {
+        sessionEncodedUIDs.push('04:AA:26:09:F1:C8:90');
+      }
+      window.simCollisionTestMode = true;
+      showToast('Simulating duplicate card tap...');
+      triggerNativeNfcWrite();
     }
 
     function detectMobilePlatform() {
@@ -1149,19 +1574,50 @@
 
         setTimeout(() => {
           if (!activeNdefAbortController) return;
-          const mockUid = generateMockUid();
+
+          let mockUid;
+          if (window.simCollisionTestMode && sessionEncodedUIDs.length > 0) {
+            mockUid = sessionEncodedUIDs[sessionEncodedUIDs.length - 1];
+            window.simCollisionTestMode = false;
+          } else {
+            mockUid = generateMockUid();
+          }
+          lastSimulatedUid = mockUid;
           
           if (title) title.innerText = 'Verifying NDEF Record...';
-          if (desc) desc.innerText = `Card Contact: UID ${mockUid} // Reading back sector...`;
+          if (desc) desc.innerText = `Card Contact: UID ${mockUid} // Interrogating UID matrix...`;
 
           setTimeout(() => {
             if (!activeNdefAbortController) return;
 
+            // DUPLICATE UID COLLISION INTERCEPTOR
+            if (sessionEncodedUIDs.includes(mockUid)) {
+              playHwErrorBuzz(); // 220Hz alert tone
+              if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+
+              if (title) title.innerText = 'DUPLICATE DETECTED';
+              if (desc) desc.innerText = `Physical UID: ${mockUid} // Physical chip already provisioned this session.`;
+              if (icon) {
+                icon.className = 'w-20 h-20 rounded-full bg-amber-500 text-black flex items-center justify-center transition-all shadow-md';
+                icon.innerHTML = `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>`;
+              }
+
+              showToast("DUPLICATE DETECTED // Physical chip already provisioned this session.", false, 'amber');
+              logAuditTrail('UID_COLLISION', `Collision prevented for physical UID: ${mockUid}`, 'warning');
+
+              setTimeout(() => {
+                cancelNfcScan();
+              }, 2400);
+              return;
+            }
+
+            // UNIQUE CHIP CONFIRMATION
+            sessionEncodedUIDs.push(mockUid);
             playHwSuccessChime();
             if (navigator.vibrate) navigator.vibrate([40, 60, 120]);
 
             if (title) title.innerText = 'VERIFIED OK';
-            if (desc) desc.innerText = `NTAG213 UID: ${mockUid} // Byte-for-Byte Match`;
+            if (desc) desc.innerText = `NTAG213 UID: ${mockUid} // Provisioned & Indexed in Session`;
             if (icon) {
               icon.className = 'w-20 h-20 rounded-full bg-emerald-500 text-white flex items-center justify-center transition-all shadow-md';
               icon.innerHTML = `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>`;
@@ -1208,6 +1664,16 @@
           }
         }, 45000);
 
+        // Pre-scan listener to capture physical UID if available
+        let detectedPhysicalUid = null;
+        try {
+          const scanReader = new NDEFReader();
+          await scanReader.scan({ signal });
+          scanReader.onreading = (ev) => {
+            if (ev.serialNumber) detectedPhysicalUid = ev.serialNumber;
+          };
+        } catch (e) {}
+
         const ndef = new NDEFReader();
         await ndef.write({
           records: [{ recordType: 'url', data: rawUrl }]
@@ -1218,17 +1684,41 @@
           nfcSessionTimeoutId = null;
         }
 
+        // DUPLICATE UID COLLISION INTERCEPTOR (REAL HARDWARE TAG)
+        if (detectedPhysicalUid) {
+          if (sessionEncodedUIDs.includes(detectedPhysicalUid)) {
+            playHwErrorBuzz();
+            if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+
+            if (title) title.innerText = 'DUPLICATE DETECTED';
+            if (desc) desc.innerText = `Physical UID: ${detectedPhysicalUid} // Physical chip already provisioned this session.`;
+            if (icon) {
+              icon.className = 'w-20 h-20 rounded-full bg-amber-500 text-black flex items-center justify-center transition-all shadow-md';
+              icon.innerHTML = `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>`;
+            }
+
+            showToast("DUPLICATE DETECTED // Physical chip already provisioned this session.", false, 'amber');
+            logAuditTrail('UID_COLLISION', `Collision prevented for physical UID: ${detectedPhysicalUid}`, 'warning');
+
+            setTimeout(() => {
+              cancelNfcScan();
+            }, 2400);
+            return;
+          }
+          sessionEncodedUIDs.push(detectedPhysicalUid);
+        }
+
         playHwSuccessChime();
         if (navigator.vibrate) navigator.vibrate([40, 60, 120]);
 
         if (title) title.innerText = 'VERIFIED OK';
-        if (desc) desc.innerText = 'NDEF payload written and verified on card.';
+        if (desc) desc.innerText = detectedPhysicalUid ? `NTAG213 UID: ${detectedPhysicalUid} // Verified OK` : 'NDEF payload written and verified on card.';
         if (icon) {
           icon.className = 'w-20 h-20 rounded-full bg-emerald-500 text-white flex items-center justify-center transition-all shadow-md';
           icon.innerHTML = `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>`;
         }
 
-        logAuditTrail('NFC_VERIFIED', `Card encoded & verified with ${rawUrl}`);
+        logAuditTrail('NFC_VERIFIED', `Card encoded & verified with ${rawUrl} (UID: ${detectedPhysicalUid || 'N/A'})`);
         showToast('Card encoded and verified.');
         updateSerialWriteStatus(rawUrl);
 
@@ -2033,6 +2523,12 @@
 
     function loadSerialToBurner(url, clientName, serialCode) {
       if (!url) return;
+      const serials = getSerials();
+      if (serialCode && serials) {
+        const foundIdx = serials.findIndex(s => (s.serial || '').toLowerCase() === serialCode.toLowerCase());
+        if (foundIdx >= 0) currentLedgerIndex = foundIdx;
+      }
+
       const encoderInput = document.getElementById('encoder-input');
       const targetUrlInput = document.getElementById('targetUrlInput');
       if (encoderInput) encoderInput.value = url;
@@ -2040,6 +2536,11 @@
       if (typeof updateFootprint === 'function') {
         updateFootprint();
       }
+      if (typeof updateVisualQcDock === 'function') {
+        updateVisualQcDock();
+      }
+
+      if (serialCode) highlightLedgerRow(serialCode);
 
       const suite = document.getElementById('provisioning-suite');
       if (suite) {
@@ -2081,6 +2582,7 @@
       filtered.forEach(item => {
         const tr = document.createElement('tr');
         tr.className = "hover:bg-neutral-50/80 border-b border-neutral-100 transition-colors text-xs cursor-pointer select-none group";
+        tr.setAttribute('data-serial', item.serial);
         
         const clientName = item.name || item.client || 'Unknown';
         const targetUrl = item.url || item.targetUrl || '';
@@ -2188,6 +2690,481 @@
       document.body.removeChild(link);
       showToast("CSV exported.");
       logAuditTrail('EXPORT_CSV', `Exported ${serials.length} serials.`);
+    }
+
+    // =========================================================================
+    // 5B. GLOBAL ERGONOMIC HOTKEYS ENGINE
+    // =========================================================================
+    let currentLedgerIndex = -1;
+
+    function cycleNextLedgerRecord() {
+      const serials = getSerials();
+      if (!serials || serials.length === 0) return;
+      currentLedgerIndex = (currentLedgerIndex + 1) % serials.length;
+      loadIndexedRecord(currentLedgerIndex);
+    }
+
+    function cyclePrevLedgerRecord() {
+      const serials = getSerials();
+      if (!serials || serials.length === 0) return;
+      currentLedgerIndex = (currentLedgerIndex - 1 + serials.length) % serials.length;
+      loadIndexedRecord(currentLedgerIndex);
+    }
+
+    function loadIndexedRecord(idx) {
+      const serials = getSerials();
+      if (!serials || idx < 0 || idx >= serials.length) return;
+      const item = serials[idx];
+      const url = item.url || item.targetUrl || '';
+      const clientName = item.name || item.client || '';
+
+      const encoderInput = document.getElementById('encoder-input');
+      const targetUrlInput = document.getElementById('targetUrlInput');
+      if (encoderInput) encoderInput.value = url;
+      if (targetUrlInput) targetUrlInput.value = url;
+      if (typeof updateFootprint === 'function') updateFootprint();
+      if (typeof updateVisualQcDock === 'function') updateVisualQcDock();
+
+      highlightLedgerRow(item.serial);
+      playHwChirp();
+      showToast(`[${idx + 1}/${serials.length}] Primed: ${item.serial} (${clientName})`);
+    }
+
+    function highlightLedgerRow(serialCode) {
+      const tbody = document.getElementById('serials-table-body');
+      if (!tbody) return;
+      const rows = tbody.querySelectorAll('tr');
+      rows.forEach(r => {
+        if (r.getAttribute('data-serial') === serialCode) {
+          r.classList.add('bg-neutral-100', 'ring-1', 'ring-neutral-900');
+          r.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        } else {
+          r.classList.remove('bg-neutral-100', 'ring-1', 'ring-neutral-900');
+        }
+      });
+    }
+
+    function handleHotkeyReset() {
+      // 1. If radar modal open, abort write scan
+      const radarModal = document.getElementById('nfc-radar-modal');
+      if (radarModal && !radarModal.classList.contains('hidden')) {
+        cancelNfcScan();
+        showToast('Write scan aborted.', false);
+        return;
+      }
+
+      // 2. If any open modal, close it
+      const modalIds = ['raw-order-modal', 'chip-inspect-modal', 'serial-modal', 'order-modal'];
+      let closed = false;
+      for (const mId of modalIds) {
+        const el = document.getElementById(mId);
+        if (el && !el.classList.contains('hidden')) {
+          closeModal(mId);
+          closed = true;
+        }
+      }
+      if (closed) return;
+
+      // 3. Clear loaded burner state
+      const encoderInput = document.getElementById('encoder-input');
+      const targetUrlInput = document.getElementById('targetUrlInput');
+      if (encoderInput) encoderInput.value = '';
+      if (targetUrlInput) targetUrlInput.value = '';
+      currentLedgerIndex = -1;
+      highlightLedgerRow('__none__');
+      if (typeof updateFootprint === 'function') updateFootprint();
+      if (typeof updateVisualQcDock === 'function') updateVisualQcDock();
+      showToast('Hardware burner reset to unassigned state.');
+    }
+
+    function initGlobalHotkeys() {
+      window.addEventListener('keydown', (e) => {
+        const target = e.target;
+        const isEditing = target && (
+          target.tagName === 'INPUT' ||
+          target.tagName === 'TEXTAREA' ||
+          target.tagName === 'SELECT' ||
+          target.isContentEditable
+        );
+
+        if (isEditing) {
+          if (e.key === 'Escape') {
+            target.blur();
+            handleHotkeyReset();
+          }
+          return;
+        }
+
+        if (e.code === 'Space') {
+          e.preventDefault();
+          triggerNativeNfcWrite();
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          cycleNextLedgerRecord();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          cyclePrevLedgerRecord();
+        } else if (e.key === 'Escape') {
+          e.preventDefault();
+          handleHotkeyReset();
+        }
+      });
+    }
+
+    // =========================================================================
+    // 5C. SMART CLIPBOARD / RAW ORDER INGESTION ENGINE
+    // =========================================================================
+    function generateNextSerialId() {
+      const now = new Date();
+      const yy = String(now.getFullYear()).slice(-2);
+      const mm = String(now.getMonth() + 1).padStart(2, '0');
+      const dd = String(now.getDate()).padStart(2, '0');
+      const rand = Math.floor(100000 + Math.random() * 900000);
+      return `aa${yy}${mm}${dd}${rand}`;
+    }
+
+    let activeRawParsedData = null;
+
+    function openRawOrderModal() {
+      const input = document.getElementById('raw-order-input');
+      if (input) input.value = '';
+      handleRawOrderInput('');
+      openModal('raw-order-modal');
+      setTimeout(() => {
+        if (input) input.focus();
+      }, 100);
+    }
+
+    async function pasteFromClipboardToRawInput() {
+      try {
+        if (navigator.clipboard && navigator.clipboard.readText) {
+          const text = await navigator.clipboard.readText();
+          const input = document.getElementById('raw-order-input');
+          if (input) {
+            input.value = text;
+            handleRawOrderInput(text);
+          }
+        } else {
+          showToast('Clipboard API unavailable in this browser.', false);
+        }
+      } catch (e) {
+        showToast('Clipboard access denied. Please paste manually.', false);
+      }
+    }
+
+    function handleRawOrderInput(text) {
+      const parsed = parseRawOrderText(text);
+      activeRawParsedData = parsed;
+
+      const pStatus = document.getElementById('raw-parse-status');
+      const pName = document.getElementById('preview-raw-name');
+      const pPhone = document.getElementById('preview-raw-phone');
+      const pBrand = document.getElementById('preview-raw-brand');
+      const pSerial = document.getElementById('preview-raw-serial');
+      const pUrl = document.getElementById('preview-raw-url');
+
+      if (!text || !text.trim()) {
+        if (pStatus) { pStatus.innerText = 'Awaiting input'; pStatus.className = 'text-neutral-500'; }
+        if (pName) pName.innerText = '--';
+        if (pPhone) pPhone.innerText = '--';
+        if (pBrand) pBrand.innerText = '--';
+        if (pSerial) pSerial.innerText = parsed.serial;
+        if (pUrl) pUrl.innerText = '--';
+        return;
+      }
+
+      if (pStatus) {
+        pStatus.innerText = 'Parsed OK';
+        pStatus.className = 'text-emerald-400 font-bold';
+      }
+      if (pName) pName.innerText = parsed.name || 'Unassigned Client';
+      if (pPhone) pPhone.innerText = parsed.phone || 'N/A';
+      if (pBrand) pBrand.innerText = parsed.brand || 'Direct Client';
+      if (pSerial) pSerial.innerText = parsed.serial;
+      if (pUrl) pUrl.innerText = parsed.url;
+    }
+
+    function parseRawOrderText(text) {
+      const generatedSerial = generateNextSerialId();
+      if (!text || !text.trim()) {
+        return { name: '', phone: '', brand: '', url: '', serial: generatedSerial };
+      }
+
+      const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+      let name = '';
+      let phone = '';
+      let brand = '';
+      let url = '';
+
+      // 1. Explicit key prefixes
+      for (const line of lines) {
+        const nameMatch = line.match(/^(?:name|customer|client|full\s*name)\s*[:=-]\s*(.+)$/i);
+        if (nameMatch && !name) { name = nameMatch[1].trim(); continue; }
+
+        const phoneMatch = line.match(/^(?:phone|contact|mobile|tel|cell|number)\s*[:=-]\s*(.+)$/i);
+        if (phoneMatch && !phone) { phone = phoneMatch[1].trim(); continue; }
+
+        const brandMatch = line.match(/^(?:brand|company|business|entity|shop|store|org)\s*[:=-]\s*(.+)$/i);
+        if (brandMatch && !brand) { brand = brandMatch[1].trim(); continue; }
+
+        const urlMatch = line.match(/^(?:url|link|target|slug|website|destination)\s*[:=-]\s*(.+)$/i);
+        if (urlMatch && !url) { url = urlMatch[1].trim(); continue; }
+      }
+
+      // 2. Discover Philippine phone format
+      if (!phone) {
+        const phPhoneRegex = /(?:\+?63[ -]?9\d{2}[ -]?\d{3}[ -]?\d{4}|09\d{2}[ -]?\d{3}[ -]?\d{4}|\b09\d{9}\b|\b\+639\d{9}\b)/;
+        const phoneFind = text.match(phPhoneRegex);
+        if (phoneFind) phone = phoneFind[0].replace(/[ -]/g, '');
+      }
+
+      // 3. Discover URL or slug pattern
+      if (!url) {
+        const urlRegex = /(https?:\/\/[^\s]+|attachmentanywhere\.com\/[^\s]+|\/c\/[a-zA-Z0-9_-]+)/i;
+        const urlFind = text.match(urlRegex);
+        if (urlFind) url = urlFind[0];
+      }
+
+      // 4. Line heuristics for remaining fields
+      const unassignedLines = lines.filter(line => {
+        if (name && line.includes(name)) return false;
+        if (phone && line.includes(phone)) return false;
+        if (brand && line.includes(brand)) return false;
+        if (url && line.includes(url)) return false;
+        if (/^(?:name|phone|contact|brand|url|link|order)/i.test(line)) return false;
+        return true;
+      });
+
+      if (!name && unassignedLines.length > 0) name = unassignedLines.shift();
+      if (!brand && unassignedLines.length > 0) brand = unassignedLines.shift();
+
+      if (!brand) brand = name ? `${name} Brand` : 'Direct Client';
+      if (!name) name = 'Unassigned Client';
+
+      if (!url) {
+        const slug = (brand || name).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || generatedSerial;
+        url = `https://attachmentanywhere.com/c/${slug}`;
+      } else if (!/^https?:\/\//i.test(url)) {
+        if (url.startsWith('/')) {
+          url = 'https://attachmentanywhere.com' + url;
+        } else {
+          url = 'https://' + url;
+        }
+      }
+
+      return { name, phone, brand, url, serial: generatedSerial };
+    }
+
+    function commitRawOrderToLedger() {
+      const input = document.getElementById('raw-order-input');
+      const text = input ? input.value : '';
+      if (!text || !text.trim()) {
+        showToast('Please paste order text first.', false);
+        return;
+      }
+
+      const parsed = activeRawParsedData || parseRawOrderText(text);
+      const serials = getSerials();
+
+      const newRecord = {
+        serial: parsed.serial,
+        name: parsed.name,
+        client: parsed.name,
+        brand: parsed.brand,
+        phone: parsed.phone || '',
+        url: parsed.url,
+        targetUrl: parsed.url,
+        localUrl: `${parsed.serial}.html`,
+        chip: 'NTAG213',
+        status: 'ACTIVE'
+      };
+
+      serials.unshift(newRecord);
+      saveSerials(serials);
+      renderSerialTable();
+      updateFootprint();
+      runSystemAudit();
+
+      closeModal('raw-order-modal');
+      loadSerialToBurner(newRecord.url, newRecord.name, newRecord.serial);
+      playHwSuccessChime();
+      showToast(`RAW ORDER INGESTED // ${newRecord.serial} primed into writer.`);
+      logAuditTrail('RAW_INGEST', `Ingested order for ${newRecord.name} (${newRecord.brand}) - SN: ${newRecord.serial}`);
+    }
+
+    // =========================================================================
+    // 5D. CSV DRAG-AND-DROP INGESTION ENGINE
+    // =========================================================================
+    function parseCsvLine(text) {
+      const result = [];
+      let cur = '';
+      let inQuotes = false;
+      for (let i = 0; i < text.length; i++) {
+        const ch = text[i];
+        if (ch === '"') {
+          if (inQuotes && text[i + 1] === '"') {
+            cur += '"';
+            i++;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (ch === ',' && !inQuotes) {
+          result.push(cur.replace(/^"|"$/g, '').trim());
+          cur = '';
+        } else {
+          cur += ch;
+        }
+      }
+      result.push(cur.replace(/^"|"$/g, '').trim());
+      return result;
+    }
+
+    function initLedgerDragDrop() {
+      const ledger = document.getElementById('univer-ledger');
+      const overlay = document.getElementById('ledger-drop-overlay');
+      if (!ledger) return;
+
+      ledger.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (overlay) {
+          overlay.classList.remove('hidden');
+          overlay.classList.add('flex');
+        }
+      });
+
+      ledger.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!ledger.contains(e.relatedTarget)) {
+          if (overlay) {
+            overlay.classList.add('hidden');
+            overlay.classList.remove('flex');
+          }
+        }
+      });
+
+      ledger.addEventListener('drop', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (overlay) {
+          overlay.classList.add('hidden');
+          overlay.classList.remove('flex');
+        }
+
+        const files = e.dataTransfer.files;
+        if (!files || files.length === 0) return;
+        const file = files[0];
+        if (!file.name.toLowerCase().endsWith('.csv') && file.type !== 'text/csv' && file.type !== 'text/plain') {
+          showToast('Please drop a valid .csv file.', false);
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          const content = evt.target.result;
+          processCsvDrop(content, file.name);
+        };
+        reader.readAsText(file);
+      });
+    }
+
+    function processCsvDrop(content, filename = 'imported.csv') {
+      if (!content || !content.trim()) {
+        showToast('Dropped CSV file is empty.', false);
+        return;
+      }
+
+      const rawLines = content.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+      if (rawLines.length === 0) {
+        showToast('No readable rows found in CSV.', false);
+        return;
+      }
+
+      const firstRow = parseCsvLine(rawLines[0]);
+      let hasHeaders = false;
+      let colIndex = { serial: 0, name: 1, brand: 2, url: 3, chip: 4, status: 5 };
+
+      const lowerHeaders = firstRow.map(h => h.toLowerCase());
+      if (lowerHeaders.some(h => h.includes('serial') || h.includes('client') || h.includes('name') || h.includes('brand') || h.includes('url'))) {
+        hasHeaders = true;
+        lowerHeaders.forEach((h, idx) => {
+          if (h.includes('serial') || h.includes('sn') || h.includes('code')) colIndex.serial = idx;
+          else if (h.includes('client') || h.includes('name') || h.includes('customer')) colIndex.name = idx;
+          else if (h.includes('brand') || h.includes('entity') || h.includes('company')) colIndex.brand = idx;
+          else if (h.includes('url') || h.includes('link') || h.includes('route') || h.includes('target')) colIndex.url = idx;
+          else if (h.includes('chip') || h.includes('tag')) colIndex.chip = idx;
+          else if (h.includes('status')) colIndex.status = idx;
+        });
+      }
+
+      const dataRows = hasHeaders ? rawLines.slice(1) : rawLines;
+      if (dataRows.length === 0) {
+        showToast('No data rows found in CSV.', false);
+        return;
+      }
+
+      const serials = getSerials();
+      let mergedCount = 0;
+
+      for (const line of dataRows) {
+        const cols = parseCsvLine(line);
+        if (cols.length === 0 || cols.every(c => !c)) continue;
+
+        let serialCode = (cols[colIndex.serial] || '').trim();
+        const clientName = (cols[colIndex.name] || 'Direct Client').trim();
+        const brandName = (cols[colIndex.brand] || (clientName ? `${clientName} Brand` : 'Attachment Anywhere')).trim();
+        let targetUrl = (cols[colIndex.url] || '').trim();
+        const chipType = (cols[colIndex.chip] || 'NTAG213').trim();
+        const statusType = (cols[colIndex.status] || 'ACTIVE').trim().toUpperCase();
+
+        if (!serialCode) {
+          serialCode = generateNextSerialId();
+        }
+
+        if (!targetUrl) {
+          const slug = (brandName || clientName).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || serialCode;
+          targetUrl = `https://attachmentanywhere.com/c/${slug}`;
+        } else if (!/^https?:\/\//i.test(targetUrl)) {
+          if (targetUrl.startsWith('/')) {
+            targetUrl = 'https://attachmentanywhere.com' + targetUrl;
+          } else {
+            targetUrl = 'https://' + targetUrl;
+          }
+        }
+
+        const existingIdx = serials.findIndex(s => (s.serial || '').toLowerCase() === serialCode.toLowerCase());
+        const record = {
+          serial: serialCode,
+          name: clientName,
+          client: clientName,
+          brand: brandName,
+          url: targetUrl,
+          targetUrl: targetUrl,
+          localUrl: `${serialCode}.html`,
+          chip: chipType,
+          status: statusType || 'ACTIVE'
+        };
+
+        if (existingIdx >= 0) {
+          serials[existingIdx] = { ...serials[existingIdx], ...record };
+        } else {
+          serials.unshift(record);
+        }
+        mergedCount++;
+      }
+
+      if (mergedCount > 0) {
+        saveSerials(serials);
+        renderSerialTable();
+        updateFootprint();
+        runSystemAudit();
+        playHwSuccessChime();
+        showToast(`CSV INGESTION // Merged ${mergedCount} client records.`);
+        logAuditTrail('CSV_MERGED', `Ingested ${mergedCount} records via drag-and-drop (${filename}).`);
+      } else {
+        showToast('No valid records parsed from CSV.', false);
+      }
     }
 
     // 6. ORDERS PIPELINE
@@ -2493,9 +3470,12 @@
       const shippingSelect = document.getElementById('order-cust-shipping');
       const totalInput = document.getElementById('order-prod-total');
 
-      let basePrice = 1200;
-      if (productSelect.value.includes('ReviewShield')) basePrice = 500;
-      if (productSelect.value.includes('Hub')) basePrice = 2500;
+      const cfg = (typeof getMeadhallConfig === 'function') ? getMeadhallConfig() : { pricing: {} };
+      let basePrice = (cfg.pricing && cfg.pricing.card) || 1200;
+      if (productSelect.value.includes('ReviewShield')) basePrice = (cfg.pricing && cfg.pricing.reviewShield) || 500;
+      if (productSelect.value.includes('Hub')) basePrice = (cfg.pricing && cfg.pricing.hub) || 2500;
+      if (productSelect.value.includes('Patch')) basePrice = (cfg.pricing && cfg.pricing.patch) || 650;
+      if (productSelect.value.includes('Puck')) basePrice = (cfg.pricing && cfg.pricing.puck) || 850;
 
       const qty = Math.max(1, parseInt(qtyInput.value) || 1);
       const shippingFee = parseInt(shippingSelect.options[shippingSelect.selectedIndex].dataset.fee) || 0;
@@ -2680,6 +3660,7 @@
         }
         if (memPctElem) memPctElem.innerText = "0%";
         if (memBarElem) memBarElem.style.width = "0%";
+        if (typeof updateVisualQcDock === 'function') updateVisualQcDock('');
         return;
       }
 
@@ -2726,6 +3707,10 @@
           fitElem.innerText = `Exceeds NTAG215 • Needs NTAG216 (888B)`;
           fitElem.className = "text-red-400 font-bold";
         }
+      }
+
+      if (typeof updateVisualQcDock === 'function') {
+        updateVisualQcDock(url);
       }
     }
 
@@ -2806,6 +3791,422 @@
       }
     });
 
+    // =========================================================================
+    // CARD DESIGN & MOCKUP PREVIEW ENGINE
+    // =========================================================================
+    let qcQrInstance = null;
+
+    function handleCustomLogoUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      if (!file.type.startsWith('image/')) {
+        showToast('Please select a valid image file (PNG, JPG, SVG).', false);
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const logoImg = document.getElementById('qc-card-front-logo');
+        if (logoImg) {
+          logoImg.src = e.target.result;
+          showToast('Client logo applied to mockup.');
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function resetClientLogo() {
+      const logoImg = document.getElementById('qc-card-front-logo');
+      const uploadInput = document.getElementById('qc-logo-upload');
+      if (logoImg) {
+        logoImg.src = 'brandbgrmv.png';
+      }
+      if (uploadInput) {
+        uploadInput.value = '';
+      }
+      showToast('Logo reset to Attachment Anywhere default.');
+    }
+
+    function updateQcMockupQR(explicitUrl) {
+      const qrContainer = document.getElementById('qc-mockup-qrcode');
+      if (!qrContainer) return;
+
+      let target = explicitUrl;
+      if (!target) {
+        const encInput = document.getElementById('encoder-input');
+        const tgtInput = document.getElementById('targetUrlInput');
+        target = (encInput && encInput.value.trim()) || (tgtInput && tgtInput.value.trim()) || 'https://attachmentanywhere.com';
+      }
+
+      qrContainer.innerHTML = '';
+      if (typeof QRCode !== 'undefined') {
+        try {
+          qcQrInstance = new QRCode(qrContainer, {
+            text: target,
+            width: 64,
+            height: 64,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.M
+          });
+        } catch (err) {
+          console.warn('QR Code generation notice:', err);
+        }
+      }
+    }
+
+    function updateVisualQcDock(explicitUrl) {
+      const brandElem = document.getElementById('qcBrandText');
+      const nameElem = document.getElementById('qcNameText');
+      const serialElem = document.getElementById('qcSerialText');
+      
+      const urlInput = explicitUrl || (document.getElementById('encoder-input') ? document.getElementById('encoder-input').value.trim() : '') || (document.getElementById('targetUrlInput') ? document.getElementById('targetUrlInput').value.trim() : '');
+
+      if (!urlInput) {
+        if (brandElem) brandElem.innerText = "ATTACHMENT ANYWHERE";
+        if (nameElem) nameElem.innerText = "SAMPLE OPERATOR";
+        if (serialElem) serialElem.innerText = "SN: PENDING-PROVISION";
+        updateQcMockupQR('https://attachmentanywhere.com');
+        return;
+      }
+
+      const serials = getSerials();
+      const match = serials.find(s => (s.url || s.targetUrl) === urlInput || (s.serial && urlInput.toLowerCase().includes(s.serial.toLowerCase())));
+
+      if (match) {
+        if (brandElem) brandElem.innerText = (match.brand || "ATTACHMENT ANYWHERE").toUpperCase();
+        if (nameElem) nameElem.innerText = (match.name || match.client || "VERIFIED OPERATOR").toUpperCase();
+        if (serialElem) serialElem.innerText = `SN: ${match.serial || "aa260906052304"}`;
+      } else {
+        const urlParts = urlInput.split('/');
+        const extracted = urlParts[urlParts.length - 1].replace(/\.html$/, '');
+        if (brandElem) brandElem.innerText = "ATTACHMENT ANYWHERE";
+        if (nameElem) nameElem.innerText = "ACTIVE PRODUCTION CARD";
+        if (serialElem) serialElem.innerText = `SN: ${extracted || "CUSTOM-URI"}`;
+      }
+
+      updateQcMockupQR(urlInput);
+    }
+
+    // Safety stubs
+    function setQcFormFactor() {}
+    function toggleQcXray() {}
+    // =========================================================================
+    // MEADHALL OPERATIONS COPILOT ENGINE (GEMINI-POWERED)
+    // =========================================================================
+    const CONFIG_STORAGE_KEY = 'aa_meadhall_config';
+
+    function getMeadhallConfig() {
+      const defaults = {
+        pricing: {
+          card: 1200,
+          patch: 650,
+          puck: 850,
+          reviewShield: 500,
+          hub: 2500
+        },
+        inventory: {
+          ntag213: 250,
+          cardStock: 120,
+          ntag215: 80,
+          ntag216: 45
+        }
+      };
+      try {
+        const stored = localStorage.getItem(CONFIG_STORAGE_KEY);
+        if (!stored) {
+          localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(defaults));
+          return defaults;
+        }
+        return { ...defaults, ...JSON.parse(stored) };
+      } catch (e) {
+        return defaults;
+      }
+    }
+
+    function saveMeadhallConfig(cfg) {
+      localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(cfg));
+    }
+
+    function appendGeminiMessage(role, text) {
+      const stream = document.getElementById('gemini-chat-stream');
+      if (!stream) return;
+
+      const msgDiv = document.createElement('div');
+      
+      if (role === 'user') {
+        msgDiv.className = 'flex justify-end';
+        msgDiv.innerHTML = `
+          <div class="bg-[#1e202a] border border-neutral-700/60 text-white rounded-2xl rounded-tr-sm px-4 py-2.5 text-xs sm:text-sm max-w-[85%] sm:max-w-xl shadow-sm">
+            ${escapeHtml(text)}
+          </div>
+        `;
+      } else {
+        msgDiv.className = 'flex items-start gap-3';
+        msgDiv.innerHTML = `
+          <div class="w-7 h-7 rounded-xl bg-gradient-to-br from-sky-400 to-indigo-500 p-0.5 shrink-0 mt-0.5">
+            <div class="w-full h-full bg-[#0a0b0e] rounded-[10px] flex items-center justify-center">
+              <svg class="w-3.5 h-3.5 text-sky-400" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C12 7.52285 7.52285 12 2 12C7.52285 12 12 16.4772 12 22C12 16.4772 16.4772 12 22 12C16.4772 12 12 7.52285 12 2Z" />
+              </svg>
+            </div>
+          </div>
+          <div class="bg-[#121318] border border-neutral-800 rounded-2xl rounded-tl-sm px-4 py-3 text-xs sm:text-sm text-neutral-200 leading-relaxed max-w-[85%] sm:max-w-2xl shadow-sm whitespace-pre-line">
+            ${text}
+          </div>
+        `;
+      }
+
+      stream.appendChild(msgDiv);
+      stream.scrollTop = stream.scrollHeight;
+    }
+
+    function sendGeminiPrompt(promptText) {
+      const input = document.getElementById('gemini-input');
+      if (input) {
+        input.value = promptText;
+        processGeminiQuery(promptText);
+        input.value = '';
+      }
+    }
+
+    function handleGeminiSubmit(event) {
+      if (event) event.preventDefault();
+      const input = document.getElementById('gemini-input');
+      if (!input) return;
+      const q = input.value.trim();
+      if (!q) return;
+      input.value = '';
+      processGeminiQuery(q);
+    }
+
+    async function processGeminiQuery(query) {
+      appendGeminiMessage('user', query);
+
+      const cfg = getMeadhallConfig();
+      const serials = getSerials();
+      const orders = getOrders();
+      const statRevenue = document.getElementById('stat-revenue');
+      const currentRevenue = statRevenue ? statRevenue.innerText : '₱0.00';
+
+      // 1. HELP / GREETING
+      if (/^(hi|hello|hey|help|\?)$/i.test(query.trim())) {
+        appendGeminiMessage('gemini', "I can help you dynamically modify card pricing, check inventory counts, register client serials, or view revenue metrics. Try asking:\n• *'Set card price to 1450'*\n• *'Add 50 NTAG213 chips'*\n• *'Add client John Doe for Brand X with serial aa260999'*\n• *'How much is total realized value?'*");
+        return;
+      }
+
+      // 2. PRICING MUTATIONS
+      const cardPriceMatch = query.match(/(?:set|update|change)\s+(?:the\s+)?(?:executive\s+)?card\s+price\s+(?:to\s+)?(?:₱|p|php)?\s*(\d+(?:\.\d+)?)/i);
+      if (cardPriceMatch) {
+        const newPrice = parseFloat(cardPriceMatch[1]);
+        cfg.pricing.card = newPrice;
+        saveMeadhallConfig(cfg);
+        updateManualOrderTotal();
+        logAuditTrail('PRICE_UPDATE', `Executive card price set to ₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}.`);
+        showToast(`Executive Card price set to ₱${newPrice.toLocaleString()}`);
+        appendGeminiMessage('gemini', `✦ Updated! The **Executive Card** price is now **₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}**.\n\nAll subsequent manual order calculations will automatically use this rate.`);
+        return;
+      }
+
+      const patchPriceMatch = query.match(/(?:set|update|change)\s+(?:the\s+)?(?:velcro\s+)?patch\s+price\s+(?:to\s+)?(?:₱|p|php)?\s*(\d+(?:\.\d+)?)/i);
+      if (patchPriceMatch) {
+        const newPrice = parseFloat(patchPriceMatch[1]);
+        cfg.pricing.patch = newPrice;
+        saveMeadhallConfig(cfg);
+        updateManualOrderTotal();
+        logAuditTrail('PRICE_UPDATE', `Velcro patch price set to ₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}.`);
+        showToast(`Tactical Patch price set to ₱${newPrice.toLocaleString()}`);
+        appendGeminiMessage('gemini', `✦ Done! The **Velcro Tactical Patch** price has been updated to **₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}**.`);
+        return;
+      }
+
+      const puckPriceMatch = query.match(/(?:set|update|change)\s+(?:the\s+)?(?:countertop\s+)?puck\s+price\s+(?:to\s+)?(?:₱|p|php)?\s*(\d+(?:\.\d+)?)/i);
+      if (puckPriceMatch) {
+        const newPrice = parseFloat(puckPriceMatch[1]);
+        cfg.pricing.puck = newPrice;
+        saveMeadhallConfig(cfg);
+        updateManualOrderTotal();
+        logAuditTrail('PRICE_UPDATE', `Countertop puck price set to ₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}.`);
+        showToast(`Countertop Puck price set to ₱${newPrice.toLocaleString()}`);
+        appendGeminiMessage('gemini', `✦ Done! The **Countertop Acrylic Puck** price is now **₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}**.`);
+        return;
+      }
+
+      const shieldPriceMatch = query.match(/(?:set|update|change)\s+(?:the\s+)?(?:reviewshield|shield)\s+price\s+(?:to\s+)?(?:₱|p|php)?\s*(\d+(?:\.\d+)?)/i);
+      if (shieldPriceMatch) {
+        const newPrice = parseFloat(shieldPriceMatch[1]);
+        cfg.pricing.reviewShield = newPrice;
+        saveMeadhallConfig(cfg);
+        updateManualOrderTotal();
+        logAuditTrail('PRICE_UPDATE', `ReviewShield price set to ₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}.`);
+        showToast(`ReviewShield price set to ₱${newPrice.toLocaleString()}`);
+        appendGeminiMessage('gemini', `✦ Done! The **ReviewShield** price has been updated to **₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}**.`);
+        return;
+      }
+
+      const hubPriceMatch = query.match(/(?:set|update|change)\s+(?:the\s+)?hub\s+price\s+(?:to\s+)?(?:₱|p|php)?\s*(\d+(?:\.\d+)?)/i);
+      if (hubPriceMatch) {
+        const newPrice = parseFloat(hubPriceMatch[1]);
+        cfg.pricing.hub = newPrice;
+        saveMeadhallConfig(cfg);
+        updateManualOrderTotal();
+        logAuditTrail('PRICE_UPDATE', `Hub price set to ₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}.`);
+        showToast(`Smart Hub price set to ₱${newPrice.toLocaleString()}`);
+        appendGeminiMessage('gemini', `✦ Done! The **Smart Hub** price is now **₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}**.`);
+        return;
+      }
+
+      // 3. INVENTORY ADJUSTMENTS
+      const addInvMatch = query.match(/(?:add|restock|increase)\s+(\d+)\s*(?:units?\s+of\s+)?(ntag213|ntag|chips?|card\s*stock|ntag215|ntag216)/i);
+      if (addInvMatch) {
+        const qty = parseInt(addInvMatch[1], 10);
+        const itemRaw = addInvMatch[2].toLowerCase();
+        let key = 'ntag213';
+        if (itemRaw.includes('stock') || itemRaw.includes('card')) key = 'cardStock';
+        else if (itemRaw.includes('215')) key = 'ntag215';
+        else if (itemRaw.includes('216')) key = 'ntag216';
+
+        cfg.inventory[key] = (cfg.inventory[key] || 0) + qty;
+        saveMeadhallConfig(cfg);
+        logAuditTrail('INVENTORY_ADJUST', `Restocked +${qty} units of ${key.toUpperCase()}. Current: ${cfg.inventory[key]}`);
+        showToast(`Inventory updated: +${qty} ${key.toUpperCase()}`);
+        appendGeminiMessage('gemini', `✦ Inventory Restocked! Added **+${qty} units** to **${key.toUpperCase()}**. Your available stock is now **${cfg.inventory[key]} units**.`);
+        return;
+      }
+
+      const deductInvMatch = query.match(/(?:deduct|reduce|decrease|remove)\s+(\d+)\s*(?:units?\s+of\s+)?(ntag213|ntag|chips?|card\s*stock|ntag215|ntag216)/i);
+      if (deductInvMatch) {
+        const qty = parseInt(deductInvMatch[1], 10);
+        const itemRaw = deductInvMatch[2].toLowerCase();
+        let key = 'ntag213';
+        if (itemRaw.includes('stock') || itemRaw.includes('card')) key = 'cardStock';
+        else if (itemRaw.includes('215')) key = 'ntag215';
+        else if (itemRaw.includes('216')) key = 'ntag216';
+
+        cfg.inventory[key] = Math.max(0, (cfg.inventory[key] || 0) - qty);
+        saveMeadhallConfig(cfg);
+        logAuditTrail('INVENTORY_ADJUST', `Deducted -${qty} units of ${key.toUpperCase()}. Current: ${cfg.inventory[key]}`);
+        showToast(`Inventory deducted: -${qty} ${key.toUpperCase()}`);
+        appendGeminiMessage('gemini', `✦ Stock Deducted. Deducted **-${qty} units** from **${key.toUpperCase()}**. Current remaining: **${cfg.inventory[key]} units**.`);
+        return;
+      }
+
+      // 4. SERIAL & CLIENT REGISTRATION
+      const regMatch = query.match(/add\s+client\s+([A-Za-z0-9\s\.\-]+?)\s+for\s+([A-Za-z0-9\s\.\-]+?)\s+with\s+serial\s+([A-Za-z0-9_\-]+)/i) ||
+                       query.match(/register\s+serial\s+([A-Za-z0-9_\-]+)\s+for\s+([A-Za-z0-9\s\.\-]+?)(?:\s+for\s+([A-Za-z0-9\s\.\-]+))?$/i);
+      if (regMatch) {
+        let clientName, brandName, serialCode;
+        if (query.toLowerCase().startsWith('add client')) {
+          clientName = regMatch[1].trim();
+          brandName = regMatch[2].trim();
+          serialCode = regMatch[3].trim().toLowerCase();
+        } else {
+          serialCode = regMatch[1].trim().toLowerCase();
+          clientName = regMatch[2].trim();
+          brandName = (regMatch[3] && regMatch[3].trim()) || "Attachment Anywhere";
+        }
+
+        const newRecord = {
+          serial: serialCode,
+          name: clientName,
+          client: clientName,
+          brand: brandName,
+          url: `https://attachmentanywhere.com/c/${serialCode}`,
+          targetUrl: `https://attachmentanywhere.com/c/${serialCode}`,
+          localUrl: `${serialCode}.html`,
+          chip: "NTAG213",
+          status: "ACTIVE",
+          created: new Date().toISOString().split('T')[0]
+        };
+
+        const existingIdx = serials.findIndex(s => s.serial.toLowerCase() === serialCode);
+        if (existingIdx >= 0) {
+          serials[existingIdx] = newRecord;
+        } else {
+          serials.unshift(newRecord);
+        }
+        saveSerials(serials);
+        renderSerialTable();
+        renderMeadhall();
+        if (typeof updateVisualQcDock === 'function') {
+          updateVisualQcDock(newRecord.url);
+        }
+        logAuditTrail('REGISTER_SERIAL', `Registered serial ${serialCode} to ${clientName} (${brandName}).`);
+        showToast(`Serial ${serialCode} registered.`);
+        appendGeminiMessage('gemini', `✦ Client Registered!\n• **Client:** ${clientName}\n• **Brand:** ${brandName}\n• **Serial:** ${serialCode}\n• **NFC Target:** ${newRecord.url}\n\nThe directory table and card mockup review below have been synchronized with this card.`);
+        return;
+      }
+
+      // 5. SALES METRICS & REVENUE INQUIRY
+      if (/(how\s+much|what\s+is|show|get|display).*?(realized\s+value|revenue|sales|gross)/i.test(query)) {
+        const dispatched = orders.filter(o => o.status === 'Dispatched').length;
+        appendGeminiMessage('gemini', `✦ Financial Summary:\n• **Gross Realized Value:** ${currentRevenue}\n• **Dispatched Orders:** ${dispatched}\n• **Total Orders in Pipeline:** ${orders.length}`);
+        return;
+      }
+
+      // 6. SERIALS & ACTIVE CARDS INQUIRY
+      if (/(show|get|count|how\s+many).*?(cards?|serials?)/i.test(query)) {
+        const activeCount = serials.filter(s => s.status === 'ACTIVE').length;
+        appendGeminiMessage('gemini', `✦ Hardware Registry:\n• **Active Registered Serials:** ${activeCount}\n• **Total Provisioned Units:** ${serials.length}\n• **Latest Record:** ${serials[0] ? `${serials[0].client} (${serials[0].serial})` : 'None'}`);
+        return;
+      }
+
+      // 7. TELEMETRY CHECK / STATUS SUMMARY
+      if (/(telemetry|system\s+status|health|status|audit\s+check)/i.test(query)) {
+        const activeCount = serials.filter(s => s.status === 'ACTIVE').length;
+        appendGeminiMessage('gemini', `✦ System Health Status: **NOMINAL**\n• **Gross Realized Value:** ${currentRevenue}\n• **Active Cards:** ${activeCount} registered\n• **Orders in Queue:** ${orders.length}\n• **NTAG213 Chips:** ${cfg.inventory.ntag213 || 0} units\n• **Executive Card Price:** ₱${(cfg.pricing.card || 1200).toLocaleString('en-US', { minimumFractionDigits: 2 })}`);
+        return;
+      }
+
+      // 8. OPTIONAL AI BACKEND BRIDGE
+      try {
+        const resp = await fetch('/.netlify/functions/meadhall-copilot', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            prompt: query,
+            state: {
+              config: cfg,
+              serialsCount: serials.length,
+              ordersCount: orders.length,
+              revenue: currentRevenue
+            }
+          })
+        });
+
+        if (resp.ok) {
+          const result = await resp.json();
+          appendGeminiMessage('gemini', result.reply || result.message || 'Operation executed.');
+          if (result.stateMutation) {
+            if (result.stateMutation.pricing) {
+              cfg.pricing = { ...cfg.pricing, ...result.stateMutation.pricing };
+              saveMeadhallConfig(cfg);
+              updateManualOrderTotal();
+            }
+            if (result.stateMutation.inventory) {
+              cfg.inventory = { ...cfg.inventory, ...result.stateMutation.inventory };
+              saveMeadhallConfig(cfg);
+            }
+          }
+        } else {
+          appendGeminiMessage('gemini', `I couldn't match that command with local actions, and the external serverless function returned status ${resp.status}. You can try asking:\n• *"Set card price to 1450"*\n• *"Add 50 NTAG213 chips"*\n• *"How much is total realized value?"*`);
+        }
+      } catch (err) {
+        appendGeminiMessage('gemini', `I'm not sure how to handle: *"${escapeHtml(query)}"*. Try asking to update a price, restock chips, or query total realized value!`);
+      }
+    }
+
+    function escapeHtml(str) {
+      return (str || '').replace(/[&<>"']/g, m => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+      })[m]);
+    }
+
     // INITIAL MOUNT
     window.updateFootprint = updateFootprint;
     window.showToast = showToast;
@@ -2818,9 +4219,33 @@
     window.testInspectedUrl = testInspectedUrl;
     window.cancelInspectScan = cancelInspectScan;
     window.skipBatchItem = skipBatchItem;
+    window.setQcFormFactor = setQcFormFactor;
+    window.toggleQcXray = toggleQcXray;
+    window.updateVisualQcDock = updateVisualQcDock;
+    window.handleCustomLogoUpload = handleCustomLogoUpload;
+    window.resetClientLogo = resetClientLogo;
+    window.updateQcMockupQR = updateQcMockupQR;
+    window.sendGeminiPrompt = sendGeminiPrompt;
+    window.handleGeminiSubmit = handleGeminiSubmit;
+    window.processGeminiQuery = processGeminiQuery;
+    window.getMeadhallConfig = getMeadhallConfig;
+    window.saveMeadhallConfig = saveMeadhallConfig;
+    window.cycleNextLedgerRecord = cycleNextLedgerRecord;
+    window.cyclePrevLedgerRecord = cyclePrevLedgerRecord;
+    window.handleHotkeyReset = handleHotkeyReset;
+    window.initGlobalHotkeys = initGlobalHotkeys;
+    window.testSimulateCollision = testSimulateCollision;
+    window.openRawOrderModal = openRawOrderModal;
+    window.handleRawOrderInput = handleRawOrderInput;
+    window.commitRawOrderToLedger = commitRawOrderToLedger;
+    window.pasteFromClipboardToRawInput = pasteFromClipboardToRawInput;
+    window.initLedgerDragDrop = initLedgerDragDrop;
+    window.processCsvDrop = processCsvDrop;
     initMobileMenu();
     checkAuthGate();
     detectMobilePlatform();
+    initGlobalHotkeys();
+    initLedgerDragDrop();
     renderSerialTable();
     renderMeadhall();
     renderAuditLogs();
@@ -2836,6 +4261,7 @@
       if (bootTarget) bootTarget.value = initialUrl;
     }
     updateFootprint();
+    updateVisualQcDock();
   </script>
 </body>
 </html>
