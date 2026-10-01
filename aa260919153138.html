@@ -35,11 +35,60 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
+
+        /* Ambient Christmas Snow Effect (Background Plane) */
+        #snow-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .snowflake {
+            position: absolute;
+            top: -45px;
+            pointer-events: none;
+            will-change: transform, opacity;
+            animation: snowfall linear forwards;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(148, 163, 184, 0.55);
+            filter: drop-shadow(0 0 5px rgba(186, 230, 253, 0.85));
+        }
+        .snowflake svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+            fill: currentColor;
+        }
+        @keyframes snowfall {
+            0% {
+                transform: translate3d(0, -35px, 0) rotate(0deg);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.9;
+            }
+            50% {
+                transform: translate3d(var(--sway-x, 20px), 50vh, 0) rotate(var(--rot-mid, 90deg));
+            }
+            85% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translate3d(var(--drift-x, -20px), 105vh, 0) rotate(var(--rot-end, 180deg));
+                opacity: 0;
+            }
+        }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
+<body class="min-h-screen flex items-center justify-center p-4 relative overflow-x-hidden">
 
-    <div class="w-full max-w-md ig-card rounded-3xl p-6 md:p-8 shadow-sm">
+    <!-- Ambient Christmas Snow Layer (Background Plane) -->
+    <div id="snow-container" class="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true"></div>
+
+    <div class="w-full max-w-md ig-card rounded-3xl p-6 md:p-8 shadow-sm relative z-10">
         
         <!-- Brand & Logo Slot -->
         <div class="text-center mb-6">
@@ -54,13 +103,16 @@
             <p class="text-xs text-gray-400 mt-0.5">Accountancy Student</p>
         </div>
 
-        <!-- Primary Actions -->
-        <div class="grid grid-cols-2 gap-3 mb-6">
-            <button onclick="downloadVCard()" class="flex items-center justify-center gap-2 bg-black text-white text-xs md:text-sm font-semibold py-3 px-4 rounded-xl ig-button shadow-sm cursor-pointer">
-                <i class="fa-solid fa-user-plus text-xs"></i> Save Contact
+        <!-- Primary Actions: Save Contact, Share & Show QR -->
+        <div class="grid grid-cols-3 gap-2 sm:gap-3 mb-6">
+            <button onclick="downloadVCard()" class="flex items-center justify-center gap-1.5 sm:gap-2 bg-black text-white text-xs md:text-sm font-semibold py-3 px-2 rounded-xl ig-button shadow-sm cursor-pointer active:scale-95 transition-all">
+                <i class="fa-solid fa-user-plus text-xs"></i> <span class="truncate">Save</span>
             </button>
-            <button onclick="toggleQRModal()" class="flex items-center justify-center gap-2 bg-gray-100 text-gray-800 text-xs md:text-sm font-semibold py-3 px-4 rounded-xl ig-button border border-gray-200 cursor-pointer">
-                <i class="fa-solid fa-qrcode text-xs"></i> Show QR
+            <button onclick="shareProfile()" class="flex items-center justify-center gap-1.5 sm:gap-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs md:text-sm font-semibold py-3 px-2 rounded-xl ig-button border border-gray-200 cursor-pointer active:scale-95 transition-all">
+                <i class="fa-solid fa-share-nodes text-xs"></i> <span class="truncate">Share</span>
+            </button>
+            <button onclick="toggleQRModal()" class="flex items-center justify-center gap-1.5 sm:gap-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs md:text-sm font-semibold py-3 px-2 rounded-xl ig-button border border-gray-200 cursor-pointer active:scale-95 transition-all">
+                <i class="fa-solid fa-qrcode text-xs"></i> <span class="truncate">Show QR</span>
             </button>
         </div>
 
@@ -84,7 +136,7 @@
             </a>
 
             <!-- Facebook -->
-            <a href="https://www.facebook.com/Shawii.95" target="_blank" class="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50 border border-gray-100 ig-button group">
+            <a href="https://www.facebook.com/Shawii.95" onclick="openDeepLink('fb-messenger://user-thread/Shawii.95', 'https://www.facebook.com/Shawii.95', event)" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50 border border-gray-100 ig-button group">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-blue-600 shadow-sm border border-gray-100">
                         <i class="fa-brands fa-facebook-f"></i>
@@ -98,7 +150,7 @@
             </a>
 
             <!-- Instagram -->
-            <a href="https://www.instagram.com/shawawawaww" target="_blank" class="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50 border border-gray-100 ig-button group">
+            <a href="https://www.instagram.com/shawawawaww" onclick="openDeepLink('instagram://user?username=shawawawaww', 'https://www.instagram.com/shawawawaww', event)" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50 border border-gray-100 ig-button group">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-pink-600 shadow-sm border border-gray-100">
                         <i class="fa-brands fa-instagram"></i>
@@ -156,9 +208,94 @@
         </div>
     </div>
 
+    <!-- Floating Toast Notification Layer (Fintech Luxury Pill) -->
+    <div id="toast-container" class="fixed bottom-6 inset-x-0 z-50 flex justify-center pointer-events-none px-4" aria-live="polite">
+        <div id="toast" class="opacity-0 translate-y-3 pointer-events-none transition-all duration-300 ease-out bg-black/90 text-white backdrop-blur-md px-5 py-2.5 rounded-full text-xs font-medium shadow-2xl flex items-center gap-2 border border-white/10 tracking-tight">
+            <i class="fa-solid fa-circle-check text-emerald-400 text-xs"></i>
+            <span id="toast-msg">Link copied to clipboard!</span>
+        </div>
+    </div>
+
     <script>
-        // Generate vCard Data
-        function downloadVCard() {
+        // 1. Contact Photo Base64 Extraction & Caching for vCard
+        let cachedPhotoBase64 = null;
+
+        async function getProfilePhotoBase64() {
+            if (cachedPhotoBase64) return cachedPhotoBase64;
+
+            try {
+                const res = await fetch('Shawn Manucdoc.jpg');
+                if (res.ok) {
+                    const blob = await res.blob();
+                    const base64 = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => {
+                            if (typeof reader.result === 'string') {
+                                resolve(reader.result.split(',')[1]);
+                            } else {
+                                reject(new Error('Invalid blob reader output'));
+                            }
+                        };
+                        reader.onerror = reject;
+                        reader.readAsDataURL(blob);
+                    });
+                    if (base64) {
+                        cachedPhotoBase64 = base64;
+                        return cachedPhotoBase64;
+                    }
+                }
+            } catch (err) {}
+
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.crossOrigin = 'Anonymous';
+                img.onload = () => {
+                    try {
+                        const canvas = document.createElement('canvas');
+                        const maxDim = 320;
+                        let w = img.naturalWidth || img.width || 300;
+                        let h = img.naturalHeight || img.height || 300;
+                        if (w > maxDim || h > maxDim) {
+                            if (w > h) {
+                                h = Math.round((h * maxDim) / w);
+                                w = maxDim;
+                            } else {
+                                w = Math.round((w * maxDim) / h);
+                                h = maxDim;
+                            }
+                        }
+                        canvas.width = w;
+                        canvas.height = h;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, w, h);
+                        const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+                        cachedPhotoBase64 = dataUrl.split(',')[1];
+                        resolve(cachedPhotoBase64);
+                    } catch (e) {
+                        resolve(null);
+                    }
+                };
+                img.onerror = () => resolve(null);
+                img.src = 'Shawn Manucdoc.jpg';
+            });
+        }
+
+        if (typeof window !== 'undefined') {
+            setTimeout(getProfilePhotoBase64, 400);
+        }
+
+        // 2. Generate vCard with Native Photo Embedding
+        async function downloadVCard() {
+            let photoPayload = '';
+            try {
+                const photoBase64 = await getProfilePhotoBase64();
+                if (photoBase64) {
+                    photoPayload = `\nPHOTO;ENCODING=b;TYPE=JPEG:${photoBase64}`;
+                }
+            } catch (e) {
+                photoPayload = '';
+            }
+
             const vcardData = `BEGIN:VCARD
 VERSION:3.0
 FN:Shawn Xedrix Manucdoc
@@ -166,18 +303,105 @@ N:Manucdoc;Shawn Xedrix;;;
 TITLE:Reseller | Accountancy Student
 EMAIL:xedrix99@gmail.com
 URL:https://www.linkedin.com/in/shawn-xedrix-manucdoc-44480b280
-URL:https://attachmentanywhere.com/aa260919153138.html
+URL:https://attachmentanywhere.com/aa260919153138.html${photoPayload}
 END:VCARD`;
 
-            const blob = new Blob([vcardData], { type: 'text/vcard;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
+            const dataUri = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vcardData);
             const link = document.createElement('a');
-            link.href = url;
+            link.href = dataUri;
             link.setAttribute('download', 'Shawn_Xedrix_Manucdoc.vcf');
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            URL.revokeObjectURL(url);
+        }
+
+        // 3. Native Web Share API + Clean Toast Fallback
+        let toastTimer;
+        function showToast(message = "Link copied to clipboard!") {
+            const toast = document.getElementById("toast");
+            const toastMsg = document.getElementById("toast-msg");
+            if (!toast || !toastMsg) return;
+
+            toastMsg.textContent = message;
+            toast.classList.remove("opacity-0", "translate-y-3", "pointer-events-none");
+            toast.classList.add("opacity-100", "translate-y-0", "pointer-events-auto");
+
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.remove("opacity-100", "translate-y-0", "pointer-events-auto");
+                toast.classList.add("opacity-0", "translate-y-3", "pointer-events-none");
+            }, 2000);
+        }
+
+        async function shareProfile() {
+            const shareData = {
+                title: document.title || 'Shawn Xedrix Manucdoc | Digital Calling Card',
+                text: 'Digital Calling Card of Shawn Xedrix Manucdoc',
+                url: window.location.href
+            };
+
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                    return;
+                } catch (err) {
+                    if (err.name === 'AbortError') return;
+                }
+            }
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(window.location.href)
+                    .then(() => showToast("Link copied to clipboard!"))
+                    .catch(() => copyViaTextarea(window.location.href));
+            } else {
+                copyViaTextarea(window.location.href);
+            }
+        }
+
+        function copyViaTextarea(text) {
+            const textarea = document.createElement("textarea");
+            textarea.value = text;
+            textarea.style.position = "fixed";
+            textarea.style.top = "-9999px";
+            textarea.style.opacity = "0";
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
+            try {
+                document.execCommand("copy");
+                showToast("Link copied to clipboard!");
+            } catch (e) {
+                showToast("Failed to copy link");
+            }
+            document.body.removeChild(textarea);
+        }
+
+        // 4. Cross-Platform App Deep Linking
+        function openDeepLink(appUri, webUrl, e) {
+            if (e) e.preventDefault();
+
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            if (!isMobile) {
+                window.open(webUrl, '_blank', 'noopener,noreferrer');
+                return;
+            }
+
+            let appOpened = false;
+            const onVisibilityChange = () => {
+                if (document.hidden) {
+                    appOpened = true;
+                }
+            };
+            document.addEventListener('visibilitychange', onVisibilityChange, { once: true });
+
+            window.location.href = appUri;
+
+            setTimeout(() => {
+                document.removeEventListener('visibilitychange', onVisibilityChange);
+                if (!appOpened && !document.hidden) {
+                    window.location.href = webUrl;
+                }
+            }, 1500);
         }
 
         // Initialize QR
@@ -199,7 +423,7 @@ END:VCARD`;
             modal.classList.toggle('hidden');
             modal.classList.toggle('flex');
         }
-	// Download QR Code Image
+        // Download QR Code Image
         function downloadQR() {
             const qrImage = qrContainer.querySelector("img");
             
@@ -214,9 +438,73 @@ END:VCARD`;
                 alert("QR Code is still generating, please try again in a second.");
             }
         }
-    </script>
-</body>
-</html>
+
+        // Ambient Christmas Snow Generator (Background Plane, Memory-Safe)
+        (function initChristmasSnow() {
+            const container = document.getElementById('snow-container');
+            if (!container) return;
+
+            // Respect user preference for reduced motion
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            // High-detail crystalline snowflake vector paths (solid and regular)
+            const dSolid = 'M224 0c17.7 0 32 14.3 32 32l0 30.1 15-15c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-49 49 0 70.3 61.4-35.8 17.7-66.1c3.4-12.8 16.6-20.4 29.4-17s20.4 16.6 17 29.4l-5.2 19.3 23.6-13.8c15.3-8.9 34.9-3.7 43.8 11.5s3.8 34.9-11.5 43.8l-25.3 14.8 21.7 5.8c12.8 3.4 20.4 16.6 17 29.4s-16.6 20.4-29.4 17l-67.7-18.1L287.5 256l60.9 35.5 67.7-18.1c12.8-3.4 26 4.2 29.4 17s-4.2 26-17 29.4l-21.7 5.8 25.3 14.8c15.3 8.9 20.4 28.5 11.5 43.8s-28.5 20.4-43.8 11.5l-23.6-13.8 5.2 19.3c3.4 12.8-4.2 26-17 29.4s-26-4.2-29.4-17l-17.7-66.1L256 311.7l0 70.3 49 49c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-15-15 0 30.1c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-30.1-15 15c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l49-49 0-70.3-61.4 35.8-17.7 66.1c-3.4 12.8-16.6 20.4-29.4 17s-20.4-16.6-17-29.4l5.2-19.3L48.1 395.6c-15.3 8.9-34.9 3.7-43.8-11.5s-3.7-34.9 11.5-43.8l25.3-14.8-21.7-5.8c-12.8-3.4-20.4-16.6-17-29.4s16.6-20.4 29.4-17l67.7 18.1L160.5 256 99.6 220.5 31.9 238.6c-12.8 3.4-26-4.2-29.4-17s4.2-26 17-29.4l21.7-5.8L15.9 171.6C.6 162.7-4.5 143.1 4.4 127.9s28.5-20.4 43.8-11.5l23.6 13.8-5.2-19.3c-3.4-12.8 4.2-26 17-29.4s26 4.2 29.4 17l17.7 66.1L192 200.3l0-70.3L143 81c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l15 15L192 32c0-17.7 14.3-32 32-32z';
+            const dReg = 'M224 0c13.3 0 24 10.7 24 24l0 46.1 23-23c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-57 57 0 76.5 66.2-38.2 20.9-77.8c3.4-12.8 16.6-20.4 29.4-17s20.4 16.6 17 29.4L373 142.2l37.1-21.4c11.5-6.6 26.2-2.7 32.8 8.8s2.7 26.2-8.8 32.8L397 183.8l31.5 8.4c12.8 3.4 20.4 16.6 17 29.4s-16.6 20.4-29.4 17l-77.8-20.9L272 256l66.2 38.2 77.8-20.9c12.8-3.4 26 4.2 29.4 17s-4.2 26-17 29.4L397 328.2l37.1 21.4c11.5 6.6 15.4 21.3 8.8 32.8s-21.3 15.4-32.8 8.8L373 369.8l8.4 31.5c3.4 12.8-4.2 26-17 29.4s-26-4.2-29.4-17l-20.9-77.8L248 297.6l0 76.5 57 57c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-23-23 0 46.1c0 13.3-10.7 24-24 24s-24-10.7-24-24l0-46.1-23 23c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l57-57 0-76.5-66.2 38.2-20.9 77.8c-3.4 12.8-16.6 20.4-29.4 17s-20.4-16.6-17-29.4L75 369.8 37.9 391.2c-11.5 6.6-26.2 2.7-32.8-8.8s-2.7-26.2 8.8-32.8L51 328.2l-31.5-8.4c-12.8-3.4-20.4-16.6-17-29.4s16.6-20.4 29.4-17l77.8 20.9L176 256l-66.2-38.2L31.9 238.6c-12.8 3.4-26-4.2-29.4-17s4.2-26 17-29.4L51 183.8 13.9 162.4c-11.5-6.6-15.4-21.3-8.8-32.8s21.3-15.4 32.8-8.8L75 142.2l-8.4-31.5c-3.4-12.8 4.2-26 17-29.4s26 4.2 29.4 17l20.9 77.8L200 214.4l0-76.5L143 81c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l23 23L200 24c0-13.3 10.7-24 24-24z';
+
+            function createSnowflake() {
+                // Throttle max active flakes to prevent overhead on lower-end mobile devices
+                if (container.childElementCount > 35) return;
+
+                const flake = document.createElement('div');
+                flake.className = 'snowflake';
+
+                // Particle size: 16px to 32px (clearly visible snowflakes with crystalline branches)
+                const size = Math.floor(Math.random() * 16 + 16);
+                // Starting horizontal position
+                const startLeft = (Math.random() * 100).toFixed(2);
+                // Animation duration: 6s to 11s for a relaxed winter drift
+                const duration = (Math.random() * 5 + 6).toFixed(2);
+                // Drift and sway offsets
+                const swayX = ((Math.random() - 0.5) * 44).toFixed(1);
+                const driftX = ((Math.random() - 0.5) * 60).toFixed(1);
+                // Rotation angles during descent
+                const rotMid = Math.floor((Math.random() - 0.5) * 160);
+                const rotEnd = Math.floor((Math.random() - 0.5) * 360);
+                // Shimmering ice opacity
+                const opacity = (Math.random() * 0.35 + 0.45).toFixed(2);
+
+                flake.style.width = `${size}px`;
+                flake.style.height = `${size}px`;
+                flake.style.left = `${startLeft}%`;
+                flake.style.animationDuration = `${duration}s`;
+                flake.style.setProperty('--sway-x', `${swayX}px`);
+                flake.style.setProperty('--drift-x', `${driftX}px`);
+                flake.style.setProperty('--rot-mid', `${rotMid}deg`);
+                flake.style.setProperty('--rot-end', `${rotEnd}deg`);
+                flake.style.opacity = opacity;
+
+                // Alternate between solid and outlined crystalline snowflake geometry
+                const path = Math.random() > 0.45 ? dSolid : dReg;
+                flake.innerHTML = `<svg viewBox="0 0 448 512" aria-hidden="true"><path d="${path}"/></svg>`;
+
+                container.appendChild(flake);
+
+                // Safe cleanup once fallen to prevent DOM memory leaks
+                setTimeout(() => {
+                    if (flake.parentNode === container) {
+                        container.removeChild(flake);
+                    }
+                }, parseFloat(duration) * 1000 + 200);
+            }
+
+            // Staggered initial spawn
+            for (let i = 0; i < 14; i++) {
+                setTimeout(createSnowflake, i * 220);
+            }
+
+            // Continuous peaceful snowfall interval
+            setInterval(createSnowflake, 450);
+        })();
     </script>
 </body>
 </html>

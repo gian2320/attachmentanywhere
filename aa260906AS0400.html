@@ -12,11 +12,60 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <style>
         body { font-family: 'Montserrat', sans-serif; background-color: #f4f5f7; }
+
+        /* Ambient Christmas Snow Effect (Background Plane) */
+        #snow-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .snowflake {
+            position: absolute;
+            top: -45px;
+            pointer-events: none;
+            will-change: transform, opacity;
+            animation: snowfall linear forwards;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(148, 163, 184, 0.55);
+            filter: drop-shadow(0 0 5px rgba(186, 230, 253, 0.85));
+        }
+        .snowflake svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+            fill: currentColor;
+        }
+        @keyframes snowfall {
+            0% {
+                transform: translate3d(0, -35px, 0) rotate(0deg);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.9;
+            }
+            50% {
+                transform: translate3d(var(--sway-x, 20px), 50vh, 0) rotate(var(--rot-mid, 90deg));
+            }
+            85% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translate3d(var(--drift-x, -20px), 105vh, 0) rotate(var(--rot-end, 180deg));
+                opacity: 0;
+            }
+        }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
+<body class="min-h-screen flex items-center justify-center p-4 relative overflow-x-hidden">
 
-    <div class="w-full max-w-md bg-white rounded-[32px] shadow-xl border border-gray-100 overflow-hidden p-6 relative">
+    <!-- Ambient Christmas Snow Layer (Background Plane) -->
+    <div id="snow-container" class="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true"></div>
+
+    <div class="w-full max-w-md bg-white rounded-[32px] shadow-xl border border-gray-100 overflow-hidden p-6 relative z-10">
         
         <!-- Profile Header -->
         <div class="flex flex-col items-center text-center mt-4">
@@ -27,15 +76,19 @@
             <p class="text-sm font-semibold text-gray-600 mt-0.5">Salesman | KTJ Auto Supply</p>
         </div>
 
-        <!-- Action Buttons (Save Contact & Show QR) -->
-        <div class="grid grid-cols-2 gap-3 mt-6">
-            <button onclick="downloadVCard()" class="flex items-center justify-center gap-2 bg-black text-white py-3.5 px-4 rounded-2xl font-bold text-sm hover:bg-gray-800 transition shadow-sm cursor-pointer">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
-                Save Contact
+        <!-- Action Buttons (Save Contact, Share & Show QR) -->
+        <div class="grid grid-cols-3 gap-2 sm:gap-3 mt-6">
+            <button onclick="downloadVCard()" class="flex items-center justify-center gap-1.5 sm:gap-2 bg-black text-white py-3.5 px-2 rounded-2xl font-bold text-xs sm:text-sm hover:bg-gray-800 transition shadow-sm cursor-pointer active:scale-95">
+                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
+                <span class="truncate">Save</span>
             </button>
-            <button onclick="openQRModal()" class="flex items-center justify-center gap-2 bg-gray-100 text-gray-900 py-3.5 px-4 rounded-2xl font-bold text-sm hover:bg-gray-200 transition cursor-pointer">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h.01M16 16h1m-4-4h.01M4 16h2m10-12h2a2 2 0 012 2v2M4 6v2a2 2 0 002 2h2m0 8H6a2 2 0 01-2-2v-2m16 0v2a2 2 0 01-2 2h-2"/></svg>
-                Show QR
+            <button onclick="shareProfile()" class="flex items-center justify-center gap-1.5 sm:gap-2 bg-gray-100 hover:bg-gray-200 text-gray-900 py-3.5 px-2 rounded-2xl font-bold text-xs sm:text-sm transition cursor-pointer active:scale-95 border border-gray-200">
+                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+                <span class="truncate">Share</span>
+            </button>
+            <button onclick="openQRModal()" class="flex items-center justify-center gap-1.5 sm:gap-2 bg-gray-100 hover:bg-gray-200 text-gray-900 py-3.5 px-2 rounded-2xl font-bold text-xs sm:text-sm transition cursor-pointer active:scale-95 border border-gray-200">
+                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h.01M16 16h1m-4-4h.01M4 16h2m10-12h2a2 2 0 012 2v2M4 6v2a2 2 0 002 2h2m0 8H6a2 2 0 01-2-2v-2m16 0v2a2 2 0 01-2 2h-2"/></svg>
+                <span class="truncate">Show QR</span>
             </button>
         </div>
 
@@ -56,7 +109,7 @@
             </a>
 
             <!-- Viber -->
-            <a href="viber://chat?number=639173600400" class="flex items-center justify-between p-4 rounded-2xl bg-gray-50 hover:bg-gray-100 transition border border-gray-100/80 group">
+            <a href="viber://chat?number=639173600400" onclick="openDeepLink('viber://chat?number=%2B639173600400', 'viber://chat?number=%2B639173600400', event)" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-4 rounded-2xl bg-gray-50 hover:bg-gray-100 transition border border-gray-100/80 group">
                 <div class="flex items-center gap-3.5">
                     <div class="w-11 h-11 rounded-xl bg-white flex items-center justify-center shadow-sm text-purple-600">
                         <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M18.81 16.42c-.93.93-2.18 1.45-3.51 1.45-1.33 0-2.58-.52-3.51-1.45L4.47 11.05C3.54 10.12 3.02 8.87 3.02 7.54c0-1.33.52-2.58 1.45-3.51l1.5-1.5c.59-.59 1.55-.59 2.14 0l2.25 2.25c.59.59.59 1.55 0 2.14l-.79.79c-.2.2-.2.52 0 .72l3.18 3.18c.2.2.52.2.72 0l.79-.79c.59-.59 1.55-.59 2.14 0l2.25 2.25c.59.59.59 1.55 0 2.14l-1.5 1.5zM12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.59 1.37 5.09L2 22l5.05-1.35C8.5 21.46 10.21 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.54 0-2.98-.42-4.22-1.15l-.3-.18-3.08.82.83-3-.2-.31C4.37 14.92 4 13.5 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z"/></svg>
@@ -70,7 +123,7 @@
             </a>
 
             <!-- Facebook -->
-            <a href="https://m.facebook.com/dktj.ktj.flaviano/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-4 rounded-2xl bg-gray-50 hover:bg-gray-100 transition border border-gray-100/80 group">
+            <a href="https://m.facebook.com/dktj.ktj.flaviano/" onclick="openDeepLink('fb-messenger://user-thread/dktj.ktj.flaviano', 'https://m.facebook.com/dktj.ktj.flaviano/', event)" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-4 rounded-2xl bg-gray-50 hover:bg-gray-100 transition border border-gray-100/80 group">
                 <div class="flex items-center gap-3.5">
                     <div class="w-11 h-11 rounded-xl bg-white flex items-center justify-center shadow-sm text-blue-600">
                         <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
@@ -118,8 +171,94 @@
         </div>
     </div>
 
+    <!-- Floating Toast Notification Layer (Fintech Luxury Pill) -->
+    <div id="toast-container" class="fixed bottom-6 inset-x-0 z-50 flex justify-center pointer-events-none px-4" aria-live="polite">
+        <div id="toast" class="opacity-0 translate-y-3 pointer-events-none transition-all duration-300 ease-out bg-black/90 text-white backdrop-blur-md px-5 py-2.5 rounded-full text-xs font-medium shadow-2xl flex items-center gap-2 border border-white/10 tracking-tight">
+            <svg class="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            <span id="toast-msg">Link copied to clipboard!</span>
+        </div>
+    </div>
+
     <script>
-        function downloadVCard() {
+        // 1. Contact Photo Base64 Extraction & Caching for vCard
+        let cachedPhotoBase64 = null;
+
+        async function getProfilePhotoBase64() {
+            if (cachedPhotoBase64) return cachedPhotoBase64;
+
+            try {
+                const res = await fetch('Arnel Pacon.png');
+                if (res.ok) {
+                    const blob = await res.blob();
+                    const base64 = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => {
+                            if (typeof reader.result === 'string') {
+                                resolve(reader.result.split(',')[1]);
+                            } else {
+                                reject(new Error('Invalid blob reader output'));
+                            }
+                        };
+                        reader.onerror = reject;
+                        reader.readAsDataURL(blob);
+                    });
+                    if (base64) {
+                        cachedPhotoBase64 = base64;
+                        return cachedPhotoBase64;
+                    }
+                }
+            } catch (err) {}
+
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.crossOrigin = 'Anonymous';
+                img.onload = () => {
+                    try {
+                        const canvas = document.createElement('canvas');
+                        const maxDim = 320;
+                        let w = img.naturalWidth || img.width || 300;
+                        let h = img.naturalHeight || img.height || 300;
+                        if (w > maxDim || h > maxDim) {
+                            if (w > h) {
+                                h = Math.round((h * maxDim) / w);
+                                w = maxDim;
+                            } else {
+                                w = Math.round((w * maxDim) / h);
+                                h = maxDim;
+                            }
+                        }
+                        canvas.width = w;
+                        canvas.height = h;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, w, h);
+                        const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+                        cachedPhotoBase64 = dataUrl.split(',')[1];
+                        resolve(cachedPhotoBase64);
+                    } catch (e) {
+                        resolve(null);
+                    }
+                };
+                img.onerror = () => resolve(null);
+                img.src = 'Arnel Pacon.png';
+            });
+        }
+
+        if (typeof window !== 'undefined') {
+            setTimeout(getProfilePhotoBase64, 400);
+        }
+
+        // 2. Generate vCard with Native Photo Embedding
+        async function downloadVCard() {
+            let photoPayload = '';
+            try {
+                const photoBase64 = await getProfilePhotoBase64();
+                if (photoBase64) {
+                    photoPayload = `\nPHOTO;ENCODING=b;TYPE=JPEG:${photoBase64}`;
+                }
+            } catch (e) {
+                photoPayload = '';
+            }
+
             const vcardData = `BEGIN:VCARD
 VERSION:3.0
 FN:Arnel Pacon
@@ -129,18 +268,105 @@ ORG:DYKTJ Auto Supply
 TEL;TYPE=CELL:09071191502
 TEL;TYPE=WORK:09173600400
 EMAIL:khimflaviano123@gmail.com
-URL:${window.location.href}
+URL:${window.location.href}${photoPayload}
 END:VCARD`;
 
-            const blob = new Blob([vcardData], { type: 'text/vcard;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
+            const dataUri = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vcardData);
             const link = document.createElement('a');
-            link.href = url;
+            link.href = dataUri;
             link.setAttribute('download', 'Arnel_Pacon.vcf');
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            URL.revokeObjectURL(url);
+        }
+
+        // 3. Native Web Share API + Clean Toast Fallback
+        let toastTimer;
+        function showToast(message = "Link copied to clipboard!") {
+            const toast = document.getElementById("toast");
+            const toastMsg = document.getElementById("toast-msg");
+            if (!toast || !toastMsg) return;
+
+            toastMsg.textContent = message;
+            toast.classList.remove("opacity-0", "translate-y-3", "pointer-events-none");
+            toast.classList.add("opacity-100", "translate-y-0", "pointer-events-auto");
+
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.remove("opacity-100", "translate-y-0", "pointer-events-auto");
+                toast.classList.add("opacity-0", "translate-y-3", "pointer-events-none");
+            }, 2000);
+        }
+
+        async function shareProfile() {
+            const shareData = {
+                title: document.title || 'Arnel Pacon | DYKTJ Auto Supply',
+                text: 'Digital Calling Card of Arnel Pacon',
+                url: window.location.href
+            };
+
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                    return;
+                } catch (err) {
+                    if (err.name === 'AbortError') return;
+                }
+            }
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(window.location.href)
+                    .then(() => showToast("Link copied to clipboard!"))
+                    .catch(() => copyViaTextarea(window.location.href));
+            } else {
+                copyViaTextarea(window.location.href);
+            }
+        }
+
+        function copyViaTextarea(text) {
+            const textarea = document.createElement("textarea");
+            textarea.value = text;
+            textarea.style.position = "fixed";
+            textarea.style.top = "-9999px";
+            textarea.style.opacity = "0";
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
+            try {
+                document.execCommand("copy");
+                showToast("Link copied to clipboard!");
+            } catch (e) {
+                showToast("Failed to copy link");
+            }
+            document.body.removeChild(textarea);
+        }
+
+        // 4. Cross-Platform App Deep Linking
+        function openDeepLink(appUri, webUrl, e) {
+            if (e) e.preventDefault();
+
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            if (!isMobile) {
+                window.open(webUrl, '_blank', 'noopener,noreferrer');
+                return;
+            }
+
+            let appOpened = false;
+            const onVisibilityChange = () => {
+                if (document.hidden) {
+                    appOpened = true;
+                }
+            };
+            document.addEventListener('visibilitychange', onVisibilityChange, { once: true });
+
+            window.location.href = appUri;
+
+            setTimeout(() => {
+                document.removeEventListener('visibilitychange', onVisibilityChange);
+                if (!appOpened && !document.hidden) {
+                    window.location.href = webUrl;
+                }
+            }, 1500);
         }
 
         function openQRModal() {
@@ -159,6 +385,73 @@ END:VCARD`;
             document.getElementById('qrModal').classList.remove('flex');
             document.getElementById('qrModal').classList.add('hidden');
         }
+
+        // Ambient Christmas Snow Generator (Background Plane, Memory-Safe)
+        (function initChristmasSnow() {
+            const container = document.getElementById('snow-container');
+            if (!container) return;
+
+            // Respect user preference for reduced motion
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            // High-detail crystalline snowflake vector paths (solid and regular)
+            const dSolid = 'M224 0c17.7 0 32 14.3 32 32l0 30.1 15-15c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-49 49 0 70.3 61.4-35.8 17.7-66.1c3.4-12.8 16.6-20.4 29.4-17s20.4 16.6 17 29.4l-5.2 19.3 23.6-13.8c15.3-8.9 34.9-3.7 43.8 11.5s3.8 34.9-11.5 43.8l-25.3 14.8 21.7 5.8c12.8 3.4 20.4 16.6 17 29.4s-16.6 20.4-29.4 17l-67.7-18.1L287.5 256l60.9 35.5 67.7-18.1c12.8-3.4 26 4.2 29.4 17s-4.2 26-17 29.4l-21.7 5.8 25.3 14.8c15.3 8.9 20.4 28.5 11.5 43.8s-28.5 20.4-43.8 11.5l-23.6-13.8 5.2 19.3c3.4 12.8-4.2 26-17 29.4s-26-4.2-29.4-17l-17.7-66.1L256 311.7l0 70.3 49 49c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-15-15 0 30.1c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-30.1-15 15c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l49-49 0-70.3-61.4 35.8-17.7 66.1c-3.4 12.8-16.6 20.4-29.4 17s-20.4-16.6-17-29.4l5.2-19.3L48.1 395.6c-15.3 8.9-34.9 3.7-43.8-11.5s-3.7-34.9 11.5-43.8l25.3-14.8-21.7-5.8c-12.8-3.4-20.4-16.6-17-29.4s16.6-20.4 29.4-17l67.7 18.1L160.5 256 99.6 220.5 31.9 238.6c-12.8 3.4-26-4.2-29.4-17s4.2-26 17-29.4l21.7-5.8L15.9 171.6C.6 162.7-4.5 143.1 4.4 127.9s28.5-20.4 43.8-11.5l23.6 13.8-5.2-19.3c-3.4-12.8 4.2-26 17-29.4s26 4.2 29.4 17l17.7 66.1L192 200.3l0-70.3L143 81c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l15 15L192 32c0-17.7 14.3-32 32-32z';
+            const dReg = 'M224 0c13.3 0 24 10.7 24 24l0 46.1 23-23c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-57 57 0 76.5 66.2-38.2 20.9-77.8c3.4-12.8 16.6-20.4 29.4-17s20.4 16.6 17 29.4L373 142.2l37.1-21.4c11.5-6.6 26.2-2.7 32.8 8.8s2.7 26.2-8.8 32.8L397 183.8l31.5 8.4c12.8 3.4 20.4 16.6 17 29.4s-16.6 20.4-29.4 17l-77.8-20.9L272 256l66.2 38.2 77.8-20.9c12.8-3.4 26 4.2 29.4 17s-4.2 26-17 29.4L397 328.2l37.1 21.4c11.5 6.6 15.4 21.3 8.8 32.8s-21.3 15.4-32.8 8.8L373 369.8l8.4 31.5c3.4 12.8-4.2 26-17 29.4s-26-4.2-29.4-17l-20.9-77.8L248 297.6l0 76.5 57 57c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-23-23 0 46.1c0 13.3-10.7 24-24 24s-24-10.7-24-24l0-46.1-23 23c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l57-57 0-76.5-66.2 38.2-20.9 77.8c-3.4 12.8-16.6 20.4-29.4 17s-20.4-16.6-17-29.4L75 369.8 37.9 391.2c-11.5 6.6-26.2 2.7-32.8-8.8s-2.7-26.2 8.8-32.8L51 328.2l-31.5-8.4c-12.8-3.4-20.4-16.6-17-29.4s16.6-20.4 29.4-17l77.8 20.9L176 256l-66.2-38.2L31.9 238.6c-12.8 3.4-26-4.2-29.4-17s4.2-26 17-29.4L51 183.8 13.9 162.4c-11.5-6.6-15.4-21.3-8.8-32.8s21.3-15.4 32.8-8.8L75 142.2l-8.4-31.5c-3.4-12.8 4.2-26 17-29.4s26 4.2 29.4 17l20.9 77.8L200 214.4l0-76.5L143 81c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l23 23L200 24c0-13.3 10.7-24 24-24z';
+
+            function createSnowflake() {
+                // Throttle max active flakes to prevent overhead on lower-end mobile devices
+                if (container.childElementCount > 35) return;
+
+                const flake = document.createElement('div');
+                flake.className = 'snowflake';
+
+                // Particle size: 16px to 32px (clearly visible snowflakes with crystalline branches)
+                const size = Math.floor(Math.random() * 16 + 16);
+                // Starting horizontal position
+                const startLeft = (Math.random() * 100).toFixed(2);
+                // Animation duration: 6s to 11s for a relaxed winter drift
+                const duration = (Math.random() * 5 + 6).toFixed(2);
+                // Drift and sway offsets
+                const swayX = ((Math.random() - 0.5) * 44).toFixed(1);
+                const driftX = ((Math.random() - 0.5) * 60).toFixed(1);
+                // Rotation angles during descent
+                const rotMid = Math.floor((Math.random() - 0.5) * 160);
+                const rotEnd = Math.floor((Math.random() - 0.5) * 360);
+                // Shimmering ice opacity
+                const opacity = (Math.random() * 0.35 + 0.45).toFixed(2);
+
+                flake.style.width = `${size}px`;
+                flake.style.height = `${size}px`;
+                flake.style.left = `${startLeft}%`;
+                flake.style.animationDuration = `${duration}s`;
+                flake.style.setProperty('--sway-x', `${swayX}px`);
+                flake.style.setProperty('--drift-x', `${driftX}px`);
+                flake.style.setProperty('--rot-mid', `${rotMid}deg`);
+                flake.style.setProperty('--rot-end', `${rotEnd}deg`);
+                flake.style.opacity = opacity;
+
+                // Alternate between solid and outlined crystalline snowflake geometry
+                const path = Math.random() > 0.45 ? dSolid : dReg;
+                flake.innerHTML = `<svg viewBox="0 0 448 512" aria-hidden="true"><path d="${path}"/></svg>`;
+
+                container.appendChild(flake);
+
+                // Safe cleanup once fallen to prevent DOM memory leaks
+                setTimeout(() => {
+                    if (flake.parentNode === container) {
+                        container.removeChild(flake);
+                    }
+                }, parseFloat(duration) * 1000 + 200);
+            }
+
+            // Staggered initial spawn
+            for (let i = 0; i < 14; i++) {
+                setTimeout(createSnowflake, i * 220);
+            }
+
+            // Continuous peaceful snowfall interval
+            setInterval(createSnowflake, 450);
+        })();
     </script>
 </body>
 </html>

@@ -208,28 +208,24 @@
 
     </section>
 
-    <!-- 1B. GEMINI BRAND OPERATIONS COPILOT -->
-    <section id="gemini-copilot-section" class="bg-gradient-to-b from-[#0f1015] via-[#0b0c10] to-[#07080a] text-white rounded-3xl p-6 sm:p-8 border border-neutral-800 shadow-2xl relative overflow-hidden space-y-5">
+    <!-- 1B. OPERATIONS COMMAND CONSOLE -->
+    <section id="gemini-copilot-section" class="bg-[#0c0c0e] text-white rounded-3xl p-6 sm:p-8 border border-neutral-800 shadow-xl relative overflow-hidden space-y-5">
       
-      <!-- Header with Gemini Star -->
+      <!-- Console Header -->
       <div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-neutral-800/80 pb-4">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-sky-400 via-indigo-500 to-purple-500 p-0.5 shadow-lg shadow-sky-500/20 flex items-center justify-center shrink-0">
-            <div class="w-full h-full bg-[#0a0b0e] rounded-[14px] flex items-center justify-center">
-              <svg class="w-5 h-5 text-sky-400" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C12 7.52285 7.52285 12 2 12C7.52285 12 12 16.4772 12 22C12 16.4772 16.4772 12 22 12C16.4772 12 12 7.52285 12 2Z" />
-              </svg>
-            </div>
+          <div class="w-10 h-10 rounded-xl bg-neutral-900 border border-neutral-800 text-neutral-300 font-mono text-sm font-bold flex items-center justify-center shrink-0">
+            &gt;_
           </div>
           <div>
             <div class="flex items-center gap-2">
               <h2 class="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-2">
-                Meadhall Copilot
-                <span class="text-[10px] font-mono font-medium px-2 py-0.5 rounded-md bg-sky-950/80 border border-sky-800/60 text-sky-300">Gemini</span>
+                Operations Console
+                <span class="text-[10px] font-mono font-medium px-2 py-0.5 rounded-md bg-neutral-900 border border-neutral-800 text-neutral-400">Terminal</span>
               </h2>
             </div>
             <p class="text-xs text-neutral-400 mt-0.5">
-              Ask to update card pricing, check sales metrics, manage chip stock, or register clients.
+              Execute operational commands, adjust product pricing, monitor metrics, or manage chip stock.
             </p>
           </div>
         </div>
@@ -240,35 +236,31 @@
         </div>
       </div>
 
-      <!-- Conversational Chat Stream (Gemini Vibe) -->
+      <!-- Command Stream -->
       <div id="gemini-chat-stream" class="relative z-10 space-y-4 max-h-[340px] overflow-y-auto pr-1">
         
-        <!-- Welcome Bubble -->
+        <!-- Welcome Prompt -->
         <div class="flex items-start gap-3">
-          <div class="w-7 h-7 rounded-xl bg-gradient-to-br from-sky-400 to-indigo-500 p-0.5 shrink-0 mt-0.5">
-            <div class="w-full h-full bg-[#0a0b0e] rounded-[10px] flex items-center justify-center">
-              <svg class="w-3.5 h-3.5 text-sky-400" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C12 7.52285 7.52285 12 2 12C7.52285 12 12 16.4772 12 22C12 16.4772 16.4772 12 22 12C16.4772 12 12 7.52285 12 2Z" />
-              </svg>
-            </div>
+          <div class="w-7 h-7 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-400 font-mono text-[11px] font-bold shrink-0 mt-0.5 flex items-center justify-center">
+            &gt;_
           </div>
           <div class="flex-1 space-y-2.5">
-            <div class="bg-[#121318] border border-neutral-800 rounded-2xl rounded-tl-sm px-4 py-3 text-xs sm:text-sm text-neutral-200 leading-relaxed max-w-2xl shadow-sm">
-              Hello! I'm your operations assistant. What would you like to update or review today?
+            <div class="bg-[#121318] border border-neutral-800 rounded-2xl rounded-tl-sm px-4 py-3 text-xs sm:text-sm text-neutral-300 leading-relaxed max-w-2xl shadow-sm font-mono">
+              Operations Command Console active. Enter a command or select a preset to execute:
             </div>
-            <!-- Suggestion Pills -->
+            <!-- Preset Command Buttons -->
             <div class="flex flex-wrap gap-2 pt-0.5">
-              <button type="button" onclick="sendGeminiPrompt('Set card price to 1450')" class="text-xs bg-[#16171f] hover:bg-[#1f202b] border border-neutral-700/60 hover:border-sky-500/50 text-neutral-300 hover:text-white px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 font-mono">
-                <span class="text-sky-400 font-bold">&gt;&gt;</span> Set card price to ₱1,450
+              <button type="button" onclick="sendGeminiPrompt('Set card price to 1450')" class="text-xs bg-[#16171f] hover:bg-[#20212c] border border-neutral-800 hover:border-neutral-600 text-neutral-300 hover:text-white px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 font-mono">
+                <span class="text-neutral-500 font-bold">&gt;</span> Set card price to ₱1,450
               </button>
-              <button type="button" onclick="sendGeminiPrompt('How much is total realized value?')" class="text-xs bg-[#16171f] hover:bg-[#1f202b] border border-neutral-700/60 hover:border-sky-500/50 text-neutral-300 hover:text-white px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 font-mono">
-                <span class="text-sky-400 font-bold">&gt;&gt;</span> Total realized value
+              <button type="button" onclick="sendGeminiPrompt('How much is total realized value?')" class="text-xs bg-[#16171f] hover:bg-[#20212c] border border-neutral-800 hover:border-neutral-600 text-neutral-300 hover:text-white px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 font-mono">
+                <span class="text-neutral-500 font-bold">&gt;</span> Total realized value
               </button>
-              <button type="button" onclick="sendGeminiPrompt('Add 50 NTAG213 chips')" class="text-xs bg-[#16171f] hover:bg-[#1f202b] border border-neutral-700/60 hover:border-sky-500/50 text-neutral-300 hover:text-white px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 font-mono">
-                <span class="text-sky-400 font-bold">&gt;&gt;</span> Restock 50 chips
+              <button type="button" onclick="sendGeminiPrompt('Add 50 NTAG213 chips')" class="text-xs bg-[#16171f] hover:bg-[#20212c] border border-neutral-800 hover:border-neutral-600 text-neutral-300 hover:text-white px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 font-mono">
+                <span class="text-neutral-500 font-bold">&gt;</span> Restock 50 chips
               </button>
-              <button type="button" onclick="sendGeminiPrompt('Telemetry check')" class="text-xs bg-[#16171f] hover:bg-[#1f202b] border border-neutral-700/60 hover:border-sky-500/50 text-neutral-300 hover:text-white px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 font-mono">
-                <span class="text-sky-400 font-bold">&gt;&gt;</span> System health report
+              <button type="button" onclick="sendGeminiPrompt('Telemetry check')" class="text-xs bg-[#16171f] hover:bg-[#20212c] border border-neutral-800 hover:border-neutral-600 text-neutral-300 hover:text-white px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 font-mono">
+                <span class="text-neutral-500 font-bold">&gt;</span> System health report
               </button>
             </div>
           </div>
@@ -276,14 +268,12 @@
 
       </div>
 
-      <!-- Signature Gemini Prompt Bar -->
+      <!-- Command Input Bar -->
       <div class="relative z-10 pt-2 border-t border-neutral-800/80">
-        <form onsubmit="handleGeminiSubmit(event)" class="bg-[#121318] border border-neutral-700 focus-within:border-sky-500/80 rounded-2xl p-1.5 pl-4 flex items-center gap-3 transition-all shadow-lg focus-within:shadow-sky-500/10">
-          <svg class="w-5 h-5 text-sky-400 shrink-0" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2C12 7.52285 7.52285 12 2 12C7.52285 12 12 16.4772 12 22C12 16.4772 16.4772 12 22 12C16.4772 12 12 7.52285 12 2Z" />
-          </svg>
-          <input type="text" id="gemini-input" placeholder="Ask Gemini Copilot to set card price, adjust inventory, or check sales..." class="bg-transparent border-none text-white text-[16px] sm:text-sm focus:outline-none flex-1 placeholder-neutral-500" autocomplete="off" spellcheck="false">
-          <button type="submit" id="gemini-send-btn" class="w-9 h-9 rounded-xl bg-white hover:bg-neutral-200 active:scale-95 text-black flex items-center justify-center transition-all cursor-pointer shrink-0 shadow-md">
+        <form onsubmit="handleGeminiSubmit(event)" class="bg-[#121318] border border-neutral-800 focus-within:border-neutral-600 rounded-2xl p-1.5 pl-4 flex items-center gap-3 transition-all shadow-sm">
+          <span class="font-mono text-neutral-500 text-sm font-bold shrink-0">&gt;</span>
+          <input type="text" id="gemini-input" placeholder="Type a command (e.g., set card price, adjust stock, or check sales)..." class="bg-transparent border-none text-white text-[16px] sm:text-sm focus:outline-none flex-1 placeholder-neutral-500 font-mono" autocomplete="off" spellcheck="false">
+          <button type="submit" id="gemini-send-btn" class="w-9 h-9 rounded-xl bg-white hover:bg-neutral-200 active:scale-95 text-black flex items-center justify-center transition-all cursor-pointer shrink-0 shadow-sm" title="Execute Command">
             <svg class="w-4 h-4 transform rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <line x1="12" y1="19" x2="12" y2="5"></line>
               <polyline points="5 12 12 5 19 12"></polyline>
@@ -740,14 +730,14 @@
           <div>
             <h3 class="text-lg font-black uppercase tracking-tight text-neutral-900">NFC Tag Inspector</h3>
           </div>
-          <span id="inspect-status-badge" class="px-3 py-1 rounded-md text-[10px] font-mono uppercase tracking-wider font-bold bg-blue-50 text-blue-700 border border-blue-200">
+          <span id="inspect-status-badge" class="px-3 py-1 rounded-md text-[10px] font-mono uppercase tracking-wider font-bold bg-neutral-100 text-neutral-700 border border-neutral-200">
             Awaiting Tag
           </span>
         </div>
 
         <!-- Scanning Radar Visual -->
         <div id="inspect-scanner-visual" class="py-4 flex flex-col items-center justify-center text-center">
-          <div id="inspect-radar-ring" class="w-20 h-20 rounded-full border-2 border-blue-500/40 flex items-center justify-center text-blue-600 bg-blue-50/50 transition-all">
+          <div id="inspect-radar-ring" class="w-20 h-20 rounded-full border-2 border-neutral-300 flex items-center justify-center text-neutral-500 bg-neutral-50 transition-all">
             <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
           </div>
           <p id="inspect-scanner-hint" class="text-xs font-mono text-neutral-500 mt-3">Hold physical NFC card against rear antenna...</p>
@@ -920,7 +910,7 @@
           <div>
             <div class="flex justify-between items-center mb-1.5">
               <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-400">Raw Order Text</label>
-              <button type="button" onclick="pasteFromClipboardToRawInput()" class="text-[10px] text-sky-400 hover:text-sky-300 underline cursor-pointer min-h-[36px] inline-flex items-center">Paste from Clipboard</button>
+              <button type="button" onclick="pasteFromClipboardToRawInput()" class="text-[10px] text-neutral-400 hover:text-white underline cursor-pointer min-h-[36px] inline-flex items-center">Paste from Clipboard</button>
             </div>
             <textarea id="raw-order-input" rows="5" oninput="handleRawOrderInput(this.value)" placeholder="Name: Gian Christian Villanueva&#10;Phone: 0917-123-4567&#10;Brand: Attachment Anywhere&#10;URL: https://attachmentanywhere.com/c/gian" class="w-full bg-[#141418] border border-neutral-800 focus:border-white focus-visible:ring-2 focus-visible:ring-white rounded-2xl p-4 text-[16px] sm:text-xs font-mono text-emerald-400 outline-none transition-colors resize-none placeholder:text-neutral-600"></textarea>
           </div>
@@ -946,7 +936,7 @@
               </div>
               <div>
                 <span class="text-neutral-500 text-[10px] block">GENERATED SERIAL:</span>
-                <span id="preview-raw-serial" class="font-bold text-sky-400 truncate block">--</span>
+                <span id="preview-raw-serial" class="font-bold text-white font-mono truncate block">--</span>
               </div>
             </div>
             <div class="pt-1.5 border-t border-neutral-800/60">
@@ -996,9 +986,9 @@
             <div class="sm:col-span-2">
               <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-500 mb-1.5">Product</label>
               <select id="order-prod-select" onchange="updateManualOrderDefaults()" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-900 rounded-2xl px-4 py-3 text-[16px] sm:text-xs text-neutral-900 outline-none font-medium min-h-[44px]">
-                <option value="Smart Executive Card">Smart Executive Card (₱1,200)</option>
-                <option value="Google ReviewShield™">Google ReviewShield™ (₱500)</option>
-                <option value="Digital Hub Touchpoint">Digital Hub Touchpoint (₱2,500)</option>
+                <option value="Smart Executive Card">Smart Executive Card (₱900)</option>
+                <option value="Google ReviewShield™">Google ReviewShield™ (₱350)</option>
+                <option value="Digital Hub Touchpoint">Digital Hub Touchpoint (₱2,000)</option>
               </select>
             </div>
             <div>
@@ -1877,12 +1867,12 @@
 
       // Reset UI to Scanning State
       if (badge) {
-        badge.className = "px-3 py-1 rounded-md text-[10px] font-mono uppercase tracking-wider font-bold bg-blue-50 text-blue-700 border border-blue-200";
+        badge.className = "px-3 py-1 rounded-md text-[10px] font-mono uppercase tracking-wider font-bold bg-neutral-100 text-neutral-700 border border-neutral-200";
         badge.innerText = hardwareMode === 'sim' ? "SIMULATOR ACTIVE" : "AWAITING TAG";
       }
 
       if (ring) {
-        ring.className = "w-20 h-20 rounded-full border-2 border-blue-500/50 flex items-center justify-center text-blue-600 bg-blue-50/50 transition-all";
+        ring.className = "w-20 h-20 rounded-full border-2 border-neutral-300 flex items-center justify-center text-neutral-500 bg-neutral-50 transition-all";
         ring.innerHTML = `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>`;
       }
 
@@ -1895,7 +1885,7 @@
       if (chipType) chipType.innerText = 'Interrogating...';
       if (cardUid) {
         cardUid.innerText = 'Scanning...';
-        cardUid.className = 'text-blue-500 font-bold tracking-wider';
+        cardUid.className = 'text-neutral-400 font-bold tracking-wider font-mono';
       }
       if (recType) recType.innerText = '--';
       if (memGauge) memGauge.innerText = '--';
@@ -3362,7 +3352,7 @@
 
         let badgeStyles = "bg-neutral-100 text-neutral-600 border border-neutral-200 font-semibold";
         if(order.status === 'Pending') badgeStyles = "bg-amber-50 text-amber-700 border border-amber-200 font-semibold";
-        if(order.status === 'Encoded') badgeStyles = "bg-blue-50 text-blue-700 border border-blue-200 font-semibold";
+        if(order.status === 'Encoded') badgeStyles = "bg-neutral-900 text-white border border-neutral-900 font-semibold";
         if(order.status === 'Dispatched') badgeStyles = "bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold";
 
         const hasTargetUrl = order.specs && order.specs.targetUrl;
@@ -3452,9 +3442,9 @@
       const totalInput = document.getElementById('order-prod-total');
 
       const cfg = (typeof getMeadhallConfig === 'function') ? getMeadhallConfig() : { pricing: {} };
-      let basePrice = (cfg.pricing && cfg.pricing.card) || 1200;
-      if (productSelect.value.includes('ReviewShield')) basePrice = (cfg.pricing && cfg.pricing.reviewShield) || 500;
-      if (productSelect.value.includes('Hub')) basePrice = (cfg.pricing && cfg.pricing.hub) || 2500;
+      let basePrice = (cfg.pricing && cfg.pricing.card) || 900;
+      if (productSelect.value.includes('ReviewShield')) basePrice = (cfg.pricing && cfg.pricing.reviewShield) || 350;
+      if (productSelect.value.includes('Hub')) basePrice = (cfg.pricing && cfg.pricing.hub) || 2000;
       if (productSelect.value.includes('Patch')) basePrice = (cfg.pricing && cfg.pricing.patch) || 650;
       if (productSelect.value.includes('Puck')) basePrice = (cfg.pricing && cfg.pricing.puck) || 850;
 
@@ -3877,11 +3867,11 @@
     function getMeadhallConfig() {
       const defaults = {
         pricing: {
-          card: 1200,
+          card: 900,
           patch: 650,
           puck: 850,
-          reviewShield: 500,
-          hub: 2500
+          reviewShield: 350,
+          hub: 2000
         },
         inventory: {
           ntag213: 250,
@@ -3915,21 +3905,17 @@
       if (role === 'user') {
         msgDiv.className = 'flex justify-end';
         msgDiv.innerHTML = `
-          <div class="bg-[#1e202a] border border-neutral-700/60 text-white rounded-2xl rounded-tr-sm px-4 py-2.5 text-xs sm:text-sm max-w-[85%] sm:max-w-xl shadow-sm">
+          <div class="bg-neutral-800 border border-neutral-700 text-white rounded-2xl rounded-tr-sm px-4 py-2.5 text-xs sm:text-sm max-w-[85%] sm:max-w-xl shadow-sm font-mono">
             ${escapeHtml(text)}
           </div>
         `;
       } else {
         msgDiv.className = 'flex items-start gap-3';
         msgDiv.innerHTML = `
-          <div class="w-7 h-7 rounded-xl bg-gradient-to-br from-sky-400 to-indigo-500 p-0.5 shrink-0 mt-0.5">
-            <div class="w-full h-full bg-[#0a0b0e] rounded-[10px] flex items-center justify-center">
-              <svg class="w-3.5 h-3.5 text-sky-400" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C12 7.52285 7.52285 12 2 12C7.52285 12 12 16.4772 12 22C12 16.4772 16.4772 12 22 12C16.4772 12 12 7.52285 12 2Z" />
-              </svg>
-            </div>
+          <div class="w-7 h-7 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-400 font-mono text-[11px] font-bold shrink-0 mt-0.5 flex items-center justify-center">
+            &gt;_
           </div>
-          <div class="bg-[#121318] border border-neutral-800 rounded-2xl rounded-tl-sm px-4 py-3 text-xs sm:text-sm text-neutral-200 leading-relaxed max-w-[85%] sm:max-w-2xl shadow-sm whitespace-pre-line">
+          <div class="bg-[#121318] border border-neutral-800 rounded-2xl rounded-tl-sm px-4 py-3 text-xs sm:text-sm text-neutral-200 leading-relaxed max-w-[85%] sm:max-w-2xl shadow-sm whitespace-pre-line font-mono">
             ${text}
           </div>
         `;
@@ -4034,6 +4020,62 @@
         return;
       }
 
+      // 2B. DISCOUNT MUTATIONS (Local Fast Path)
+      const discountAllMatch = query.match(/(?:apply|give|set|take)\s+(?:a\s+)?(\d+(?:\.\d+)?)\s*%\s*(?:discount|off)(?:\s+(?:across|on|to|for)?\s*(?:all\s+)?(?:products|catalog|items|inventory)?)?/i) ||
+                               query.match(/(\d+(?:\.\d+)?)\s*%\s*(?:discount|off)\s+(?:across|on|for)?\s*(?:all\s+)?(?:products|catalog|items)/i);
+      if (discountAllMatch) {
+        const pct = parseFloat(discountAllMatch[1]);
+        const factor = Math.max(0, (100 - pct) / 100);
+        cfg.pricing.card = Math.round((cfg.pricing.card || 900) * factor);
+        cfg.pricing.patch = Math.round((cfg.pricing.patch || 650) * factor);
+        cfg.pricing.puck = Math.round((cfg.pricing.puck || 850) * factor);
+        cfg.pricing.reviewShield = Math.round((cfg.pricing.reviewShield || 350) * factor);
+        cfg.pricing.hub = Math.round((cfg.pricing.hub || 2000) * factor);
+        saveMeadhallConfig(cfg);
+        updateManualOrderTotal();
+        logAuditTrail('PRICE_UPDATE', `Applied ${pct}% discount across all catalog products.`);
+        showToast(`${pct}% discount applied across catalog.`);
+        appendGeminiMessage('gemini', `>> Discount Applied: **${pct}% off** has been applied across all products.\n• **Executive Card:** ₱${cfg.pricing.card.toLocaleString()}\n• **Tactical Patch:** ₱${cfg.pricing.patch.toLocaleString()}\n• **Countertop Puck:** ₱${cfg.pricing.puck.toLocaleString()}\n• **ReviewShield:** ₱${cfg.pricing.reviewShield.toLocaleString()}\n• **Smart Hub:** ₱${cfg.pricing.hub.toLocaleString()}\n\nManual order calculations are immediately updated.`);
+        return;
+      }
+
+      // 2C. MULTI-PRODUCT / ABSOLUTE DEDUCTION PARSER
+      if (/(?:less|deduct|reduce|minus)/i.test(query) && /(?:hub|shield|card|patch|puck)/i.test(query)) {
+        let changed = false;
+        const hubMatch = query.match(/(?:less|deduct|minus)\s+(?:₱|p|php)?\s*(\d+(?:\.\d+)?)\s*(?:pesos?|php|₱)?\s*(?:for|from|on)?\s*(?:the\s+)?(?:business\s+)?(?:digital\s+)?hub/i) ||
+                         query.match(/(?:business\s+)?(?:digital\s+)?hub\s*(?:for\s+)?(?:less|deduct|minus)\s+(?:₱|p|php)?\s*(\d+(?:\.\d+)?)/i);
+        if (hubMatch) {
+          const amt = parseFloat(hubMatch[1]);
+          cfg.pricing.hub = Math.max(0, (cfg.pricing.hub || 2500) - amt);
+          changed = true;
+        }
+
+        const shieldMatch = query.match(/(?:less|deduct|minus)\s+(?:₱|p|php)?\s*(\d+(?:\.\d+)?)\s*(?:pesos?|php|₱)?\s*(?:for|from|on)?\s*(?:the\s+)?(?:google\s+)?review\s*shield/i) ||
+                            query.match(/(?:google\s+)?review\s*shield\s*(?:for\s+)?(?:less|deduct|minus)\s+(?:₱|p|php)?\s*(\d+(?:\.\d+)?)/i);
+        if (shieldMatch) {
+          const amt = parseFloat(shieldMatch[1]);
+          cfg.pricing.reviewShield = Math.max(0, (cfg.pricing.reviewShield || 500) - amt);
+          changed = true;
+        }
+
+        const cardMatch = query.match(/(?:less|deduct|minus)\s+(?:₱|p|php)?\s*(\d+(?:\.\d+)?)\s*(?:pesos?|php|₱)?\s*(?:for|from|on)?\s*(?:the\s+)?(?:smart\s+)?(?:executive\s+)?card/i) ||
+                          query.match(/(?:smart\s+)?(?:executive\s+)?card\s*(?:for\s+)?(?:less|deduct|minus)\s+(?:₱|p|php)?\s*(\d+(?:\.\d+)?)/i);
+        if (cardMatch) {
+          const amt = parseFloat(cardMatch[1]);
+          cfg.pricing.card = Math.max(0, (cfg.pricing.card || 1200) - amt);
+          changed = true;
+        }
+
+        if (changed) {
+          saveMeadhallConfig(cfg);
+          updateManualOrderTotal();
+          logAuditTrail('PRICE_UPDATE', `Applied price reductions: Card ₱${cfg.pricing.card}, ReviewShield ₱${cfg.pricing.reviewShield}, Hub ₱${cfg.pricing.hub}.`);
+          showToast(`Prices adjusted: Card ₱${cfg.pricing.card}, Shield ₱${cfg.pricing.reviewShield}, Hub ₱${cfg.pricing.hub}`);
+          appendGeminiMessage('gemini', `>> Updated Product Pricing:\n• **Smart Executive Card:** ₱${cfg.pricing.card.toLocaleString('en-US', { minimumFractionDigits: 2 })}\n• **Google ReviewShield™:** ₱${cfg.pricing.reviewShield.toLocaleString('en-US', { minimumFractionDigits: 2 })}\n• **Business Digital Hub:** ₱${cfg.pricing.hub.toLocaleString('en-US', { minimumFractionDigits: 2 })}\n\nManual order totals and catalog rates are synchronized.`);
+          return;
+        }
+      }
+
       // 3. INVENTORY ADJUSTMENTS
       const addInvMatch = query.match(/(?:add|restock|increase)\s+(\d+)\s*(?:units?\s+of\s+)?(ntag213|ntag|chips?|card\s*stock|ntag215|ntag216)/i);
       if (addInvMatch) {
@@ -4132,13 +4174,13 @@
       // 7. TELEMETRY CHECK / STATUS SUMMARY
       if (/(telemetry|system\s+status|health|status|audit\s+check)/i.test(query)) {
         const activeCount = serials.filter(s => s.status === 'ACTIVE').length;
-        appendGeminiMessage('gemini', `>> System Health Status: **NOMINAL**\n• **Gross Realized Value:** ${currentRevenue}\n• **Active Cards:** ${activeCount} registered\n• **Orders in Queue:** ${orders.length}\n• **NTAG213 Chips:** ${cfg.inventory.ntag213 || 0} units\n• **Executive Card Price:** ₱${(cfg.pricing.card || 1200).toLocaleString('en-US', { minimumFractionDigits: 2 })}`);
+        appendGeminiMessage('gemini', `>> System Health Status: **NOMINAL**\n• **Gross Realized Value:** ${currentRevenue}\n• **Active Cards:** ${activeCount} registered\n• **Orders in Queue:** ${orders.length}\n• **NTAG213 Chips:** ${cfg.inventory.ntag213 || 0} units\n• **Executive Card Price:** ₱${(cfg.pricing.card || 900).toLocaleString('en-US', { minimumFractionDigits: 2 })}`);
         return;
       }
 
       // 8. OPTIONAL AI BACKEND BRIDGE
       try {
-        const resp = await fetch('/.netlify/functions/meadhall-copilot', {
+        const resp = await fetch('/.netlify/functions/copilot', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -4160,17 +4202,23 @@
               cfg.pricing = { ...cfg.pricing, ...result.stateMutation.pricing };
               saveMeadhallConfig(cfg);
               updateManualOrderTotal();
+              logAuditTrail('PRICE_UPDATE', `Pricing updated via Copilot (${result.action || 'MUTATION'}).`);
+              showToast(result.action === 'APPLY_DISCOUNT' ? 'Discount applied to catalog' : 'Pricing updated');
             }
             if (result.stateMutation.inventory) {
               cfg.inventory = { ...cfg.inventory, ...result.stateMutation.inventory };
               saveMeadhallConfig(cfg);
+              logAuditTrail('INVENTORY_ADJUST', `Inventory updated via Copilot (${result.action || 'MUTATION'}).`);
+              showToast('Inventory updated');
             }
           }
+        } else if (resp.status === 404) {
+          appendGeminiMessage('gemini', `Console serverless endpoint was not found (HTTP 404). Serverless function deployment in progress. In the meantime, direct operations are active:\n• *"Set card price to 1450"*\n• *"Apply 10% discount across products"*\n• *"Add 50 NTAG213 chips"*\n• *"How much is total realized value?"*`);
         } else {
-          appendGeminiMessage('gemini', `I couldn't match that command with local actions, and the external serverless function returned status ${resp.status}. You can try asking:\n• *"Set card price to 1450"*\n• *"Add 50 NTAG213 chips"*\n• *"How much is total realized value?"*`);
+          appendGeminiMessage('gemini', `Console serverless service returned HTTP ${resp.status}. You can try again or use direct commands:\n• *"Set card price to 1450"*\n• *"Apply 10% discount across products"*\n• *"Telemetry check"*`);
         }
       } catch (err) {
-        appendGeminiMessage('gemini', `I'm not sure how to handle: *"${escapeHtml(query)}"*. Try asking to update a price, restock chips, or query total realized value!`);
+        appendGeminiMessage('gemini', `Unrecognized command: *"${escapeHtml(query)}"*. Try an operational command like updating a price, restocking chips, or checking realized value.`);
       }
     }
 
