@@ -111,15 +111,19 @@
   <!-- Main Unified Container (Optically Centered by Default, Adapts Smoothly on Mobile & Desktop) -->
   <main id="main-container" class="min-h-[100dvh] w-full flex flex-col justify-center items-center px-4 safe-insets max-w-2xl mx-auto transition-all duration-500 ease-out relative z-10">
 
-    <!-- 1. Ambient-Grounded Avatar (Responsive: w-28 h-28 on mobile, w-36 h-36 on desktop) -->
-    <div id="avatar-container" class="relative my-2 w-28 h-28 sm:w-36 sm:h-36 flex items-center justify-center select-none cursor-grab active:cursor-grabbing transition-all duration-300">
-      <div class="absolute inset-0 bg-neutral-200/60 rounded-full blur-2xl -z-10 transform scale-90 pointer-events-none"></div>
+    <!-- 1. Ambient-Grounded Avatar (Fail-Safe Interactive Memoji) -->
+    <div id="avatar-container" class="relative my-2 w-32 h-32 sm:w-36 sm:h-36 mx-auto flex items-center justify-center select-none cursor-grab active:cursor-grabbing transition-all duration-300">
+      <!-- Subtle Ambient Glow -->
+      <div class="absolute inset-0 bg-neutral-200/70 rounded-full blur-2xl -z-10 transform scale-90 pointer-events-none"></div>
       <img
         id="avatar-img"
         src="avatar/frame_48_delay-0.05s.webp"
-        alt="Talk with GI Avatar"
-        class="w-full h-full object-contain pointer-events-none select-none transition-opacity duration-150"
-      >
+        alt="Interactive Memoji Avatar"
+        class="w-full h-full object-cover pointer-events-none select-none transition-opacity duration-200"
+        loading="eager"
+        decoding="async"
+        draggable="false"
+      />
     </div>
 
     <!-- 2. Identity & Header Text Hierarchy -->
@@ -284,56 +288,114 @@
 
 
     /* =========================================================================
-       1. CROSS-PLATFORM TOUCH & GYRO AVATAR ENGINE (Zero-Lag Scrubber)
+       1. BULLETPROOF MEMOJI AVATAR ENGINE (Flicker-Free, Zero-Lag Scrubber)
        ========================================================================= */
     const totalFrames = 84;
-    let currentFrame = 48; // Frame 48 faces straight ahead
+    let currentFrame = 48; // Frame 48 faces straight forward
     let targetFrame = 48;
-    const avatarImg = document.getElementById("avatar-img");
+    let lastRenderedFrame = 48;
     let isTouchActive = false;
+    let touchEndTimeout = null;
 
-    // Asynchronous Frame Preloader: Critical Keyframes First
-    const preloadedImages = new Map();
-    function preloadFrames() {
-      // Phase 1: High priority orientation anchors
-      const priorityFrames = [48, 0, 83, 24, 60, 12, 36, 72];
-      priorityFrames.forEach(idx => {
-        const padded = String(idx).padStart(2, "0");
-        const img = new Image();
-        img.src = `avatar/frame_${padded}_delay-0.05s.webp`;
-        preloadedImages.set(idx, img);
-      });
+    const avatarImg = document.getElementById("avatar-img");
+    const avatarContainer = document.getElementById("avatar-container");
 
-      // Phase 2: Asynchronously load remaining frames in background
+    // Relative frame path generator
+    function getFramePath(idx) {
+      const clamped = Math.max(0, Math.min(totalFrames - 1, idx));
+      const padded = String(clamped).padStart(2, "0");
+      return `avatar/frame_${padded}_delay-0.05s.webp`;
+    }
+
+    // In-memory Frame Cache & Loaded Tracker
+    const frameCache = new Array(totalFrames);
+    const loadedFrameIndices = new Set([48]); // Base frame is already loaded eagerly in HTML
+
+    function loadFrame(idx) {
+      if (idx < 0 || idx >= totalFrames) return;
+      if (frameCache[idx]) return frameCache[idx];
+
+      const img = new Image();
+      img.onload = () => {
+        img._loaded = true;
+        loadedFrameIndices.add(idx);
+      };
+      img.onerror = () => {
+        console.warn(`Avatar frame ${idx} failed to load.`);
+      };
+      img.src = getFramePath(idx);
+      frameCache[idx] = img;
+      return img;
+    }
+
+    // Return nearest loaded frame index to eliminate blank flickers
+    function getNearestLoadedFrame(targetIdx) {
+      if (loadedFrameIndices.has(targetIdx)) return targetIdx;
+      let minDiff = Infinity;
+      let closest = lastRenderedFrame;
+      for (const idx of loadedFrameIndices) {
+        const diff = Math.abs(idx - targetIdx);
+        if (diff < minDiff) {
+          minDiff = diff;
+          closest = idx;
+        }
+      }
+      return closest;
+    }
+
+    // Staged Frame Preloader (prevents network congestion)
+    function initAvatarPreloader() {
+      // Stage 1: Priority turnaround anchor angles
+      const priorityFrames = [48, 0, 83, 24, 60, 12, 36, 72, 18, 54, 66];
+      priorityFrames.forEach(idx => loadFrame(idx));
+
+      // Stage 2: Center viewing corridor (frames 38-58)
       setTimeout(() => {
-        for (let i = 0; i < totalFrames; i++) {
-          if (!preloadedImages.has(i)) {
-            const padded = String(i).padStart(2, "0");
-            const img = new Image();
-            img.src = `avatar/frame_${padded}_delay-0.05s.webp`;
-            preloadedImages.set(i, img);
+        for (let i = 38; i <= 58; i++) {
+          loadFrame(i);
+        }
+      }, 120);
+
+      // Stage 3: Smooth background staggered batches for remaining frames
+      setTimeout(() => {
+        let i = 0;
+        function loadBatch() {
+          const batchSize = 6;
+          for (let b = 0; b < batchSize && i < totalFrames; b++, i++) {
+            if (!loadedFrameIndices.has(i)) {
+              loadFrame(i);
+            }
+          }
+          if (i < totalFrames) {
+            setTimeout(loadBatch, 35);
           }
         }
+        loadBatch();
       }, 350);
     }
-    preloadFrames();
+    initAvatarPreloader();
 
     // Map screen X coordinate (0 to 1) to frame index (0 to 83)
     function updateTargetFromX(clientX) {
-      if (typeof clientX !== "number" || isNaN(clientX)) return;
+      if (typeof clientX !== "number" || isNaN(clientX) || window.innerWidth <= 0) return;
       const ratio = Math.max(0, Math.min(1, clientX / window.innerWidth));
       targetFrame = Math.round(ratio * (totalFrames - 1));
     }
 
-    // Desktop mousemove tracking
+    // 1. Desktop Mouse Tracking
     window.addEventListener("mousemove", (e) => {
       updateTargetFromX(e.clientX);
     }, { passive: true });
 
-    // Mobile touch interaction tracking (Touchstart & Touchmove)
+    document.addEventListener("mouseleave", () => {
+      targetFrame = 48;
+    });
+
+    // 2. Mobile Touch Tracking (Touchstart & Touchmove)
     window.addEventListener("touchstart", (e) => {
       if (e.touches && e.touches[0]) {
         isTouchActive = true;
+        if (touchEndTimeout) clearTimeout(touchEndTimeout);
         updateTargetFromX(e.touches[0].clientX);
       }
     }, { passive: true });
@@ -346,38 +408,75 @@
     }, { passive: true });
 
     window.addEventListener("touchend", () => {
-      isTouchActive = false;
-      setTimeout(() => {
-        if (!isTouchActive) targetFrame = 48;
-      }, 1200);
+      touchEndTimeout = setTimeout(() => {
+        isTouchActive = false;
+        targetFrame = 48; // Smooth glide back to center
+      }, 800);
     }, { passive: true });
 
-    // Smooth return to neutral center (frame 48) on desktop cursor leave
-    document.addEventListener("mouseleave", () => {
+    window.addEventListener("touchcancel", () => {
+      isTouchActive = false;
       targetFrame = 48;
-    });
+    }, { passive: true });
 
-    // DeviceOrientation Parallax for subtle gyro tilt on mobile
+    // 3. Subtle Mobile Gyroscope Parallax (DeviceOrientation)
     if (window.DeviceOrientationEvent) {
-      window.addEventListener("deviceorientation", (e) => {
-        if (isTouchActive) return;
-        if (e.gamma !== null && e.gamma !== undefined) {
-          const clampedGamma = Math.max(-30, Math.min(30, e.gamma));
-          const normalized = (clampedGamma + 30) / 60; // 0 to 1
-          targetFrame = Math.round(normalized * (totalFrames - 1));
-        }
-      }, { passive: true });
+      try {
+        window.addEventListener("deviceorientation", (e) => {
+          if (isTouchActive) return; // Touch interaction takes precedence
+          if (e.gamma !== null && e.gamma !== undefined && !isNaN(e.gamma)) {
+            // Deadzone to prevent micro-jitter when phone is resting
+            if (Math.abs(e.gamma) < 2.5) {
+              targetFrame = 48;
+              return;
+            }
+            // Clamp gamma [-25, 25] degrees for a natural subtle tilt
+            const clampedGamma = Math.max(-25, Math.min(25, e.gamma));
+            const normalized = (clampedGamma + 25) / 50; // 0 to 1
+            targetFrame = Math.round(normalized * (totalFrames - 1));
+          }
+        }, { passive: true });
+      } catch (err) {
+        // Safe fallback if DeviceOrientation is restricted
+      }
     }
 
-    // High-performance linear interpolation (lerp) loop
+    // 4. Fallback recovery if image fails to load
+    if (avatarImg) {
+      avatarImg.addEventListener("error", () => {
+        console.warn("Avatar frame error fallback to center frame.");
+        avatarImg.src = getFramePath(48);
+        lastRenderedFrame = 48;
+      });
+    }
+
+    // 5. 60 FPS Flicker-Free Render Loop with Damped Lerp
     function animateAvatar() {
       const diff = targetFrame - currentFrame;
-      if (Math.abs(diff) > 0.04) {
-        currentFrame += diff * 0.18; // Responsive damping
-        const rounded = Math.round(currentFrame);
-        const padded = String(rounded).padStart(2, "0");
-        avatarImg.src = `avatar/frame_${padded}_delay-0.05s.webp`;
+      if (Math.abs(diff) > 0.02) {
+        currentFrame += diff * 0.16; // Smooth, responsive damping
+      } else {
+        currentFrame = targetFrame;
       }
+
+      const rounded = Math.round(currentFrame);
+      if (rounded !== lastRenderedFrame && rounded >= 0 && rounded < totalFrames) {
+        // If target frame is loaded, swap instantly
+        if (loadedFrameIndices.has(rounded)) {
+          avatarImg.src = getFramePath(rounded);
+          lastRenderedFrame = rounded;
+        } else {
+          // Preload on demand
+          loadFrame(rounded);
+          // Only swap to closest loaded frame if not currently showing it
+          const nearest = getNearestLoadedFrame(rounded);
+          if (nearest !== lastRenderedFrame) {
+            avatarImg.src = getFramePath(nearest);
+            lastRenderedFrame = nearest;
+          }
+        }
+      }
+
       requestAnimationFrame(animateAvatar);
     }
     animateAvatar();
