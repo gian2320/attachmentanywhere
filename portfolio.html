@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth bg-[#f4f4f5] text-black">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#f4f4f5">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="format-detection" content="telephone=no">
+  <title>Talk with GI</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons via CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Clean custom scrollbar for light mode */
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
+
+    /* Mobile thumb snap scrollbar hiding */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Eliminate tap flash & touch highlights */
+    * { -webkit-tap-highlight-color: transparent; }
+
+    /* Enable smooth vertical scrolling while panning avatar horizontally */
+    body, #avatar-container { touch-action: pan-y; }
+
+    /* Safe area insets protection for notch, dynamic island, home indicator */
+    .safe-insets {
+      padding-top: max(1rem, env(safe-area-inset-top));
+      padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
+      padding-left: max(1rem, env(safe-area-inset-left));
+      padding-right: max(1rem, env(safe-area-inset-right));
+    }
+
+    /* Stage card animations */
+    .stage-enter {
+      animation: stageSlideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes stageSlideUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Optical Centering & Smooth Dynamic Expansion */
+    #main-container {
+      transition: min-height 0.4s ease-out, padding 0.4s ease-out;
+    }
+    #main-container.active-stage {
+      justify-content: flex-start;
+      padding-top: max(1.25rem, env(safe-area-inset-top));
+      padding-bottom: max(2rem, env(safe-area-inset-bottom));
+    }
+
+    #interactive-stage {
+      transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, margin 0.35s ease;
+    }
+    #interactive-stage.stage-open {
+      max-height: 38dvh;
+      opacity: 1;
+      pointer-events: auto;
+      margin-top: 1.25rem;
+      margin-bottom: 1rem;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    @media (min-width: 640px) {
+      #interactive-stage.stage-open {
+        max-height: 520px;
+      }
+    }
+    #interactive-stage::-webkit-scrollbar { width: 4px; }
+    #interactive-stage::-webkit-scrollbar-track { background: transparent; }
+    #interactive-stage::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 9999px; }
+
+    /* Keyboard Open State Adaptation (Prevents Mobile Flex Squashing) */
+    .keyboard-open #avatar-container {
+      width: 3.5rem !important;
+      height: 3.5rem !important;
+      margin-top: 0.25rem !important;
+      margin-bottom: 0.25rem !important;
+    }
+    .keyboard-open #hero-header {
+      display: none !important;
+    }
+    .keyboard-open #suggestion-chips {
+      display: none !important;
+    }
+    .keyboard-open #interactive-stage.stage-open {
+      max-height: 25dvh !important;
+    }
+  </style>
+</head>
+
+<body class="bg-[#f4f4f5] text-black font-sans antialiased selection:bg-black selection:text-white min-h-[100dvh] relative overflow-x-hidden">
+
+  <!-- Obsidian Starlight Canvas Cursor Engine -->
+  <canvas id="cursor-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+  <!-- Ambient Frosted Glow Layer -->
+  <div class="fixed top-8 left-1/2 -translate-x-1/2 w-[340px] sm:w-[540px] h-[280px] bg-gradient-to-b from-neutral-200/50 to-transparent blur-[90px] pointer-events-none rounded-full" aria-hidden="true"></div>
+
+  <!-- Main Unified Container (Optically Centered by Default, Adapts Smoothly on Mobile & Desktop) -->
+  <main id="main-container" class="min-h-[100dvh] w-full flex flex-col justify-center items-center px-4 safe-insets max-w-2xl mx-auto transition-all duration-500 ease-out relative z-10">
+
+    <!-- 1. Ambient-Grounded Avatar (Responsive: w-28 h-28 on mobile, w-36 h-36 on desktop) -->
+    <div id="avatar-container" class="relative my-2 w-28 h-28 sm:w-36 sm:h-36 flex items-center justify-center select-none cursor-grab active:cursor-grabbing transition-all duration-300">
+      <div class="absolute inset-0 bg-neutral-200/60 rounded-full blur-2xl -z-10 transform scale-90 pointer-events-none"></div>
+      <img
+        id="avatar-img"
+        src="avatar/frame_48_delay-0.05s.webp"
+        alt="Talk with GI Avatar"
+        class="w-full h-full object-contain pointer-events-none select-none transition-opacity duration-150"
+      >
+    </div>
+
+    <!-- 2. Identity & Header Text Hierarchy -->
+    <div id="hero-header" class="text-center max-w-lg mt-1 mb-3.5 transition-all duration-300">
+      <h1 id="hero-name" class="text-2xl sm:text-3xl font-extrabold tracking-tight text-neutral-900">TALK WITH GI</h1>
+      <p id="hero-subtitle" class="mt-1 text-xs sm:text-sm font-medium text-neutral-500">Gian Villanueva • Founder, Attachment Anywhere</p>
+    </div>
+
+    <!-- 3. Thumb-Zone Navigation Chips Dock (Mobile Horizontal Scrollable Snap-Row, Desktop Center Wrap, min-h-[44px]) -->
+    <div id="suggestion-chips" class="flex flex-nowrap sm:flex-wrap overflow-x-auto no-scrollbar gap-2 py-1 px-4 w-full justify-start sm:justify-center mb-4 transition-all duration-300">
+      <button type="button" onclick="handleSuggestion('Who is GI?')" class="min-h-[44px] px-4 py-2.5 rounded-full text-xs font-medium whitespace-nowrap bg-white/90 hover:bg-white text-neutral-700 hover:text-black border border-neutral-200/80 shadow-2xs hover:border-black active:scale-95 transition-all cursor-pointer flex items-center justify-center shrink-0">Who is GI?</button>
+      <button type="button" onclick="handleSuggestion('NFC Hardware')" class="min-h-[44px] px-4 py-2.5 rounded-full text-xs font-medium whitespace-nowrap bg-white/90 hover:bg-white text-neutral-700 hover:text-black border border-neutral-200/80 shadow-2xs hover:border-black active:scale-95 transition-all cursor-pointer flex items-center justify-center shrink-0">NFC Hardware</button>
+      <button type="button" onclick="handleSuggestion('Experience')" class="min-h-[44px] px-4 py-2.5 rounded-full text-xs font-medium whitespace-nowrap bg-white/90 hover:bg-white text-neutral-700 hover:text-black border border-neutral-200/80 shadow-2xs hover:border-black active:scale-95 transition-all cursor-pointer flex items-center justify-center shrink-0">Experience</button>
+      <button type="button" onclick="handleSuggestion('Dev Stack')" class="min-h-[44px] px-4 py-2.5 rounded-full text-xs font-medium whitespace-nowrap bg-white/90 hover:bg-white text-neutral-700 hover:text-black border border-neutral-200/80 shadow-2xs hover:border-black active:scale-95 transition-all cursor-pointer flex items-center justify-center shrink-0">Dev Stack</button>
+      <button type="button" onclick="handleSuggestion('Contact')" class="min-h-[44px] px-4 py-2.5 rounded-full text-xs font-medium whitespace-nowrap bg-white/90 hover:bg-white text-neutral-700 hover:text-black border border-neutral-200/80 shadow-2xs hover:border-black active:scale-95 transition-all cursor-pointer flex items-center justify-center shrink-0">Contact</button>
+    </div>
+
+    <!-- 4. Dynamic Interactive Stage (Collapsible, Mobile Touch-Optimized Scroll) -->
+    <div id="interactive-stage" class="w-full max-h-0 opacity-0 overflow-hidden pointer-events-none transition-all duration-500 ease-in-out">
+      <div id="stage-viewport" class="w-full">
+        <div id="stage-content" class="w-full">
+          <!-- Injected dynamically upon user query -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Refined Input Dock (Tactile Pill with 16px font to prevent iOS Auto-Zoom) -->
+    <div id="prompt-dock" class="w-full max-w-xl transition-all duration-300">
+      <form id="prompt-form" onsubmit="handleQuerySubmit(event)" class="relative flex items-center w-full">
+        <div class="absolute left-4 text-neutral-400 pointer-events-none flex items-center">
+          <i data-lucide="search" class="w-4 h-4"></i>
+        </div>
+        <input
+          id="prompt-input"
+          type="text"
+          placeholder="Ask about NFC hardware, experience, DOH, or dev stack..."
+          class="w-full pl-11 pr-13 py-3.5 text-[16px] md:text-sm bg-white/95 backdrop-blur-xl border border-neutral-200/90 rounded-full text-neutral-800 placeholder-neutral-400 focus:outline-none focus:border-neutral-400 focus:ring-1 focus:ring-neutral-400 shadow-sm hover:shadow-md transition-all"
+          autocomplete="off"
+        >
+        <button
+          type="submit"
+          class="absolute right-2.5 w-8 h-8 rounded-full bg-black text-white hover:bg-neutral-800 active:scale-95 transition flex items-center justify-center cursor-pointer shadow-xs"
+          aria-label="Submit prompt"
+        >
+          <i data-lucide="arrow-up" class="w-4 h-4"></i>
+        </button>
+      </form>
+    </div>
+
+  </main>
+
+  <!-- ================= JAVASCRIPT ENGINE ================= -->
+  <script>
+    /* =========================================================================
+       CENTRALIZED CONTENT ENGINE (GIAN_DATA)
+       ========================================================================= */
+    const GIAN_DATA = {
+      profile: {
+        name: "TALK WITH GI",
+        role: "Gian Villanueva • Founder, Attachment Anywhere"
+      },
+
+      about: {
+        title: "About Gian",
+        bio: "3rd-year BS Entrepreneurship student at Colegio de San Juan de Letran and currently working with the Department of Health (BLHSD) through the Government Internship Program. I run Attachment Anywhere, manufacturing custom contactless NFC business cards and tap-to-review counter stands for local shops and businesses. Outside of hardware, I work with health databases at DOH, edit short-form videos, and build practical web tools using Gemini, Antigravity, and Opal."
+      },
+
+      experiences: [
+        {
+          period: "Jun 2026 – Present",
+          company: "Department of Health (BLHSD) × DOLE",
+          role: "GIP Technical Staff & Encoder",
+          description: "Validating national health worker records and checking database systems (CSS, BHWconnect, Purokalusogan) to fix discrepancies across barangays."
+        },
+        {
+          period: "Apr 2026 – Present",
+          company: "Whop Clipping Community",
+          role: "Content Creator & Clipper",
+          description: "Editing short-form video clips, memes, and social formats for creator communities on Whop, Instagram Reels, and TikTok."
+        },
+        {
+          period: "Jan 2024 – Apr 2024",
+          company: "Letran Community Extension Department",
+          role: "Administrative Assistant (Work Immersion)",
+          description: "Handled digital outreach, social media graphics, and logistical coordination for community extension programs in Manila."
+        },
+        {
+          period: "Nov 2020 – May 2022",
+          company: "Involve Asia",
+          role: "Affiliate Marketer",
+          description: "Promoted tech and lifestyle products through Facebook posts and affiliate conversion links."
+        }
+      ],
+
+      builds: [
+        {
+          title: "Attachment Anywhere NFC Cards",
+          desc: "Custom contactless business cards. Tap on any iPhone or Android to instantly open your digital profile without downloading any app.",
+          actionLabel: "Order Hardware →",
+          link: "order.html"
+        },
+        {
+          title: "Smart Counter Review Hubs",
+          desc: "Physical tap-to-review stands for cafes and retail counters to collect 5-star Google reviews right at checkout.",
+          actionLabel: "View Catalog →",
+          link: "products.html"
+        },
+        {
+          title: "Automated Feedback & Webhooks",
+          desc: "Serverless webhooks connecting customer forms and orders directly to Discord and notifications.",
+          actionLabel: "Brand Story →",
+          link: "story.html"
+        }
+      ],
+
+      mediaWorks: [
+        {
+          title: "Short-Form Video & Clipping",
+          platform: "Whop / Reels / TikTok",
+          desc: "Fast-paced video editing, viral hooks, and audio sync using CapCut, OpusClip, and Premiere."
+        },
+        {
+          title: "Product Graphics & Branding",
+          platform: "Catalog & Social",
+          desc: "Visual branding, digital calling card layouts, and catalog infographics for Attachment Anywhere."
+        }
+      ],
+
+      platforms: [
+        { group: "AI & Development", tools: ["Google Gemini", "Antigravity", "Google Opal", "Claude Code", "Cursor"] },
+        { group: "Health Systems & Databases", tools: ["CSS (DOH)", "BHWconnect", "Purokalusogan System", "Google Sheets"] },
+        { group: "Web & Automation", tools: ["HTML / Tailwind", "JavaScript", "Netlify Functions", "Cloudflare", "Webhooks"] },
+        { group: "Video & Design", tools: ["CapCut", "OpusClip", "Photoshop", "NFC Tools"] }
+      ],
+
+      mindset: {
+        quote: "Entrepreneurs don't complain about broken processes; they build tools to fix them.",
+        principles: [
+          { title: "Execution", desc: "Build and test a working version quickly instead of getting stuck overplanning." },
+          { title: "Utility", desc: "Physical products that open clean web pages without forcing people to download an app." },
+          { title: "Modern Tools", desc: "Using AI models like Gemini, Antigravity, and Opal to speed up coding and daily work." }
+        ]
+      },
+
+      hobbies: [
+        "Dystopian sci-fi worldbuilding (Silo, Fallout, Snowpiercer)",
+        "Late-night video editing and sound sync experiments",
+        "Halfcourt basketball games around Manila",
+        "Testing new AI tools and workflows"
+      ],
+
+      contact: {
+        notice: "Available for custom NFC cards, review stands, and freelance web work.",
+        links: [
+          { label: "Instagram", url: "https://instagram.com/g.attachmenz", icon: "instagram" },
+          { label: "Messenger", url: "https://m.me/Gian2320", icon: "message-circle" },
+          { label: "Order Cards", url: "order.html", icon: "credit-card" }
+        ],
+        referenceNotice: "Character references from Letran faculty and DOH BLHSD supervisors are available upon request."
+      }
+    };
+
+
+    /* =========================================================================
+       1. CROSS-PLATFORM TOUCH & GYRO AVATAR ENGINE (Zero-Lag Scrubber)
+       ========================================================================= */
+    const totalFrames = 84;
+    let currentFrame = 48; // Frame 48 faces straight ahead
+    let targetFrame = 48;
+    const avatarImg = document.getElementById("avatar-img");
+    let isTouchActive = false;
+
+    // Asynchronous Frame Preloader: Critical Keyframes First
+    const preloadedImages = new Map();
+    function preloadFrames() {
+      // Phase 1: High priority orientation anchors
+      const priorityFrames = [48, 0, 83, 24, 60, 12, 36, 72];
+      priorityFrames.forEach(idx => {
+        const padded = String(idx).padStart(2, "0");
+        const img = new Image();
+        img.src = `avatar/frame_${padded}_delay-0.05s.webp`;
+        preloadedImages.set(idx, img);
+      });
+
+      // Phase 2: Asynchronously load remaining frames in background
+      setTimeout(() => {
+        for (let i = 0; i < totalFrames; i++) {
+          if (!preloadedImages.has(i)) {
+            const padded = String(i).padStart(2, "0");
+            const img = new Image();
+            img.src = `avatar/frame_${padded}_delay-0.05s.webp`;
+            preloadedImages.set(i, img);
+          }
+        }
+      }, 350);
+    }
+    preloadFrames();
+
+    // Map screen X coordinate (0 to 1) to frame index (0 to 83)
+    function updateTargetFromX(clientX) {
+      if (typeof clientX !== "number" || isNaN(clientX)) return;
+      const ratio = Math.max(0, Math.min(1, clientX / window.innerWidth));
+      targetFrame = Math.round(ratio * (totalFrames - 1));
+    }
+
+    // Desktop mousemove tracking
+    window.addEventListener("mousemove", (e) => {
+      updateTargetFromX(e.clientX);
+    }, { passive: true });
+
+    // Mobile touch interaction tracking (Touchstart & Touchmove)
+    window.addEventListener("touchstart", (e) => {
+      if (e.touches && e.touches[0]) {
+        isTouchActive = true;
+        updateTargetFromX(e.touches[0].clientX);
+      }
+    }, { passive: true });
+
+    window.addEventListener("touchmove", (e) => {
+      if (e.touches && e.touches[0]) {
+        isTouchActive = true;
+        updateTargetFromX(e.touches[0].clientX);
+      }
+    }, { passive: true });
+
+    window.addEventListener("touchend", () => {
+      isTouchActive = false;
+      setTimeout(() => {
+        if (!isTouchActive) targetFrame = 48;
+      }, 1200);
+    }, { passive: true });
+
+    // Smooth return to neutral center (frame 48) on desktop cursor leave
+    document.addEventListener("mouseleave", () => {
+      targetFrame = 48;
+    });
+
+    // DeviceOrientation Parallax for subtle gyro tilt on mobile
+    if (window.DeviceOrientationEvent) {
+      window.addEventListener("deviceorientation", (e) => {
+        if (isTouchActive) return;
+        if (e.gamma !== null && e.gamma !== undefined) {
+          const clampedGamma = Math.max(-30, Math.min(30, e.gamma));
+          const normalized = (clampedGamma + 30) / 60; // 0 to 1
+          targetFrame = Math.round(normalized * (totalFrames - 1));
+        }
+      }, { passive: true });
+    }
+
+    // High-performance linear interpolation (lerp) loop
+    function animateAvatar() {
+      const diff = targetFrame - currentFrame;
+      if (Math.abs(diff) > 0.04) {
+        currentFrame += diff * 0.18; // Responsive damping
+        const rounded = Math.round(currentFrame);
+        const padded = String(rounded).padStart(2, "0");
+        avatarImg.src = `avatar/frame_${padded}_delay-0.05s.webp`;
+      }
+      requestAnimationFrame(animateAvatar);
+    }
+    animateAvatar();
+
+
+    /* =========================================================================
+       2. VIRTUAL KEYBOARD & VIEWPORT ADAPTATION (Android, Huawei & iOS)
+       ========================================================================= */
+    const mainContainer = document.getElementById("main-container");
+    const interactiveStage = document.getElementById("interactive-stage");
+    const stageContent = document.getElementById("stage-content");
+    const promptDock = document.getElementById("prompt-dock");
+
+    function handleViewportChange() {
+      if (!window.visualViewport) return;
+      const height = window.visualViewport.height;
+      const fullHeight = window.innerHeight;
+
+      // Virtual keyboard detection threshold
+      const isKeyboardOpen = height < fullHeight * 0.76;
+      if (isKeyboardOpen) {
+        mainContainer.classList.add("keyboard-open");
+        setTimeout(() => {
+          promptDock.scrollIntoView({ behavior: "smooth", block: "end" });
+        }, 80);
+      } else {
+        mainContainer.classList.remove("keyboard-open");
+      }
+    }
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", handleViewportChange);
+      window.visualViewport.addEventListener("scroll", handleViewportChange);
+    }
+
+
+    /* =========================================================================
+       3. BESPOKE STAGE TEMPLATES & DYNAMIC EXPANSION (Crisp Light Mode)
+       ========================================================================= */
+    function escapeHtml(text) {
+      if (!text) return "";
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    const STAGE_TEMPLATES = {
+      about: () => {
+        const d = GIAN_DATA.about;
+        return `
+          <div class="bg-white p-6 sm:p-8 rounded-3xl border border-neutral-200/80 shadow-xs">
+            <div class="mb-3">
+              <h3 class="text-lg sm:text-xl font-bold text-neutral-900">${escapeHtml(d.title)}</h3>
+            </div>
+            <p class="text-neutral-700 text-xs sm:text-sm font-light leading-relaxed mb-6">${escapeHtml(d.bio)}</p>
+            <div class="flex flex-wrap items-center gap-3 pt-5 border-t border-neutral-100">
+              <a href="aa260906052304.html" class="bg-black text-white hover:bg-neutral-800 text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-xl inline-flex items-center gap-2 shadow-xs transition-all active:scale-95 cursor-pointer">
+                <i data-lucide="user-check" class="w-4 h-4"></i>
+                <span>Digital Card</span>
+              </a>
+              <a href="order.html" class="border border-neutral-300 bg-white hover:border-black text-black text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-xl inline-flex items-center gap-2 transition-all active:scale-95 cursor-pointer">
+                <i data-lucide="credit-card" class="w-4 h-4"></i>
+                <span>Order Cards</span>
+              </a>
+              <a href="story.html" class="border border-neutral-300 bg-white hover:border-black text-black text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-xl inline-flex items-center gap-2 transition-all active:scale-95 cursor-pointer">
+                <i data-lucide="book-open" class="w-4 h-4"></i>
+                <span>Story</span>
+              </a>
+            </div>
+          </div>
+        `;
+      },
+
+      experiences: () => {
+        const experiencesHtml = GIAN_DATA.experiences.map((exp) => `
+          <div class="bg-white p-5 sm:p-6 rounded-3xl border border-neutral-200/80 shadow-xs hover:border-black transition-all">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-1">
+              <h4 class="text-sm sm:text-base font-bold text-neutral-900">${escapeHtml(exp.role)}</h4>
+              <span class="text-xs font-mono text-neutral-400 font-medium">${escapeHtml(exp.period)}</span>
+            </div>
+            <p class="text-xs font-semibold text-neutral-500 mb-2.5">${escapeHtml(exp.company)}</p>
+            <p class="text-xs sm:text-sm text-neutral-600 font-light leading-relaxed">${escapeHtml(exp.description)}</p>
+          </div>
+        `).join('');
+
+        return `
+          <div class="space-y-4">
+            <div class="px-1">
+              <h3 class="text-base font-bold text-neutral-900">Experience</h3>
+            </div>
+            <div class="space-y-3">
+              ${experiencesHtml}
+            </div>
+          </div>
+        `;
+      },
+
+      builds: () => {
+        const buildsHtml = GIAN_DATA.builds.map(b => `
+          <div class="bg-white p-5 sm:p-6 rounded-3xl border border-neutral-200/80 shadow-xs flex flex-col justify-between hover:border-black transition-all">
+            <div>
+              <h4 class="font-bold text-sm sm:text-base text-neutral-900 mb-2">${escapeHtml(b.title)}</h4>
+              <p class="text-xs text-neutral-600 font-light leading-relaxed mb-5">${escapeHtml(b.desc)}</p>
+            </div>
+            <a href="${b.link}" class="w-full bg-black text-white hover:bg-neutral-800 text-xs font-bold uppercase tracking-widest py-3 rounded-xl text-center transition-all inline-flex items-center justify-center gap-1.5 shadow-xs active:scale-95 cursor-pointer">
+              <span>${escapeHtml(b.actionLabel)}</span>
+            </a>
+          </div>
+        `).join('');
+
+        const mediaHtml = GIAN_DATA.mediaWorks.map(m => `
+          <div class="p-5 sm:p-6 rounded-3xl bg-white border border-neutral-200/80 shadow-xs flex flex-col justify-between hover:border-black transition-all">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-1.5">
+                <h5 class="text-sm sm:text-base font-bold text-neutral-900">${escapeHtml(m.title)}</h5>
+                <span class="text-xs font-mono text-neutral-400">${escapeHtml(m.platform)}</span>
+              </div>
+              <p class="text-xs text-neutral-600 font-light leading-relaxed">${escapeHtml(m.desc)}</p>
+            </div>
+          </div>
+        `).join('');
+
+        return `
+          <div class="space-y-6">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between px-1">
+                <h3 class="text-base font-bold text-neutral-900">Products &amp; Hardware</h3>
+                <a href="products.html" class="text-xs font-semibold text-neutral-600 hover:text-black transition-colors">Catalog &rarr;</a>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+                ${buildsHtml}
+              </div>
+            </div>
+
+            <div class="space-y-3 pt-1">
+              <div class="px-1">
+                <h3 class="text-base font-bold text-neutral-900">Media</h3>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                ${mediaHtml}
+              </div>
+            </div>
+          </div>
+        `;
+      },
+
+      platforms: () => {
+        const d = GIAN_DATA.platforms;
+        const groupsHtml = d.map(g => `
+          <div class="p-5 sm:p-6 rounded-3xl bg-white border border-neutral-200/80 shadow-xs hover:border-black transition-all">
+            <h4 class="text-sm font-bold text-neutral-900 mb-3">
+              ${escapeHtml(g.group)}
+            </h4>
+            <div class="flex flex-wrap gap-2">
+              ${g.tools.map(item => `<span class="px-3 py-1.5 rounded-xl text-xs bg-neutral-100 text-neutral-800 font-medium border border-neutral-200/70 shadow-2xs">${escapeHtml(item)}</span>`).join('')}
+            </div>
+          </div>
+        `).join('');
+
+        return `
+          <div class="space-y-4">
+            <div class="px-1">
+              <h3 class="text-base font-bold text-neutral-900">Tools &amp; Stack</h3>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              ${groupsHtml}
+            </div>
+          </div>
+        `;
+      },
+
+      contact: () => {
+        const c = GIAN_DATA.contact;
+        const linksHtml = c.links.map(l => {
+          const isPrimary = l.label.toLowerCase().includes("order");
+          const href = l.url;
+          return `
+            <a href="${href}" target="${href.startsWith('http') ? '_blank' : '_self'}" rel="${href.startsWith('http') ? 'noopener noreferrer' : ''}" class="${isPrimary ? 'bg-black text-white hover:bg-neutral-800 shadow-xs' : 'border border-neutral-300 bg-white hover:border-black text-black'} text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-xl inline-flex items-center justify-center gap-2 transition-all active:scale-95 flex-1 min-w-[140px] text-center cursor-pointer">
+              <i data-lucide="${escapeHtml(l.icon)}" class="w-4 h-4"></i>
+              <span>${escapeHtml(l.label)}</span>
+            </a>
+          `;
+        }).join('');
+
+        return `
+          <div class="bg-white p-6 sm:p-8 rounded-3xl border border-neutral-200/80 shadow-xs">
+            <h3 class="text-base sm:text-lg font-bold text-neutral-900 mb-2">Get in Touch</h3>
+            <p class="text-neutral-600 text-xs sm:text-sm font-light leading-relaxed mb-6">${escapeHtml(c.notice)}</p>
+            
+            <div class="flex flex-wrap gap-3 mb-6">
+              ${linksHtml}
+              <a href="aa260906052304.html" class="border border-neutral-300 bg-white hover:border-black text-black text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-xl inline-flex items-center justify-center gap-2 transition-all active:scale-95 flex-1 min-w-[140px] text-center cursor-pointer">
+                <i data-lucide="user-check" class="w-4 h-4"></i>
+                <span>Digital Card</span>
+              </a>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-[#fbfbfd] border border-neutral-200/80 flex items-start gap-3">
+              <i data-lucide="file-text" class="w-4 h-4 text-neutral-700 shrink-0 mt-0.5"></i>
+              <p class="text-xs text-neutral-600 font-light leading-relaxed">${escapeHtml(c.referenceNotice)}</p>
+            </div>
+          </div>
+        `;
+      },
+
+      mindset: () => {
+        const m = GIAN_DATA.mindset;
+        const principlesHtml = m.principles.map(p => `
+          <div class="p-4 sm:p-5 rounded-2xl bg-[#fbfbfd] border border-neutral-200/80">
+            <h5 class="text-xs font-bold text-neutral-900 mb-1">${escapeHtml(p.title)}</h5>
+            <p class="text-xs sm:text-sm text-neutral-600 font-light leading-relaxed">${escapeHtml(p.desc)}</p>
+          </div>
+        `).join('');
+
+        const hobbiesHtml = GIAN_DATA.hobbies.map(h => `
+          <li class="flex items-start gap-3 text-xs sm:text-sm text-neutral-700 font-light leading-relaxed">
+            <span class="w-1.5 h-1.5 rounded-full bg-neutral-900 shrink-0 mt-2"></span>
+            <span>${escapeHtml(h)}</span>
+          </li>
+        `).join('');
+
+        return `
+          <div class="space-y-4">
+            <div class="bg-black text-white p-6 sm:p-8 rounded-3xl shadow-sm">
+              <blockquote class="text-base sm:text-lg font-medium leading-relaxed">
+                &ldquo;${escapeHtml(m.quote)}&rdquo;
+              </blockquote>
+            </div>
+
+            <div class="bg-white p-6 sm:p-7 rounded-3xl border border-neutral-200/80 shadow-xs">
+              <h4 class="text-sm sm:text-base font-bold text-neutral-900 mb-3.5">Principles</h4>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                ${principlesHtml}
+              </div>
+            </div>
+
+            <div class="bg-white p-6 sm:p-7 rounded-3xl border border-neutral-200/80 shadow-xs">
+              <h4 class="text-sm sm:text-base font-bold text-neutral-900 mb-3.5">Interests</h4>
+              <ul class="space-y-2.5">
+                ${hobbiesHtml}
+              </ul>
+            </div>
+          </div>
+        `;
+      },
+
+      fallback: () => `
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-neutral-200/80 shadow-xs">
+          <h3 class="text-base sm:text-lg font-bold text-neutral-900 mb-2">Explore Gian's Work</h3>
+          <p class="text-neutral-600 text-xs sm:text-sm font-light leading-relaxed mb-6">
+            Gian Villanueva manufactures custom contactless NFC cards and audits healthcare database systems. Select a category below or ask a specific question:
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <button onclick="handleSuggestion('NFC Hardware')" class="text-left p-4 rounded-2xl bg-[#fbfbfd] hover:bg-neutral-100 border border-neutral-200/80 transition-all cursor-pointer">
+              <div class="text-xs font-bold text-neutral-900 mb-1">NFC Hardware &amp; Cards</div>
+              <div class="text-xs text-neutral-500 font-light">Custom contactless cards and Google review stands.</div>
+            </button>
+            <button onclick="handleSuggestion('Experience')" class="text-left p-4 rounded-2xl bg-[#fbfbfd] hover:bg-neutral-100 border border-neutral-200/80 transition-all cursor-pointer">
+              <div class="text-xs font-bold text-neutral-900 mb-1">Experience &amp; DOH</div>
+              <div class="text-xs text-neutral-500 font-light">Health worker validation and content clipping.</div>
+            </button>
+            <button onclick="handleSuggestion('Dev Stack')" class="text-left p-4 rounded-2xl bg-[#fbfbfd] hover:bg-neutral-100 border border-neutral-200/80 transition-all cursor-pointer">
+              <div class="text-xs font-bold text-neutral-900 mb-1">Tools &amp; Tech Stack</div>
+              <div class="text-xs text-neutral-500 font-light">Gemini, Antigravity, Opal, and serverless webhooks.</div>
+            </button>
+            <button onclick="handleSuggestion('Contact')" class="text-left p-4 rounded-2xl bg-[#fbfbfd] hover:bg-neutral-100 border border-neutral-200/80 transition-all cursor-pointer">
+              <div class="text-xs font-bold text-neutral-900 mb-1">Contact &amp; Orders</div>
+              <div class="text-xs text-neutral-500 font-light">Direct Instagram, Messenger, and references.</div>
+            </button>
+          </div>
+        </div>
+      `,
+
+      queryWrapper: (prompt, note, innerHtml) => `
+        <div class="space-y-4">
+          <div class="p-4 sm:p-5 rounded-2xl bg-white border border-neutral-200/80 shadow-xs flex items-start justify-between gap-4">
+            <div class="space-y-1">
+              <p class="text-xs font-mono text-neutral-400">&ldquo;${escapeHtml(prompt)}&rdquo;</p>
+              <p class="text-xs sm:text-sm text-neutral-700 font-light leading-relaxed">${escapeHtml(note)}</p>
+            </div>
+            <button onclick="dismissStage()" title="Close stage" class="p-1 rounded-full hover:bg-neutral-100 text-neutral-400 hover:text-black transition-colors shrink-0 cursor-pointer">
+              <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+          </div>
+          <div>
+            ${innerHtml}
+          </div>
+        </div>
+      `
+    };
+
+    function renderStage(prompt, note, tabKey) {
+      mainContainer.classList.add("active-stage");
+      interactiveStage.classList.remove("max-h-0", "opacity-0", "pointer-events-none");
+      interactiveStage.classList.add("stage-open");
+
+      stageContent.classList.remove("stage-enter");
+      void stageContent.offsetWidth; // Force Reflow
+      const innerHtml = STAGE_TEMPLATES[tabKey] ? STAGE_TEMPLATES[tabKey]() : STAGE_TEMPLATES.fallback();
+      stageContent.innerHTML = STAGE_TEMPLATES.queryWrapper(prompt, note, innerHtml);
+      stageContent.classList.add("stage-enter");
+      lucide.createIcons();
+
+      // Smooth scroll into stage view
+      setTimeout(() => {
+        interactiveStage.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }, 50);
+    }
+
+    function dismissStage() {
+      interactiveStage.classList.remove("stage-open");
+      interactiveStage.classList.add("max-h-0", "opacity-0", "pointer-events-none");
+      mainContainer.classList.remove("active-stage");
+      setTimeout(() => {
+        stageContent.innerHTML = "";
+      }, 400);
+    }
+
+
+    /* =========================================================================
+       4. SMART QUERY PARSER ENGINE
+       ========================================================================= */
+    const promptInput = document.getElementById("prompt-input");
+
+    function hasAny(targetStr, keywords) {
+      return keywords.some(k => targetStr.includes(k));
+    }
+
+    function handleQuery(rawText) {
+      if (!rawText || !rawText.trim()) return;
+      const q = rawText.trim().toLowerCase();
+
+      // Bio / Background
+      if (hasAny(q, ["who", "about", "student", "letran", "story", "origin", "bio", "gian", "gi", "talk", "founder"])) {
+        renderStage(rawText, "Here is an introduction to GI.", "about");
+      }
+      // Work & Experience
+      else if (hasAny(q, ["experience", "doh", "gip", "health", "whop", "clipping", "involve asia", "involve", "jobs", "work", "job", "intern", "timeline"])) {
+        renderStage(rawText, "Here is Gian's work experience across DOH database verification, Letran, and creator projects.", "experiences");
+      }
+      // Products & Hardware
+      else if (hasAny(q, ["attachment", "nfc", "cards", "card", "hardware", "review", "stands", "stand", "products", "product", "builds", "build", "pricing", "price", "rates"])) {
+        renderStage(rawText, "Here are Gian's custom NFC cards, smart review hubs, and physical hardware products.", "builds");
+      }
+      // Tech & Tools
+      else if (hasAny(q, ["tools", "stack", "gemini", "antigravity", "opal", "code", "ai", "software", "tech", "platform", "platforms", "dev"])) {
+        renderStage(rawText, "Here are the developer tools, AI workflows, and health systems Gian works with.", "platforms");
+      }
+      // Contact & Orders
+      else if (hasAny(q, ["contact", "hire", "order", "rates", "inquire", "socials", "social", "reference", "references", "instagram", "messenger", "reach", "email", "phone"])) {
+        renderStage(rawText, "Here are direct channels to get in touch, order hardware, or request references.", "contact");
+      }
+      // Mindset & Principles
+      else if (hasAny(q, ["mindset", "philosophy", "principles", "principle", "hobby", "hobbies", "interests", "interest", "basketball", "sci-fi"])) {
+        renderStage(rawText, "Here are Gian's core working principles and interests.", "mindset");
+      }
+      // Fallback
+      else {
+        renderStage(
+          rawText,
+          "Gian Villanueva builds custom NFC hardware and practical web tools. Ask about NFC hardware, experience, developer stack, or contact.",
+          "fallback"
+        );
+      }
+    }
+
+    function handleQuerySubmit(e) {
+      if (e) e.preventDefault();
+      const rawText = promptInput.value.trim();
+      if (!rawText) return;
+      promptInput.value = "";
+      handleQuery(rawText);
+    }
+
+    function handleSuggestion(text) {
+      promptInput.value = text;
+      handleQuery(text);
+    }
+
+    // Auto-focus input on desktop load
+    window.addEventListener("DOMContentLoaded", () => {
+      lucide.createIcons();
+      if (window.innerWidth >= 768 && promptInput) {
+        promptInput.focus();
+      }
+    });
+
+
+    /* =========================================================================
+       5. DUAL-MODE CURSOR ENGINE (Light Mode Obsidian / Starlight Palette)
+       ========================================================================= */
+    (function initCursorEngine() {
+      const canvas = document.getElementById("cursor-canvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+
+      let width = (canvas.width = window.innerWidth);
+      let height = (canvas.height = window.innerHeight);
+
+      window.addEventListener("resize", () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      }, { passive: true });
+
+      const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
+      const particles = [];
+      const shockwaves = [];
+      let animId = null;
+
+      // Particle colors tuned for light background: Obsidian charcoal, deep slate, starlight white & platinum
+      const GLITTER_COLORS = [
+        "rgba(15, 23, 42,",      // Deep obsidian slate
+        "rgba(30, 41, 59,",      // Charcoal core
+        "rgba(51, 65, 85,",      // Muted slate
+        "rgba(71, 85, 105,",     // Cool steel
+        "rgba(255, 255, 255,",   // Diamond glint highlight
+        "rgba(148, 163, 184,"    // Platinum sparkle
+      ];
+
+      class Shockwave {
+        constructor(x, y) {
+          this.x = x;
+          this.y = y;
+          this.radius = 6;
+          this.maxRadius = isCoarsePointer ? 45 : 60;
+          this.life = 1.0;
+          this.decay = isCoarsePointer ? 0.055 : 0.045;
+        }
+        update() {
+          this.radius += (this.maxRadius - this.radius) * 0.2;
+          this.life -= this.decay;
+        }
+        draw(ctx) {
+          if (this.life <= 0) return;
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(30, 41, 59, ${this.life * 0.35})`;
+          ctx.lineWidth = 1.2;
+          ctx.shadowColor = "rgba(15, 23, 42, 0.25)";
+          ctx.shadowBlur = 4;
+          ctx.stroke();
+          ctx.restore();
+        }
+      }
+
+      class GlitterParticle {
+        constructor(x, y, isBurst = false) {
+          this.x = x + (Math.random() - 0.5) * 6;
+          this.y = y + (Math.random() - 0.5) * 6;
+          const speed = isBurst ? Math.random() * 4.2 + 1.5 : Math.random() * 1.5 + 0.3;
+          const angle = Math.random() * Math.PI * 2;
+          this.vx = Math.cos(angle) * speed;
+          this.vy = Math.sin(angle) * speed;
+          this.size = Math.random() * 2.5 + 0.8;
+          this.life = 1.0;
+          this.decay = isBurst ? Math.random() * 0.038 + 0.024 : Math.random() * 0.018 + 0.014;
+          this.colorPrefix = GLITTER_COLORS[Math.floor(Math.random() * GLITTER_COLORS.length)];
+          this.twinkleSpeed = Math.random() * 16 + 10;
+          this.isSparkleCross = Math.random() > 0.65;
+        }
+        update() {
+          this.x += this.vx;
+          this.y += this.vy;
+          this.vx *= 0.95;
+          this.vy *= 0.95;
+          this.life -= this.decay;
+        }
+        draw(ctx, masterAlpha = 1) {
+          if (this.life <= 0) return;
+          const twinkle = Math.abs(Math.sin(this.life * this.twinkleSpeed));
+          const alpha = Math.max(0, Math.min(1, this.life * twinkle * masterAlpha));
+
+          ctx.save();
+          ctx.fillStyle = `${this.colorPrefix} ${alpha})`;
+          ctx.shadowColor = "rgba(15, 23, 42, 0.3)";
+          ctx.shadowBlur = this.size * 2;
+
+          if (this.isSparkleCross && this.life > 0.35) {
+            const len = this.size * 2.2;
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y - len);
+            ctx.lineTo(this.x, this.y + len);
+            ctx.moveTo(this.x - len, this.y);
+            ctx.lineTo(this.x + len, this.y);
+            ctx.strokeStyle = `${this.colorPrefix} ${Math.min(1, alpha * 1.3)})`;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          } else {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          ctx.restore();
+        }
+      }
+
+      /* --- MOBILE COARSE POINTER: Tap Burst Shockwave Engine --- */
+      if (isCoarsePointer) {
+        function triggerMobileBurst(x, y) {
+          shockwaves.push(new Shockwave(x, y));
+          const burstCount = Math.floor(Math.random() * 6) + 12; // 12-18 particles
+          for (let i = 0; i < burstCount; i++) {
+            if (particles.length < 50) {
+              particles.push(new GlitterParticle(x, y, true));
+            }
+          }
+          if (!animId) startTouchLoop();
+        }
+
+        function touchLoop() {
+          ctx.clearRect(0, 0, width, height);
+
+          for (let i = shockwaves.length - 1; i >= 0; i--) {
+            shockwaves[i].update();
+            shockwaves[i].draw(ctx);
+            if (shockwaves[i].life <= 0) shockwaves.splice(i, 1);
+          }
+
+          for (let i = particles.length - 1; i >= 0; i--) {
+            particles[i].update();
+            particles[i].draw(ctx, 1);
+            if (particles[i].life <= 0) particles.splice(i, 1);
+          }
+
+          if (shockwaves.length > 0 || particles.length > 0) {
+            animId = requestAnimationFrame(touchLoop);
+          } else {
+            animId = null; // Sleep when idle to conserve 100% mobile battery
+          }
+        }
+
+        function startTouchLoop() {
+          if (!animId) animId = requestAnimationFrame(touchLoop);
+        }
+
+        window.addEventListener("touchstart", (e) => {
+          if (e.touches && e.touches[0]) {
+            triggerMobileBurst(e.touches[0].clientX, e.touches[0].clientY);
+          }
+        }, { passive: true });
+
+        return; // Early return for touch devices; desktop trail below
+      }
+
+      /* --- DESKTOP FINE POINTER: Continuous 60 FPS Trail Engine --- */
+      const mouse = { x: width / 2, y: height / 2, moved: false };
+      const trail = { x: width / 2, y: height / 2 };
+      let lastMoveTime = Date.now();
+      let masterAlpha = 0;
+
+      window.addEventListener("mousemove", (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+        mouse.moved = true;
+        lastMoveTime = Date.now();
+
+        if (particles.length < 110) {
+          const count = Math.floor(Math.random() * 3) + 2;
+          for (let i = 0; i < count; i++) {
+            particles.push(new GlitterParticle(mouse.x, mouse.y));
+          }
+        }
+      }, { passive: true });
+
+      window.addEventListener("mousedown", (e) => {
+        lastMoveTime = Date.now();
+        shockwaves.push(new Shockwave(e.clientX, e.clientY));
+        const burstCount = Math.floor(Math.random() * 8) + 18;
+        for (let i = 0; i < burstCount; i++) {
+          if (particles.length < 130) {
+            particles.push(new GlitterParticle(e.clientX, e.clientY, true));
+          }
+        }
+      }, { passive: true });
+
+      function desktopLoop() {
+        ctx.clearRect(0, 0, width, height);
+
+        const isIdle = Date.now() - lastMoveTime > 700;
+        masterAlpha += ((isIdle ? 0 : 1) - masterAlpha) * 0.12;
+
+        trail.x += (mouse.x - trail.x) * 0.22;
+        trail.y += (mouse.y - trail.y) * 0.22;
+
+        if (masterAlpha > 0.01 && mouse.moved) {
+          const radial = ctx.createRadialGradient(trail.x, trail.y, 0, trail.x, trail.y, 36);
+          radial.addColorStop(0, `rgba(255, 255, 255, ${0.14 * masterAlpha})`);
+          radial.addColorStop(0.3, `rgba(148, 163, 184, ${0.08 * masterAlpha})`);
+          radial.addColorStop(0.6, `rgba(30, 41, 59, ${0.14 * masterAlpha})`);
+          radial.addColorStop(1, "transparent");
+          ctx.fillStyle = radial;
+          ctx.beginPath();
+          ctx.arc(trail.x, trail.y, 36, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        for (let i = shockwaves.length - 1; i >= 0; i--) {
+          shockwaves[i].update();
+          shockwaves[i].draw(ctx);
+          if (shockwaves[i].life <= 0) shockwaves.splice(i, 1);
+        }
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+          particles[i].update();
+          particles[i].draw(ctx, masterAlpha);
+          if (particles[i].life <= 0) particles.splice(i, 1);
+        }
+
+        requestAnimationFrame(desktopLoop);
+      }
+
+      requestAnimationFrame(desktopLoop);
+    })();
+  </script>
+</body>
+</html>
