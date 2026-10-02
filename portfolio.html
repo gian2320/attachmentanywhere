@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth bg-[#f4f4f5] text-black">
+<html lang="en" class="scroll-smooth bg-black text-white">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="theme-color" content="#f4f4f5">
+  <meta name="theme-color" content="#000000">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="format-detection" content="telephone=no">
-  <title>Talk with GI</title>
+  <title>Talk with GI — Gian Villanueva</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
   <!-- Tailwind CSS via CDN -->
@@ -17,23 +17,23 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
-    /* Clean custom scrollbar for light mode */
+    /* OLED Clean Custom Scrollbar */
     ::-webkit-scrollbar { width: 4px; height: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 9999px; }
-    ::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
+    ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
 
-    /* Mobile thumb snap scrollbar hiding */
+    /* Hide horizontal scrollbar for mobile thumb snap dock */
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-    /* Eliminate tap flash & touch highlights */
+    /* Remove tap flash and touch highlights globally */
     * { -webkit-tap-highlight-color: transparent; }
 
-    /* Enable smooth vertical scrolling while panning avatar horizontally */
+    /* Touch action optimization: allows smooth vertical scrolling while scrubbing */
     body, #avatar-container { touch-action: pan-y; }
 
-    /* Safe area insets protection for notch, dynamic island, home indicator */
+    /* Safe area insets for notches, dynamic islands, and home indicators */
     .safe-insets {
       padding-top: max(1rem, env(safe-area-inset-top));
       padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
@@ -64,7 +64,7 @@
       transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, margin 0.35s ease;
     }
     #interactive-stage.stage-open {
-      max-height: 38dvh;
+      max-height: 42dvh;
       opacity: 1;
       pointer-events: auto;
       margin-top: 1.25rem;
@@ -79,9 +79,9 @@
     }
     #interactive-stage::-webkit-scrollbar { width: 4px; }
     #interactive-stage::-webkit-scrollbar-track { background: transparent; }
-    #interactive-stage::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 9999px; }
+    #interactive-stage::-webkit-scrollbar-thumb { background: #27272a; border-radius: 9999px; }
 
-    /* Keyboard Open State Adaptation (Prevents Mobile Flex Squashing) */
+    /* Virtual Keyboard Open Adaptation (Prevents Mobile Flex Squashing) */
     .keyboard-open #avatar-container {
       width: 3.5rem !important;
       height: 3.5rem !important;
@@ -100,48 +100,48 @@
   </style>
 </head>
 
-<body class="bg-[#f4f4f5] text-black font-sans antialiased selection:bg-black selection:text-white min-h-[100dvh] relative overflow-x-hidden">
+<body class="bg-[#000000] text-white font-sans antialiased selection:bg-white selection:text-black min-h-[100dvh] relative overflow-x-hidden">
 
-  <!-- Obsidian Starlight Canvas Cursor Engine -->
+  <!-- Glowing Glitter Black Canvas Cursor Engine -->
   <canvas id="cursor-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
 
-  <!-- Ambient Frosted Glow Layer -->
-  <div class="fixed top-8 left-1/2 -translate-x-1/2 w-[340px] sm:w-[540px] h-[280px] bg-gradient-to-b from-neutral-200/50 to-transparent blur-[90px] pointer-events-none rounded-full" aria-hidden="true"></div>
+  <!-- Ambient Obsidian Halo Layer -->
+  <div class="fixed top-8 left-1/2 -translate-x-1/2 w-[320px] sm:w-[500px] h-[260px] bg-gradient-to-b from-neutral-800/25 to-transparent blur-[100px] pointer-events-none rounded-full" aria-hidden="true"></div>
 
-  <!-- Main Unified Container (Optically Centered by Default, Adapts Smoothly on Mobile & Desktop) -->
+  <!-- Main Unified Container (Optically Centered by Default, Dynamically Expands on Interaction) -->
   <main id="main-container" class="min-h-[100dvh] w-full flex flex-col justify-center items-center px-4 safe-insets max-w-2xl mx-auto transition-all duration-500 ease-out relative z-10">
 
-    <!-- 1. Ambient-Grounded Avatar (Fail-Safe Interactive Memoji) -->
+    <!-- 1. Ambient-Grounded Memoji Avatar (Lag-Free In-Memory Scrubber) -->
     <div id="avatar-container" class="relative my-2 w-32 h-32 sm:w-36 sm:h-36 mx-auto flex items-center justify-center select-none cursor-grab active:cursor-grabbing transition-all duration-300">
       <!-- Subtle Ambient Glow -->
-      <div class="absolute inset-0 bg-neutral-200/70 rounded-full blur-2xl -z-10 transform scale-90 pointer-events-none"></div>
+      <div class="absolute inset-0 bg-neutral-800/40 rounded-full blur-2xl -z-10 pointer-events-none"></div>
       <img
         id="avatar-img"
         src="avatar/frame_48_delay-0.05s.webp"
         alt="Interactive Memoji Avatar"
         class="w-full h-full object-cover pointer-events-none select-none transition-opacity duration-200"
         loading="eager"
-        decoding="async"
+        decoding="sync"
         draggable="false"
       />
     </div>
 
-    <!-- 2. Identity & Header Text Hierarchy -->
+    <!-- 2. Identity & Digital Twin Header -->
     <div id="hero-header" class="text-center max-w-lg mt-1 mb-3.5 transition-all duration-300">
-      <h1 id="hero-name" class="text-2xl sm:text-3xl font-extrabold tracking-tight text-neutral-900">TALK WITH GI</h1>
-      <p id="hero-subtitle" class="mt-1 text-xs sm:text-sm font-medium text-neutral-500">Gian Villanueva • Founder, Attachment Anywhere</p>
+      <h1 id="hero-name" class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">TALK WITH GI</h1>
+      <p id="hero-subtitle" class="mt-1 text-xs sm:text-sm font-medium text-neutral-400">Gian Villanueva • Founder, Attachment Anywhere</p>
     </div>
 
-    <!-- 3. Thumb-Zone Navigation Chips Dock (Mobile Horizontal Scrollable Snap-Row, Desktop Center Wrap, min-h-[44px]) -->
+    <!-- 3. Thumb-Zone Navigation Chips Dock (Mobile Horizontal Scrollable Snap-Row, Desktop Wrap) -->
     <div id="suggestion-chips" class="flex flex-nowrap sm:flex-wrap overflow-x-auto no-scrollbar gap-2 py-1 px-4 w-full justify-start sm:justify-center mb-4 transition-all duration-300">
-      <button type="button" onclick="handleSuggestion('Who is GI?')" class="min-h-[44px] px-4 py-2.5 rounded-full text-xs font-medium whitespace-nowrap bg-white/90 hover:bg-white text-neutral-700 hover:text-black border border-neutral-200/80 shadow-2xs hover:border-black active:scale-95 transition-all cursor-pointer flex items-center justify-center shrink-0">Who is GI?</button>
-      <button type="button" onclick="handleSuggestion('NFC Hardware')" class="min-h-[44px] px-4 py-2.5 rounded-full text-xs font-medium whitespace-nowrap bg-white/90 hover:bg-white text-neutral-700 hover:text-black border border-neutral-200/80 shadow-2xs hover:border-black active:scale-95 transition-all cursor-pointer flex items-center justify-center shrink-0">NFC Hardware</button>
-      <button type="button" onclick="handleSuggestion('Experience')" class="min-h-[44px] px-4 py-2.5 rounded-full text-xs font-medium whitespace-nowrap bg-white/90 hover:bg-white text-neutral-700 hover:text-black border border-neutral-200/80 shadow-2xs hover:border-black active:scale-95 transition-all cursor-pointer flex items-center justify-center shrink-0">Experience</button>
-      <button type="button" onclick="handleSuggestion('Dev Stack')" class="min-h-[44px] px-4 py-2.5 rounded-full text-xs font-medium whitespace-nowrap bg-white/90 hover:bg-white text-neutral-700 hover:text-black border border-neutral-200/80 shadow-2xs hover:border-black active:scale-95 transition-all cursor-pointer flex items-center justify-center shrink-0">Dev Stack</button>
-      <button type="button" onclick="handleSuggestion('Contact')" class="min-h-[44px] px-4 py-2.5 rounded-full text-xs font-medium whitespace-nowrap bg-white/90 hover:bg-white text-neutral-700 hover:text-black border border-neutral-200/80 shadow-2xs hover:border-black active:scale-95 transition-all cursor-pointer flex items-center justify-center shrink-0">Contact</button>
+      <button type="button" onclick="handleSuggestion('Who is Gian?')" class="min-h-[44px] px-4 py-2.5 rounded-full text-xs font-medium whitespace-nowrap bg-[#0e0e12] hover:bg-[#18181c] text-neutral-300 hover:text-white border border-neutral-800 active:scale-95 transition-all cursor-pointer flex items-center justify-center shrink-0">Who is Gian?</button>
+      <button type="button" onclick="handleSuggestion('NFC Hardware')" class="min-h-[44px] px-4 py-2.5 rounded-full text-xs font-medium whitespace-nowrap bg-[#0e0e12] hover:bg-[#18181c] text-neutral-300 hover:text-white border border-neutral-800 active:scale-95 transition-all cursor-pointer flex items-center justify-center shrink-0">NFC Hardware</button>
+      <button type="button" onclick="handleSuggestion('Experience')" class="min-h-[44px] px-4 py-2.5 rounded-full text-xs font-medium whitespace-nowrap bg-[#0e0e12] hover:bg-[#18181c] text-neutral-300 hover:text-white border border-neutral-800 active:scale-95 transition-all cursor-pointer flex items-center justify-center shrink-0">Experience</button>
+      <button type="button" onclick="handleSuggestion('Dev Stack')" class="min-h-[44px] px-4 py-2.5 rounded-full text-xs font-medium whitespace-nowrap bg-[#0e0e12] hover:bg-[#18181c] text-neutral-300 hover:text-white border border-neutral-800 active:scale-95 transition-all cursor-pointer flex items-center justify-center shrink-0">Dev Stack</button>
+      <button type="button" onclick="handleSuggestion('Contact')" class="min-h-[44px] px-4 py-2.5 rounded-full text-xs font-medium whitespace-nowrap bg-[#0e0e12] hover:bg-[#18181c] text-neutral-300 hover:text-white border border-neutral-800 active:scale-95 transition-all cursor-pointer flex items-center justify-center shrink-0">Contact</button>
     </div>
 
-    <!-- 4. Dynamic Interactive Stage (Collapsible, Mobile Touch-Optimized Scroll) -->
+    <!-- 4. Dynamic Interactive Stage (Collapsible, Touch-Optimized Scroll) -->
     <div id="interactive-stage" class="w-full max-h-0 opacity-0 overflow-hidden pointer-events-none transition-all duration-500 ease-in-out">
       <div id="stage-viewport" class="w-full">
         <div id="stage-content" class="w-full">
@@ -150,22 +150,22 @@
       </div>
     </div>
 
-    <!-- 5. Refined Input Dock (Tactile Pill with 16px font to prevent iOS Auto-Zoom) -->
+    <!-- 5. Refined Input Dock (Tactile Pill with 16px font to eliminate iOS Auto-Zoom) -->
     <div id="prompt-dock" class="w-full max-w-xl transition-all duration-300">
       <form id="prompt-form" onsubmit="handleQuerySubmit(event)" class="relative flex items-center w-full">
-        <div class="absolute left-4 text-neutral-400 pointer-events-none flex items-center">
+        <div class="absolute left-4 text-neutral-500 pointer-events-none flex items-center">
           <i data-lucide="search" class="w-4 h-4"></i>
         </div>
         <input
           id="prompt-input"
           type="text"
           placeholder="Ask about NFC hardware, experience, DOH, or dev stack..."
-          class="w-full pl-11 pr-13 py-3.5 text-[16px] md:text-sm bg-white/95 backdrop-blur-xl border border-neutral-200/90 rounded-full text-neutral-800 placeholder-neutral-400 focus:outline-none focus:border-neutral-400 focus:ring-1 focus:ring-neutral-400 shadow-sm hover:shadow-md transition-all"
+          class="w-full pl-11 pr-13 py-3.5 text-[16px] md:text-sm bg-[#0e0e12]/95 backdrop-blur-xl border border-neutral-800 rounded-full text-white placeholder-neutral-500 focus:outline-none focus:border-neutral-600 focus:ring-1 focus:ring-neutral-600 shadow-xl transition-all"
           autocomplete="off"
         >
         <button
           type="submit"
-          class="absolute right-2.5 w-8 h-8 rounded-full bg-black text-white hover:bg-neutral-800 active:scale-95 transition flex items-center justify-center cursor-pointer shadow-xs"
+          class="absolute right-2.5 w-8 h-8 rounded-full bg-white text-black hover:bg-neutral-200 active:scale-95 transition flex items-center justify-center cursor-pointer shadow-xs"
           aria-label="Submit prompt"
         >
           <i data-lucide="arrow-up" class="w-4 h-4"></i>
@@ -178,93 +178,105 @@
   <!-- ================= JAVASCRIPT ENGINE ================= -->
   <script>
     /* =========================================================================
-       CENTRALIZED CONTENT ENGINE (GIAN_DATA)
+       1. CENTRALIZED CONTENT ENGINE (GIAN_DATA)
        ========================================================================= */
     const GIAN_DATA = {
       profile: {
-        name: "TALK WITH GI",
-        role: "Gian Villanueva • Founder, Attachment Anywhere"
+        name: "Gian Villanueva",
+        title: "Hey, I'm Gian 👋",
+        subheading: "Founder @ Attachment Anywhere • 3rd Yr BS Entrepreneurship (Letran) • DOH GIP Intern",
+        location: "Manila, PH",
+        status: "OPEN FOR CLIENTS & BUILDS"
       },
 
-      about: {
-        title: "About Gian",
-        bio: "3rd-year BS Entrepreneurship student at Colegio de San Juan de Letran and currently working with the Department of Health (BLHSD) through the Government Internship Program. I run Attachment Anywhere, manufacturing custom contactless NFC business cards and tap-to-review counter stands for local shops and businesses. Outside of hardware, I work with health databases at DOH, edit short-form videos, and build practical web tools using Gemini, Antigravity, and Opal."
+      me: {
+        headline: "Entrepreneur, Phygital Builder & Operational Technologist",
+        body: "3rd-year BS Entrepreneurship student at Colegio de San Juan de Letran and currently serving in the Government Internship Program (GIP) at the Department of Health (Bureau of Local Health Systems Development). Founder of Attachment Anywhere—manufacturing custom NFC digital calling cards, tap-to-review counter hubs, and phygital products. Actively exploring Google AI models (Gemini, Antigravity, Opal) to eliminate business friction through automations, coding, and high-retention video pipelines.",
+        tags: ["Letran Manila", "Attachment Anywhere", "DOH-BLHSD", "Google AI Ecosystem", "NFC Hardware", "Short-Form Creator"]
       },
 
-      experiences: [
+      projects: [
         {
-          period: "Jun 2026 – Present",
-          company: "Department of Health (BLHSD) × DOLE",
-          role: "GIP Technical Staff & Encoder",
-          description: "Validating national health worker records and checking database systems (CSS, BHWconnect, Purokalusogan) to fix discrepancies across barangays."
-        },
-        {
-          period: "Apr 2026 – Present",
-          company: "Whop Clipping Community",
-          role: "Content Creator & Clipper",
-          description: "Editing short-form video clips, memes, and social formats for creator communities on Whop, Instagram Reels, and TikTok."
-        },
-        {
-          period: "Jan 2024 – Apr 2024",
-          company: "Letran Community Extension Department",
-          role: "Administrative Assistant (Work Immersion)",
-          description: "Handled digital outreach, social media graphics, and logistical coordination for community extension programs in Manila."
-        },
-        {
-          period: "Nov 2020 – May 2022",
-          company: "Involve Asia",
-          role: "Affiliate Marketer",
-          description: "Promoted tech and lifestyle products through Facebook posts and affiliate conversion links."
-        }
-      ],
-
-      builds: [
-        {
-          title: "Attachment Anywhere NFC Cards",
-          desc: "Custom contactless business cards. Tap on any iPhone or Android to instantly open your digital profile without downloading any app.",
+          title: "Attachment Anywhere — NFC Cards",
+          tag: "FLAGSHIP HARDWARE",
+          badge: "In Production",
+          desc: "Custom contactless business cards (matte PVC & premium finishes). One tap launches a dynamic digital calling profile on any modern smartphone—zero apps required.",
           actionLabel: "Order Hardware →",
           link: "order.html"
         },
         {
           title: "Smart Counter Review Hubs",
-          desc: "Physical tap-to-review stands for cafes and retail counters to collect 5-star Google reviews right at checkout.",
+          tag: "RETAIL & CAFES",
+          badge: "Deployed in Manila",
+          desc: "Physical tap-to-rate counter stands engineered for coffee shops and local businesses to instantly collect 5-star Google reviews at checkout.",
           actionLabel: "View Catalog →",
           link: "products.html"
         },
         {
-          title: "Automated Feedback & Webhooks",
-          desc: "Serverless webhooks connecting customer forms and orders directly to Discord and notifications.",
+          title: "Automated Feedback & Webhook Engine",
+          tag: "AUTOMATION",
+          badge: "Live System",
+          desc: "Serverless webhooks connecting customer forms, NFC taps, and instant alert channels without expensive third-party SaaS subscriptions.",
           actionLabel: "Brand Story →",
           link: "story.html"
         }
       ],
 
-      mediaWorks: [
+      experience: [
         {
-          title: "Short-Form Video & Clipping",
-          platform: "Whop / Reels / TikTok",
-          desc: "Fast-paced video editing, viral hooks, and audio sync using CapCut, OpusClip, and Premiere."
+          role: "GIP Technical Administrative Staff & Encoder",
+          org: "Department of Health (BLHSD) × DOLE",
+          period: "Jun 2026 – Present",
+          tag: "Government Operations",
+          points: [
+            "Auditing and encoding national Barangay Health Workers (BHW) records across the country to resolve data discrepancies.",
+            "Testing and managing departmental information systems: CSS, BHWconnect, and the Purokalusogan program."
+          ]
         },
         {
-          title: "Product Graphics & Branding",
-          platform: "Catalog & Social",
-          desc: "Visual branding, digital calling card layouts, and catalog infographics for Attachment Anywhere."
+          role: "Content Creator & Clipper (Content Rewards)",
+          org: "Whop Clipping Community",
+          period: "Apr 2026 – Present",
+          tag: "Creator Economy",
+          points: [
+            "Engineering high-retention vertical video content (POV memes, viral clipping, cultural commentary).",
+            "Optimizing retention curves and hook structures for cross-platform algorithm payout bounties."
+          ]
+        },
+        {
+          role: "Administrative Assistant (SHS Work Immersion)",
+          org: "Letran Community Extension Development",
+          period: "Jan 2024 – Apr 2024",
+          tag: "Community Extension",
+          points: [
+            "Handled digital outreach, social media graphics, and logistical coordination for community extension programs in Manila."
+          ]
+        },
+        {
+          role: "Affiliate Marketer",
+          org: "Involve Asia",
+          period: "Nov 2020 – May 2022",
+          tag: "E-Commerce Growth",
+          points: [
+            "Promoted tech and lifestyle products through Facebook posts and affiliate conversion links."
+          ]
         }
       ],
 
-      platforms: [
-        { group: "AI & Development", tools: ["Google Gemini", "Antigravity", "Google Opal", "Claude Code", "Cursor"] },
-        { group: "Health Systems & Databases", tools: ["CSS (DOH)", "BHWconnect", "Purokalusogan System", "Google Sheets"] },
-        { group: "Web & Automation", tools: ["HTML / Tailwind", "JavaScript", "Netlify Functions", "Cloudflare", "Webhooks"] },
-        { group: "Video & Design", tools: ["CapCut", "OpusClip", "Photoshop", "NFC Tools"] }
+      stack: [
+        { category: "Google AI & Frontier Tools", tools: ["Google Gemini 1.5/2.0", "Google Antigravity", "Google Opal", "Claude Code", "Cursor"] },
+        { category: "National Health Systems", tools: ["CSS (DOH)", "BHWconnect", "Purokalusogan System", "Google Sheets Master Records"] },
+        { category: "Hardware & Phygital", tools: ["NFC Tools Pro", "NTAG215 / NTAG216", "Physical Stand Production", "Direct Phone Webhooks"] },
+        { category: "Web & Automation", tools: ["Tailwind CSS", "Vanilla JavaScript", "Cloudflare Pages", "Netlify Functions", "REST Webhooks"] },
+        { category: "Video & Design", tools: ["CapCut Desktop", "OpusClip AI", "Adobe Photoshop", "High-Retention Visual Hooks"] }
       ],
 
       mindset: {
-        quote: "Entrepreneurs don't complain about broken processes; they build tools to fix them.",
+        quote: "Entrepreneurs don't complain about broken systems; they manufacture the tools to fix them.",
         principles: [
-          { title: "Execution", desc: "Build and test a working version quickly instead of getting stuck overplanning." },
-          { title: "Utility", desc: "Physical products that open clean web pages without forcing people to download an app." },
-          { title: "Modern Tools", desc: "Using AI models like Gemini, Antigravity, and Opal to speed up coding and daily work." }
+          { title: "Rapid Execution", desc: "Ship working prototypes in days, not months. Test reality before overplanning." },
+          { title: "Zero App Friction", desc: "Physical objects that instantly load lightweight web apps without app store friction." },
+          { title: "AI-Amplified Leverage", desc: "Harnessing Google Gemini and Antigravity to write production systems and automate manual labor." }
         ]
       },
 
@@ -276,226 +288,129 @@
       ],
 
       contact: {
-        notice: "Available for custom NFC cards, review stands, and freelance web work.",
+        notice: "Available for custom NFC cards, review hubs, and technical freelance engagements.",
         links: [
+          { label: "Order Cards", url: "order.html", icon: "credit-card" },
           { label: "Instagram", url: "https://instagram.com/g.attachmenz", icon: "instagram" },
           { label: "Messenger", url: "https://m.me/Gian2320", icon: "message-circle" },
-          { label: "Order Cards", url: "order.html", icon: "credit-card" }
+          { label: "Digital Calling Card", url: "aa260906052304.html", icon: "user-check" }
         ],
-        referenceNotice: "Character references from Letran faculty and DOH BLHSD supervisors are available upon request."
+        referenceNotice: "Verified character references from Letran faculty and DOH BLHSD supervisory staff available upon request."
       }
     };
 
 
     /* =========================================================================
-       1. BULLETPROOF MEMOJI AVATAR ENGINE (Flicker-Free, Zero-Lag Scrubber)
+       2. CRITICAL FIX: LAG-FREE MEMOJI PRELOADER ENGINE (Full In-Memory Cache)
        ========================================================================= */
     const totalFrames = 84;
     let currentFrame = 48; // Frame 48 faces straight forward
     let targetFrame = 48;
     let lastRenderedFrame = 48;
-    let isTouchActive = false;
-    let touchEndTimeout = null;
-
     const avatarImg = document.getElementById("avatar-img");
-    const avatarContainer = document.getElementById("avatar-container");
 
-    // Relative frame path generator
-    function getFramePath(idx) {
-      const clamped = Math.max(0, Math.min(totalFrames - 1, idx));
-      const padded = String(clamped).padStart(2, "0");
-      return `avatar/frame_${padded}_delay-0.05s.webp`;
-    }
-
-    // In-memory Frame Cache & Loaded Tracker
+    // 1. Full In-Memory Cache: Load all 84 images immediately
     const frameCache = new Array(totalFrames);
-    const loadedFrameIndices = new Set([48]); // Base frame is already loaded eagerly in HTML
-
-    function loadFrame(idx) {
-      if (idx < 0 || idx >= totalFrames) return;
-      if (frameCache[idx]) return frameCache[idx];
-
+    for (let i = 0; i < totalFrames; i++) {
+      const padded = String(i).padStart(2, "0");
       const img = new Image();
-      img.onload = () => {
-        img._loaded = true;
-        loadedFrameIndices.add(idx);
-      };
-      img.onerror = () => {
-        console.warn(`Avatar frame ${idx} failed to load.`);
-      };
-      img.src = getFramePath(idx);
-      frameCache[idx] = img;
-      return img;
+      img.src = `avatar/frame_${padded}_delay-0.05s.webp`;
+      frameCache[i] = img;
     }
 
-    // Return nearest loaded frame index to eliminate blank flickers
-    function getNearestLoadedFrame(targetIdx) {
-      if (loadedFrameIndices.has(targetIdx)) return targetIdx;
-      let minDiff = Infinity;
-      let closest = lastRenderedFrame;
-      for (const idx of loadedFrameIndices) {
-        const diff = Math.abs(idx - targetIdx);
-        if (diff < minDiff) {
-          minDiff = diff;
-          closest = idx;
-        }
-      }
-      return closest;
+    // 2. Instant Center Mount: set base frame without delay
+    if (avatarImg) {
+      avatarImg.src = "avatar/frame_48_delay-0.05s.webp";
     }
 
-    // Staged Frame Preloader (prevents network congestion)
-    function initAvatarPreloader() {
-      // Stage 1: Priority turnaround anchor angles
-      const priorityFrames = [48, 0, 83, 24, 60, 12, 36, 72, 18, 54, 66];
-      priorityFrames.forEach(idx => loadFrame(idx));
-
-      // Stage 2: Center viewing corridor (frames 38-58)
-      setTimeout(() => {
-        for (let i = 38; i <= 58; i++) {
-          loadFrame(i);
-        }
-      }, 120);
-
-      // Stage 3: Smooth background staggered batches for remaining frames
-      setTimeout(() => {
-        let i = 0;
-        function loadBatch() {
-          const batchSize = 6;
-          for (let b = 0; b < batchSize && i < totalFrames; b++, i++) {
-            if (!loadedFrameIndices.has(i)) {
-              loadFrame(i);
-            }
-          }
-          if (i < totalFrames) {
-            setTimeout(loadBatch, 35);
-          }
-        }
-        loadBatch();
-      }, 350);
-    }
-    initAvatarPreloader();
-
-    // Map screen X coordinate (0 to 1) to frame index (0 to 83)
-    function updateTargetFromX(clientX) {
+    // Helper: Map screen X coordinate (0 to 1) to frame index (0 to 83)
+    function handlePointerCoord(clientX) {
       if (typeof clientX !== "number" || isNaN(clientX) || window.innerWidth <= 0) return;
       const ratio = Math.max(0, Math.min(1, clientX / window.innerWidth));
       targetFrame = Math.round(ratio * (totalFrames - 1));
     }
 
-    // 1. Desktop Mouse Tracking
+    // Passive mouse and touch event listeners
     window.addEventListener("mousemove", (e) => {
-      updateTargetFromX(e.clientX);
+      handlePointerCoord(e.clientX);
     }, { passive: true });
 
-    document.addEventListener("mouseleave", () => {
-      targetFrame = 48;
-    });
-
-    // 2. Mobile Touch Tracking (Touchstart & Touchmove)
     window.addEventListener("touchstart", (e) => {
       if (e.touches && e.touches[0]) {
-        isTouchActive = true;
-        if (touchEndTimeout) clearTimeout(touchEndTimeout);
-        updateTargetFromX(e.touches[0].clientX);
+        handlePointerCoord(e.touches[0].clientX);
       }
     }, { passive: true });
 
     window.addEventListener("touchmove", (e) => {
       if (e.touches && e.touches[0]) {
-        isTouchActive = true;
-        updateTargetFromX(e.touches[0].clientX);
+        handlePointerCoord(e.touches[0].clientX);
       }
     }, { passive: true });
 
+    // Smooth return to neutral center on leave or touch release
+    document.addEventListener("mouseleave", () => {
+      targetFrame = 48;
+    });
+
     window.addEventListener("touchend", () => {
-      touchEndTimeout = setTimeout(() => {
-        isTouchActive = false;
-        targetFrame = 48; // Smooth glide back to center
-      }, 800);
+      setTimeout(() => { targetFrame = 48; }, 850);
     }, { passive: true });
 
     window.addEventListener("touchcancel", () => {
-      isTouchActive = false;
       targetFrame = 48;
     }, { passive: true });
 
-    // 3. Subtle Mobile Gyroscope Parallax (DeviceOrientation)
+    // DeviceOrientation Parallax on mobile with deadzone clamp
     if (window.DeviceOrientationEvent) {
-      try {
-        window.addEventListener("deviceorientation", (e) => {
-          if (isTouchActive) return; // Touch interaction takes precedence
-          if (e.gamma !== null && e.gamma !== undefined && !isNaN(e.gamma)) {
-            // Deadzone to prevent micro-jitter when phone is resting
-            if (Math.abs(e.gamma) < 2.5) {
-              targetFrame = 48;
-              return;
-            }
-            // Clamp gamma [-25, 25] degrees for a natural subtle tilt
-            const clampedGamma = Math.max(-25, Math.min(25, e.gamma));
-            const normalized = (clampedGamma + 25) / 50; // 0 to 1
-            targetFrame = Math.round(normalized * (totalFrames - 1));
-          }
-        }, { passive: true });
-      } catch (err) {
-        // Safe fallback if DeviceOrientation is restricted
-      }
+      window.addEventListener("deviceorientation", (e) => {
+        if (e.gamma !== null && e.gamma !== undefined && !isNaN(e.gamma)) {
+          if (Math.abs(e.gamma) < 2) return;
+          const clamped = Math.max(-25, Math.min(25, e.gamma));
+          const ratio = (clamped + 25) / 50;
+          targetFrame = Math.round(ratio * (totalFrames - 1));
+        }
+      }, { passive: true });
     }
 
-    // 4. Fallback recovery if image fails to load
-    if (avatarImg) {
-      avatarImg.addEventListener("error", () => {
-        console.warn("Avatar frame error fallback to center frame.");
-        avatarImg.src = getFramePath(48);
-        lastRenderedFrame = 48;
-      });
-    }
-
-    // 5. 60 FPS Flicker-Free Render Loop with Damped Lerp
+    // 4. RequestAnimationFrame Lerp Damping Loop (Damping factor 0.22, Throttled Mutation)
     function animateAvatar() {
       const diff = targetFrame - currentFrame;
       if (Math.abs(diff) > 0.02) {
-        currentFrame += diff * 0.16; // Smooth, responsive damping
+        currentFrame += diff * 0.22;
       } else {
         currentFrame = targetFrame;
       }
 
-      const rounded = Math.round(currentFrame);
-      if (rounded !== lastRenderedFrame && rounded >= 0 && rounded < totalFrames) {
-        // If target frame is loaded, swap instantly
-        if (loadedFrameIndices.has(rounded)) {
-          avatarImg.src = getFramePath(rounded);
-          lastRenderedFrame = rounded;
-        } else {
-          // Preload on demand
-          loadFrame(rounded);
-          // Only swap to closest loaded frame if not currently showing it
-          const nearest = getNearestLoadedFrame(rounded);
-          if (nearest !== lastRenderedFrame) {
-            avatarImg.src = getFramePath(nearest);
-            lastRenderedFrame = nearest;
-          }
+      const roundedIndex = Math.max(0, Math.min(totalFrames - 1, Math.round(currentFrame)));
+
+      // Throttling: Only mutate avatarImg.src when the rounded integer index actually changes
+      if (roundedIndex !== lastRenderedFrame) {
+        lastRenderedFrame = roundedIndex;
+        // Zero Network Scrubbing: read exclusively from frameCache
+        if (frameCache[roundedIndex] && frameCache[roundedIndex].src) {
+          avatarImg.src = frameCache[roundedIndex].src;
         }
       }
 
       requestAnimationFrame(animateAvatar);
     }
-    animateAvatar();
+    requestAnimationFrame(animateAvatar);
 
 
     /* =========================================================================
-       2. VIRTUAL KEYBOARD & VIEWPORT ADAPTATION (Android, Huawei & iOS)
+       3. VIRTUAL KEYBOARD & VIEWPORT ADAPTATION (Android, Huawei & iOS)
        ========================================================================= */
     const mainContainer = document.getElementById("main-container");
     const interactiveStage = document.getElementById("interactive-stage");
     const stageContent = document.getElementById("stage-content");
     const promptDock = document.getElementById("prompt-dock");
 
-    function handleViewportChange() {
+    function handleViewportResize() {
       if (!window.visualViewport) return;
       const height = window.visualViewport.height;
       const fullHeight = window.innerHeight;
 
-      // Virtual keyboard detection threshold
+      // Virtual keyboard active when viewport height shrinks significantly
       const isKeyboardOpen = height < fullHeight * 0.76;
       if (isKeyboardOpen) {
         mainContainer.classList.add("keyboard-open");
@@ -508,13 +423,13 @@
     }
 
     if (window.visualViewport) {
-      window.visualViewport.addEventListener("resize", handleViewportChange);
-      window.visualViewport.addEventListener("scroll", handleViewportChange);
+      window.visualViewport.addEventListener("resize", handleViewportResize);
+      window.visualViewport.addEventListener("scroll", handleViewportResize);
     }
 
 
     /* =========================================================================
-       3. BESPOKE STAGE TEMPLATES & DYNAMIC EXPANSION (Crisp Light Mode)
+       4. BESPOKE STAGE TEMPLATES & DYNAMIC EXPANSION (Pure OLED Luxury Dark)
        ========================================================================= */
     function escapeHtml(text) {
       if (!text) return "";
@@ -524,114 +439,110 @@
     }
 
     const STAGE_TEMPLATES = {
-      about: () => {
-        const d = GIAN_DATA.about;
+      me: () => {
+        const d = GIAN_DATA.me;
+        const tagsHtml = d.tags.map(t => `<span class="px-3 py-1 rounded-full text-[11px] font-medium bg-[#141418] text-neutral-300 border border-neutral-800">${escapeHtml(t)}</span>`).join('');
         return `
-          <div class="bg-white p-6 sm:p-8 rounded-3xl border border-neutral-200/80 shadow-xs">
-            <div class="mb-3">
-              <h3 class="text-lg sm:text-xl font-bold text-neutral-900">${escapeHtml(d.title)}</h3>
+          <div class="bg-[#0a0a0c] p-6 sm:p-8 rounded-3xl border border-neutral-800/80 shadow-2xl">
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span class="text-xs font-mono text-neutral-500 uppercase tracking-wider">${escapeHtml(GIAN_DATA.profile.status)}</span>
+              <span class="text-xs font-mono text-neutral-500">${escapeHtml(GIAN_DATA.profile.location)}</span>
             </div>
-            <p class="text-neutral-700 text-xs sm:text-sm font-light leading-relaxed mb-6">${escapeHtml(d.bio)}</p>
-            <div class="flex flex-wrap items-center gap-3 pt-5 border-t border-neutral-100">
-              <a href="aa260906052304.html" class="bg-black text-white hover:bg-neutral-800 text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-xl inline-flex items-center gap-2 shadow-xs transition-all active:scale-95 cursor-pointer">
+            <h3 class="text-lg sm:text-xl font-bold text-white mb-1.5">${escapeHtml(d.headline)}</h3>
+            <p class="text-neutral-300 text-xs sm:text-sm font-light leading-relaxed mb-5">${escapeHtml(d.body)}</p>
+            <div class="flex flex-wrap gap-1.5 mb-6">
+              ${tagsHtml}
+            </div>
+            <div class="flex flex-wrap items-center gap-3 pt-5 border-t border-neutral-800/60">
+              <a href="aa260906052304.html" class="bg-white text-black hover:bg-neutral-200 text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-xl inline-flex items-center gap-2 shadow-xs transition-all active:scale-95 cursor-pointer">
                 <i data-lucide="user-check" class="w-4 h-4"></i>
                 <span>Digital Card</span>
               </a>
-              <a href="order.html" class="border border-neutral-300 bg-white hover:border-black text-black text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-xl inline-flex items-center gap-2 transition-all active:scale-95 cursor-pointer">
+              <a href="order.html" class="border border-neutral-700 bg-transparent hover:border-white text-white text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-xl inline-flex items-center gap-2 transition-all active:scale-95 cursor-pointer">
                 <i data-lucide="credit-card" class="w-4 h-4"></i>
-                <span>Order Cards</span>
+                <span>Order Hardware</span>
               </a>
-              <a href="story.html" class="border border-neutral-300 bg-white hover:border-black text-black text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-xl inline-flex items-center gap-2 transition-all active:scale-95 cursor-pointer">
+              <a href="story.html" class="border border-neutral-700 bg-transparent hover:border-white text-white text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-xl inline-flex items-center gap-2 transition-all active:scale-95 cursor-pointer">
                 <i data-lucide="book-open" class="w-4 h-4"></i>
-                <span>Story</span>
+                <span>Brand Story</span>
               </a>
             </div>
           </div>
         `;
       },
 
-      experiences: () => {
-        const experiencesHtml = GIAN_DATA.experiences.map((exp) => `
-          <div class="bg-white p-5 sm:p-6 rounded-3xl border border-neutral-200/80 shadow-xs hover:border-black transition-all">
-            <div class="flex flex-wrap items-center justify-between gap-2 mb-1">
-              <h4 class="text-sm sm:text-base font-bold text-neutral-900">${escapeHtml(exp.role)}</h4>
-              <span class="text-xs font-mono text-neutral-400 font-medium">${escapeHtml(exp.period)}</span>
-            </div>
-            <p class="text-xs font-semibold text-neutral-500 mb-2.5">${escapeHtml(exp.company)}</p>
-            <p class="text-xs sm:text-sm text-neutral-600 font-light leading-relaxed">${escapeHtml(exp.description)}</p>
-          </div>
-        `).join('');
-
-        return `
-          <div class="space-y-4">
-            <div class="px-1">
-              <h3 class="text-base font-bold text-neutral-900">Experience</h3>
-            </div>
-            <div class="space-y-3">
-              ${experiencesHtml}
-            </div>
-          </div>
-        `;
-      },
-
-      builds: () => {
-        const buildsHtml = GIAN_DATA.builds.map(b => `
-          <div class="bg-white p-5 sm:p-6 rounded-3xl border border-neutral-200/80 shadow-xs flex flex-col justify-between hover:border-black transition-all">
+      projects: () => {
+        const buildsHtml = GIAN_DATA.projects.map(b => `
+          <div class="bg-[#0a0a0c] p-5 sm:p-6 rounded-3xl border border-neutral-800/80 shadow-2xl flex flex-col justify-between hover:border-neutral-600 transition-all">
             <div>
-              <h4 class="font-bold text-sm sm:text-base text-neutral-900 mb-2">${escapeHtml(b.title)}</h4>
-              <p class="text-xs text-neutral-600 font-light leading-relaxed mb-5">${escapeHtml(b.desc)}</p>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="text-[10px] font-mono tracking-wider uppercase text-neutral-400 bg-[#141418] px-2.5 py-0.5 rounded-full border border-neutral-800">${escapeHtml(b.tag)}</span>
+                <span class="text-[10px] font-mono text-neutral-500">${escapeHtml(b.badge)}</span>
+              </div>
+              <h4 class="font-bold text-sm sm:text-base text-white mb-2">${escapeHtml(b.title)}</h4>
+              <p class="text-xs text-neutral-300 font-light leading-relaxed mb-5">${escapeHtml(b.desc)}</p>
             </div>
-            <a href="${b.link}" class="w-full bg-black text-white hover:bg-neutral-800 text-xs font-bold uppercase tracking-widest py-3 rounded-xl text-center transition-all inline-flex items-center justify-center gap-1.5 shadow-xs active:scale-95 cursor-pointer">
+            <a href="${b.link}" class="w-full bg-white text-black hover:bg-neutral-200 text-xs font-bold uppercase tracking-widest py-3 rounded-xl text-center transition-all inline-flex items-center justify-center gap-1.5 shadow-xs active:scale-95 cursor-pointer">
               <span>${escapeHtml(b.actionLabel)}</span>
             </a>
           </div>
         `).join('');
 
-        const mediaHtml = GIAN_DATA.mediaWorks.map(m => `
-          <div class="p-5 sm:p-6 rounded-3xl bg-white border border-neutral-200/80 shadow-xs flex flex-col justify-between hover:border-black transition-all">
-            <div>
-              <div class="flex items-center justify-between gap-2 mb-1.5">
-                <h5 class="text-sm sm:text-base font-bold text-neutral-900">${escapeHtml(m.title)}</h5>
-                <span class="text-xs font-mono text-neutral-400">${escapeHtml(m.platform)}</span>
-              </div>
-              <p class="text-xs text-neutral-600 font-light leading-relaxed">${escapeHtml(m.desc)}</p>
-            </div>
-          </div>
-        `).join('');
-
         return `
-          <div class="space-y-6">
-            <div class="space-y-3">
-              <div class="flex items-center justify-between px-1">
-                <h3 class="text-base font-bold text-neutral-900">Products &amp; Hardware</h3>
-                <a href="products.html" class="text-xs font-semibold text-neutral-600 hover:text-black transition-colors">Catalog &rarr;</a>
-              </div>
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
-                ${buildsHtml}
-              </div>
+          <div class="space-y-4">
+            <div class="flex items-center justify-between px-1">
+              <h3 class="text-base font-bold text-white">Projects &amp; Hardware</h3>
+              <a href="products.html" class="text-xs font-semibold text-neutral-400 hover:text-white transition-colors">Catalog &rarr;</a>
             </div>
-
-            <div class="space-y-3 pt-1">
-              <div class="px-1">
-                <h3 class="text-base font-bold text-neutral-900">Media</h3>
-              </div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                ${mediaHtml}
-              </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+              ${buildsHtml}
             </div>
           </div>
         `;
       },
 
-      platforms: () => {
-        const d = GIAN_DATA.platforms;
-        const groupsHtml = d.map(g => `
-          <div class="p-5 sm:p-6 rounded-3xl bg-white border border-neutral-200/80 shadow-xs hover:border-black transition-all">
-            <h4 class="text-sm font-bold text-neutral-900 mb-3">
-              ${escapeHtml(g.group)}
+      experience: () => {
+        const itemsHtml = GIAN_DATA.experience.map(exp => `
+          <div class="bg-[#0a0a0c] p-5 sm:p-6 rounded-3xl border border-neutral-800/80 shadow-2xl hover:border-neutral-600 transition-all">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-1">
+              <h4 class="text-sm sm:text-base font-bold text-white">${escapeHtml(exp.role)}</h4>
+              <span class="text-xs font-mono text-neutral-500 font-medium">${escapeHtml(exp.period)}</span>
+            </div>
+            <div class="flex items-center gap-2 mb-3">
+              <p class="text-xs font-semibold text-neutral-400">${escapeHtml(exp.org)}</p>
+              <span class="text-[10px] font-mono text-neutral-500 border border-neutral-800 bg-[#121215] px-2 py-0.5 rounded-full">${escapeHtml(exp.tag)}</span>
+            </div>
+            <ul class="space-y-1.5">
+              ${exp.points.map(pt => `
+                <li class="flex items-start gap-2 text-xs text-neutral-300 font-light leading-relaxed">
+                  <span class="w-1 h-1 rounded-full bg-neutral-500 shrink-0 mt-1.5"></span>
+                  <span>${escapeHtml(pt)}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        `).join('');
+
+        return `
+          <div class="space-y-4">
+            <div class="px-1">
+              <h3 class="text-base font-bold text-white">Experience Timeline</h3>
+            </div>
+            <div class="space-y-3">
+              ${itemsHtml}
+            </div>
+          </div>
+        `;
+      },
+
+      stack: () => {
+        const groupsHtml = GIAN_DATA.stack.map(g => `
+          <div class="p-5 sm:p-6 rounded-3xl bg-[#0a0a0c] border border-neutral-800/80 shadow-2xl hover:border-neutral-600 transition-all">
+            <h4 class="text-sm font-bold text-white mb-3">
+              ${escapeHtml(g.category)}
             </h4>
             <div class="flex flex-wrap gap-2">
-              ${g.tools.map(item => `<span class="px-3 py-1.5 rounded-xl text-xs bg-neutral-100 text-neutral-800 font-medium border border-neutral-200/70 shadow-2xs">${escapeHtml(item)}</span>`).join('')}
+              ${g.tools.map(item => `<span class="px-3 py-1.5 rounded-xl text-xs bg-[#141418] text-neutral-200 font-medium border border-neutral-800 shadow-2xs">${escapeHtml(item)}</span>`).join('')}
             </div>
           </div>
         `).join('');
@@ -639,7 +550,7 @@
         return `
           <div class="space-y-4">
             <div class="px-1">
-              <h3 class="text-base font-bold text-neutral-900">Tools &amp; Stack</h3>
+              <h3 class="text-base font-bold text-white">Technical Matrix &amp; AI Stack</h3>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
               ${groupsHtml}
@@ -654,7 +565,7 @@
           const isPrimary = l.label.toLowerCase().includes("order");
           const href = l.url;
           return `
-            <a href="${href}" target="${href.startsWith('http') ? '_blank' : '_self'}" rel="${href.startsWith('http') ? 'noopener noreferrer' : ''}" class="${isPrimary ? 'bg-black text-white hover:bg-neutral-800 shadow-xs' : 'border border-neutral-300 bg-white hover:border-black text-black'} text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-xl inline-flex items-center justify-center gap-2 transition-all active:scale-95 flex-1 min-w-[140px] text-center cursor-pointer">
+            <a href="${href}" target="${href.startsWith('http') ? '_blank' : '_self'}" rel="${href.startsWith('http') ? 'noopener noreferrer' : ''}" class="${isPrimary ? 'bg-white text-black hover:bg-neutral-200' : 'border border-neutral-700 bg-transparent hover:border-white text-white'} text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-xl inline-flex items-center justify-center gap-2 transition-all active:scale-95 flex-1 min-w-[140px] text-center cursor-pointer shadow-xs">
               <i data-lucide="${escapeHtml(l.icon)}" class="w-4 h-4"></i>
               <span>${escapeHtml(l.label)}</span>
             </a>
@@ -662,21 +573,17 @@
         }).join('');
 
         return `
-          <div class="bg-white p-6 sm:p-8 rounded-3xl border border-neutral-200/80 shadow-xs">
-            <h3 class="text-base sm:text-lg font-bold text-neutral-900 mb-2">Get in Touch</h3>
-            <p class="text-neutral-600 text-xs sm:text-sm font-light leading-relaxed mb-6">${escapeHtml(c.notice)}</p>
+          <div class="bg-[#0a0a0c] p-6 sm:p-8 rounded-3xl border border-neutral-800/80 shadow-2xl">
+            <h3 class="text-base sm:text-lg font-bold text-white mb-2">Get in Touch</h3>
+            <p class="text-neutral-300 text-xs sm:text-sm font-light leading-relaxed mb-6">${escapeHtml(c.notice)}</p>
             
             <div class="flex flex-wrap gap-3 mb-6">
               ${linksHtml}
-              <a href="aa260906052304.html" class="border border-neutral-300 bg-white hover:border-black text-black text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-xl inline-flex items-center justify-center gap-2 transition-all active:scale-95 flex-1 min-w-[140px] text-center cursor-pointer">
-                <i data-lucide="user-check" class="w-4 h-4"></i>
-                <span>Digital Card</span>
-              </a>
             </div>
 
-            <div class="p-4 rounded-2xl bg-[#fbfbfd] border border-neutral-200/80 flex items-start gap-3">
-              <i data-lucide="file-text" class="w-4 h-4 text-neutral-700 shrink-0 mt-0.5"></i>
-              <p class="text-xs text-neutral-600 font-light leading-relaxed">${escapeHtml(c.referenceNotice)}</p>
+            <div class="p-4 rounded-2xl bg-[#141418] border border-neutral-800/80 flex items-start gap-3">
+              <i data-lucide="shield-check" class="w-4 h-4 text-neutral-400 shrink-0 mt-0.5"></i>
+              <p class="text-xs text-neutral-400 font-light leading-relaxed">${escapeHtml(c.referenceNotice)}</p>
             </div>
           </div>
         `;
@@ -685,36 +592,36 @@
       mindset: () => {
         const m = GIAN_DATA.mindset;
         const principlesHtml = m.principles.map(p => `
-          <div class="p-4 sm:p-5 rounded-2xl bg-[#fbfbfd] border border-neutral-200/80">
-            <h5 class="text-xs font-bold text-neutral-900 mb-1">${escapeHtml(p.title)}</h5>
-            <p class="text-xs sm:text-sm text-neutral-600 font-light leading-relaxed">${escapeHtml(p.desc)}</p>
+          <div class="p-4 sm:p-5 rounded-2xl bg-[#141418] border border-neutral-800/80">
+            <h5 class="text-xs font-bold text-white mb-1">${escapeHtml(p.title)}</h5>
+            <p class="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">${escapeHtml(p.desc)}</p>
           </div>
         `).join('');
 
         const hobbiesHtml = GIAN_DATA.hobbies.map(h => `
-          <li class="flex items-start gap-3 text-xs sm:text-sm text-neutral-700 font-light leading-relaxed">
-            <span class="w-1.5 h-1.5 rounded-full bg-neutral-900 shrink-0 mt-2"></span>
+          <li class="flex items-start gap-3 text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
+            <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0 mt-2"></span>
             <span>${escapeHtml(h)}</span>
           </li>
         `).join('');
 
         return `
           <div class="space-y-4">
-            <div class="bg-black text-white p-6 sm:p-8 rounded-3xl shadow-sm">
+            <div class="bg-[#141418] text-white p-6 sm:p-8 rounded-3xl border border-neutral-800/80 shadow-2xl">
               <blockquote class="text-base sm:text-lg font-medium leading-relaxed">
                 &ldquo;${escapeHtml(m.quote)}&rdquo;
               </blockquote>
             </div>
 
-            <div class="bg-white p-6 sm:p-7 rounded-3xl border border-neutral-200/80 shadow-xs">
-              <h4 class="text-sm sm:text-base font-bold text-neutral-900 mb-3.5">Principles</h4>
+            <div class="bg-[#0a0a0c] p-6 sm:p-7 rounded-3xl border border-neutral-800/80 shadow-2xl">
+              <h4 class="text-sm sm:text-base font-bold text-white mb-3.5">Operating Principles</h4>
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 ${principlesHtml}
               </div>
             </div>
 
-            <div class="bg-white p-6 sm:p-7 rounded-3xl border border-neutral-200/80 shadow-xs">
-              <h4 class="text-sm sm:text-base font-bold text-neutral-900 mb-3.5">Interests</h4>
+            <div class="bg-[#0a0a0c] p-6 sm:p-7 rounded-3xl border border-neutral-800/80 shadow-2xl">
+              <h4 class="text-sm sm:text-base font-bold text-white mb-3.5">Interests &amp; Offline</h4>
               <ul class="space-y-2.5">
                 ${hobbiesHtml}
               </ul>
@@ -724,27 +631,27 @@
       },
 
       fallback: () => `
-        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-neutral-200/80 shadow-xs">
-          <h3 class="text-base sm:text-lg font-bold text-neutral-900 mb-2">Explore Gian's Work</h3>
-          <p class="text-neutral-600 text-xs sm:text-sm font-light leading-relaxed mb-6">
-            Gian Villanueva manufactures custom contactless NFC cards and audits healthcare database systems. Select a category below or ask a specific question:
+        <div class="bg-[#0a0a0c] p-6 sm:p-8 rounded-3xl border border-neutral-800/80 shadow-2xl">
+          <h3 class="text-base sm:text-lg font-bold text-white mb-2">Explore Gian's Universe</h3>
+          <p class="text-neutral-300 text-xs sm:text-sm font-light leading-relaxed mb-6">
+            Gian Villanueva manufactures custom contactless NFC cards and audits national healthcare database systems. Select a topic or ask a question:
           </p>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <button onclick="handleSuggestion('NFC Hardware')" class="text-left p-4 rounded-2xl bg-[#fbfbfd] hover:bg-neutral-100 border border-neutral-200/80 transition-all cursor-pointer">
-              <div class="text-xs font-bold text-neutral-900 mb-1">NFC Hardware &amp; Cards</div>
-              <div class="text-xs text-neutral-500 font-light">Custom contactless cards and Google review stands.</div>
+            <button onclick="handleSuggestion('NFC Hardware')" class="text-left p-4 rounded-2xl bg-[#141418] hover:bg-[#1a1a20] border border-neutral-800/80 transition-all cursor-pointer">
+              <div class="text-xs font-bold text-white mb-1">NFC Hardware &amp; Cards</div>
+              <div class="text-xs text-neutral-400 font-light">Custom contactless cards and Google review stands.</div>
             </button>
-            <button onclick="handleSuggestion('Experience')" class="text-left p-4 rounded-2xl bg-[#fbfbfd] hover:bg-neutral-100 border border-neutral-200/80 transition-all cursor-pointer">
-              <div class="text-xs font-bold text-neutral-900 mb-1">Experience &amp; DOH</div>
-              <div class="text-xs text-neutral-500 font-light">Health worker validation and content clipping.</div>
+            <button onclick="handleSuggestion('Experience')" class="text-left p-4 rounded-2xl bg-[#141418] hover:bg-[#1a1a20] border border-neutral-800/80 transition-all cursor-pointer">
+              <div class="text-xs font-bold text-white mb-1">Experience &amp; DOH</div>
+              <div class="text-xs text-neutral-400 font-light">National health worker audits and clipping work.</div>
             </button>
-            <button onclick="handleSuggestion('Dev Stack')" class="text-left p-4 rounded-2xl bg-[#fbfbfd] hover:bg-neutral-100 border border-neutral-200/80 transition-all cursor-pointer">
-              <div class="text-xs font-bold text-neutral-900 mb-1">Tools &amp; Tech Stack</div>
-              <div class="text-xs text-neutral-500 font-light">Gemini, Antigravity, Opal, and serverless webhooks.</div>
+            <button onclick="handleSuggestion('Dev Stack')" class="text-left p-4 rounded-2xl bg-[#141418] hover:bg-[#1a1a20] border border-neutral-800/80 transition-all cursor-pointer">
+              <div class="text-xs font-bold text-white mb-1">Tools &amp; Tech Stack</div>
+              <div class="text-xs text-neutral-400 font-light">Gemini, Antigravity, Opal, and serverless webhooks.</div>
             </button>
-            <button onclick="handleSuggestion('Contact')" class="text-left p-4 rounded-2xl bg-[#fbfbfd] hover:bg-neutral-100 border border-neutral-200/80 transition-all cursor-pointer">
-              <div class="text-xs font-bold text-neutral-900 mb-1">Contact &amp; Orders</div>
-              <div class="text-xs text-neutral-500 font-light">Direct Instagram, Messenger, and references.</div>
+            <button onclick="handleSuggestion('Contact')" class="text-left p-4 rounded-2xl bg-[#141418] hover:bg-[#1a1a20] border border-neutral-800/80 transition-all cursor-pointer">
+              <div class="text-xs font-bold text-white mb-1">Contact &amp; Orders</div>
+              <div class="text-xs text-neutral-400 font-light">Direct Instagram, Messenger, and references.</div>
             </button>
           </div>
         </div>
@@ -752,12 +659,12 @@
 
       queryWrapper: (prompt, note, innerHtml) => `
         <div class="space-y-4">
-          <div class="p-4 sm:p-5 rounded-2xl bg-white border border-neutral-200/80 shadow-xs flex items-start justify-between gap-4">
+          <div class="p-4 sm:p-5 rounded-2xl bg-[#0a0a0c] border border-neutral-800/80 shadow-2xl flex items-start justify-between gap-4">
             <div class="space-y-1">
-              <p class="text-xs font-mono text-neutral-400">&ldquo;${escapeHtml(prompt)}&rdquo;</p>
-              <p class="text-xs sm:text-sm text-neutral-700 font-light leading-relaxed">${escapeHtml(note)}</p>
+              <p class="text-xs font-mono text-neutral-500">&ldquo;${escapeHtml(prompt)}&rdquo;</p>
+              <p class="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">${escapeHtml(note)}</p>
             </div>
-            <button onclick="dismissStage()" title="Close stage" class="p-1 rounded-full hover:bg-neutral-100 text-neutral-400 hover:text-black transition-colors shrink-0 cursor-pointer">
+            <button onclick="dismissStage()" title="Close stage" class="p-1 rounded-full hover:bg-neutral-800 text-neutral-400 hover:text-white transition-colors shrink-0 cursor-pointer">
               <i data-lucide="x" class="w-4 h-4"></i>
             </button>
           </div>
@@ -797,7 +704,7 @@
 
 
     /* =========================================================================
-       4. SMART QUERY PARSER ENGINE
+       5. DIGITAL TWIN QUERY PARSER ENGINE
        ========================================================================= */
     const promptInput = document.getElementById("prompt-input");
 
@@ -810,34 +717,34 @@
       const q = rawText.trim().toLowerCase();
 
       // Bio / Background
-      if (hasAny(q, ["who", "about", "student", "letran", "story", "origin", "bio", "gian", "gi", "talk", "founder"])) {
-        renderStage(rawText, "Here is an introduction to GI.", "about");
+      if (hasAny(q, ["who", "gian", "gi", "about", "student", "letran", "story", "origin", "bio", "founder", "talk"])) {
+        renderStage(rawText, "Here is Gian's core profile and background.", "me");
+      }
+      // Projects & NFC Hardware
+      else if (hasAny(q, ["attachment", "nfc", "cards", "card", "hardware", "review", "stands", "stand", "projects", "project", "builds", "build", "pricing", "price", "rates"])) {
+        renderStage(rawText, "Here are Gian's custom NFC cards, review stands, and physical builds.", "projects");
       }
       // Work & Experience
-      else if (hasAny(q, ["experience", "doh", "gip", "health", "whop", "clipping", "involve asia", "involve", "jobs", "work", "job", "intern", "timeline"])) {
-        renderStage(rawText, "Here is Gian's work experience across DOH database verification, Letran, and creator projects.", "experiences");
+      else if (hasAny(q, ["experience", "doh", "gip", "health", "whop", "clipping", "involve", "jobs", "work", "job", "intern", "timeline", "operations"])) {
+        renderStage(rawText, "Here is Gian's experience across DOH health database audits, Letran, and creator projects.", "experience");
       }
-      // Products & Hardware
-      else if (hasAny(q, ["attachment", "nfc", "cards", "card", "hardware", "review", "stands", "stand", "products", "product", "builds", "build", "pricing", "price", "rates"])) {
-        renderStage(rawText, "Here are Gian's custom NFC cards, smart review hubs, and physical hardware products.", "builds");
-      }
-      // Tech & Tools
+      // Stack & Tools
       else if (hasAny(q, ["tools", "stack", "gemini", "antigravity", "opal", "code", "ai", "software", "tech", "platform", "platforms", "dev"])) {
-        renderStage(rawText, "Here are the developer tools, AI workflows, and health systems Gian works with.", "platforms");
+        renderStage(rawText, "Here are the AI ecosystems, health database systems, and developer tools Gian builds with.", "stack");
       }
       // Contact & Orders
       else if (hasAny(q, ["contact", "hire", "order", "rates", "inquire", "socials", "social", "reference", "references", "instagram", "messenger", "reach", "email", "phone"])) {
-        renderStage(rawText, "Here are direct channels to get in touch, order hardware, or request references.", "contact");
+        renderStage(rawText, "Here are direct channels to get in touch, order hardware, or request verified references.", "contact");
       }
       // Mindset & Principles
       else if (hasAny(q, ["mindset", "philosophy", "principles", "principle", "hobby", "hobbies", "interests", "interest", "basketball", "sci-fi"])) {
-        renderStage(rawText, "Here are Gian's core working principles and interests.", "mindset");
+        renderStage(rawText, "Here are Gian's operating principles and offline interests.", "mindset");
       }
       // Fallback
       else {
         renderStage(
           rawText,
-          "Gian Villanueva builds custom NFC hardware and practical web tools. Ask about NFC hardware, experience, developer stack, or contact.",
+          "Gian Villanueva manufactures contactless NFC hardware and builds AI tools. Select a category below or ask a specific question:",
           "fallback"
         );
       }
@@ -866,9 +773,9 @@
 
 
     /* =========================================================================
-       5. DUAL-MODE CURSOR ENGINE (Light Mode Obsidian / Starlight Palette)
+       6. GLOWING GLITTER BLACK (OBSIDIAN STARLIGHT) CANVAS CURSOR ENGINE
        ========================================================================= */
-    (function initCursorEngine() {
+    (function initGlitterBlackCursor() {
       const canvas = document.getElementById("cursor-canvas");
       if (!canvas) return;
       const ctx = canvas.getContext("2d");
@@ -886,14 +793,14 @@
       const shockwaves = [];
       let animId = null;
 
-      // Particle colors tuned for light background: Obsidian charcoal, deep slate, starlight white & platinum
+      // Particle colors: Deep obsidian core with crystalline silver, platinum, & starlight
       const GLITTER_COLORS = [
-        "rgba(15, 23, 42,",      // Deep obsidian slate
-        "rgba(30, 41, 59,",      // Charcoal core
-        "rgba(51, 65, 85,",      // Muted slate
-        "rgba(71, 85, 105,",     // Cool steel
-        "rgba(255, 255, 255,",   // Diamond glint highlight
-        "rgba(148, 163, 184,"    // Platinum sparkle
+        "rgba(255, 255, 255,",   // Pure diamond starlight
+        "rgba(226, 232, 240,",   // Brilliant silver shimmer
+        "rgba(192, 198, 220,",   // Pale icy violet
+        "rgba(148, 163, 184,",   // Metallic platinum
+        "rgba(39, 39, 42,",      // Obsidian slate
+        "rgba(10, 10, 15,"       // Void black core
       ];
 
       class Shockwave {
@@ -914,10 +821,10 @@
           ctx.save();
           ctx.beginPath();
           ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-          ctx.strokeStyle = `rgba(30, 41, 59, ${this.life * 0.35})`;
+          ctx.strokeStyle = `rgba(255, 255, 255, ${this.life * 0.4})`;
           ctx.lineWidth = 1.2;
-          ctx.shadowColor = "rgba(15, 23, 42, 0.25)";
-          ctx.shadowBlur = 4;
+          ctx.shadowColor = "rgba(255, 255, 255, 0.6)";
+          ctx.shadowBlur = 6;
           ctx.stroke();
           ctx.restore();
         }
@@ -936,7 +843,7 @@
           this.decay = isBurst ? Math.random() * 0.038 + 0.024 : Math.random() * 0.018 + 0.014;
           this.colorPrefix = GLITTER_COLORS[Math.floor(Math.random() * GLITTER_COLORS.length)];
           this.twinkleSpeed = Math.random() * 16 + 10;
-          this.isSparkleCross = Math.random() > 0.65;
+          this.isSparkleCross = Math.random() > 0.70; // 30% chance for 4-point star glint
         }
         update() {
           this.x += this.vx;
@@ -952,7 +859,7 @@
 
           ctx.save();
           ctx.fillStyle = `${this.colorPrefix} ${alpha})`;
-          ctx.shadowColor = "rgba(15, 23, 42, 0.3)";
+          ctx.shadowColor = "rgba(255, 255, 255, 0.5)";
           ctx.shadowBlur = this.size * 2;
 
           if (this.isSparkleCross && this.life > 0.35) {
@@ -1005,7 +912,7 @@
           if (shockwaves.length > 0 || particles.length > 0) {
             animId = requestAnimationFrame(touchLoop);
           } else {
-            animId = null; // Sleep when idle to conserve 100% mobile battery
+            animId = null; // Sleep when idle to preserve 100% mobile battery
           }
         }
 
@@ -1034,6 +941,7 @@
         mouse.moved = true;
         lastMoveTime = Date.now();
 
+        // Spawn 2 to 4 micro stardust glitter specks per move event
         if (particles.length < 110) {
           const count = Math.floor(Math.random() * 3) + 2;
           for (let i = 0; i < count; i++) {
@@ -1042,10 +950,11 @@
         }
       }, { passive: true });
 
+      // Click burst: spawn 20 explosive particles radiating outward on mousedown
       window.addEventListener("mousedown", (e) => {
         lastMoveTime = Date.now();
         shockwaves.push(new Shockwave(e.clientX, e.clientY));
-        const burstCount = Math.floor(Math.random() * 8) + 18;
+        const burstCount = 20;
         for (let i = 0; i < burstCount; i++) {
           if (particles.length < 130) {
             particles.push(new GlitterParticle(e.clientX, e.clientY, true));
@@ -1056,6 +965,7 @@
       function desktopLoop() {
         ctx.clearRect(0, 0, width, height);
 
+        // Idle auto-fade: smoothly interpolate canvas opacity to 0 when mouse stops moving for > 700ms
         const isIdle = Date.now() - lastMoveTime > 700;
         masterAlpha += ((isIdle ? 0 : 1) - masterAlpha) * 0.12;
 
@@ -1063,10 +973,11 @@
         trail.y += (mouse.y - trail.y) * 0.22;
 
         if (masterAlpha > 0.01 && mouse.moved) {
+          // Ambient obsidian smoke trail under cursor
           const radial = ctx.createRadialGradient(trail.x, trail.y, 0, trail.x, trail.y, 36);
-          radial.addColorStop(0, `rgba(255, 255, 255, ${0.14 * masterAlpha})`);
+          radial.addColorStop(0, `rgba(255, 255, 255, ${0.12 * masterAlpha})`);
           radial.addColorStop(0.3, `rgba(148, 163, 184, ${0.08 * masterAlpha})`);
-          radial.addColorStop(0.6, `rgba(30, 41, 59, ${0.14 * masterAlpha})`);
+          radial.addColorStop(0.6, `rgba(15, 23, 42, ${0.16 * masterAlpha})`);
           radial.addColorStop(1, "transparent");
           ctx.fillStyle = radial;
           ctx.beginPath();
@@ -1074,12 +985,14 @@
           ctx.fill();
         }
 
+        // Draw and update shockwaves
         for (let i = shockwaves.length - 1; i >= 0; i--) {
           shockwaves[i].update();
           shockwaves[i].draw(ctx);
           if (shockwaves[i].life <= 0) shockwaves.splice(i, 1);
         }
 
+        // Update and draw particles
         for (let i = particles.length - 1; i >= 0; i--) {
           particles[i].update();
           particles[i].draw(ctx, masterAlpha);
