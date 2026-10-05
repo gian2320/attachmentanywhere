@@ -162,20 +162,6 @@
                 <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
             </a>
 
-            <!-- Viber -->
-            <a href="viber://chat?number=%2B639657689591" onclick="openDeepLink('viber://chat?number=%2B639657689591', 'viber://chat?number=%2B639657689591', event)" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50 border border-gray-100 ig-button group">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-purple-600 shadow-sm border border-gray-100">
-                        <i class="fa-brands fa-viber"></i>
-                    </div>
-                    <div>
-                        <div class="text-sm font-semibold text-gray-900">Viber</div>
-                        <div class="text-xs text-gray-500">Message on Viber</div>
-                    </div>
-                </div>
-                <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
-            </a>
-
             <!-- Google Mail Direct Link -->
             <a href="https://mail.google.com/mail/?view=cm&fs=1&to=gianchristianvillanueva@gmail.com" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50 border border-gray-100 ig-button group">
                 <div class="flex items-center gap-3">
@@ -185,6 +171,34 @@
                     <div>
                         <div class="text-sm font-semibold text-gray-900">Google Mail</div>
                         <div class="text-xs text-gray-500">gianchristianvillanueva@gmail.com</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
+            </a>
+
+            <!-- Portfolio -->
+            <a href="https://attachmentanywhere.com/portfolio" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50 border border-gray-100 ig-button group">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-indigo-600 shadow-sm border border-gray-100">
+                        <i class="fa-solid fa-briefcase"></i>
+                    </div>
+                    <div>
+                        <div class="text-sm font-semibold text-gray-900">Portfolio</div>
+                        <div class="text-xs text-gray-500">View recent projects & case studies</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
+            </a>
+
+            <!-- Brand Website -->
+            <a href="https://attachmentanywhere.com" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50 border border-gray-100 ig-button group">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-teal-600 shadow-sm border border-gray-100">
+                        <i class="fa-solid fa-globe"></i>
+                    </div>
+                    <div>
+                        <div class="text-sm font-semibold text-gray-900">Attachment Anywhere</div>
+                        <div class="text-xs text-gray-500">Official website & smart solutions</div>
                     </div>
                 </div>
                 <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
@@ -399,7 +413,7 @@ END:VCARD`;
             document.body.removeChild(textarea);
         }
 
-        // 4. Cross-Platform App Deep Linking (Messenger, Instagram, Viber)
+        // 4. Cross-Platform App Deep Linking (Messenger, Instagram)
         function openDeepLink(appUri, webUrl, e) {
             if (e) e.preventDefault();
 

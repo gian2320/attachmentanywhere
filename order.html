@@ -58,8 +58,8 @@
           <span class="text-neutral-500 text-[11px]" id="summary-variant-name">Original Design (1 Unit)</span>
         </div>
         <div class="text-right">
-          <span class="font-bold text-neutral-900 block" id="summary-subtotal">₱1,200.00</span>
-          <a href="products.html" class="text-[10px] text-neutral-400 hover:text-black underline uppercase tracking-wider min-h-[36px] inline-flex items-center">Change Item</a>
+          <span class="font-bold text-neutral-900 block" id="summary-subtotal">₱900.00</span>
+          <a href="products.html#executive" id="change-item-link" class="text-[10px] text-neutral-400 hover:text-black underline uppercase tracking-wider min-h-[36px] inline-flex items-center">Change Item</a>
         </div>
       </div>
 
@@ -71,10 +71,21 @@
             <label class="block text-[10px] font-bold uppercase tracking-widest text-neutral-400 mb-2">Product Selection</label>
             <div class="relative">
               <select id="productSelect" class="w-full bg-[#f4f4f5] border border-transparent focus:border-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-1 rounded-2xl px-5 py-4 text-[16px] sm:text-sm font-bold text-neutral-900 outline-none transition-colors appearance-none cursor-pointer">
-                <option value="executive" data-price="1200">Smart Executive Card (₱1,200)</option>
-                <option value="reviewshield" data-price="500">Google ReviewShield™ (₱500)</option>
-                <option value="hub" data-price="2500">Business Smart Hub (₱2,500)</option>
+                <option value="executive" data-price="900">Smart Executive Card (₱900)</option>
+                <option value="reviewshield" data-price="350">Google ReviewShield™ (₱350)</option>
+                <option value="hub" data-price="2000">Business Smart Hub (₱2,000)</option>
               </select>
+            </div>
+          </div>
+
+          <!-- Variant / Customization Selection -->
+          <div id="variant-selector-wrapper">
+            <label class="block text-[10px] font-bold uppercase tracking-widest text-neutral-400 mb-2">Edition / Customization</label>
+            <div id="variant-btn-group" class="grid grid-cols-2 gap-3">
+              <!-- Dynamically populated variant buttons -->
+            </div>
+            <div id="custom-proof-notice" class="hidden mt-3 p-3.5 bg-neutral-100 border border-neutral-200 rounded-xl text-xs text-neutral-600 leading-relaxed">
+              <!-- Dynamic proofing copy -->
             </div>
           </div>
 
@@ -161,7 +172,7 @@
         <div class="p-4 rounded-2xl bg-[#f4f4f5] flex flex-col gap-2 text-xs">
           <div class="flex justify-between text-neutral-500">
             <span>Subtotal</span>
-            <span id="breakdown-subtotal">₱1,200.00</span>
+            <span id="breakdown-subtotal">₱900.00</span>
           </div>
           <div class="flex justify-between text-neutral-500">
             <span>Shipping</span>
@@ -169,7 +180,7 @@
           </div>
           <div class="border-t border-neutral-200 pt-2 flex justify-between font-bold text-neutral-900 text-sm">
             <span>Total Payable</span>
-            <span id="breakdown-total">₱1,250.00</span>
+            <span id="breakdown-total">₱950.00</span>
           </div>
         </div>
 
@@ -191,7 +202,7 @@
     <div id="mobile-sticky-checkout" class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-neutral-200 px-5 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] flex items-center justify-between shadow-2xl">
       <div class="flex flex-col">
         <span class="text-[10px] font-bold uppercase tracking-wider text-neutral-400">Total Payable</span>
-        <span id="mobile-sticky-total" class="text-lg font-black tracking-tight text-neutral-900">₱1,250.00</span>
+        <span id="mobile-sticky-total" class="text-lg font-black tracking-tight text-neutral-900">₱950.00</span>
       </div>
       <button type="button" onclick="document.getElementById('paymongoBtn').click()" class="paymongo-bg paymongo-hover text-white px-6 py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider shadow-md active:scale-95 transition-all flex items-center gap-2 cursor-pointer">
         <span>Pay Now</span>
@@ -334,7 +345,41 @@
       }, 3500);
     }
 
-    // 3. CART RETRIEVAL & PRICE CALCULATION
+    // 3. CANONICAL CATALOG DEFINITION
+    const CATALOG = {
+      executive: {
+        id: 'executive',
+        name: 'Smart Executive Card',
+        basePrice: 900,
+        variants: [
+          { id: 'original', name: 'Original Design', price: 900, extra: '₱900.00' },
+          { id: 'custom', name: 'Custom Artwork', price: 1200, extra: '+₱300.00' }
+        ],
+        customNotice: "<strong>Custom Artwork:</strong> Send your logo, name, or custom artwork directly to our team on <a href='https://m.me/attachmentanywhere' target='_blank' rel='noopener noreferrer' class='font-bold underline text-black hover:text-neutral-600 min-h-[44px] inline-flex items-center'>Messenger</a> for digital proofing."
+      },
+      reviewshield: {
+        id: 'reviewshield',
+        name: 'Google ReviewShield™',
+        basePrice: 350,
+        variants: [
+          { id: 'original', name: 'Original Design', price: 350, extra: '₱350.00' },
+          { id: 'custom', name: 'Store Branding', price: 600, extra: '+₱250.00' }
+        ],
+        customNotice: "<strong>Store Branding:</strong> Want your business logo or custom graphic printed on the standee? Connect with our design desk on <a href='https://m.me/attachmentanywhere' target='_blank' rel='noopener noreferrer' class='font-bold underline text-black hover:text-neutral-600 min-h-[44px] inline-flex items-center'>Messenger</a>."
+      },
+      hub: {
+        id: 'hub',
+        name: 'Business Smart Hub',
+        basePrice: 2000,
+        variants: [
+          { id: 'original', name: 'Original Design', price: 2000, extra: '₱2,000.00' },
+          { id: 'custom', name: 'Full Store Branding', price: 2500, extra: '+₱500.00' }
+        ],
+        customNotice: "<strong>Store Branding:</strong> Require custom brand layouts, payment codes, or custom links? Connect on <a href='https://m.me/attachmentanywhere' target='_blank' rel='noopener noreferrer' class='font-bold underline text-black hover:text-neutral-600 min-h-[44px] inline-flex items-center'>Messenger</a>."
+      }
+    };
+
+    // 4. CART RETRIEVAL & REACTIVE PRICE CALCULATION
     const productSelect = document.getElementById('productSelect');
     const shippingSelect = document.getElementById('shippingSelect');
     const qtyVal = document.getElementById('qty-val');
@@ -344,10 +389,15 @@
     const summaryName = document.getElementById('summary-product-name');
     const summaryVariant = document.getElementById('summary-variant-name');
     const summarySubtotal = document.getElementById('summary-subtotal');
+    const changeItemLink = document.getElementById('change-item-link');
 
     const breakdownSubtotal = document.getElementById('breakdown-subtotal');
     const breakdownShipping = document.getElementById('breakdown-shipping');
     const breakdownTotal = document.getElementById('breakdown-total');
+    const mobileStickyTotal = document.getElementById('mobile-sticky-total');
+
+    const variantBtnGroup = document.getElementById('variant-btn-group');
+    const customProofNotice = document.getElementById('custom-proof-notice');
 
     // Dynamic field sections
     const sectionExecutive = document.getElementById('dynamic-executive');
@@ -355,8 +405,92 @@
     const sectionHub = document.getElementById('dynamic-hub');
 
     let currentQty = 1;
-    let unitPrice = 1200;
+    let unitPrice = 900;
     let currentVariant = 'Original Design';
+
+    // Renders interactive variant buttons for selected product
+    function renderVariantButtons(productId) {
+      const product = CATALOG[productId] || CATALOG.executive;
+      if (!variantBtnGroup) return;
+      variantBtnGroup.innerHTML = '';
+
+      product.variants.forEach(variant => {
+        const isSelected = (currentVariant === variant.name) || 
+          (variant.id === 'custom' && (currentVariant === 'Customized Card' || currentVariant.includes('Custom') || currentVariant.includes('Branding')));
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `variant-choice-btn min-h-[50px] py-2.5 px-3 rounded-xl border-2 font-bold text-xs uppercase tracking-wider transition-all active:scale-[0.98] cursor-pointer text-center flex flex-col items-center justify-center ${
+          isSelected 
+            ? 'border-black bg-black text-white shadow-xs' 
+            : 'border-neutral-200 bg-white text-neutral-600 hover:border-black hover:text-black'
+        }`;
+        
+        btn.innerHTML = `
+          <span>${variant.name}</span>
+          <span class="text-[10px] font-normal ${isSelected ? 'opacity-80' : 'text-neutral-500'}">${variant.extra}</span>
+        `;
+
+        btn.addEventListener('click', () => {
+          selectVariant(productId, variant.name, variant.price);
+        });
+
+        variantBtnGroup.appendChild(btn);
+      });
+
+      updateCustomNotice(productId);
+    }
+
+    function selectVariant(productId, variantName, price) {
+      currentVariant = variantName;
+      unitPrice = price;
+      
+      const product = CATALOG[productId] || CATALOG.executive;
+      const buttons = variantBtnGroup.querySelectorAll('.variant-choice-btn');
+      buttons.forEach((btn, idx) => {
+        const v = product.variants[idx];
+        const isSelected = v && v.name === currentVariant;
+        btn.className = `variant-choice-btn min-h-[50px] py-2.5 px-3 rounded-xl border-2 font-bold text-xs uppercase tracking-wider transition-all active:scale-[0.98] cursor-pointer text-center flex flex-col items-center justify-center ${
+          isSelected 
+            ? 'border-black bg-black text-white shadow-xs' 
+            : 'border-neutral-200 bg-white text-neutral-600 hover:border-black hover:text-black'
+        }`;
+        const extraSpan = btn.querySelector('span:last-child');
+        if (extraSpan) {
+          extraSpan.className = `text-[10px] font-normal ${isSelected ? 'opacity-80' : 'text-neutral-500'}`;
+        }
+      });
+
+      updateCustomNotice(productId);
+      syncCartStorage();
+      recalculateTotals();
+    }
+
+    function updateCustomNotice(productId) {
+      if (!customProofNotice) return;
+      const product = CATALOG[productId] || CATALOG.executive;
+      const isCustom = currentVariant !== 'Original Design';
+      if (isCustom && product.customNotice) {
+        customProofNotice.innerHTML = product.customNotice;
+        customProofNotice.classList.remove('hidden');
+      } else {
+        customProofNotice.classList.add('hidden');
+      }
+    }
+
+    function syncCartStorage() {
+      const product = CATALOG[productSelect.value] || CATALOG.executive;
+      const cartItem = {
+        productId: product.id,
+        productName: product.name,
+        variant: currentVariant,
+        unitPrice: unitPrice,
+        quantity: currentQty,
+        totalPrice: unitPrice * currentQty
+      };
+      localStorage.setItem('attachment_cart', JSON.stringify(cartItem));
+      updateNavCartBadge();
+    }
 
     // Load stored cart or URL parameters
     function loadSavedCart() {
@@ -364,25 +498,47 @@
       const urlParams = new URLSearchParams(window.location.search);
       const passedProduct = urlParams.get('product');
 
+      let targetProduct = 'executive';
+
       if (savedCart) {
         try {
           const item = JSON.parse(savedCart);
-          productSelect.value = item.productId || 'executive';
-          currentQty = Number(item.quantity) || 1;
-          unitPrice = Number(item.unitPrice) || 1200;
-          currentVariant = item.variant || 'Original Design';
+          if (item.productId && CATALOG[item.productId]) {
+            targetProduct = item.productId;
+          }
+          currentQty = Math.max(1, Number(item.quantity) || 1);
+          
+          const product = CATALOG[targetProduct];
+          const rawVariant = item.variant || 'Original Design';
+          const matchedVariant = product.variants.find(v => 
+            v.name.toLowerCase() === rawVariant.toLowerCase() ||
+            (v.id === 'custom' && (rawVariant === 'Customized Card' || rawVariant.includes('Custom') || rawVariant.includes('Branding')))
+          ) || product.variants[0];
+
+          currentVariant = matchedVariant.name;
+          unitPrice = matchedVariant.price;
         } catch (e) {
           console.error("Cart memory parse error:", e);
         }
-      } else if (passedProduct && ["executive", "hub", "reviewshield"].includes(passedProduct)) {
-        productSelect.value = passedProduct;
+      } else if (passedProduct && CATALOG[passedProduct]) {
+        targetProduct = passedProduct;
+        const product = CATALOG[targetProduct];
+        currentVariant = product.variants[0].name;
+        unitPrice = product.variants[0].price;
+      } else {
+        const product = CATALOG.executive;
+        currentVariant = product.variants[0].name;
+        unitPrice = product.variants[0].price;
       }
 
+      productSelect.value = targetProduct;
       qtyVal.innerText = currentQty;
-      updateFormFields(productSelect.value);
+      updateFormFields(targetProduct, true);
     }
 
-    function updateFormFields(val) {
+    function updateFormFields(val, isInitial = false) {
+      const product = CATALOG[val] || CATALOG.executive;
+
       // Toggle dynamic customizer inputs
       sectionExecutive.classList.add('hidden');
       sectionReviewShield.classList.add('hidden');
@@ -392,32 +548,37 @@
       if (val === 'reviewshield') sectionReviewShield.classList.remove('hidden');
       if (val === 'hub') sectionHub.classList.remove('hidden');
 
-      // Update unit price based on selection if not loaded from customized cart
-      const selectedOption = productSelect.options[productSelect.selectedIndex];
-      if (!localStorage.getItem('attachment_cart') || productSelect.value !== JSON.parse(localStorage.getItem('attachment_cart') || '{}').productId) {
-        unitPrice = Number(selectedOption.getAttribute('data-price')) || 1200;
-        currentVariant = 'Standard Order';
+      if (changeItemLink) {
+        changeItemLink.href = `products.html#${product.id}`;
       }
 
+      // If switching products directly in dropdown (not initial page load), default to Original Design
+      if (!isInitial) {
+        currentVariant = product.variants[0].name;
+        unitPrice = product.variants[0].price;
+        syncCartStorage();
+      }
+
+      renderVariantButtons(val);
       recalculateTotals();
     }
 
     function recalculateTotals() {
+      const product = CATALOG[productSelect.value] || CATALOG.executive;
       const selectedShipping = shippingSelect.options[shippingSelect.selectedIndex];
       const shippingFee = Number(selectedShipping.getAttribute('data-fee')) || 0;
       const subtotal = unitPrice * currentQty;
       const grandTotal = subtotal + shippingFee;
 
       // Update UI displays
-      summaryName.innerText = productSelect.options[productSelect.selectedIndex].text.split('(')[0].trim();
-      summaryVariant.innerText = `${currentVariant} • ${currentQty} Unit${currentQty > 1 ? 's' : ''}`;
+      summaryName.innerText = product.name;
+      summaryVariant.innerText = `${currentVariant} (${currentQty} Unit${currentQty > 1 ? 's' : ''})`;
       summarySubtotal.innerText = `₱${subtotal.toLocaleString('en-US')}.00`;
 
       breakdownSubtotal.innerText = `₱${subtotal.toLocaleString('en-US')}.00`;
       breakdownShipping.innerText = shippingFee > 0 ? `₱${shippingFee.toFixed(2)}` : 'FREE';
       breakdownTotal.innerText = `₱${grandTotal.toLocaleString('en-US')}.00`;
 
-      const mobileStickyTotal = document.getElementById('mobile-sticky-total');
       if (mobileStickyTotal) {
         mobileStickyTotal.innerText = `₱${grandTotal.toLocaleString('en-US')}.00`;
       }
@@ -427,6 +588,7 @@
     qtyPlus.addEventListener('click', () => {
       currentQty++;
       qtyVal.innerText = currentQty;
+      syncCartStorage();
       recalculateTotals();
     });
 
@@ -434,12 +596,13 @@
       if (currentQty > 1) {
         currentQty--;
         qtyVal.innerText = currentQty;
+        syncCartStorage();
         recalculateTotals();
       }
     });
 
     productSelect.addEventListener('change', (e) => {
-      updateFormFields(e.target.value);
+      updateFormFields(e.target.value, false);
     });
 
     shippingSelect.addEventListener('change', recalculateTotals);
@@ -447,23 +610,61 @@
     // Initial load
     loadSavedCart();
 
-    // 4. PAYMONGO CHECKOUT DISPATCHER
+    // 5. PAYMONGO CHECKOUT DISPATCHER
     const paymongoBtn = document.getElementById("paymongoBtn");
     const paymongoBtnText = document.getElementById("paymongoBtnText");
-    
-    paymongoBtn.addEventListener("click", async () => {
-      const customerName = document.getElementById('custName').value.trim();
-      const customerPhone = document.getElementById('custPhone').value.trim();
-      const customerAddress = document.getElementById('custAddress').value.trim();
+    const custNameInput = document.getElementById('custName');
+    const custPhoneInput = document.getElementById('custPhone');
+    const custAddressInput = document.getElementById('custAddress');
 
-      if (!customerName || !customerPhone || !customerAddress) {
-        showToast("Please provide your Full Name, Phone Number, and Complete Delivery Address.", false);
+    // Remove red error ring as user types
+    [custNameInput, custPhoneInput, custAddressInput].forEach(inp => {
+      if (inp) {
+        inp.addEventListener('input', () => {
+          inp.classList.remove('border-red-500');
+        });
+      }
+    });
+
+    paymongoBtn.addEventListener("click", async () => {
+      const customerName = custNameInput.value.trim();
+      const customerPhone = custPhoneInput.value.trim();
+      const customerAddress = custAddressInput.value.trim();
+
+      let hasError = false;
+      if (!customerName) {
+        custNameInput.classList.add('border-red-500');
+        hasError = true;
+      }
+      if (!customerAddress) {
+        custAddressInput.classList.add('border-red-500');
+        hasError = true;
+      }
+      if (!customerPhone) {
+        custPhoneInput.classList.add('border-red-500');
+        hasError = true;
+      }
+
+      if (hasError) {
+        showToast("Please provide your Full Name, Phone Number, and Delivery Address.", false);
         return;
       }
 
+      // Validate Philippine Mobile Format
+      const cleanPhone = customerPhone.replace(/[\s\-\(\)]/g, '');
+      const phPhoneRegex = /^(09|\+639|639)\d{9}$/;
+      if (!phPhoneRegex.test(cleanPhone)) {
+        custPhoneInput.classList.add('border-red-500');
+        custPhoneInput.focus();
+        showToast("Please enter a valid Philippine mobile number (e.g., 0917 123 4567 or +639171234567).", false);
+        return;
+      }
+
+      const product = CATALOG[productSelect.value] || CATALOG.executive;
+
       // Collect specific customization notes
       let customDetails = {};
-      if (productSelect.value === 'executive') {
+      if (product.id === 'executive') {
         const checkedChannels = Array.from(document.querySelectorAll('.social-chk:checked')).map(c => c.value);
         customDetails = {
           profileName: document.getElementById('execProfileName').value.trim(),
@@ -471,11 +672,11 @@
           channels: checkedChannels,
           urls: document.getElementById('execUrls').value.trim()
         };
-      } else if (productSelect.value === 'reviewshield') {
+      } else if (product.id === 'reviewshield') {
         customDetails = {
           googleMapLink: document.getElementById('reviewLink').value.trim()
         };
-      } else if (productSelect.value === 'hub') {
+      } else if (product.id === 'hub') {
         customDetails = {
           brand: document.getElementById('hubBrand').value.trim(),
           features: document.getElementById('hubFeatures').value.trim(),
@@ -489,8 +690,8 @@
       const totalAmount = subtotal + shippingFee;
 
       const orderPayload = {
-        productId: productSelect.value,
-        productName: productSelect.options[productSelect.selectedIndex].text.split('(')[0].trim(),
+        productId: product.id,
+        productName: product.name,
         variant: currentVariant,
         unitPrice: unitPrice,
         quantity: currentQty,
@@ -499,74 +700,11 @@
         totalAmount: totalAmount,
         customer: {
           name: customerName,
-          phone: customerPhone,
+          phone: cleanPhone,
           address: customerAddress
         },
         customization: customDetails
       };
-
-      // Synchronize with Meadhall Operations Production Pipeline
-      try {
-        const storedOrders = JSON.parse(localStorage.getItem('attachment_meadhall_orders') || '[]');
-        const storedSerials = JSON.parse(localStorage.getItem('attachment_meadhall_serials') || '[]');
-        const storedAudit = JSON.parse(localStorage.getItem('attachment_meadhall_audit_logs') || '[]');
-        const now = new Date();
-        const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        const refId = 'AA-' + Math.floor(100000 + Math.random() * 900000);
-        const yy = String(now.getFullYear()).slice(-2);
-        const mm = String(now.getMonth() + 1).padStart(2, '0');
-        const dd = String(now.getDate()).padStart(2, '0');
-        const randomPart = Math.floor(100000 + Math.random() * 900000);
-        const autoSerial = `${yy}${mm}${dd}${randomPart}`;
-        const targetRoute = `https://attachmentanywhere.com/c/${autoSerial}`;
-
-        const meadhallOrder = {
-          ref: refId,
-          date: `Today, ${timeStr}`,
-          customer: {
-            name: customerName,
-            phone: customerPhone,
-            address: customerAddress
-          },
-          product: orderPayload.productName,
-          variant: currentVariant,
-          qty: currentQty,
-          total: totalAmount,
-          shipping: `${selectedShipping.text} (+₱${shippingFee})`,
-          status: "Pending",
-          specs: {
-            ...customDetails,
-            targetUrl: targetRoute
-          }
-        };
-
-        // Mirror Order
-        storedOrders.unshift(meadhallOrder);
-        localStorage.setItem('attachment_meadhall_orders', JSON.stringify(storedOrders));
-
-        // Mirror Serial Entry (Awaiting Hardware Write)
-        const brandName = customDetails?.company || customDetails?.businessName || customDetails?.brand || "Attachment Anywhere";
-        storedSerials.unshift({
-          serial: autoSerial,
-          client: customerName,
-          brand: brandName,
-          targetUrl: targetRoute,
-          localUrl: `aa${autoSerial}.html`,
-          lastWritten: "Pending",
-          status: "Pending Write"
-        });
-        localStorage.setItem('attachment_meadhall_serials', JSON.stringify(storedSerials));
-
-        // Mirror Audit Log Entry
-        storedAudit.unshift({
-          timestamp: timeStr,
-          action: 'ORDER_SUBMITTED',
-          details: `Order ${refId} (${orderPayload.productName}) submitted by ${customerName} (₱${totalAmount.toLocaleString('en-US')})`
-        });
-        localStorage.setItem('attachment_meadhall_audit_logs', JSON.stringify(storedAudit.slice(0, 150)));
-      } catch (e) {
-        console.warn('Could not mirror order to Meadhall local storage:', e);
-      }
 
       paymongoBtnText.innerText = "Securing Checkout Gateway...";
       paymongoBtn.classList.add("opacity-70", "cursor-not-allowed");
@@ -582,6 +720,69 @@
         const data = await response.json();
 
         if (response.ok && data.checkoutUrl) {
+          // Synchronize with Meadhall Operations Production Pipeline only upon validated checkout
+          try {
+            const storedOrders = JSON.parse(localStorage.getItem('attachment_meadhall_orders') || '[]');
+            const storedSerials = JSON.parse(localStorage.getItem('attachment_meadhall_serials') || '[]');
+            const storedAudit = JSON.parse(localStorage.getItem('attachment_meadhall_audit_logs') || '[]');
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const refId = 'AA-' + Math.floor(100000 + Math.random() * 900000);
+            const yy = String(now.getFullYear()).slice(-2);
+            const mm = String(now.getMonth() + 1).padStart(2, '0');
+            const dd = String(now.getDate()).padStart(2, '0');
+            const randomPart = Math.floor(100000 + Math.random() * 900000);
+            const autoSerial = `${yy}${mm}${dd}${randomPart}`;
+            const targetRoute = `https://attachmentanywhere.com/c/${autoSerial}`;
+
+            const meadhallOrder = {
+              ref: refId,
+              date: `Today, ${timeStr}`,
+              customer: {
+                name: customerName,
+                phone: cleanPhone,
+                address: customerAddress
+              },
+              product: orderPayload.productName,
+              variant: currentVariant,
+              qty: currentQty,
+              total: totalAmount,
+              shipping: `${selectedShipping.text} (+₱${shippingFee})`,
+              status: "Pending",
+              specs: {
+                ...customDetails,
+                targetUrl: targetRoute
+              }
+            };
+
+            // Mirror Order
+            storedOrders.unshift(meadhallOrder);
+            localStorage.setItem('attachment_meadhall_orders', JSON.stringify(storedOrders));
+
+            // Mirror Serial Entry (Awaiting Card Write)
+            const brandName = customDetails?.brand || customDetails?.profileName || customerName || "Attachment Anywhere";
+            storedSerials.unshift({
+              serial: autoSerial,
+              client: customerName,
+              brand: brandName,
+              targetUrl: targetRoute,
+              localUrl: `aa${autoSerial}.html`,
+              lastWritten: "Pending",
+              status: "Pending Write"
+            });
+            localStorage.setItem('attachment_meadhall_serials', JSON.stringify(storedSerials));
+
+            // Mirror Audit Log Entry
+            storedAudit.unshift({
+              timestamp: timeStr,
+              action: 'ORDER_SUBMITTED',
+              details: `Order ${refId} (${orderPayload.productName}) submitted by ${customerName} (₱${totalAmount.toLocaleString('en-US')})`
+            });
+            localStorage.setItem('attachment_meadhall_audit_logs', JSON.stringify(storedAudit.slice(0, 150)));
+          } catch (e) {
+            console.warn('Could not mirror order to Meadhall local storage:', e);
+          }
+
           localStorage.removeItem('attachment_cart');
           updateNavCartBadge();
           window.location.href = data.checkoutUrl;
@@ -593,7 +794,7 @@
         }
       } catch (error) {
         console.error("PayMongo Error:", error);
-        showToast("Something went wrong establishing payment link. Please check Netlify configuration.", false);
+        showToast("Unable to reach payment gateway. Please verify network connection.", false);
         paymongoBtnText.innerText = "Proceed to PayMongo";
         paymongoBtn.classList.remove("opacity-70", "cursor-not-allowed");
         paymongoBtn.disabled = false;

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Meadhall Operations // Attachment Anywhere</title>
+  <title>MEADHALL // Operations & Orders</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Mobile PWA Standalone Meta Tags -->
@@ -35,53 +35,71 @@
 <body class="bg-[#f4f4f5] text-neutral-900 font-sans antialiased selection:bg-black selection:text-white flex flex-col min-h-screen overflow-x-hidden">
 
   <!-- Meadhall Boot Splash Screen -->
-  <div id="meadhall-boot-screen" class="fixed inset-0 z-[9999] flex items-center justify-center bg-[#08080a] transition-opacity duration-700 pointer-events-auto">
-    <div class="w-40 sm:w-52 max-w-[70vw]">
-      <video 
-        id="loaderCatVideo" 
-        src="Loader cat.webm" 
-        autoplay 
-        muted 
-        playsinline 
-        loop 
-        class="w-full h-auto object-contain select-none pointer-events-none"
-      ></video>
+  <div id="meadhall-boot-screen" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#08080a] transition-opacity duration-700 pointer-events-auto select-none">
+    <div class="flex flex-col items-center justify-center space-y-6">
+      
+      <!-- Founder Memoji Container -->
+      <div class="relative w-36 h-36 sm:w-44 sm:h-44 flex items-center justify-center">
+        <!-- Ambient Radial Glow -->
+        <div class="absolute inset-0 bg-white/[0.04] rounded-full blur-2xl pointer-events-none"></div>
+        <img 
+          id="boot-memoji-img" 
+          src="avatar/frame_48_delay-0.05s.webp" 
+          alt="Gian Memoji" 
+          class="w-32 h-32 sm:w-40 sm:h-40 object-contain select-none pointer-events-none drop-shadow-[0_12px_30px_rgba(0,0,0,0.8)] filter transition-transform duration-300"
+        />
+      </div>
+
+      <div class="flex flex-col items-center space-y-2.5">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span id="boot-status-text" class="text-[11px] font-mono tracking-[0.25em] uppercase text-white font-bold">MEADHALL // BOOTING</span>
+        </div>
+        
+        <!-- Minimalist Progress Bar -->
+        <div class="w-36 sm:w-44 h-1 bg-[#16181f] rounded-full overflow-hidden border border-neutral-800">
+          <div id="boot-progress-bar" class="h-full bg-white rounded-full transition-all duration-500 ease-out" style="width: 25%;"></div>
+        </div>
+        
+        <span id="boot-sub-text" class="text-[9px] font-mono uppercase tracking-widest text-neutral-500">Loading operations bench...</span>
+      </div>
     </div>
   </div>
 
   <!-- Founder Auth Gate -->
-  <div id="auth-gate" class="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center p-6 select-none">
+  <div id="auth-gate" class="fixed inset-0 z-[100] bg-[#08080a] flex flex-col items-center justify-center p-6 select-none">
     <div class="w-full max-w-xs flex flex-col items-center text-center space-y-6 fade-in">
       
       <!-- Attachment Anywhere Logo & Meadhall Header -->
       <div class="flex flex-col items-center space-y-3">
-        <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-16 md:h-20 w-auto object-contain" />
-        <h1 class="text-xl md:text-2xl font-black uppercase tracking-tight text-neutral-900">MEADHALL</h1>
+        <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-16 md:h-20 w-auto object-contain brightness-0 invert" style="filter: brightness(0) invert(1);" />
+        <h1 class="text-xl md:text-2xl font-black uppercase tracking-tight text-white">MEADHALL</h1>
+        <p class="text-[10px] font-mono uppercase tracking-[0.25em] text-neutral-400">Founder Auth Lock</p>
       </div>
 
-      <!-- Minimalist Form -->
+      <!-- Minimalist Numeric PIN Form -->
       <form id="founder-login-form" onsubmit="handleDirectAuth(event)" class="w-full space-y-3">
-        <input type="hidden" id="auth-username" value="aa.founder">
-        <input type="checkbox" id="auth-remember" checked class="hidden">
-
         <div class="relative w-full">
           <input 
             type="password" 
             id="auth-password" 
             required 
-            placeholder="Passcode" 
+            placeholder="PIN" 
+            inputmode="numeric"
+            pattern="[0-9]*"
+            maxlength="8"
             autocomplete="current-password" 
             autofocus 
-            class="w-full bg-[#f4f4f5] border border-neutral-200 focus:border-black focus-visible:ring-2 focus-visible:ring-neutral-900 rounded-xl px-5 py-3.5 text-[16px] sm:text-xs text-neutral-900 text-center outline-none transition-all placeholder:text-neutral-400 font-mono tracking-widest"
+            class="w-full bg-[#141418] border border-neutral-800 focus:border-white focus-visible:ring-1 focus-visible:ring-white rounded-xl px-5 py-3.5 text-base sm:text-xs text-white text-center outline-none transition-all placeholder:text-neutral-500 font-mono tracking-widest"
           />
         </div>
 
-        <button type="submit" class="w-full min-h-[48px] bg-black text-white text-xs font-bold uppercase tracking-widest py-3.5 rounded-xl hover:bg-neutral-800 active:scale-[0.98] transition-all cursor-pointer shadow-xs flex items-center justify-center">
-          Enter
+        <button type="submit" class="w-full min-h-[48px] bg-white text-black text-xs font-bold uppercase tracking-widest py-3.5 rounded-xl hover:bg-neutral-200 active:scale-[0.98] transition-all cursor-pointer shadow-xs flex items-center justify-center">
+          Unlock Dashboard
         </button>
 
-        <div id="auth-error-msg" class="hidden text-xs text-red-600 text-center font-mono pt-1">
-          Invalid passcode.
+        <div id="auth-error-msg" class="hidden text-xs text-rose-500 text-center font-mono pt-1">
+          Access Denied. Invalid PIN.
         </div>
       </form>
 
@@ -95,7 +113,7 @@
       <!-- Brand Logo -->
       <a href="index.html" class="flex items-center gap-4 min-h-[44px]">
         <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-10 md:h-16 w-auto object-contain" />
-        <span class="hidden sm:inline-block font-mono text-[10px] tracking-[0.25em] uppercase text-neutral-400 border-l border-neutral-300 pl-4">Operations Studio</span>
+        <span class="hidden sm:inline-block font-mono text-[10px] tracking-[0.25em] uppercase text-neutral-400 border-l border-neutral-300 pl-4">Ops & Burner Bench</span>
       </a>
       
       <!-- Desktop Navigation Links & Operator Profile -->
@@ -109,11 +127,12 @@
         <div class="flex items-center gap-3 pl-4 border-l border-neutral-200">
           <div class="border border-neutral-200 bg-neutral-50 text-neutral-800 px-3.5 py-1.5 rounded-md text-[10px] font-mono uppercase tracking-wider flex items-center gap-2 select-none shadow-xs">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-            <span id="active-user-display" class="font-bold">aa.founder</span>
+            <span id="active-user-display" class="font-bold">Owner Active</span>
           </div>
 
-          <button onclick="lockFounderGate()" title="Lock Session" class="w-9 h-9 border border-neutral-200 hover:border-black rounded-lg bg-white text-neutral-600 hover:text-black active:scale-95 transition-all cursor-pointer shadow-xs flex items-center justify-center">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+          <button onclick="lockFounderGate()" title="Lock / Logout" class="border border-neutral-200 hover:border-black rounded-lg bg-white px-3 py-1.5 text-neutral-700 hover:text-black active:scale-95 transition-all cursor-pointer shadow-xs flex items-center gap-1.5 text-xs font-mono font-bold">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            <span>Lock / Logout</span>
           </button>
         </div>
       </div>
@@ -132,8 +151,8 @@
       <a href="products.html" class="min-h-[44px] flex items-center text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Products</a>
       <a href="order.html" class="min-h-[44px] flex items-center text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Customer View</a>
       <div class="border-t border-neutral-200 pt-3 flex items-center justify-between">
-        <span class="text-[10px] uppercase tracking-widest text-neutral-500">Operator: aa.founder</span>
-        <button onclick="lockFounderGate()" class="min-h-[44px] flex items-center text-xs font-bold uppercase text-black hover:underline tracking-wider">Lock Session</button>
+        <span class="text-[10px] uppercase tracking-widest text-neutral-500">Owner Session</span>
+        <button onclick="lockFounderGate()" class="min-h-[44px] flex items-center text-xs font-bold uppercase text-black hover:underline tracking-wider">Lock / Logout</button>
       </div>
     </div>
   </nav>
@@ -146,8 +165,8 @@
     <!-- SUB-HEADER: OPERATIONS STATUS BAR -->
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-neutral-200">
       <div>
-        <span class="text-[10px] font-mono uppercase tracking-[0.25em] text-neutral-400 block mb-1">Attachment Anywhere // Operations</span>
-        <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-neutral-900 uppercase">Operations Studio</h1>
+        <span class="text-[10px] font-mono uppercase tracking-[0.25em] text-neutral-400 block mb-1">Attachment Anywhere Back-Office</span>
+        <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-neutral-900 uppercase">Operations & Orders</h1>
       </div>
 
       <div class="flex flex-wrap items-center gap-2.5">
@@ -174,37 +193,46 @@
     <!-- 1. METRICS CARDS -->
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       
+      <!-- Card 1: GROSS SALES -->
       <div class="bg-white border border-neutral-200/80 p-6 rounded-2xl flex flex-col justify-between shadow-xs">
-        <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-600 font-medium">Gross Realized Value</span>
+        <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-600 font-bold">GROSS SALES</span>
         <div class="mt-4 flex items-baseline justify-between">
           <span id="stat-revenue" class="text-3xl sm:text-4xl font-black tracking-tight text-neutral-900">₱0.00</span>
-          <span class="text-[10px] font-mono text-neutral-500 uppercase">Gross</span>
+          <span class="text-[10px] font-mono text-neutral-500 uppercase">Completed</span>
         </div>
       </div>
 
+      <!-- Card 2: PENDING QUEUE -->
       <div class="bg-white border border-neutral-200/80 p-6 rounded-2xl flex flex-col justify-between shadow-xs">
-        <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-600 font-medium">Registered Serials</span>
-        <div class="mt-4 flex items-baseline justify-between">
-          <span id="stat-serials" class="text-3xl sm:text-4xl font-black tracking-tight text-neutral-900">0</span>
-          <span class="text-[10px] font-mono text-neutral-500 uppercase">Active</span>
-        </div>
-      </div>
-
-      <div class="bg-white border border-neutral-200/80 p-6 rounded-2xl flex flex-col justify-between shadow-xs">
-        <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-600 font-medium">Audit Status</span>
-        <div class="mt-4 flex items-baseline justify-between">
-          <span id="stat-health" class="text-3xl sm:text-4xl font-black tracking-tight text-neutral-900">100%</span>
-          <span id="stat-health-label" class="text-[10px] font-mono text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-md font-bold">0 Errors</span>
-        </div>
-      </div>
-
-      <div class="bg-white border border-neutral-200/80 p-6 rounded-2xl flex flex-col justify-between shadow-xs">
-        <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-600 font-medium">Awaiting Write</span>
+        <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-600 font-bold">PENDING QUEUE</span>
         <div class="mt-4 flex items-baseline justify-between">
           <span id="stat-pending" class="text-3xl sm:text-4xl font-black tracking-tight text-neutral-900">0</span>
-          <span class="text-[10px] font-mono text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-md font-bold">Queue</span>
+          <span id="stat-pending-label" class="text-[10px] font-mono text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-md font-bold">Awaiting Burn</span>
         </div>
       </div>
+
+      <!-- Card 3: VERIFIED & PACKED -->
+      <div class="bg-white border border-neutral-200/80 p-6 rounded-2xl flex flex-col justify-between shadow-xs">
+        <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-600 font-bold">VERIFIED & PACKED</span>
+        <div class="mt-4 flex items-baseline justify-between">
+          <span id="stat-verified" class="text-3xl sm:text-4xl font-black tracking-tight text-neutral-900">0</span>
+          <span id="stat-verified-label" class="text-[10px] font-mono text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-md font-bold">QC Passed</span>
+        </div>
+      </div>
+
+      <!-- Card 4: CHIP INVENTORY -->
+      <div class="bg-white border border-neutral-200/80 p-6 rounded-2xl flex flex-col justify-between shadow-xs">
+        <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-600 font-bold">CHIP INVENTORY</span>
+        <div class="mt-4 flex items-baseline justify-between">
+          <span id="stat-inventory" class="text-3xl sm:text-4xl font-black tracking-tight text-neutral-900">250</span>
+          <span id="stat-inventory-label" class="text-[10px] font-mono text-neutral-600 bg-neutral-100 border border-neutral-200 px-2.5 py-0.5 rounded-md font-bold">NTAG213 Stock</span>
+        </div>
+      </div>
+
+      <!-- Compatibility hooks for audit script bindings -->
+      <span id="stat-serials" class="hidden">0</span>
+      <span id="stat-health" class="hidden">100%</span>
+      <span id="stat-health-label" class="hidden">0 Errors</span>
 
     </section>
 
@@ -220,12 +248,12 @@
           <div>
             <div class="flex items-center gap-2">
               <h2 class="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-2">
-                Operations Console
-                <span class="text-[10px] font-mono font-medium px-2 py-0.5 rounded-md bg-neutral-900 border border-neutral-800 text-neutral-400">Terminal</span>
+                Workshop Operations Agent
+                <span class="text-[10px] font-mono font-medium px-2 py-0.5 rounded-md bg-neutral-900 border border-neutral-800 text-emerald-400">Autonomous</span>
               </h2>
             </div>
             <p class="text-xs text-neutral-400 mt-0.5">
-              Execute operational commands, adjust product pricing, monitor metrics, or manage chip stock.
+              Autonomous operations agent. Call tools for unit margin analysis, courier waybill generation, chip stock management, and fulfillment status mutations.
             </p>
           </div>
         </div>
@@ -246,21 +274,24 @@
           </div>
           <div class="flex-1 space-y-2.5">
             <div class="bg-[#121318] border border-neutral-800 rounded-2xl rounded-tl-sm px-4 py-3 text-xs sm:text-sm text-neutral-300 leading-relaxed max-w-2xl shadow-sm font-mono">
-              Operations Command Console active. Enter a command or select a preset to execute:
+              Workshop Operations Agent active. Enter an operational directive or select a preset:
             </div>
             <!-- Preset Command Buttons -->
             <div class="flex flex-wrap gap-2 pt-0.5">
-              <button type="button" onclick="sendGeminiPrompt('Set card price to 1450')" class="text-xs bg-[#16171f] hover:bg-[#20212c] border border-neutral-800 hover:border-neutral-600 text-neutral-300 hover:text-white px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 font-mono">
-                <span class="text-neutral-500 font-bold">&gt;</span> Set card price to ₱1,450
+              <button type="button" onclick="sendGeminiPrompt('Calculate unit margins and shop profitability')" class="text-xs bg-[#16171f] hover:bg-[#20212c] border border-neutral-800 hover:border-neutral-600 text-neutral-300 hover:text-white px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 font-mono">
+                <span class="text-emerald-500 font-bold">&gt;</span> Unit Margins Analysis
               </button>
-              <button type="button" onclick="sendGeminiPrompt('How much is total realized value?')" class="text-xs bg-[#16171f] hover:bg-[#20212c] border border-neutral-800 hover:border-neutral-600 text-neutral-300 hover:text-white px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 font-mono">
-                <span class="text-neutral-500 font-bold">&gt;</span> Total realized value
+              <button type="button" onclick="sendGeminiPrompt('Generate waybill for next pending order')" class="text-xs bg-[#16171f] hover:bg-[#20212c] border border-neutral-800 hover:border-neutral-600 text-neutral-300 hover:text-white px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 font-mono">
+                <span class="text-amber-500 font-bold">&gt;</span> Copy Next Waybill
               </button>
-              <button type="button" onclick="sendGeminiPrompt('Add 50 NTAG213 chips')" class="text-xs bg-[#16171f] hover:bg-[#20212c] border border-neutral-800 hover:border-neutral-600 text-neutral-300 hover:text-white px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 font-mono">
-                <span class="text-neutral-500 font-bold">&gt;</span> Restock 50 chips
+              <button type="button" onclick="sendGeminiPrompt('Restock 100 NTAG213 chips')" class="text-xs bg-[#16171f] hover:bg-[#20212c] border border-neutral-800 hover:border-neutral-600 text-neutral-300 hover:text-white px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 font-mono">
+                <span class="text-blue-500 font-bold">&gt;</span> Restock 100 Chips
               </button>
-              <button type="button" onclick="sendGeminiPrompt('Telemetry check')" class="text-xs bg-[#16171f] hover:bg-[#20212c] border border-neutral-800 hover:border-neutral-600 text-neutral-300 hover:text-white px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 font-mono">
-                <span class="text-neutral-500 font-bold">&gt;</span> System health report
+              <button type="button" onclick="sendGeminiPrompt('Check duplicate UID collision logs')" class="text-xs bg-[#16171f] hover:bg-[#20212c] border border-neutral-800 hover:border-neutral-600 text-neutral-300 hover:text-white px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 font-mono">
+                <span class="text-purple-500 font-bold">&gt;</span> Duplicate UID Audit
+              </button>
+              <button type="button" onclick="sendGeminiPrompt('Workshop telemetry and fulfillment overview')" class="text-xs bg-[#16171f] hover:bg-[#20212c] border border-neutral-800 hover:border-neutral-600 text-neutral-300 hover:text-white px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 font-mono">
+                <span class="text-neutral-400 font-bold">&gt;</span> Workshop Overview
               </button>
             </div>
           </div>
@@ -285,7 +316,7 @@
     </section>
 
     <!-- 1C. CARD DESIGN & MOCKUP PREVIEW -->
-    <section id="hardware-qc-dock" class="bg-[#0c0c0e] text-white rounded-3xl p-6 sm:p-8 border border-neutral-800 shadow-xl space-y-6">
+    <section id="card-qc-dock" class="bg-[#0c0c0e] text-white rounded-3xl p-6 sm:p-8 border border-neutral-800 shadow-xl space-y-6">
       
       <!-- Hidden DOM fields for script compatibility -->
       <div class="hidden" aria-hidden="true">
@@ -424,135 +455,186 @@
 
     </section>
 
-    <!-- 2. NFC WRITER (CARD PROGRAMMING BENCH) -->
-    <section id="provisioning-suite" class="bg-[#0c0c0e] text-white rounded-3xl p-7 sm:p-9 border border-neutral-800 shadow-xl space-y-6 transition-all duration-300">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-neutral-800 pb-5">
+    <!-- 2. CHIP BURNER DOCK -->
+    <section id="provisioning-suite" class="bg-white border border-neutral-200/80 rounded-3xl p-6 sm:p-8 shadow-xs space-y-6 transition-all duration-300">
+      
+      <!-- Module Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-neutral-100 pb-5">
         <div>
-          <div class="flex items-center gap-3">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
-            <h2 class="text-base sm:text-lg font-bold tracking-tight text-white uppercase">Hardware NFC Writer</h2>
+          <div class="flex items-center gap-2.5">
+            <span class="text-[10px] font-mono tracking-[0.2em] text-neutral-400 uppercase font-bold">// WORKSHOP: BENCH</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-neutral-100 text-neutral-600 font-bold border border-neutral-200">Card Writer</span>
           </div>
-          <p class="text-xs text-neutral-400 mt-1">Encode physical cards with verified target URLs via Android (Web NFC) or iPhone (Shortcuts).</p>
+          <h2 class="text-xl sm:text-2xl font-black uppercase tracking-tight text-neutral-900 mt-1">Chip Burner Dock</h2>
+          <p class="text-xs text-neutral-500 mt-1">Batch card burner bench. Configure profile parameters, burn NTAG213 chips, and test physical payload routing.</p>
         </div>
 
         <div class="flex flex-wrap items-center gap-2.5">
-          <span id="platform-badge" class="px-3.5 py-1.5 rounded-md text-[10px] font-mono uppercase tracking-wider bg-neutral-900 border border-neutral-800 text-neutral-300">
-            Detecting Device...
-          </span>
-          <!-- Tactile Hardware Mode Toggle [ REAL NFC | SIMULATOR ] -->
-          <div class="inline-flex items-center bg-[#141418] p-1 rounded-lg border border-neutral-800 font-mono text-[10px]">
-            <button type="button" id="btn-mode-real" onclick="setHwMode('real')" class="px-3 py-1 rounded-md text-neutral-400 hover:text-white transition-all font-bold cursor-pointer">REAL NFC</button>
-            <button type="button" id="btn-mode-sim" onclick="setHwMode('sim')" class="px-3 py-1 rounded-md bg-white text-black font-bold transition-all shadow-xs cursor-pointer">SIMULATOR</button>
+          <div class="border border-neutral-200 bg-neutral-50 px-3.5 py-1.5 rounded-xl text-[10px] font-mono uppercase tracking-wider flex items-center gap-2 text-neutral-600 shadow-2xs">
+            <span id="nfc-encoder-indicator" class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span id="platform-badge" class="font-bold text-neutral-800">Encoder Online</span>
           </div>
-          <button type="button" id="btn-test-collision" onclick="testSimulateCollision()" title="Simulate duplicate physical tag tap to verify collision interceptor" class="hidden text-[10px] font-mono border border-amber-600/70 bg-amber-950/40 text-amber-300 hover:bg-amber-900/60 px-3 py-1.5 rounded-lg transition-all cursor-pointer">
-            Test Collision
-          </button>
-          <button onclick="openIosShortcutGuide()" class="border border-neutral-700 hover:border-white bg-neutral-900 text-neutral-300 hover:text-white text-[10px] font-mono uppercase px-3 py-1.5 rounded-lg cursor-pointer transition-colors">
+          <button type="button" onclick="openIosShortcutGuide()" class="border border-neutral-200 hover:border-black bg-white text-neutral-700 hover:text-black text-xs font-mono font-bold uppercase tracking-wider px-3.5 py-2 rounded-xl transition-all cursor-pointer shadow-xs">
             iPhone Guide
           </button>
         </div>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <!-- BENTO GRID: THE FORGE (FORM) + LIVE CARD OUTPUT -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
         
-        <!-- Left: URL Input & Actions -->
-        <div class="lg:col-span-8 space-y-4">
-          <!-- Batch Burner Telemetry Bar (revealed when active) -->
-          <div id="batch-progress-bar" class="hidden p-3.5 bg-[#141418] border border-neutral-800 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono">
-            <div class="flex items-center gap-2.5">
-              <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-              <span id="batch-progress-text" class="text-neutral-200 font-bold uppercase tracking-wider text-[11px]">BATCH PROGRESS: [ 0 / 10 COMPLETED ]</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <span id="batch-target-client" class="text-[10px] text-neutral-400 truncate max-w-[200px]">Client: Ready</span>
-              <button onclick="skipBatchItem()" class="text-[10px] text-neutral-400 hover:text-white underline cursor-pointer">Skip</button>
-            </div>
-          </div>
-
+        <!-- LEFT BOX: THE FORGE (Form) - Span 2 -->
+        <div class="lg:col-span-2 bg-[#fcfcfd] border border-neutral-200 p-6 sm:p-8 rounded-2xl shadow-xs relative flex flex-col justify-between">
           <div>
-            <div class="flex items-center justify-between mb-2">
-              <label class="block text-[10px] font-mono uppercase tracking-wider text-neutral-400">Destination Routing URL</label>
-              <span id="hw-active-mode-label" class="text-[10px] font-mono text-emerald-400 uppercase font-bold tracking-wider">● EMULATOR READY</span>
+            <div class="flex items-center justify-between mb-6">
+              <h3 class="text-sm font-bold uppercase tracking-wider text-neutral-900 font-mono flex items-center gap-2">
+                <svg class="w-4 h-4 text-neutral-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                Card Configuration
+              </h3>
+              <span class="text-[10px] font-mono text-neutral-400 uppercase tracking-widest">Input Parameters</span>
             </div>
-            <textarea id="encoder-input" rows="3" placeholder="https://attachmentanywhere.com/c/aa260906052304" class="w-full bg-[#141418] border border-neutral-800 focus:border-white focus-visible:ring-2 focus-visible:ring-white rounded-2xl p-4 text-[16px] sm:text-xs font-mono text-emerald-400 outline-none transition-colors resize-none placeholder:text-neutral-600"></textarea>
-            <input type="hidden" id="targetUrlInput">
-          </div>
 
-          <!-- Action Buttons -->
-          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
-            <button id="btn-nfc-write" onclick="triggerNativeNfcWrite()" class="col-span-2 sm:col-span-1 lg:col-span-2 min-h-[44px] bg-white text-black text-xs font-mono font-bold uppercase tracking-wider py-3.5 px-3 rounded-xl hover:bg-neutral-200 active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-2 shadow-sm">
-              <svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-              <span id="btn-nfc-write-label">WRITE (SIMULATOR)</span>
-            </button>
-            <button onclick="triggerChipInspection()" title="Inspect physical NFC tag UID and payload" class="min-h-[44px] border border-neutral-700 hover:border-white bg-[#141418] text-neutral-200 text-xs font-mono uppercase tracking-wider py-3.5 px-2 rounded-xl active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap">
-              <span>INSPECT/READ</span>
-            </button>
-            <button id="btn-batch-toggle" onclick="toggleBatchBurner()" title="Batch auto-advance encoder" class="min-h-[44px] border border-neutral-700 hover:border-white bg-[#141418] text-neutral-200 text-xs font-mono uppercase tracking-wider py-3.5 px-2 rounded-xl active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap">
-              <span id="btn-batch-label">BATCH BURNER</span>
-            </button>
-            <button onclick="triggerIosShortcutWrite()" class="min-h-[44px] border border-neutral-700 hover:border-white bg-[#141418] text-neutral-200 text-xs font-mono uppercase tracking-wider py-3.5 px-2 rounded-xl active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1">
-              <span>iPhone</span>
-            </button>
-            <button onclick="openQrPreview()" class="min-h-[44px] border border-neutral-700 hover:border-white bg-[#141418] text-neutral-200 text-xs font-mono uppercase tracking-wider py-3.5 px-2 rounded-xl active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1">
-              <span>QR</span>
-            </button>
-            <button onclick="copyFormattedNDEF()" class="min-h-[44px] border border-neutral-700 hover:border-white bg-[#141418] text-neutral-200 text-xs font-mono uppercase tracking-wider py-3.5 px-2 rounded-xl active:scale-95 transition-all cursor-pointer flex items-center justify-center">
-              Copy URL
-            </button>
+            <form id="nfc-form" class="space-y-5" onsubmit="event.preventDefault(); forgeNFC();">
+              
+              <!-- Inputs Grid -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Profile / Client Name -->
+                <div class="flex flex-col gap-1.5">
+                  <label class="text-[10px] font-mono text-neutral-500 uppercase tracking-widest font-bold">Profile / Owner Name</label>
+                  <input type="text" id="clientName" required placeholder="e.g. Gian Villanueva / Badshot Coffee" 
+                         class="w-full bg-white border border-neutral-200 focus:border-black focus-visible:ring-2 focus-visible:ring-black rounded-xl px-4 py-3 text-xs font-medium text-neutral-900 placeholder:text-neutral-400 outline-none transition-all">
+                </div>
+
+                <!-- Product Type -->
+                <div class="flex flex-col gap-1.5">
+                  <label class="text-[10px] font-mono text-neutral-500 uppercase tracking-widest font-bold">Product Type</label>
+                  <select id="productType" class="w-full bg-white border border-neutral-200 focus:border-black focus-visible:ring-2 focus-visible:ring-black rounded-xl px-4 py-3 text-xs font-mono font-medium text-neutral-900 outline-none transition-all cursor-pointer">
+                    <option value="AA-CARD">Premium Matte Card (NFC)</option>
+                    <option value="AA-PATCH">Drop 001 Signature Patch</option>
+                    <option value="AA-STAND">Cafe Counter Stand</option>
+                    <option value="AA-KEY">Executive Key Fob</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Destination URL -->
+              <div class="flex flex-col gap-1.5">
+                <div class="flex items-center justify-between">
+                  <label class="text-[10px] font-mono text-neutral-500 uppercase tracking-widest font-bold">Destination URL</label>
+                  <span class="text-[10px] font-mono text-neutral-400">Redirect target upon tap</span>
+                </div>
+                <div class="relative">
+                  <input type="url" id="targetUrl" required placeholder="https://attachmentanywhere.com/profile/..." 
+                         class="w-full bg-white border border-neutral-200 focus:border-black focus-visible:ring-2 focus-visible:ring-black rounded-xl pl-4 pr-24 py-3 text-xs font-mono text-neutral-900 placeholder:text-neutral-400 outline-none transition-all">
+                  <button type="button" onclick="pasteClipboardToForge()" class="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-mono uppercase bg-neutral-100 hover:bg-neutral-200 text-neutral-700 px-2.5 py-1.5 rounded-lg transition-colors cursor-pointer">
+                    Paste
+                  </button>
+                </div>
+              </div>
+
+              <!-- Hidden compatibility bindings so any existing scripts reference without errors -->
+              <textarea id="encoder-input" class="hidden"></textarea>
+              <input type="hidden" id="targetUrlInput">
+
+              <!-- Submit Button -->
+              <div class="pt-2">
+                <button type="submit" id="forgeBtn" class="w-full bg-black text-white font-mono font-bold text-xs uppercase tracking-[0.15em] py-4 rounded-xl hover:bg-neutral-800 active:scale-[0.99] transition-all flex justify-center items-center gap-2 shadow-sm cursor-pointer min-h-[48px]">
+                  <span>Forge New Profile</span>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </button>
+              </div>
+
+            </form>
           </div>
         </div>
 
-        <!-- Right: NDEF Diagnostics -->
-        <div class="lg:col-span-4 bg-[#141418] border border-neutral-800 p-5 rounded-2xl space-y-3 font-mono text-xs">
-          <div class="border-b border-neutral-800 pb-2.5 flex items-center justify-between">
-            <span class="text-[10px] uppercase tracking-widest text-neutral-400 font-bold">Chip Diagnostics</span>
-            <span id="hw-mode-chip-badge" class="text-[9px] uppercase px-2 py-0.5 rounded-sm bg-neutral-800 text-neutral-300">Telemetry</span>
-          </div>
-
-          <div class="flex items-baseline justify-between text-xs">
-            <span class="text-neutral-500">Record Type:</span>
-            <span class="text-white font-bold">URI (NDEF 0x04)</span>
-          </div>
-
-          <div class="flex items-baseline justify-between text-xs">
-            <span class="text-neutral-500">Payload Size:</span>
-            <span id="payload-bytes" class="text-white font-bold">0 bytes</span>
-          </div>
-
-          <div class="flex items-baseline justify-between border-t border-neutral-800 pt-2.5 text-xs">
-            <span class="text-neutral-500">Compatibility:</span>
-            <span id="chip-fit" class="text-neutral-200 font-bold">Fits NTAG213 (144B)</span>
-          </div>
-
-          <div class="flex items-baseline justify-between border-t border-neutral-800 pt-2.5 text-xs">
-            <span class="text-neutral-500">Protocol:</span>
-            <span id="ssl-status" class="text-neutral-400">Pending URL</span>
-          </div>
-
-          <!-- Memory Clearance Gauge -->
-          <div class="border-t border-neutral-800 pt-2.5 space-y-1.5">
-            <div class="flex justify-between text-[10px] text-neutral-500">
-              <span>NTAG213 Headroom (144B)</span>
-              <span id="memory-percent-label" class="text-neutral-300 font-bold">0%</span>
+        <!-- RIGHT BOX: LIVE OUTPUT - Span 1 -->
+        <div class="bg-neutral-50 border border-neutral-200 p-6 sm:p-8 rounded-2xl flex flex-col justify-between relative transition-colors shadow-xs">
+          
+          <div>
+            <div class="flex items-center justify-between border-b border-neutral-200 pb-3 mb-6">
+              <h3 class="text-xs font-mono font-bold text-neutral-500 uppercase tracking-widest">Live Card Data</h3>
+              <span class="text-[9px] font-mono uppercase px-2 py-0.5 rounded bg-white border border-neutral-200 text-neutral-600 font-bold">NTAG213</span>
             </div>
-            <div class="w-full h-1.5 bg-neutral-800 rounded-full overflow-hidden">
-              <div id="memory-gauge-bar" class="h-full bg-emerald-400 transition-all duration-300" style="width: 0%"></div>
+            
+            <!-- Generated Serial -->
+            <div class="mb-6">
+              <p class="text-[10px] font-mono text-neutral-400 uppercase tracking-widest mb-1">Assigned Serial Code</p>
+              <div class="flex items-center justify-between gap-2">
+                <p id="out-serial" class="font-mono text-xl sm:text-2xl text-neutral-300 font-bold tracking-wider transition-colors truncate">---- ---- ----</p>
+                <button type="button" onclick="copyForgedSerial()" title="Copy Serial Code" class="text-neutral-400 hover:text-black p-1 transition-colors cursor-pointer">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Preview Details -->
+            <div class="space-y-4 bg-white p-4 rounded-xl border border-neutral-200 font-mono text-xs">
+              <div>
+                <p class="text-[9px] text-neutral-400 uppercase tracking-widest mb-0.5">Owner</p>
+                <p id="out-name" class="text-sm text-black font-semibold truncate opacity-40">Awaiting input...</p>
+              </div>
+              <div class="border-t border-neutral-100 pt-2.5">
+                <p class="text-[9px] text-neutral-400 uppercase tracking-widest mb-0.5">URL Target</p>
+                <p id="out-url" class="text-xs text-blue-600 font-medium truncate opacity-40">Awaiting input...</p>
+              </div>
+              <div class="border-t border-neutral-100 pt-2.5 flex items-center justify-between text-[10px]">
+                <span class="text-neutral-400 uppercase">Product</span>
+                <span id="out-hw" class="text-neutral-800 font-bold uppercase">AA-CARD</span>
+              </div>
+            </div>
+
+            <!-- CHIP MEMORY & PAYLOAD (NTAG213 // 144B MAX) -->
+            <div class="mt-4 pt-3 border-t border-neutral-200 font-mono text-xs">
+              <div class="flex items-center justify-between text-[10px] uppercase font-bold text-neutral-500 mb-1.5">
+                <span>Chip Memory & Payload</span>
+                <span class="text-neutral-400 font-normal">NTAG213 // 144B MAX</span>
+              </div>
+              <div class="w-full bg-neutral-200 h-2 rounded-full overflow-hidden">
+                <div id="memory-gauge-bar" class="h-full bg-emerald-500 transition-all duration-300" style="width: 0%;"></div>
+              </div>
+              <div class="flex items-center justify-between text-[10px] mt-1.5 text-neutral-600">
+                <span id="payload-bytes">0 bytes</span>
+                <span id="chip-fit" class="font-bold text-emerald-600">Fits NTAG213</span>
+                <span id="ssl-status" class="text-neutral-400">--</span>
+                <span id="memory-percent-label" class="font-bold text-neutral-700">0%</span>
+              </div>
             </div>
           </div>
+
+          <!-- Actions & Status Indicator -->
+          <div class="mt-6 pt-4 border-t border-neutral-200 space-y-3">
+            <div id="write-status" class="flex items-center justify-between opacity-50 transition-opacity">
+              <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-500">NFC Write Status</span>
+              <span id="write-status-badge" class="text-[10px] font-mono font-bold text-neutral-500 bg-neutral-200 px-3 py-1 rounded-full">IDLE</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" id="btn-nfc-write" onclick="triggerNativeNfcWrite()" class="w-full bg-black text-white font-mono font-bold text-xs uppercase tracking-wider py-3 px-2 rounded-xl hover:bg-neutral-800 active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-xs">
+                <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <span id="btn-nfc-write-label">Tap to Write</span>
+              </button>
+              <button type="button" onclick="openQrPreview()" class="w-full border border-neutral-300 hover:border-black bg-white text-neutral-800 font-mono text-xs uppercase tracking-wider py-3 px-2 rounded-xl active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1 shadow-xs">
+                <span>QR Preview</span>
+              </button>
+            </div>
+          </div>
+
         </div>
 
       </div>
     </section>
 
-    <!-- 3. NFC SERIAL DIRECTORY (INTERACTIVE HARDWARE LEDGER) -->
+    <!-- 3. NFC SERIAL DIRECTORY (INTERACTIVE LEDGER) -->
     <section id="nfc-serial-directory" class="bg-white border border-neutral-200/80 rounded-3xl overflow-hidden flex flex-col shadow-xs">
       <div class="p-6 sm:p-7 border-b border-neutral-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div class="flex items-center gap-2.5">
-            <h2 class="text-lg font-black uppercase tracking-tight text-neutral-900">Hardware Serial Directory</h2>
+            <h2 class="text-lg font-black uppercase tracking-tight text-neutral-900">Serial Directory</h2>
             <span class="text-[10px] font-mono uppercase px-3 py-1 rounded-md border border-neutral-200 bg-neutral-50 text-neutral-600 font-bold">Interactive Ledger</span>
           </div>
-          <p class="text-xs text-neutral-500 mt-1">Verified client hardware records. Select any row or click "LOAD TO BURNER" to prime the hardware writer.</p>
+          <p class="text-xs text-neutral-500 mt-1">Verified client records. Select any row or click "LOAD TO BURNER" to prime the card burner.</p>
         </div>
 
         <div class="flex flex-wrap items-center gap-2.5">
@@ -608,7 +690,7 @@
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
               <h2 class="text-lg font-black uppercase tracking-tight text-neutral-900">Orders Pipeline</h2>
-              <p class="text-xs text-neutral-500 mt-0.5">Production fulfillment & hardware dispatch queue.</p>
+              <p class="text-xs text-neutral-500 mt-0.5">Production fulfillment & dispatch queue.</p>
             </div>
 
             <div class="flex items-center gap-2">
@@ -627,15 +709,22 @@
               <button onclick="setFilter('all')" class="filter-tab px-3 py-1.5 text-xs font-mono font-bold rounded-md transition-all bg-black text-white shadow-xs" data-filter="all">
                 <span>All (<span id="count-all">0</span>)</span>
               </button>
-              <button onclick="setFilter('Pending')" class="filter-tab px-3 py-1.5 text-xs font-mono rounded-md transition-all text-neutral-500 hover:text-black hover:bg-neutral-200/60" data-filter="Pending">
-                <span>Pending (<span id="count-pending">0</span>)</span>
+              <button onclick="setFilter('QUEUED')" class="filter-tab px-3 py-1.5 text-xs font-mono rounded-md transition-all text-neutral-500 hover:text-black hover:bg-neutral-200/60" data-filter="QUEUED">
+                <span>Queued (<span id="count-queued">0</span>)</span>
               </button>
-              <button onclick="setFilter('Encoded')" class="filter-tab px-3 py-1.5 text-xs font-mono rounded-md transition-all text-neutral-500 hover:text-black hover:bg-neutral-200/60" data-filter="Encoded">
-                <span>Encoded (<span id="count-encoded">0</span>)</span>
+              <button onclick="setFilter('BURNED')" class="filter-tab px-3 py-1.5 text-xs font-mono rounded-md transition-all text-neutral-500 hover:text-black hover:bg-neutral-200/60" data-filter="BURNED">
+                <span>Burned (<span id="count-burned">0</span>)</span>
               </button>
-              <button onclick="setFilter('Dispatched')" class="filter-tab px-3 py-1.5 text-xs font-mono rounded-md transition-all text-neutral-500 hover:text-black hover:bg-neutral-200/60" data-filter="Dispatched">
-                <span>Dispatched (<span id="count-dispatched">0</span>)</span>
+              <button onclick="setFilter('QC PASSED')" class="filter-tab px-3 py-1.5 text-xs font-mono rounded-md transition-all text-neutral-500 hover:text-black hover:bg-neutral-200/60" data-filter="QC PASSED">
+                <span>QC Passed (<span id="count-qc-passed">0</span>)</span>
               </button>
+              <button onclick="setFilter('SHIPPED')" class="filter-tab px-3 py-1.5 text-xs font-mono rounded-md transition-all text-neutral-500 hover:text-black hover:bg-neutral-200/60" data-filter="SHIPPED">
+                <span>Shipped (<span id="count-shipped">0</span>)</span>
+              </button>
+              <!-- Hidden compatibility hooks -->
+              <span id="count-pending" class="hidden">0</span>
+              <span id="count-encoded" class="hidden">0</span>
+              <span id="count-dispatched" class="hidden">0</span>
             </div>
 
             <div class="flex items-center gap-2">
@@ -687,6 +776,96 @@
       </section>
 
     </div>
+
+    <!-- 4B. CUSTOMER FEEDBACK & INBOX -->
+    <section id="customer-feedback-inbox" class="bg-white border border-neutral-200/80 rounded-3xl overflow-hidden flex flex-col shadow-xs">
+      <div class="p-6 border-b border-neutral-100 flex flex-col gap-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div class="flex items-center gap-2.5">
+              <h2 class="text-lg font-black uppercase tracking-tight text-neutral-900">Customer Feedback & Inbox</h2>
+              <span class="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-md border border-neutral-200 bg-neutral-50 text-neutral-600 font-bold">Storefront Reviews</span>
+            </div>
+            <p class="text-xs text-neutral-500 mt-0.5">Triage inbound customer reviews, product suggestions, and reported issues.</p>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button onclick="resetDemoFeedback()" class="text-neutral-400 hover:text-black text-xs font-mono p-2 w-9 h-9 flex items-center justify-center rounded-lg border border-neutral-200 hover:border-black cursor-pointer transition-colors active:scale-95" title="Reset Sample Feedback">
+              ↻
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="flex items-center bg-neutral-100 p-1 rounded-lg gap-1 overflow-x-auto">
+          <button onclick="setFeedbackFilter('all')" class="feedback-filter-tab px-3 py-1.5 text-xs font-mono font-bold rounded-md transition-all bg-black text-white shadow-xs" data-filter="all">
+            <span>All (<span id="count-feedback-all">0</span>)</span>
+          </button>
+          <button onclick="setFeedbackFilter('Review')" class="feedback-filter-tab px-3 py-1.5 text-xs font-mono rounded-md transition-all text-neutral-500 hover:text-black hover:bg-neutral-200/60" data-filter="Review">
+            <span>Reviews (<span id="count-feedback-reviews">0</span>)</span>
+          </button>
+          <button onclick="setFeedbackFilter('Suggestion')" class="feedback-filter-tab px-3 py-1.5 text-xs font-mono rounded-md transition-all text-neutral-500 hover:text-black hover:bg-neutral-200/60" data-filter="Suggestion">
+            <span>Suggestions (<span id="count-feedback-suggestions">0</span>)</span>
+          </button>
+          <button onclick="setFeedbackFilter('Issue')" class="feedback-filter-tab px-3 py-1.5 text-xs font-mono rounded-md transition-all text-neutral-500 hover:text-black hover:bg-neutral-200/60" data-filter="Issue">
+            <span>Issues (<span id="count-feedback-issues">0</span>)</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs font-mono">
+          <thead class="bg-neutral-50 text-[10px] uppercase tracking-widest text-neutral-500 border-b border-neutral-200">
+            <tr>
+              <th class="py-3.5 px-6">Type</th>
+              <th class="py-3.5 px-6">Sender</th>
+              <th class="py-3.5 px-6">Message & Rating</th>
+              <th class="py-3.5 px-6">Status</th>
+              <th class="py-3.5 px-6 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="feedback-table-body" class="divide-y divide-neutral-100 bg-white">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 4C. PRODUCT CATALOG & PRICING MANAGER -->
+    <section id="catalog-manager" class="bg-white border border-neutral-200/80 rounded-3xl overflow-hidden flex flex-col shadow-xs">
+      <div class="p-6 border-b border-neutral-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <div class="flex items-center gap-2.5">
+            <h2 class="text-lg font-black uppercase tracking-tight text-neutral-900">Products & Pricing</h2>
+            <span class="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-md border border-neutral-200 bg-neutral-50 text-neutral-600 font-bold">Catalog Config</span>
+          </div>
+          <p class="text-xs text-neutral-500 mt-0.5">Quickly edit product prices, stock counters, and availability without editing code.</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="resetDefaultCatalog()" class="text-neutral-400 hover:text-black text-xs font-mono p-2 w-9 h-9 flex items-center justify-center rounded-lg border border-neutral-200 hover:border-black cursor-pointer transition-colors active:scale-95" title="Reset Default Catalog">
+            ↻
+          </button>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs font-mono">
+          <thead class="bg-neutral-50 text-[10px] uppercase tracking-widest text-neutral-500 border-b border-neutral-200">
+            <tr>
+              <th class="py-3.5 px-6">Product</th>
+              <th class="py-3.5 px-6">Price (₱)</th>
+              <th class="py-3.5 px-6">Stock</th>
+              <th class="py-3.5 px-6">Status</th>
+              <th class="py-3.5 px-6 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="catalog-table-body" class="divide-y divide-neutral-100 bg-white">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </section>
 
     <!-- 5. WEB NFC SCANNING MODAL -->
     <div id="nfc-radar-modal" class="fixed inset-0 bg-black/85 hidden items-center justify-center p-4 z-[110]">
@@ -855,7 +1034,7 @@
         <button onclick="closeSerialModal()" class="absolute top-5 right-5 w-11 h-11 flex items-center justify-center text-neutral-400 hover:text-black active:scale-95 text-2xl font-light cursor-pointer" aria-label="Close modal">&times;</button>
         
         <h3 class="text-xl font-black text-neutral-900 mt-1">Register New Serial</h3>
-        <p class="text-xs text-neutral-500 mt-1">Map hardware serial to customer destination URL.</p>
+        <p class="text-xs text-neutral-500 mt-1">Map serial to customer destination URL.</p>
 
         <form onsubmit="saveNewSerial(event)" class="mt-6 space-y-4 text-xs">
           <div>
@@ -902,7 +1081,7 @@
           </div>
           <h3 class="text-lg sm:text-xl font-bold uppercase tracking-tight text-white mt-1">Paste Raw Order</h3>
           <p class="text-xs text-neutral-400 mt-1">
-            Paste unformatted order text, DM, or SMS. Parses Name, Phone, Brand, and Target URL into a verified hardware serial.
+            Paste unformatted order text, DM, or SMS. Parses Name, Phone, Brand, and Target URL into a verified card serial.
           </p>
         </div>
 
@@ -1064,7 +1243,7 @@
           </div>
 
           <div class="p-4 rounded-2xl bg-neutral-50 border border-neutral-200">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block mb-1">Hardware Parameters</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block mb-1">Product Parameters</span>
             <div id="drawer-product" class="text-neutral-900 font-medium">Product info</div>
           </div>
 
@@ -1075,8 +1254,11 @@
         </div>
 
         <div class="mt-6 flex gap-3">
+          <button onclick="copyOrderWaybill(activeDrawerRef)" class="flex-1 min-h-[48px] border border-neutral-300 hover:border-black bg-white text-neutral-800 text-xs font-bold uppercase tracking-wider py-3.5 rounded-xl hover:bg-neutral-50 active:scale-[0.99] transition-all cursor-pointer shadow-xs flex items-center justify-center gap-1.5">
+            Copy Waybill
+          </button>
           <button id="drawer-send-to-encoder" class="flex-1 min-h-[48px] bg-black text-white text-xs font-bold uppercase tracking-wider py-3.5 rounded-xl hover:bg-neutral-800 active:scale-[0.99] transition-all cursor-pointer shadow-xs flex items-center justify-center">
-            Load into NFC Writer
+            Load into Burner
           </button>
         </div>
       </div>
@@ -1127,36 +1309,74 @@
   </footer>
 
   <script>
-    // Boot splash screen dismiss controller
+    // Boot splash screen controller (Founder Memoji Animation)
     (function initMeadhallBootScreen() {
       const bootScreen = document.getElementById('meadhall-boot-screen');
+      const memojiImg = document.getElementById('boot-memoji-img');
+      const statusText = document.getElementById('boot-status-text');
+      const subText = document.getElementById('boot-sub-text');
+      const bar = document.getElementById('boot-progress-bar');
       if (!bootScreen) return;
 
       let isDismissed = false;
 
+      // Smooth interactive head turn animation across frames during boot
+      let memojiAnimInterval = null;
+      if (memojiImg) {
+        const frameSequence = [48, 49, 50, 52, 54, 56, 58, 56, 54, 52, 50, 48, 46, 44, 42, 40, 38, 40, 42, 44, 46, 48];
+        let seqIndex = 0;
+        memojiAnimInterval = setInterval(() => {
+          if (isDismissed) {
+            clearInterval(memojiAnimInterval);
+            return;
+          }
+          const frameNum = frameSequence[seqIndex % frameSequence.length];
+          const padded = String(frameNum).padStart(2, '0');
+          memojiImg.src = `avatar/frame_${padded}_delay-0.05s.webp`;
+          seqIndex++;
+        }, 90);
+      }
+
       function dismissBootScreen() {
         if (isDismissed) return;
         isDismissed = true;
+        if (memojiAnimInterval) clearInterval(memojiAnimInterval);
+        if (memojiImg) memojiImg.src = 'avatar/frame_48_delay-0.05s.webp';
 
-        bootScreen.classList.add('opacity-0', 'pointer-events-none');
+        if (statusText) statusText.innerText = 'OPERATIONAL';
+        if (subText) subText.innerText = 'Workbench ready.';
+        if (bar) bar.style.width = '100%';
+
         setTimeout(() => {
-          bootScreen.style.display = 'none';
-        }, 700);
-
-        window.removeEventListener('click', dismissBootScreen);
-        window.removeEventListener('keydown', dismissBootScreen);
+          bootScreen.classList.add('opacity-0', 'pointer-events-none');
+          setTimeout(() => {
+            bootScreen.style.display = 'none';
+          }, 700);
+        }, 350);
       }
 
-      // Early dismiss on click or keypress
-      window.addEventListener('click', dismissBootScreen, { once: true });
-      window.addEventListener('keydown', dismissBootScreen, { once: true });
+      // Step-by-step telemetry progress
+      setTimeout(() => {
+        if (!isDismissed) {
+          if (bar) bar.style.width = '55%';
+          if (subText) subText.innerText = 'Initializing burner dock...';
+        }
+      }, 700);
 
-      // Clean screen visible for exactly 1.8 seconds (or load + 800ms)
-      setTimeout(dismissBootScreen, 1800);
+      setTimeout(() => {
+        if (!isDismissed) {
+          if (bar) bar.style.width = '85%';
+          if (subText) subText.innerText = 'Loading local ledgers...';
+        }
+      }, 1400);
 
-      window.addEventListener('load', () => {
-        setTimeout(dismissBootScreen, 800);
-      }, { once: true });
+      // Keep screen visible while loading (clean 2.4s boot sequence)
+      setTimeout(dismissBootScreen, 2400);
+
+      // Allow click bypass after initial 1s has elapsed
+      setTimeout(() => {
+        bootScreen.addEventListener('click', dismissBootScreen, { once: true });
+      }, 1000);
     })();
 
     // 1. MODAL CONTROLS & IN-APP TOAST SYSTEM (Zero alert() calls)
@@ -1259,6 +1479,96 @@
       } catch (e) {}
     }
 
+    function playTactileTick() {
+      try {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(1400, now);
+        osc.frequency.exponentialRampToValueAtTime(600, now + 0.04);
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.04);
+      } catch (e) {}
+    }
+
+    function copyTextToClipboard(text, successMsg = 'Copied to clipboard.') {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text)
+          .then(() => {
+            playTactileTick();
+            showToast(successMsg);
+          })
+          .catch(() => fallbackCopyWaybill(text, successMsg));
+      } else {
+        fallbackCopyWaybill(text, successMsg);
+      }
+    }
+
+    function fallbackCopyWaybill(text, successMsg) {
+      const tempInput = document.createElement('textarea');
+      tempInput.value = text;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+      playTactileTick();
+      showToast(successMsg);
+    }
+
+    function copyOrderWaybill(ref) {
+      const orders = getOrders();
+      const order = orders.find(o => o.ref === ref);
+      if (!order) {
+        showToast('Order not found.', false);
+        return;
+      }
+
+      const clientName = (order.customer && order.customer.name) || 'Valued Client';
+      const clientPhone = (order.customer && order.customer.phone) || 'N/A';
+      const dropOff = (order.customer && order.customer.address) || 'Store Pickup / Express Courier';
+      const serialId = (order.specs && (order.specs.serial || (Array.isArray(order.specs.serials) ? order.specs.serials[0] : null) || order.specs.targetUrl)) || order.ref;
+      const amount = (order.total || 0).toLocaleString('en-US');
+      const productName = order.product || 'Attachment Anywhere Smart NFC Card';
+
+      const waybillText = "RECEIVER: " + clientName + "\n" +
+        "CONTACT: " + clientPhone + "\n" +
+        "DROP-OFF: " + dropOff + "\n" +
+        "ITEM: " + productName + " (" + serialId + ")\n" +
+        "DECLARED VALUE: ₱" + amount + "\n" +
+        "REMARKS: Fragile electronics / Handle with care.";
+
+      copyTextToClipboard(waybillText, "Waybill copied for " + clientName + "! (Lalamove / J&T ready)");
+      logAuditTrail('WAYBILL_GEN', "Courier waybill copied for " + clientName + " (" + order.ref + ")");
+    }
+
+    function copySerialWaybill(serialCode) {
+      const serials = getSerials();
+      const item = serials.find(s => s.serial === serialCode);
+      if (!item) return;
+
+      const clientName = item.name || item.client || 'Valued Client';
+      const brandName = item.brand || 'Attachment Anywhere';
+      const cfg = getMeadhallConfig();
+      const amount = (cfg.pricing && cfg.pricing.card ? cfg.pricing.card : 900).toLocaleString('en-US');
+
+      const waybillText = "RECEIVER: " + clientName + "\n" +
+        "CONTACT: Contact via " + brandName + "\n" +
+        "DROP-OFF: " + brandName + "\n" +
+        "ITEM: Attachment Anywhere Smart NFC Card (" + item.serial + ")\n" +
+        "DECLARED VALUE: ₱" + amount + "\n" +
+        "REMARKS: Fragile electronics / Handle with care.";
+
+      copyTextToClipboard(waybillText, "Waybill copied for " + clientName + "!");
+      logAuditTrail('WAYBILL_GEN', "Courier waybill generated for " + clientName + " (" + item.serial + ")");
+    }
+
     function triggerMobileFeedback(isSuccess = true) {
       if (navigator.vibrate) {
         navigator.vibrate(isSuccess ? [40, 60, 120] : [100, 50, 100]);
@@ -1311,90 +1621,75 @@
     }
 
     // 2. FOUNDER AUTH & SESSION
+    const OWNER_PIN = '2423';
+    const AUTH_STORAGE_KEY = 'aa_owner_authenticated';
     const AUTH_SESSION_KEY = 'aa_meadhall_operator_session';
-
-    const OPERATOR_CREDENTIALS = {
-      'aa.founder': 'g.attachmenzceo',
-      'meadhall': 'meadhall'
-    };
 
     function handleDirectAuth(event) {
       if (event) event.preventDefault();
-      const userElem = document.getElementById('auth-username');
       const passElem = document.getElementById('auth-password');
-      const rememberElem = document.getElementById('auth-remember');
       const errorMsg = document.getElementById('auth-error-msg');
+      const pinInput = (passElem ? passElem.value : '').trim();
 
-      const usernameInput = (userElem ? userElem.value : '').trim() || 'aa.founder';
-      const passwordInput = (passElem ? passElem.value : '').trim();
-      const isRemember = rememberElem ? rememberElem.checked : true;
-
-      const passLower = passwordInput.toLowerCase();
       const isAuthorized = 
-        passLower === 'meadhall' ||
-        passwordInput === 'g.attachmenzceo' ||
-        (OPERATOR_CREDENTIALS[usernameInput] && OPERATOR_CREDENTIALS[usernameInput] === passwordInput);
+        pinInput === OWNER_PIN || 
+        pinInput === '2423' || 
+        pinInput.toLowerCase() === 'meadhall' || 
+        pinInput === 'g.attachmenzceo';
 
       if (isAuthorized) {
         if (errorMsg) errorMsg.classList.add('hidden');
-        const effectiveOperator = (usernameInput && usernameInput !== 'meadhall') ? usernameInput : 'aa.founder';
-        const sessionPayload = {
-          operator: effectiveOperator,
-          authenticatedAt: new Date().toISOString()
-        };
-
-        if (isRemember) {
-          localStorage.setItem(AUTH_SESSION_KEY, JSON.stringify(sessionPayload));
-        } else {
-          sessionStorage.setItem(AUTH_SESSION_KEY, JSON.stringify(sessionPayload));
-        }
-
-        document.getElementById('auth-gate').classList.add('hidden');
+        localStorage.setItem(AUTH_STORAGE_KEY, 'true');
+        localStorage.setItem(AUTH_SESSION_KEY, JSON.stringify({ operator: 'aa.founder', authenticatedAt: new Date().toISOString() }));
+        
+        const gate = document.getElementById('auth-gate');
+        if (gate) gate.classList.add('hidden');
+        const main = document.querySelector('main');
+        if (main) main.classList.remove('filter', 'blur-md', 'pointer-events-none');
+        
         const display = document.getElementById('active-user-display');
-        if (display) display.innerText = effectiveOperator;
-        logAuditTrail('AUTH_SUCCESS', `Operator ${effectiveOperator} authenticated.`);
-        showToast(`Authorized. Welcome to Meadhall.`);
+        if (display) display.innerText = 'Owner Active';
+        logAuditTrail('AUTH_SUCCESS', 'Owner authenticated with PIN.');
+        showToast('Authorized. Welcome to Meadhall.');
       } else {
         if (errorMsg) errorMsg.classList.remove('hidden');
         triggerMobileFeedback(false);
-        logAuditTrail('AUTH_FAILED', `Failed gate access attempt.`, 'warning');
+        logAuditTrail('AUTH_FAILED', 'Failed gate access attempt.', 'warning');
       }
     }
 
     function checkAuthGate() {
-      const storedLocal = localStorage.getItem(AUTH_SESSION_KEY);
-      const storedSession = sessionStorage.getItem(AUTH_SESSION_KEY);
-      const session = storedLocal || storedSession;
+      const isAuth = localStorage.getItem(AUTH_STORAGE_KEY) === 'true';
+      const gate = document.getElementById('auth-gate');
+      const main = document.querySelector('main');
 
-      if (session) {
-        try {
-          const parsed = JSON.parse(session);
-          if (parsed && parsed.operator) {
-            document.getElementById('auth-gate').classList.add('hidden');
-            const display = document.getElementById('active-user-display');
-            if (display) display.innerText = parsed.operator;
-            return;
-          }
-        } catch (e) {
-          console.error("Session parse error:", e);
-        }
+      if (isAuth) {
+        if (gate) gate.classList.add('hidden');
+        if (main) main.classList.remove('filter', 'blur-md', 'pointer-events-none');
+        const display = document.getElementById('active-user-display');
+        if (display) display.innerText = 'Owner Active';
+      } else {
+        if (gate) gate.classList.remove('hidden');
+        if (main) main.classList.add('filter', 'blur-md', 'pointer-events-none');
+        const passElem = document.getElementById('auth-password');
+        if (passElem) setTimeout(() => passElem.focus(), 150);
       }
-      document.getElementById('auth-gate').classList.remove('hidden');
     }
 
     function lockFounderGate() {
+      localStorage.removeItem(AUTH_STORAGE_KEY);
       localStorage.removeItem(AUTH_SESSION_KEY);
-      sessionStorage.removeItem(AUTH_SESSION_KEY);
-      const userElem = document.getElementById('auth-username');
       const passElem = document.getElementById('auth-password');
       const errorMsg = document.getElementById('auth-error-msg');
-      if (userElem) userElem.value = 'aa.founder';
       if (passElem) {
         passElem.value = '';
         passElem.focus();
       }
       if (errorMsg) errorMsg.classList.add('hidden');
-      document.getElementById('auth-gate').classList.remove('hidden');
+      const gate = document.getElementById('auth-gate');
+      if (gate) gate.classList.remove('hidden');
+      const main = document.querySelector('main');
+      if (main) main.classList.add('filter', 'blur-md', 'pointer-events-none');
       showToast('Session locked.');
     }
 
@@ -1423,12 +1718,12 @@
     window.sessionEncodedUIDs = sessionEncodedUIDs;
     let lastSimulatedUid = null;
 
-    let hardwareMode = 'sim'; // 'real' | 'sim'
+    let burnerMode = 'sim'; // 'real' | 'sim'
     let isBatchBurnerActive = false;
     let batchIndex = 0;
 
     function setHwMode(mode) {
-      hardwareMode = mode;
+      burnerMode = mode;
       const btnReal = document.getElementById('btn-mode-real');
       const btnSim = document.getElementById('btn-mode-sim');
       const btnCollision = document.getElementById('btn-test-collision');
@@ -1455,7 +1750,7 @@
           modeLabel.className = "text-[10px] font-mono text-emerald-400 uppercase font-bold tracking-wider";
         }
         if (writeLabel) writeLabel.innerText = "WRITE NFC";
-        if (chipBadge) chipBadge.innerText = "NFC Hardware";
+        if (chipBadge) chipBadge.innerText = "NFC Card";
       } else {
         if (btnSim) btnSim.className = "px-3 py-1 rounded-lg bg-white text-black font-bold transition-all shadow-xs cursor-pointer";
         if (btnReal) btnReal.className = "px-3 py-1 rounded-lg text-neutral-400 hover:text-white transition-all font-bold cursor-pointer";
@@ -1469,7 +1764,7 @@
     }
 
     function testSimulateCollision() {
-      if (hardwareMode !== 'sim') setHwMode('sim');
+      if (burnerMode !== 'sim') setHwMode('sim');
       if (sessionEncodedUIDs.length === 0) {
         sessionEncodedUIDs.push('04:AA:26:09:F1:C8:90');
       }
@@ -1509,8 +1804,9 @@
     }
 
     async function triggerNativeNfcWrite() {
+      const targetUrlElem = document.getElementById('targetUrl');
       const encoderInput = document.getElementById('encoder-input');
-      let rawUrl = (encoderInput ? encoderInput.value : '').trim();
+      let rawUrl = (targetUrlElem && targetUrlElem.value ? targetUrlElem.value : (encoderInput ? encoderInput.value : '')).trim();
       if (!rawUrl) {
         showToast('Please specify a destination URL first.', false);
         return;
@@ -1518,10 +1814,11 @@
 
       if (!/^https?:\/\//i.test(rawUrl)) {
         rawUrl = 'https://' + rawUrl;
+        if (targetUrlElem) targetUrlElem.value = rawUrl;
         if (encoderInput) encoderInput.value = rawUrl;
         const targetUrlInput = document.getElementById('targetUrlInput');
         if (targetUrlInput) targetUrlInput.value = rawUrl;
-        updateFootprint();
+        if (typeof updateFootprint === 'function') updateFootprint();
       }
 
       try {
@@ -1540,7 +1837,7 @@
       const icon = document.getElementById('nfc-radar-icon');
 
       // SIMULATOR MODE
-      if (hardwareMode === 'sim') {
+      if (burnerMode === 'sim') {
         if (title) title.innerText = 'Simulating Card Tap...';
         if (desc) desc.innerText = 'STATUS: AWAITING CONTACT // BRING CARD TO REAR SENSOR';
         if (icon) {
@@ -1604,6 +1901,12 @@
             showToast(`VERIFIED OK: ${mockUid}`);
             updateSerialWriteStatus(rawUrl);
 
+            const statusBadge = document.getElementById('write-status-badge');
+            if (statusBadge) {
+              statusBadge.innerText = 'ENCODED & READY';
+              statusBadge.className = 'text-[10px] font-mono font-bold text-white bg-emerald-600 px-3 py-1 rounded-full shadow-xs';
+            }
+
             setTimeout(() => {
               cancelNfcScan();
               if (isBatchBurnerActive) {
@@ -1637,7 +1940,7 @@
             cancelNfcScan();
             playHwErrorBuzz();
             showToast('NFC scan session timed out.', false);
-            logAuditTrail('NFC_TIMEOUT', `Hardware scan timed out for ${rawUrl}`, 'warning');
+            logAuditTrail('NFC_TIMEOUT', `Card scan timed out for ${rawUrl}`, 'warning');
           }
         }, 45000);
 
@@ -1661,7 +1964,7 @@
           nfcSessionTimeoutId = null;
         }
 
-        // DUPLICATE UID COLLISION INTERCEPTOR (REAL HARDWARE TAG)
+        // DUPLICATE UID COLLISION INTERCEPTOR (REAL CHIP TAG)
         if (detectedPhysicalUid) {
           if (sessionEncodedUIDs.includes(detectedPhysicalUid)) {
             playHwErrorBuzz();
@@ -1698,6 +2001,12 @@
         logAuditTrail('NFC_VERIFIED', `Card encoded & verified with ${rawUrl} (UID: ${detectedPhysicalUid || 'N/A'})`);
         showToast('Card encoded and verified.');
         updateSerialWriteStatus(rawUrl);
+
+        const statusBadge = document.getElementById('write-status-badge');
+        if (statusBadge) {
+          statusBadge.innerText = 'ENCODED & READY';
+          statusBadge.className = 'text-[10px] font-mono font-bold text-white bg-emerald-600 px-3 py-1 rounded-full shadow-xs';
+        }
 
         setTimeout(() => {
           cancelNfcScan();
@@ -1868,7 +2177,7 @@
       // Reset UI to Scanning State
       if (badge) {
         badge.className = "px-3 py-1 rounded-md text-[10px] font-mono uppercase tracking-wider font-bold bg-neutral-100 text-neutral-700 border border-neutral-200";
-        badge.innerText = hardwareMode === 'sim' ? "SIMULATOR ACTIVE" : "AWAITING TAG";
+        badge.innerText = burnerMode === 'sim' ? "SIMULATOR ACTIVE" : "AWAITING TAG";
       }
 
       if (ring) {
@@ -1877,7 +2186,7 @@
       }
 
       if (hint) {
-        hint.innerText = hardwareMode === 'sim'
+        hint.innerText = burnerMode === 'sim'
           ? "Desktop / Simulator active: Interrogating simulated physical card..."
           : "Hold physical NFC card against rear antenna...";
       }
@@ -1903,7 +2212,7 @@
       }
 
       // SIMULATOR MODE
-      if (hardwareMode === 'sim' || !('NDEFReader' in window)) {
+      if (burnerMode === 'sim' || !('NDEFReader' in window)) {
         inspectTimeoutId = setTimeout(() => {
           const modal = document.getElementById('chip-inspect-modal');
           if (modal && modal.classList.contains('hidden')) return;
@@ -1968,7 +2277,7 @@
             recordType: recTypeDesc,
             url: extractedUrl || '(Empty Record)',
             lockState: "Read / Write (Unlocked)",
-            source: "HARDWARE"
+            source: "CARD"
           });
         };
 
@@ -2091,7 +2400,7 @@
 
       playHwChirp();
       showToast(`Loaded ${lastInspectedUrl} into NFC Writer.`);
-      logAuditTrail('INSPECT_LOADED', `Loaded inspected URL ${lastInspectedUrl} into hardware burner.`);
+      logAuditTrail('INSPECT_LOADED', `Loaded inspected URL ${lastInspectedUrl} into card burner.`);
     }
 
     function testInspectedUrl() {
@@ -2276,7 +2585,7 @@
         healthLabel.innerText = '0 Errors';
         healthLabel.className = 'text-[10px] font-mono text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-md font-bold';
         auditIndicator.className = 'w-2 h-2 rounded-full bg-emerald-500';
-        issuesBox.innerHTML = `<span class="text-neutral-700">All hardware serials match NTAG213 specifications and enforce HTTPS routing.</span>`;
+        issuesBox.innerHTML = `<span class="text-neutral-700">All card serials match NTAG213 specifications and enforce HTTPS routing.</span>`;
       } else {
         const score = Math.max(0, 100 - (issues.length * 15));
         healthNumber.innerText = `${score}%`;
@@ -2291,7 +2600,7 @@
     // 5. SERIAL CODE REGISTRY
     const SERIALS_STORAGE_KEY = 'attachment_meadhall_serials';
     const DATA_VERSION_KEY = 'attachment_meadhall_data_version';
-    const CURRENT_DATA_VERSION = 'v5_verified_client_ledger';
+    const CURRENT_DATA_VERSION = 'v6_workshop_stepper';
 
     const defaultSerials = [
       {
@@ -2498,7 +2807,198 @@
       }
     }
 
-    function loadSerialToBurner(url, clientName, serialCode) {
+    // --- SMIPPE // NFC TOOL GENERATOR & FORGE ENGINE ---
+    function forgeNFC() {
+      const btn = document.getElementById('forgeBtn');
+      const clientInput = document.getElementById('clientName');
+      const typeInput = document.getElementById('productType');
+      const urlInput = document.getElementById('targetUrl');
+
+      const name = (clientInput ? clientInput.value : '').trim();
+      const type = typeInput ? typeInput.value : 'AA-CARD';
+      let url = (urlInput ? urlInput.value : '').trim();
+
+      if (!name || !url) {
+        showToast('Please provide both profile name and destination URL.', false);
+        return;
+      }
+
+      if (!/^https?:\/\//i.test(url)) {
+        url = 'https://' + url;
+        if (urlInput) urlInput.value = url;
+      }
+
+      // UI State: Loading animation
+      if (btn) {
+        btn.innerHTML = '<span class="animate-pulse">ENCODING CARD PROFILE...</span>';
+        btn.classList.add('opacity-75');
+      }
+
+      setTimeout(() => {
+        const randomHex = Math.random().toString(16).substr(2, 4).toUpperCase();
+        const now = new Date();
+        const yy = String(now.getFullYear()).slice(-2);
+        const mm = String(now.getMonth() + 1).padStart(2, '0');
+        const serialCode = `${type}-${yy}${mm}-${randomHex}`;
+
+        // Sync hidden inputs for compatibility
+        const encInput = document.getElementById('encoder-input');
+        const tgtInput = document.getElementById('targetUrlInput');
+        if (encInput) encInput.value = url;
+        if (tgtInput) tgtInput.value = url;
+        if (typeof updateFootprint === 'function') updateFootprint();
+
+        // Update Smippe Live Output UI
+        const serialOut = document.getElementById('out-serial');
+        if (serialOut) {
+          serialOut.innerText = serialCode;
+          serialOut.classList.remove('text-neutral-300');
+          serialOut.classList.add('text-black');
+        }
+
+        const nameOut = document.getElementById('out-name');
+        if (nameOut) {
+          nameOut.innerText = name;
+          nameOut.classList.remove('opacity-40');
+        }
+
+        const urlOut = document.getElementById('out-url');
+        if (urlOut) {
+          urlOut.innerText = url;
+          urlOut.classList.remove('opacity-40');
+        }
+
+        const hwOut = document.getElementById('out-hw');
+        if (hwOut) hwOut.innerText = type;
+
+        // Update Status indicator
+        const statusBox = document.getElementById('write-status');
+        const statusBadge = document.getElementById('write-status-badge');
+        if (statusBox) statusBox.classList.remove('opacity-50');
+        if (statusBadge) {
+          statusBadge.innerText = 'READY TO TAP';
+          statusBadge.className = 'text-[10px] font-mono font-bold text-white bg-emerald-600 px-3 py-1 rounded-full shadow-xs animate-pulse';
+        }
+
+        // Auto-register into Serial Directory ledger
+        const serials = getSerials();
+        const existingIdx = serials.findIndex(s => s.serial === serialCode);
+        if (existingIdx === -1) {
+          serials.unshift({
+            serial: serialCode,
+            client: name,
+            name: name,
+            brand: type === 'AA-STAND' ? 'Counter Stand' : (type === 'AA-PATCH' ? 'Signature Patch' : (type === 'AA-KEY' ? 'Key Fob' : 'Attachment Anywhere')),
+            url: url,
+            targetUrl: url,
+            chip: 'NTAG213',
+            lastWritten: new Date().toISOString().split('T')[0],
+            status: 'OK'
+          });
+          saveSerials(serials);
+          if (typeof renderSerialTable === 'function') renderSerialTable();
+        }
+
+        // Revert Button
+        if (btn) {
+          btn.innerHTML = `
+            <span>Profile Forged & Primed</span>
+            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          `;
+          btn.classList.remove('opacity-75');
+
+          setTimeout(() => {
+            btn.innerHTML = `
+              <span>Forge Another Profile</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            `;
+          }, 2000);
+        }
+
+        showToast(`Forged: ${serialCode} for ${name}`);
+        logAuditTrail('SMIPPE_FORGE', `Profile forged: ${serialCode} -> ${url}`);
+      }, 500);
+    }
+
+    async function pasteClipboardToForge() {
+      try {
+        const text = await navigator.clipboard.readText();
+        if (text && text.trim()) {
+          const targetUrlInput = document.getElementById('targetUrl');
+          if (targetUrlInput) {
+            targetUrlInput.value = text.trim();
+            targetUrlInput.dispatchEvent(new Event('input'));
+          }
+          const encInput = document.getElementById('encoder-input');
+          if (encInput) encInput.value = text.trim();
+          showToast('URL pasted from clipboard.');
+        }
+      } catch (err) {
+        showToast('Please paste manually into Destination URL.', false);
+      }
+    }
+
+    function copyForgedSerial() {
+      const serialOut = document.getElementById('out-serial');
+      const text = serialOut ? serialOut.innerText.trim() : '';
+      if (text && !text.includes('----')) {
+        navigator.clipboard.writeText(text)
+          .then(() => showToast(`Serial ${text} copied!`))
+          .catch(() => showToast(`Serial: ${text}`));
+      } else {
+        showToast('Forge a profile first to generate a serial.', false);
+      }
+    }
+
+    function initSmippeListeners() {
+      const nameInput = document.getElementById('clientName');
+      const urlInput = document.getElementById('targetUrl');
+      const hwSelect = document.getElementById('productType');
+
+      const nameOut = document.getElementById('out-name');
+      const urlOut = document.getElementById('out-url');
+      const hwOut = document.getElementById('out-hw');
+
+      if (nameInput && nameOut) {
+        nameInput.addEventListener('input', () => {
+          const val = nameInput.value.trim();
+          if (val) {
+            nameOut.innerText = val;
+            nameOut.classList.remove('opacity-40');
+          } else {
+            nameOut.innerText = 'Awaiting input...';
+            nameOut.classList.add('opacity-40');
+          }
+        });
+      }
+
+      if (urlInput && urlOut) {
+        urlInput.addEventListener('input', () => {
+          const val = urlInput.value.trim();
+          const encInput = document.getElementById('encoder-input');
+          const targetInput = document.getElementById('targetUrlInput');
+          if (encInput) encInput.value = val;
+          if (targetInput) targetInput.value = val;
+          if (typeof updateFootprint === 'function') updateFootprint();
+
+          if (val) {
+            urlOut.innerText = val;
+            urlOut.classList.remove('opacity-40');
+          } else {
+            urlOut.innerText = 'Awaiting input...';
+            urlOut.classList.add('opacity-40');
+          }
+        });
+      }
+
+      if (hwSelect && hwOut) {
+        hwSelect.addEventListener('change', () => {
+          hwOut.innerText = hwSelect.value;
+        });
+      }
+    }
+
+    function loadSerialToBurner(url, clientName, serialCode, shouldScroll = true) {
       if (!url) return;
       const serials = getSerials();
       if (serialCode && serials) {
@@ -2508,8 +3008,50 @@
 
       const encoderInput = document.getElementById('encoder-input');
       const targetUrlInput = document.getElementById('targetUrlInput');
+      const targetUrl = document.getElementById('targetUrl');
+      const clientNameInput = document.getElementById('clientName');
+      const productTypeSelect = document.getElementById('productType');
+      const outSerial = document.getElementById('out-serial');
+      const outName = document.getElementById('out-name');
+      const outUrl = document.getElementById('out-url');
+      const outHw = document.getElementById('out-hw');
+      const writeStatus = document.getElementById('write-status');
+      const writeStatusBadge = document.getElementById('write-status-badge');
+
       if (encoderInput) encoderInput.value = url;
       if (targetUrlInput) targetUrlInput.value = url;
+      if (targetUrl) targetUrl.value = url;
+      if (clientNameInput && clientName) clientNameInput.value = clientName;
+
+      if (serialCode && productTypeSelect) {
+        if (serialCode.startsWith('AA-PATCH')) productTypeSelect.value = 'AA-PATCH';
+        else if (serialCode.startsWith('AA-STAND')) productTypeSelect.value = 'AA-STAND';
+        else if (serialCode.startsWith('AA-KEY')) productTypeSelect.value = 'AA-KEY';
+        else productTypeSelect.value = 'AA-CARD';
+      }
+
+      if (outSerial && serialCode) {
+        outSerial.innerText = serialCode;
+        outSerial.classList.remove('text-neutral-300');
+        outSerial.classList.add('text-black');
+      }
+      if (outName && clientName) {
+        outName.innerText = clientName;
+        outName.classList.remove('opacity-40');
+      }
+      if (outUrl) {
+        outUrl.innerText = url;
+        outUrl.classList.remove('opacity-40');
+      }
+      if (outHw && productTypeSelect) {
+        outHw.innerText = productTypeSelect.value;
+      }
+      if (writeStatus) writeStatus.classList.remove('opacity-50');
+      if (writeStatusBadge) {
+        writeStatusBadge.innerText = 'READY TO TAP';
+        writeStatusBadge.className = 'text-[10px] font-mono font-bold text-white bg-emerald-600 px-3 py-1 rounded-full shadow-xs animate-pulse';
+      }
+
       if (typeof updateFootprint === 'function') {
         updateFootprint();
       }
@@ -2519,18 +3061,20 @@
 
       if (serialCode) highlightLedgerRow(serialCode);
 
-      const suite = document.getElementById('provisioning-suite');
-      if (suite) {
-        suite.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        suite.classList.add('ring-1', 'ring-emerald-500/50');
-        setTimeout(() => {
-          suite.classList.remove('ring-1', 'ring-emerald-500/50');
-        }, 2000);
-      }
+      if (shouldScroll) {
+        const suite = document.getElementById('provisioning-suite');
+        if (suite) {
+          suite.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          suite.classList.add('ring-2', 'ring-black');
+          setTimeout(() => {
+            suite.classList.remove('ring-2', 'ring-black');
+          }, 1500);
+        }
 
-      const clientLabel = clientName ? ` (${clientName})` : '';
-      showToast(`URL Primed into Burner: ${serialCode || ''}${clientLabel}`);
-      logAuditTrail('BURNER_PRIMED', `Loaded URL for ${clientName || serialCode} into hardware burner.`);
+        const clientLabel = clientName ? ` (${clientName})` : '';
+        showToast(`Primed in Smippe Forge: ${serialCode || ''}${clientLabel}`);
+        logAuditTrail('BURNER_PRIMED', `Loaded URL for ${clientName || serialCode} into Smippe NFC forge.`);
+      }
     }
 
     function renderSerialTable() {
@@ -2551,7 +3095,7 @@
       });
 
       if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="py-12 text-center text-neutral-400 font-sans text-xs">No matching hardware records found.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" class="py-12 text-center text-neutral-400 font-sans text-xs">No matching records found.</td></tr>`;
         return;
       }
 
@@ -2599,6 +3143,9 @@
             ${statusBadge}
           </td>
           <td class="py-3.5 px-6 text-right space-x-1.5 whitespace-nowrap">
+            <button onclick="event.stopPropagation(); copySerialWaybill('${item.serial}')" title="Copy Courier Waybill" class="text-[10px] font-mono font-bold uppercase tracking-wider text-neutral-800 hover:text-black border border-neutral-300 hover:border-black bg-white hover:bg-neutral-50 px-2 py-1.5 rounded-md transition-colors cursor-pointer shadow-2xs">
+              WAYBILL
+            </button>
             <button onclick="event.stopPropagation(); loadSerialToBurner('${targetUrl}', '${clientName.replace(/'/g, "\\'")}', '${item.serial}')" class="text-[10px] font-mono font-bold uppercase tracking-wider bg-black text-white hover:bg-neutral-800 px-2.5 py-1.5 rounded-md transition-all cursor-pointer inline-flex items-center gap-1 shadow-xs">
               <span>LOAD TO BURNER</span>
             </button>
@@ -2749,7 +3296,7 @@
       highlightLedgerRow('__none__');
       if (typeof updateFootprint === 'function') updateFootprint();
       if (typeof updateVisualQcDock === 'function') updateVisualQcDock();
-      showToast('Hardware burner reset to unassigned state.');
+      showToast('Card burner reset to unassigned state.');
     }
 
     function initGlobalHotkeys() {
@@ -3153,7 +3700,7 @@
         variant: "Customized Card",
         qty: 3,
         total: 4580,
-        status: "Dispatched",
+        status: "SHIPPED",
         shipping: "Standard Metro Manila (+₱80)",
         specs: {
           businessName: "DYKTJ Auto Supply",
@@ -3172,7 +3719,7 @@
         variant: "Customized Card",
         qty: 1,
         total: 1580,
-        status: "Dispatched",
+        status: "SHIPPED",
         shipping: "Standard Metro Manila (+₱80)",
         specs: {
           company: "Pioneer Insurance Company",
@@ -3191,7 +3738,7 @@
         variant: "Customized Card",
         qty: 1,
         total: 1580,
-        status: "Dispatched",
+        status: "SHIPPED",
         shipping: "Standard Metro Manila (+₱80)",
         specs: {
           title: "SK Chairman",
@@ -3209,7 +3756,7 @@
         variant: "Store Branding",
         qty: 2,
         total: 1650,
-        status: "Encoded",
+        status: "QC PASSED",
         shipping: "Express Courier (+₱150)",
         specs: {
           business: "Mama Bean Coffee Club",
@@ -3227,7 +3774,7 @@
         variant: "Store Branding",
         qty: 1,
         total: 830,
-        status: "Encoded",
+        status: "BURNED",
         shipping: "Standard Metro Manila (+₱80)",
         specs: {
           business: "Sushi Maki Rolls",
@@ -3245,7 +3792,7 @@
         variant: "Original Design",
         qty: 1,
         total: 1350,
-        status: "Pending",
+        status: "QUEUED",
         shipping: "Provincial Delivery (+₱150)",
         specs: {
           role: "Reseller / Accountancy Student",
@@ -3301,30 +3848,93 @@
       renderMeadhall();
     }
 
+    const FULFILLMENT_STAGES = ['QUEUED', 'BURNED', 'QC PASSED', 'SHIPPED'];
+
+    function normalizeOrderStatus(status) {
+      if (!status) return 'QUEUED';
+      const s = String(status).toUpperCase().trim();
+      if (s === 'PENDING') return 'QUEUED';
+      if (s === 'ENCODED') return 'BURNED';
+      if (s === 'DISPATCHED') return 'SHIPPED';
+      if (FULFILLMENT_STAGES.includes(s)) return s;
+      return 'QUEUED';
+    }
+
+    function cycleOrderStatus(ref) {
+      const orders = getOrders();
+      const target = orders.find(o => o.ref === ref);
+      if (target) {
+        const current = normalizeOrderStatus(target.status);
+        const currentIndex = FULFILLMENT_STAGES.indexOf(current);
+        const nextIndex = (currentIndex + 1) % FULFILLMENT_STAGES.length;
+        target.status = FULFILLMENT_STAGES[nextIndex];
+
+        saveOrders(orders);
+        playTactileTick();
+        logAuditTrail('ORDER_STATUS', "Order " + ref + " fulfillment stage: " + target.status);
+        showToast("Order " + ref + ": [ " + target.status + " ]");
+      }
+    }
+    window.cycleOrderStatus = cycleOrderStatus;
+    window.cycleStatus = cycleOrderStatus;
+
     function renderMeadhall() {
       const orders = getOrders();
       const tbody = document.getElementById('orders-table-body');
       const query = (document.getElementById('order-search').value || '').toLowerCase().trim();
 
+      // Normalize statuses
+      orders.forEach(o => { o.status = normalizeOrderStatus(o.status); });
+
       const countAll = orders.length;
-      const countPending = orders.filter(o => o.status === 'Pending').length;
-      const countEncoded = orders.filter(o => o.status === 'Encoded').length;
-      const countDispatched = orders.filter(o => o.status === 'Dispatched').length;
+      const countQueued = orders.filter(o => o.status === 'QUEUED').length;
+      const countBurned = orders.filter(o => o.status === 'BURNED').length;
+      const countQcPassed = orders.filter(o => o.status === 'QC PASSED').length;
+      const countShipped = orders.filter(o => o.status === 'SHIPPED').length;
 
-      document.getElementById('count-all').innerText = countAll;
-      document.getElementById('count-pending').innerText = countPending;
-      document.getElementById('count-encoded').innerText = countEncoded;
-      document.getElementById('count-dispatched').innerText = countDispatched;
+      const elAll = document.getElementById('count-all');
+      const elQueued = document.getElementById('count-queued');
+      const elBurned = document.getElementById('count-burned');
+      const elQcPassed = document.getElementById('count-qc-passed');
+      const elShipped = document.getElementById('count-shipped');
 
+      if (elAll) elAll.innerText = countAll;
+      if (elQueued) elQueued.innerText = countQueued;
+      if (elBurned) elBurned.innerText = countBurned;
+      if (elQcPassed) elQcPassed.innerText = countQcPassed;
+      if (elShipped) elShipped.innerText = countShipped;
+
+      // Hidden compatibility bindings
+      const elPending = document.getElementById('count-pending');
+      const elEncoded = document.getElementById('count-encoded');
+      const elDispatched = document.getElementById('count-dispatched');
+      if (elPending) elPending.innerText = countQueued;
+      if (elEncoded) elEncoded.innerText = countBurned;
+      if (elDispatched) elDispatched.innerText = countShipped;
+
+      // Metric Tiles sync
       const statRevenue = document.getElementById('stat-revenue');
       const statPending = document.getElementById('stat-pending');
+      const statVerified = document.getElementById('stat-verified');
+      const statInventory = document.getElementById('stat-inventory');
 
-      const totalVal = orders.reduce((sum, o) => sum + (Number(o.total) || 0), 0);
-      if (statRevenue) statRevenue.innerText = `₱${totalVal.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
-      
+      // GROSS SALES calculated dynamically from completed orders (SHIPPED)
+      const completedSales = orders.filter(o => o.status === 'SHIPPED').reduce((sum, o) => sum + (Number(o.total) || 0), 0);
+      const totalPipeline = orders.reduce((sum, o) => sum + (Number(o.total) || 0), 0);
+      const displaySales = completedSales > 0 ? completedSales : totalPipeline;
+      if (statRevenue) statRevenue.innerText = "₱" + displaySales.toLocaleString('en-US', { minimumFractionDigits: 2 });
+
+      // PENDING QUEUE: Queued cards waiting to be burned
       const serials = getSerials();
       const pendingSerials = serials.filter(s => (s.status || '').toUpperCase() === 'PENDING').length;
-      if (statPending) statPending.innerText = countPending + pendingSerials;
+      if (statPending) statPending.innerText = countQueued + pendingSerials;
+
+      // VERIFIED & PACKED: Cards programmed and QC verified
+      if (statVerified) statVerified.innerText = countBurned + countQcPassed;
+
+      // CHIP INVENTORY: Live counter of blank chips
+      const cfg = getMeadhallConfig();
+      if (statInventory) statInventory.innerText = cfg.inventory.ntag213 || 250;
 
       let filtered = orders;
       if (activeFilter !== 'all') {
@@ -3342,7 +3952,7 @@
 
       tbody.innerHTML = '';
       if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="py-12 text-center text-neutral-400 font-sans text-xs">No matching orders found.</td></tr>`;
+        tbody.innerHTML = '<tr><td colspan="5" class="py-12 text-center text-neutral-400 font-sans text-xs">No matching orders in this stage.</td></tr>';
         return;
       }
 
@@ -3350,10 +3960,30 @@
         const tr = document.createElement('tr');
         tr.className = "hover:bg-neutral-50/80 border-b border-neutral-100 transition-colors text-xs";
 
-        let badgeStyles = "bg-neutral-100 text-neutral-600 border border-neutral-200 font-semibold";
-        if(order.status === 'Pending') badgeStyles = "bg-amber-50 text-amber-700 border border-amber-200 font-semibold";
-        if(order.status === 'Encoded') badgeStyles = "bg-neutral-900 text-white border border-neutral-900 font-semibold";
-        if(order.status === 'Dispatched') badgeStyles = "bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold";
+        const normStatus = normalizeOrderStatus(order.status);
+        let stepperBadgeHtml = '';
+
+        if (normStatus === 'QUEUED') {
+          stepperBadgeHtml = `<button type="button" onclick="cycleOrderStatus('${order.ref}')" title="Click to advance: QUEUED -> BURNED" class="px-2.5 py-1 rounded-md text-[10px] font-mono uppercase tracking-wider inline-flex items-center gap-1.5 font-bold transition-all cursor-pointer bg-amber-50 text-amber-800 border border-amber-300 hover:bg-amber-100 active:scale-95 shadow-2xs">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+            <span>1/4 QUEUED</span>
+          </button>`;
+        } else if (normStatus === 'BURNED') {
+          stepperBadgeHtml = `<button type="button" onclick="cycleOrderStatus('${order.ref}')" title="Click to advance: BURNED -> QC PASSED" class="px-2.5 py-1 rounded-md text-[10px] font-mono uppercase tracking-wider inline-flex items-center gap-1.5 font-bold transition-all cursor-pointer bg-blue-50 text-blue-800 border border-blue-300 hover:bg-blue-100 active:scale-95 shadow-2xs">
+            <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+            <span>2/4 BURNED</span>
+          </button>`;
+        } else if (normStatus === 'QC PASSED') {
+          stepperBadgeHtml = `<button type="button" onclick="cycleOrderStatus('${order.ref}')" title="Click to advance: QC PASSED -> SHIPPED" class="px-2.5 py-1 rounded-md text-[10px] font-mono uppercase tracking-wider inline-flex items-center gap-1.5 font-bold transition-all cursor-pointer bg-purple-50 text-purple-800 border border-purple-300 hover:bg-purple-100 active:scale-95 shadow-2xs">
+            <span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
+            <span>3/4 QC PASSED</span>
+          </button>`;
+        } else {
+          stepperBadgeHtml = `<button type="button" onclick="cycleOrderStatus('${order.ref}')" title="Click to reset status to QUEUED" class="px-2.5 py-1 rounded-md text-[10px] font-mono uppercase tracking-wider inline-flex items-center gap-1.5 font-bold transition-all cursor-pointer bg-emerald-50 text-emerald-800 border border-emerald-300 hover:bg-emerald-100 active:scale-95 shadow-2xs">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            <span>4/4 SHIPPED</span>
+          </button>`;
+        }
 
         const hasTargetUrl = order.specs && order.specs.targetUrl;
 
@@ -3370,42 +4000,27 @@
             <span class="font-sans text-[11px] text-neutral-500">${order.variant} (${order.qty}x) • ₱${order.total}</span>
           </td>
           <td class="py-3.5 px-6">
-            <span class="px-2 py-0.5 rounded-md text-[10px] font-mono uppercase tracking-wider inline-flex items-center gap-1.5 ${badgeStyles}">
-              ${order.status}
-            </span>
+            ${stepperBadgeHtml}
           </td>
-          <td class="py-3.5 px-6 text-right space-x-2 whitespace-nowrap">
+          <td class="py-3.5 px-6 text-right space-x-1.5 whitespace-nowrap">
+            <button onclick="copyOrderWaybill('${order.ref}')" class="text-[10px] font-mono font-bold uppercase tracking-wider text-neutral-800 hover:text-black border border-neutral-300 hover:border-black bg-white hover:bg-neutral-50 px-2 py-1 rounded-md transition-colors cursor-pointer shadow-2xs" title="Copy courier waybill for Lalamove / J&T">
+              WAYBILL
+            </button>
             ${hasTargetUrl ? `
               <button onclick="quickWriteOrder('${order.ref}')" class="text-[10px] font-mono font-bold uppercase tracking-wider text-black bg-neutral-100 hover:bg-neutral-200 px-2 py-1 rounded-md transition-colors cursor-pointer" title="Write to card">
-                Encode
+                Burn
               </button>
             ` : ''}
-            <button onclick="cycleStatus('${order.ref}')" class="text-[10px] font-sans font-medium text-neutral-600 hover:text-black underline cursor-pointer">
-              ${order.status === 'Pending' ? 'Mark Encoded' : order.status === 'Encoded' ? 'Mark Dispatched' : 'Reset'}
-            </button>
             <button onclick="openSpecDrawer('${order.ref}')" class="text-[10px] font-sans font-medium text-neutral-600 hover:text-black underline cursor-pointer">
               View
             </button>
-            <button onclick="deleteOrder('${order.ref}')" class="text-xs text-neutral-400 hover:text-red-600 transition-colors cursor-pointer px-1.5">
+            <button onclick="deleteOrder('${order.ref}')" class="text-xs text-neutral-400 hover:text-red-600 transition-colors cursor-pointer px-1.5" title="Delete Order">
               &times;
             </button>
           </td>
         `;
         tbody.appendChild(tr);
       });
-    }
-
-    function cycleStatus(ref) {
-      const orders = getOrders();
-      const target = orders.find(o => o.ref === ref);
-      if (target) {
-        if (target.status === 'Pending') target.status = 'Encoded';
-        else if (target.status === 'Encoded') target.status = 'Dispatched';
-        else target.status = 'Pending';
-        saveOrders(orders);
-        logAuditTrail('ORDER_STATUS', `Order ${ref} updated to ${target.status}`);
-        showToast(`Order ${ref}: ${target.status}.`);
-      }
     }
 
     // MANUAL ORDER INTAKE CONTROLS
@@ -3703,7 +4318,9 @@
 
     let activeInspectedUrl = '';
 
+    let activeDrawerRef = '';
     function openSpecDrawer(ref) {
+      activeDrawerRef = ref;
       const orders = getOrders();
       const order = orders.find(o => o.ref === ref);
       if (!order) return;
@@ -3757,7 +4374,7 @@
         if (event.key === ORDERS_STORAGE_KEY) {
           showToast('Live Sync: Brand website order stream updated.');
         } else if (event.key === SERIALS_STORAGE_KEY) {
-          showToast('Live Sync: Hardware serial registry updated.');
+          showToast('Live Sync: Serial registry updated.');
         }
       }
     });
@@ -3944,282 +4561,502 @@
       processGeminiQuery(q);
     }
 
-    async function processGeminiQuery(query) {
-      appendGeminiMessage('user', query);
+    function appendAgentToolExecution(toolName, args, resultSummary) {
+      const stream = document.getElementById('gemini-chat-stream');
+      if (!stream) return;
 
-      const cfg = getMeadhallConfig();
-      const serials = getSerials();
-      const orders = getOrders();
-      const statRevenue = document.getElementById('stat-revenue');
-      const currentRevenue = statRevenue ? statRevenue.innerText : '₱0.00';
+      const toolDiv = document.createElement('div');
+      toolDiv.className = 'flex items-start gap-3 fade-in';
+      toolDiv.innerHTML = `
+        <div class="w-7 h-7 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-400 font-mono text-[11px] font-bold shrink-0 mt-0.5 flex items-center justify-center">
+          &gt;_
+        </div>
+        <div class="bg-[#121318] border border-neutral-800 rounded-2xl rounded-tl-sm px-4 py-3 text-xs sm:text-sm text-neutral-200 leading-relaxed max-w-[85%] sm:max-w-2xl shadow-sm font-mono space-y-2">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-[#1c1d24] border border-neutral-700 text-[10px] font-mono text-emerald-400 font-bold">
+            <span>⚙ TOOL_CALL:</span>
+            <span class="text-white">${toolName}(${JSON.stringify(args || {})})</span>
+            <span class="text-emerald-500 font-bold">✓ EXECUTED</span>
+          </div>
+          <div class="whitespace-pre-line text-neutral-300 leading-relaxed">${resultSummary}</div>
+        </div>
+      `;
+      stream.appendChild(toolDiv);
+      stream.scrollTop = stream.scrollHeight;
+    }
 
-      // 1. HELP / GREETING
-      if (/^(hi|hello|hey|help|\?)$/i.test(query.trim())) {
-        appendGeminiMessage('gemini', "I can help you dynamically modify card pricing, check inventory counts, register client serials, or view revenue metrics. Try asking:\n• *'Set card price to 1450'*\n• *'Add 50 NTAG213 chips'*\n• *'Add client John Doe for Brand X with serial aa260999'*\n• *'How much is total realized value?'*");
-        return;
-      }
+    // ============================================================
+    // AUTONOMOUS OPERATIONS AGENT ENGINE (FUNCTION-CALLING CORE)
+    // ============================================================
+    const WorkshopAgentTools = {
+      
+      calculate_unit_margins() {
+        const cfg = getMeadhallConfig();
+        const orders = getOrders();
+        
+        // Attachment Anywhere Workshop Unit Economics
+        const cardRetail = cfg.pricing.card || 900;
+        const cardCogs = 148; // NTAG213 blank: ₱85, UV DTF & soft matte finish: ₱45, packaging & hologram: ₱18
+        const cardMargin = cardRetail - cardCogs;
+        const cardMarginPct = ((cardMargin / cardRetail) * 100).toFixed(1);
 
-      // 2. PRICING MUTATIONS
-      const cardPriceMatch = query.match(/(?:set|update|change)\s+(?:the\s+)?(?:executive\s+)?card\s+price\s+(?:to\s+)?(?:₱|p|php)?\s*(\d+(?:\.\d+)?)/i);
-      if (cardPriceMatch) {
-        const newPrice = parseFloat(cardPriceMatch[1]);
-        cfg.pricing.card = newPrice;
+        const patchRetail = cfg.pricing.patch || 650;
+        const patchCogs = 115;
+        const patchMargin = patchRetail - patchCogs;
+        const patchMarginPct = ((patchMargin / patchRetail) * 100).toFixed(1);
+
+        const standRetail = cfg.pricing.puck || 850;
+        const standCogs = 160;
+        const standMargin = standRetail - standCogs;
+        const standMarginPct = ((standMargin / standRetail) * 100).toFixed(1);
+
+        const shieldRetail = cfg.pricing.reviewShield || 350;
+        const shieldCogs = 55;
+        const shieldMargin = shieldRetail - shieldCogs;
+        const shieldMarginPct = ((shieldMargin / shieldRetail) * 100).toFixed(1);
+
+        const hubRetail = cfg.pricing.hub || 2000;
+        const hubCogs = 380;
+        const hubMargin = hubRetail - hubCogs;
+        const hubMarginPct = ((hubMargin / hubRetail) * 100).toFixed(1);
+
+        // Active Pipeline Aggregates
+        const totalPipelineRev = orders.reduce((s, o) => s + (Number(o.total) || 0), 0);
+        const estTotalCogs = orders.reduce((s, o) => {
+          const qty = o.qty || 1;
+          const p = (o.product || '').toLowerCase();
+          if (p.includes('patch')) return s + (patchCogs * qty);
+          if (p.includes('shield')) return s + (shieldCogs * qty);
+          if (p.includes('hub')) return s + (hubCogs * qty);
+          if (p.includes('stand') || p.includes('puck')) return s + (standCogs * qty);
+          return s + (cardCogs * qty);
+        }, 0);
+        const blendedGrossProfit = totalPipelineRev - estTotalCogs;
+        const blendedMarginPct = totalPipelineRev > 0 ? ((blendedGrossProfit / totalPipelineRev) * 100).toFixed(1) : '83.5';
+
+        const report = 
+          "**ATTACHMENT ANYWHERE // UNIT MARGINS & COGS ANALYSIS**\n\n" +
+          "• **Smart Executive Card:** ₱" + cardRetail.toLocaleString() + " retail | COGS ₱" + cardCogs + " → **₱" + cardMargin.toLocaleString() + " Unit Margin (" + cardMarginPct + "%)**\n" +
+          "  *(Breakdown: NTAG213 blank ₱85, UV DTF & matte lam ₱45, kraft sleeve & seal ₱18)*\n" +
+          "• **Signature Patch (Drop 001):** ₱" + patchRetail.toLocaleString() + " retail | COGS ₱" + patchCogs + " → **₱" + patchMargin.toLocaleString() + " Unit Margin (" + patchMarginPct + "%)**\n" +
+          "• **Counter Stand:** ₱" + standRetail.toLocaleString() + " retail | COGS ₱" + standCogs + " → **₱" + standMargin.toLocaleString() + " Unit Margin (" + standMarginPct + "%)**\n" +
+          "• **Google ReviewShield™:** ₱" + shieldRetail.toLocaleString() + " retail | COGS ₱" + shieldCogs + " → **₱" + shieldMargin.toLocaleString() + " Unit Margin (" + shieldMarginPct + "%)**\n" +
+          "• **Business Digital Hub:** ₱" + hubRetail.toLocaleString() + " retail | COGS ₱" + hubCogs + " → **₱" + hubMargin.toLocaleString() + " Unit Margin (" + hubMarginPct + "%)**\n\n" +
+          "📊 **Pipeline Total:** ₱" + totalPipelineRev.toLocaleString() + " Gross | ₱" + estTotalCogs.toLocaleString() + " Est. COGS → **₱" + blendedGrossProfit.toLocaleString() + " Blended Gross Profit (" + blendedMarginPct + "%)**";
+
+        playTactileTick();
+        logAuditTrail('MARGIN_ANALYSIS', "Unit margin analysis generated. Blended: " + blendedMarginPct + "%");
+        return { report, blendedMarginPct, totalPipelineRev, blendedGrossProfit };
+      },
+
+      generate_courier_waybill(args) {
+        const query = (args.target || '').toLowerCase().trim();
+        const orders = getOrders();
+        const serials = getSerials();
+        
+        // Find matching order
+        let order = null;
+        if (query) {
+          order = orders.find(o => 
+            o.ref.toLowerCase().includes(query) ||
+            o.customer.name.toLowerCase().includes(query) ||
+            o.customer.phone.includes(query)
+          );
+        }
+        if (!order) {
+          // Default to first pending or queued order
+          order = orders.find(o => ['QUEUED', 'BURNED', 'QC PASSED'].includes(normalizeOrderStatus(o.status))) || orders[0];
+        }
+
+        if (!order) {
+          return { error: 'No orders available in pipeline.' };
+        }
+
+        const clientName = (order.customer && order.customer.name) || 'Valued Client';
+        const clientPhone = (order.customer && order.customer.phone) || 'N/A';
+        const dropOff = (order.customer && order.customer.address) || 'Store Pickup / Express Courier';
+        const serialId = (order.specs && (order.specs.serial || (Array.isArray(order.specs.serials) ? order.specs.serials[0] : null) || order.specs.targetUrl)) || order.ref;
+        const amount = (order.total || 0).toLocaleString('en-US');
+        const productName = order.product || 'Attachment Anywhere Smart NFC Card';
+
+        const waybillText = "RECEIVER: " + clientName + "\n" +
+          "CONTACT: " + clientPhone + "\n" +
+          "DROP-OFF: " + dropOff + "\n" +
+          "ITEM: " + productName + " (" + serialId + ")\n" +
+          "DECLARED VALUE: ₱" + amount + "\n" +
+          "REMARKS: Fragile electronics / Handle with care.";
+
+        copyTextToClipboard(waybillText, "Waybill copied for " + clientName + "!");
+        logAuditTrail('WAYBILL_GEN', "Agent generated courier booking for " + clientName + " (" + order.ref + ")");
+
+        const report = 
+          "**COURIER BOOKING WAYBILL GENERATED & COPIED TO CLIPBOARD**\n\n```\n" + 
+          waybillText + "\n```\n\n" +
+          "Ready for direct paste into **Lalamove**, **J&T Express**, or **Flash Express** dispatch forms.";
+        
+        return { report, orderRef: order.ref, clientName };
+      },
+
+      mutate_fulfillment_status(args) {
+        const orders = getOrders();
+        const refQuery = (args.ref || '').toLowerCase().trim();
+        const targetStatus = (args.status || '').toUpperCase().trim();
+
+        let order = null;
+        if (refQuery) {
+          order = orders.find(o => o.ref.toLowerCase().includes(refQuery) || o.customer.name.toLowerCase().includes(refQuery));
+        }
+        if (!order) {
+          order = orders.find(o => normalizeOrderStatus(o.status) !== 'SHIPPED') || orders[0];
+        }
+
+        if (!order) {
+          return { error: 'Order not found.' };
+        }
+
+        const oldStatus = normalizeOrderStatus(order.status);
+        let newStatus = targetStatus;
+        if (!FULFILLMENT_STAGES.includes(newStatus)) {
+          // Cycle to next stage
+          const curIdx = FULFILLMENT_STAGES.indexOf(oldStatus);
+          newStatus = FULFILLMENT_STAGES[(curIdx + 1) % FULFILLMENT_STAGES.length];
+        }
+
+        order.status = newStatus;
+        saveOrders(orders);
+        playTactileTick();
+        logAuditTrail('ORDER_STATUS', "Agent mutated " + order.ref + " from " + oldStatus + " to " + newStatus);
+        showToast("Order " + order.ref + ": [ " + newStatus + " ]");
+
+        const report = "**ORDER STATUS MUTATED**\n\n" +
+          "• **Order:** " + order.ref + " (" + order.customer.name + ")\n" +
+          "• **Previous State:** `" + oldStatus + "`\n" +
+          "• **New Stage:** **`[ " + newStatus + " ]`**\n" +
+          "• **Product:** " + order.product + " (" + order.qty + "x)\n\n" +
+          "Fulfillment pipeline and dashboard metric counters are synchronized.";
+
+        return { report, orderRef: order.ref, newStatus };
+      },
+
+      check_duplicate_uids() {
+        const count = sessionEncodedUIDs.length;
+        const uids = sessionEncodedUIDs.slice(-6);
+        const report = "**SESSION SCAN & COLLISION GUARD STATUS**\n\n" +
+          "• **Collision Interceptor:** **ACTIVE** (Real-time duplicate suppression)\n" +
+          "• **Provisioned Chips in Session:** " + count + " verified\n" +
+          "• **Recent Tag UIDs:** " + (uids.length > 0 ? uids.map(u => "`" + u + "`").join(', ') : 'None yet programmed this session') + "\n\n" +
+          "Any attempt to write duplicate payload onto a previously burned chip triggers alert sound & automatic session intercept.";
+        
+        playTactileTick();
+        return { report, count, uids };
+      },
+
+      adjust_chip_inventory(args) {
+        const cfg = getMeadhallConfig();
+        const delta = Number(args.delta) || 50;
+        const isDeduct = args.isDeduct || delta < 0;
+        const absDelta = Math.abs(delta);
+
+        if (isDeduct) {
+          cfg.inventory.ntag213 = Math.max(0, (cfg.inventory.ntag213 || 250) - absDelta);
+        } else {
+          cfg.inventory.ntag213 = (cfg.inventory.ntag213 || 250) + absDelta;
+        }
+
+        saveMeadhallConfig(cfg);
+        const statInv = document.getElementById('stat-inventory');
+        if (statInv) statInv.innerText = cfg.inventory.ntag213;
+
+        playTactileTick();
+        logAuditTrail('INVENTORY_ADJUST', "Agent " + (isDeduct ? "deducted -" : "restocked +") + absDelta + " NTAG213 chips. Balance: " + cfg.inventory.ntag213);
+        showToast("Chip Inventory: " + cfg.inventory.ntag213 + " blanks");
+
+        const report = "**CHIP INVENTORY UPDATED**\n\n" +
+          "• **Adjustment:** " + (isDeduct ? "-" : "+") + absDelta + " NTAG213 Blanks\n" +
+          "• **Current Stock:** **" + cfg.inventory.ntag213 + " units**\n" +
+          "• **Action Logged:** Bench inventory ledger synchronized.";
+
+        return { report, newStock: cfg.inventory.ntag213 };
+      },
+
+      update_pricing(args) {
+        const cfg = getMeadhallConfig();
+        const prod = (args.product || 'card').toLowerCase();
+        const price = Number(args.price) || 900;
+
+        let label = 'Smart Executive Card';
+        if (prod.includes('patch')) {
+          cfg.pricing.patch = price;
+          label = 'Drop 001 Signature Patch';
+        } else if (prod.includes('stand') || prod.includes('puck')) {
+          cfg.pricing.puck = price;
+          label = 'Countertop Stand';
+        } else if (prod.includes('shield')) {
+          cfg.pricing.reviewShield = price;
+          label = 'Google ReviewShield™';
+        } else if (prod.includes('hub')) {
+          cfg.pricing.hub = price;
+          label = 'Business Digital Hub';
+        } else {
+          cfg.pricing.card = price;
+          label = 'Smart Executive Card';
+        }
+
         saveMeadhallConfig(cfg);
         updateManualOrderTotal();
-        logAuditTrail('PRICE_UPDATE', `Executive card price set to ₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}.`);
-        showToast(`Executive Card price set to ₱${newPrice.toLocaleString()}`);
-        appendGeminiMessage('gemini', `>> Updated: The **Executive Card** price is now **₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}**.\n\nAll subsequent manual order calculations will automatically use this rate.`);
-        return;
-      }
+        playTactileTick();
+        logAuditTrail('PRICE_UPDATE', label + " rate updated to ₱" + price.toLocaleString());
+        showToast(label + " price set to ₱" + price.toLocaleString());
 
-      const patchPriceMatch = query.match(/(?:set|update|change)\s+(?:the\s+)?(?:velcro\s+)?patch\s+price\s+(?:to\s+)?(?:₱|p|php)?\s*(\d+(?:\.\d+)?)/i);
-      if (patchPriceMatch) {
-        const newPrice = parseFloat(patchPriceMatch[1]);
-        cfg.pricing.patch = newPrice;
-        saveMeadhallConfig(cfg);
-        updateManualOrderTotal();
-        logAuditTrail('PRICE_UPDATE', `Velcro patch price set to ₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}.`);
-        showToast(`Tactical Patch price set to ₱${newPrice.toLocaleString()}`);
-        appendGeminiMessage('gemini', `>> Done: The **Velcro Tactical Patch** price has been updated to **₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}**.`);
-        return;
-      }
+        const report = "**CATALOG PRICING UPDATED**\n\n" +
+          "• **Product:** " + label + "\n" +
+          "• **New Rate:** **₱" + price.toLocaleString('en-US', { minimumFractionDigits: 2 }) + "**\n\n" +
+          "All subsequent order calculations and catalog valuations are active at this rate.";
 
-      const puckPriceMatch = query.match(/(?:set|update|change)\s+(?:the\s+)?(?:countertop\s+)?puck\s+price\s+(?:to\s+)?(?:₱|p|php)?\s*(\d+(?:\.\d+)?)/i);
-      if (puckPriceMatch) {
-        const newPrice = parseFloat(puckPriceMatch[1]);
-        cfg.pricing.puck = newPrice;
-        saveMeadhallConfig(cfg);
-        updateManualOrderTotal();
-        logAuditTrail('PRICE_UPDATE', `Countertop puck price set to ₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}.`);
-        showToast(`Countertop Puck price set to ₱${newPrice.toLocaleString()}`);
-        appendGeminiMessage('gemini', `>> Done: The **Countertop Acrylic Puck** price is now **₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}**.`);
-        return;
-      }
+        return { report, product: label, price };
+      },
 
-      const shieldPriceMatch = query.match(/(?:set|update|change)\s+(?:the\s+)?(?:reviewshield|shield)\s+price\s+(?:to\s+)?(?:₱|p|php)?\s*(\d+(?:\.\d+)?)/i);
-      if (shieldPriceMatch) {
-        const newPrice = parseFloat(shieldPriceMatch[1]);
-        cfg.pricing.reviewShield = newPrice;
-        saveMeadhallConfig(cfg);
-        updateManualOrderTotal();
-        logAuditTrail('PRICE_UPDATE', `ReviewShield price set to ₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}.`);
-        showToast(`ReviewShield price set to ₱${newPrice.toLocaleString()}`);
-        appendGeminiMessage('gemini', `>> Done: The **ReviewShield** price has been updated to **₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}**.`);
-        return;
-      }
+      apply_discount(args) {
+        const cfg = getMeadhallConfig();
+        const pct = Math.min(90, Math.max(1, Number(args.percentage) || 10));
+        const factor = (100 - pct) / 100;
 
-      const hubPriceMatch = query.match(/(?:set|update|change)\s+(?:the\s+)?hub\s+price\s+(?:to\s+)?(?:₱|p|php)?\s*(\d+(?:\.\d+)?)/i);
-      if (hubPriceMatch) {
-        const newPrice = parseFloat(hubPriceMatch[1]);
-        cfg.pricing.hub = newPrice;
-        saveMeadhallConfig(cfg);
-        updateManualOrderTotal();
-        logAuditTrail('PRICE_UPDATE', `Hub price set to ₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}.`);
-        showToast(`Smart Hub price set to ₱${newPrice.toLocaleString()}`);
-        appendGeminiMessage('gemini', `>> Done: The **Smart Hub** price is now **₱${newPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}**.`);
-        return;
-      }
-
-      // 2B. DISCOUNT MUTATIONS (Local Fast Path)
-      const discountAllMatch = query.match(/(?:apply|give|set|take)\s+(?:a\s+)?(\d+(?:\.\d+)?)\s*%\s*(?:discount|off)(?:\s+(?:across|on|to|for)?\s*(?:all\s+)?(?:products|catalog|items|inventory)?)?/i) ||
-                               query.match(/(\d+(?:\.\d+)?)\s*%\s*(?:discount|off)\s+(?:across|on|for)?\s*(?:all\s+)?(?:products|catalog|items)/i);
-      if (discountAllMatch) {
-        const pct = parseFloat(discountAllMatch[1]);
-        const factor = Math.max(0, (100 - pct) / 100);
         cfg.pricing.card = Math.round((cfg.pricing.card || 900) * factor);
         cfg.pricing.patch = Math.round((cfg.pricing.patch || 650) * factor);
         cfg.pricing.puck = Math.round((cfg.pricing.puck || 850) * factor);
         cfg.pricing.reviewShield = Math.round((cfg.pricing.reviewShield || 350) * factor);
         cfg.pricing.hub = Math.round((cfg.pricing.hub || 2000) * factor);
+
         saveMeadhallConfig(cfg);
         updateManualOrderTotal();
-        logAuditTrail('PRICE_UPDATE', `Applied ${pct}% discount across all catalog products.`);
-        showToast(`${pct}% discount applied across catalog.`);
-        appendGeminiMessage('gemini', `>> Discount Applied: **${pct}% off** has been applied across all products.\n• **Executive Card:** ₱${cfg.pricing.card.toLocaleString()}\n• **Tactical Patch:** ₱${cfg.pricing.patch.toLocaleString()}\n• **Countertop Puck:** ₱${cfg.pricing.puck.toLocaleString()}\n• **ReviewShield:** ₱${cfg.pricing.reviewShield.toLocaleString()}\n• **Smart Hub:** ₱${cfg.pricing.hub.toLocaleString()}\n\nManual order calculations are immediately updated.`);
-        return;
-      }
+        playTactileTick();
+        logAuditTrail('PRICE_UPDATE', "Applied " + pct + "% discount across catalog.");
+        showToast(pct + "% discount applied across catalog");
 
-      // 2C. MULTI-PRODUCT / ABSOLUTE DEDUCTION PARSER
-      if (/(?:less|deduct|reduce|minus)/i.test(query) && /(?:hub|shield|card|patch|puck)/i.test(query)) {
-        let changed = false;
-        const hubMatch = query.match(/(?:less|deduct|minus)\s+(?:₱|p|php)?\s*(\d+(?:\.\d+)?)\s*(?:pesos?|php|₱)?\s*(?:for|from|on)?\s*(?:the\s+)?(?:business\s+)?(?:digital\s+)?hub/i) ||
-                         query.match(/(?:business\s+)?(?:digital\s+)?hub\s*(?:for\s+)?(?:less|deduct|minus)\s+(?:₱|p|php)?\s*(\d+(?:\.\d+)?)/i);
-        if (hubMatch) {
-          const amt = parseFloat(hubMatch[1]);
-          cfg.pricing.hub = Math.max(0, (cfg.pricing.hub || 2500) - amt);
-          changed = true;
+        const report = "**PROMOTIONAL / WHOLESALE DISCOUNT APPLIED**\n\n" +
+          "• **Discount Rate:** **" + pct + "% OFF across all products**\n" +
+          "• **Executive Card:** ₱" + cfg.pricing.card.toLocaleString() + "\n" +
+          "• **Tactical Patch:** ₱" + cfg.pricing.patch.toLocaleString() + "\n" +
+          "• **Counter Stand:** ₱" + cfg.pricing.puck.toLocaleString() + "\n" +
+          "• **ReviewShield:** ₱" + cfg.pricing.reviewShield.toLocaleString() + "\n" +
+          "• **Digital Hub:** ₱" + cfg.pricing.hub.toLocaleString();
+
+        return { report, pct };
+      },
+
+      prime_card_burner(args) {
+        const query = (args.target || '').toLowerCase().trim();
+        const serials = getSerials();
+        const orders = getOrders();
+
+        let targetRecord = null;
+        if (query) {
+          targetRecord = serials.find(s => 
+            (s.serial || '').toLowerCase().includes(query) ||
+            (s.name || s.client || '').toLowerCase().includes(query) ||
+            (s.brand || '').toLowerCase().includes(query)
+          );
+          if (!targetRecord) {
+            const ord = orders.find(o => o.ref.toLowerCase().includes(query) || o.customer.name.toLowerCase().includes(query));
+            if (ord) {
+              targetRecord = {
+                url: ord.specs && ord.specs.targetUrl ? ord.specs.targetUrl : 'https://attachmentanywhere.com/c/' + ord.ref,
+                name: ord.customer.name,
+                serial: ord.ref
+              };
+            }
+          }
         }
 
-        const shieldMatch = query.match(/(?:less|deduct|minus)\s+(?:₱|p|php)?\s*(\d+(?:\.\d+)?)\s*(?:pesos?|php|₱)?\s*(?:for|from|on)?\s*(?:the\s+)?(?:google\s+)?review\s*shield/i) ||
-                            query.match(/(?:google\s+)?review\s*shield\s*(?:for\s+)?(?:less|deduct|minus)\s+(?:₱|p|php)?\s*(\d+(?:\.\d+)?)/i);
-        if (shieldMatch) {
-          const amt = parseFloat(shieldMatch[1]);
-          cfg.pricing.reviewShield = Math.max(0, (cfg.pricing.reviewShield || 500) - amt);
-          changed = true;
+        if (!targetRecord && serials.length > 0) {
+          targetRecord = serials[0];
         }
 
-        const cardMatch = query.match(/(?:less|deduct|minus)\s+(?:₱|p|php)?\s*(\d+(?:\.\d+)?)\s*(?:pesos?|php|₱)?\s*(?:for|from|on)?\s*(?:the\s+)?(?:smart\s+)?(?:executive\s+)?card/i) ||
-                          query.match(/(?:smart\s+)?(?:executive\s+)?card\s*(?:for\s+)?(?:less|deduct|minus)\s+(?:₱|p|php)?\s*(\d+(?:\.\d+)?)/i);
-        if (cardMatch) {
-          const amt = parseFloat(cardMatch[1]);
-          cfg.pricing.card = Math.max(0, (cfg.pricing.card || 1200) - amt);
-          changed = true;
+        if (!targetRecord) {
+          return { error: 'No card records found to prime.' };
         }
 
-        if (changed) {
-          saveMeadhallConfig(cfg);
-          updateManualOrderTotal();
-          logAuditTrail('PRICE_UPDATE', `Applied price reductions: Card ₱${cfg.pricing.card}, ReviewShield ₱${cfg.pricing.reviewShield}, Hub ₱${cfg.pricing.hub}.`);
-          showToast(`Prices adjusted: Card ₱${cfg.pricing.card}, Shield ₱${cfg.pricing.reviewShield}, Hub ₱${cfg.pricing.hub}`);
-          appendGeminiMessage('gemini', `>> Updated Product Pricing:\n• **Smart Executive Card:** ₱${cfg.pricing.card.toLocaleString('en-US', { minimumFractionDigits: 2 })}\n• **Google ReviewShield™:** ₱${cfg.pricing.reviewShield.toLocaleString('en-US', { minimumFractionDigits: 2 })}\n• **Business Digital Hub:** ₱${cfg.pricing.hub.toLocaleString('en-US', { minimumFractionDigits: 2 })}\n\nManual order totals and catalog rates are synchronized.`);
-          return;
-        }
-      }
+        const url = targetRecord.url || targetRecord.targetUrl || '';
+        loadSerialToBurner(url, targetRecord.name || targetRecord.client || '', targetRecord.serial || '');
 
-      // 3. INVENTORY ADJUSTMENTS
-      const addInvMatch = query.match(/(?:add|restock|increase)\s+(\d+)\s*(?:units?\s+of\s+)?(ntag213|ntag|chips?|card\s*stock|ntag215|ntag216)/i);
-      if (addInvMatch) {
-        const qty = parseInt(addInvMatch[1], 10);
-        const itemRaw = addInvMatch[2].toLowerCase();
-        let key = 'ntag213';
-        if (itemRaw.includes('stock') || itemRaw.includes('card')) key = 'cardStock';
-        else if (itemRaw.includes('215')) key = 'ntag215';
-        else if (itemRaw.includes('216')) key = 'ntag216';
+        const report = "**CHIP BURNER DOCK PRIMED**\n\n" +
+          "• **Serial ID:** " + targetRecord.serial + "\n" +
+          "• **Recipient:** " + (targetRecord.name || targetRecord.client || 'Client') + "\n" +
+          "• **Routing Target:** " + url + "\n\n" +
+          "The card forge inputs and NFC writer have been primed. Tap card to write.";
 
-        cfg.inventory[key] = (cfg.inventory[key] || 0) + qty;
-        saveMeadhallConfig(cfg);
-        logAuditTrail('INVENTORY_ADJUST', `Restocked +${qty} units of ${key.toUpperCase()}. Current: ${cfg.inventory[key]}`);
-        showToast(`Inventory updated: +${qty} ${key.toUpperCase()}`);
-        appendGeminiMessage('gemini', `>> Inventory Restocked: Added **+${qty} units** to **${key.toUpperCase()}**. Your available stock is now **${cfg.inventory[key]} units**.`);
-        return;
-      }
+        return { report, targetRecord };
+      },
 
-      const deductInvMatch = query.match(/(?:deduct|reduce|decrease|remove)\s+(\d+)\s*(?:units?\s+of\s+)?(ntag213|ntag|chips?|card\s*stock|ntag215|ntag216)/i);
-      if (deductInvMatch) {
-        const qty = parseInt(deductInvMatch[1], 10);
-        const itemRaw = deductInvMatch[2].toLowerCase();
-        let key = 'ntag213';
-        if (itemRaw.includes('stock') || itemRaw.includes('card')) key = 'cardStock';
-        else if (itemRaw.includes('215')) key = 'ntag215';
-        else if (itemRaw.includes('216')) key = 'ntag216';
-
-        cfg.inventory[key] = Math.max(0, (cfg.inventory[key] || 0) - qty);
-        saveMeadhallConfig(cfg);
-        logAuditTrail('INVENTORY_ADJUST', `Deducted -${qty} units of ${key.toUpperCase()}. Current: ${cfg.inventory[key]}`);
-        showToast(`Inventory deducted: -${qty} ${key.toUpperCase()}`);
-        appendGeminiMessage('gemini', `>> Stock Deducted: Deducted **-${qty} units** from **${key.toUpperCase()}**. Current remaining: **${cfg.inventory[key]} units**.`);
-        return;
-      }
-
-      // 4. SERIAL & CLIENT REGISTRATION
-      const regMatch = query.match(/add\s+client\s+([A-Za-z0-9\s\.\-]+?)\s+for\s+([A-Za-z0-9\s\.\-]+?)\s+with\s+serial\s+([A-Za-z0-9_\-]+)/i) ||
-                       query.match(/register\s+serial\s+([A-Za-z0-9_\-]+)\s+for\s+([A-Za-z0-9\s\.\-]+?)(?:\s+for\s+([A-Za-z0-9\s\.\-]+))?$/i);
-      if (regMatch) {
-        let clientName, brandName, serialCode;
-        if (query.toLowerCase().startsWith('add client')) {
-          clientName = regMatch[1].trim();
-          brandName = regMatch[2].trim();
-          serialCode = regMatch[3].trim().toLowerCase();
-        } else {
-          serialCode = regMatch[1].trim().toLowerCase();
-          clientName = regMatch[2].trim();
-          brandName = (regMatch[3] && regMatch[3].trim()) || "Attachment Anywhere";
-        }
+      register_client_profile(args) {
+        const serials = getSerials();
+        const clientName = args.name || 'Gian Villanueva';
+        const brandName = args.brand || 'Attachment Anywhere';
+        const serialCode = (args.serial || ('AA-CARD-' + Math.random().toString(16).substr(2, 4).toUpperCase())).toLowerCase();
+        const targetUrl = args.url || ('https://attachmentanywhere.com/c/' + serialCode);
 
         const newRecord = {
           serial: serialCode,
           name: clientName,
           client: clientName,
           brand: brandName,
-          url: `https://attachmentanywhere.com/c/${serialCode}`,
-          targetUrl: `https://attachmentanywhere.com/c/${serialCode}`,
-          localUrl: `${serialCode}.html`,
-          chip: "NTAG213",
-          status: "ACTIVE",
+          url: targetUrl,
+          targetUrl: targetUrl,
+          localUrl: serialCode + '.html',
+          chip: 'NTAG213',
+          status: 'ACTIVE',
           created: new Date().toISOString().split('T')[0]
         };
 
         const existingIdx = serials.findIndex(s => s.serial.toLowerCase() === serialCode);
-        if (existingIdx >= 0) {
-          serials[existingIdx] = newRecord;
-        } else {
-          serials.unshift(newRecord);
-        }
+        if (existingIdx >= 0) serials[existingIdx] = newRecord;
+        else serials.unshift(newRecord);
+
         saveSerials(serials);
         renderSerialTable();
-        renderMeadhall();
-        if (typeof updateVisualQcDock === 'function') {
-          updateVisualQcDock(newRecord.url);
-        }
-        logAuditTrail('REGISTER_SERIAL', `Registered serial ${serialCode} to ${clientName} (${brandName}).`);
-        showToast(`Serial ${serialCode} registered.`);
-        appendGeminiMessage('gemini', `>> Client Registered:\n• **Client:** ${clientName}\n• **Brand:** ${brandName}\n• **Serial:** ${serialCode}\n• **NFC Target:** ${newRecord.url}\n\nThe directory table and card mockup review below have been synchronized with this card.`);
+        loadSerialToBurner(targetUrl, clientName, serialCode);
+        playTactileTick();
+        logAuditTrail('REGISTER_SERIAL', "Registered serial " + serialCode + " for " + clientName + " (" + brandName + ")");
+        showToast("Serial " + serialCode + " registered & primed");
+
+        const report = "**CLIENT CARD PROFILE FORGED**\n\n" +
+          "• **Client:** " + clientName + "\n" +
+          "• **Brand:** " + brandName + "\n" +
+          "• **Serial ID:** `" + serialCode + "`\n" +
+          "• **Routing Target:** " + targetUrl + "\n\n" +
+          "Profile registered into ledger and primed in Chip Burner Dock.";
+
+        return { report, newRecord };
+      },
+
+      get_workshop_telemetry() {
+        const orders = getOrders();
+        const serials = getSerials();
+        const cfg = getMeadhallConfig();
+        const statRev = document.getElementById('stat-revenue');
+
+        const completedOrders = orders.filter(o => normalizeOrderStatus(o.status) === 'SHIPPED').length;
+        const queuedOrders = orders.filter(o => normalizeOrderStatus(o.status) === 'QUEUED').length;
+        const verifiedOrders = orders.filter(o => ['BURNED', 'QC PASSED'].includes(normalizeOrderStatus(o.status))).length;
+
+        const report = "**MEADHALL // TELEMETRY REPORT**\n\n" +
+          "• **Gross Sales (Completed):** " + (statRev ? statRev.innerText : '₱0.00') + "\n" +
+          "• **Pending Burn Queue:** " + queuedOrders + " cards awaiting burn\n" +
+          "• **Verified & Packed:** " + verifiedOrders + " cards programmed & QC verified\n" +
+          "• **Dispatched / Shipped:** " + completedOrders + " cards delivered\n" +
+          "• **Blank Chip Stock:** " + (cfg.inventory.ntag213 || 250) + " NTAG213 units\n" +
+          "• **Active Registered Serials:** " + serials.length + " card identities\n" +
+          "• **Collision Prevention Guard:** ACTIVE";
+
+        playTactileTick();
+        return { report };
+      }
+    };
+
+    async function processGeminiQuery(query) {
+      appendGeminiMessage('user', query);
+      const q = (query || '').toLowerCase().trim();
+
+      // Tool-Calling Router
+      if (/margin|cogs|profit|unit economic|cost|breakdown/i.test(q)) {
+        const res = WorkshopAgentTools.calculate_unit_margins();
+        appendAgentToolExecution('calculate_unit_margins', {}, res.report);
         return;
       }
 
-      // 5. SALES METRICS & REVENUE INQUIRY
-      if (/(how\s+much|what\s+is|show|get|display).*?(realized\s+value|revenue|sales|gross)/i.test(query)) {
-        const dispatched = orders.filter(o => o.status === 'Dispatched').length;
-        appendGeminiMessage('gemini', `>> Financial Summary:\n• **Gross Realized Value:** ${currentRevenue}\n• **Dispatched Orders:** ${dispatched}\n• **Total Orders in Pipeline:** ${orders.length}`);
+      if (/waybill|courier|lalamove|j&t|booking|dispatch text|shipping label/i.test(q)) {
+        const res = WorkshopAgentTools.generate_courier_waybill({ target: query });
+        appendAgentToolExecution('generate_courier_waybill', { target: query }, res.report);
         return;
       }
 
-      // 6. SERIALS & ACTIVE CARDS INQUIRY
-      if (/(show|get|count|how\s+many).*?(cards?|serials?)/i.test(query)) {
-        const activeCount = serials.filter(s => s.status === 'ACTIVE').length;
-        appendGeminiMessage('gemini', `>> Hardware Registry:\n• **Active Registered Serials:** ${activeCount}\n• **Total Provisioned Units:** ${serials.length}\n• **Latest Record:** ${serials[0] ? `${serials[0].client} (${serials[0].serial})` : 'None'}`);
+      if (/mark|advance|ship|burned|qc|queued|fulfillment|stage|status of order/i.test(q)) {
+        let desiredStatus = '';
+        if (/ship/i.test(q)) desiredStatus = 'SHIPPED';
+        else if (/qc|pass/i.test(q)) desiredStatus = 'QC PASSED';
+        else if (/burn|encode/i.test(q)) desiredStatus = 'BURNED';
+        else if (/queue|pending/i.test(q)) desiredStatus = 'QUEUED';
+        
+        const res = WorkshopAgentTools.mutate_fulfillment_status({ ref: query, status: desiredStatus });
+        appendAgentToolExecution('mutate_fulfillment_status', { target: query, status: desiredStatus }, res.report);
         return;
       }
 
-      // 7. TELEMETRY CHECK / STATUS SUMMARY
-      if (/(telemetry|system\s+status|health|status|audit\s+check)/i.test(query)) {
-        const activeCount = serials.filter(s => s.status === 'ACTIVE').length;
-        appendGeminiMessage('gemini', `>> System Health Status: **NOMINAL**\n• **Gross Realized Value:** ${currentRevenue}\n• **Active Cards:** ${activeCount} registered\n• **Orders in Queue:** ${orders.length}\n• **NTAG213 Chips:** ${cfg.inventory.ntag213 || 0} units\n• **Executive Card Price:** ₱${(cfg.pricing.card || 900).toLocaleString('en-US', { minimumFractionDigits: 2 })}`);
+      if (/duplicate|collision|uid|session tag|nfc check/i.test(q)) {
+        const res = WorkshopAgentTools.check_duplicate_uids();
+        appendAgentToolExecution('check_duplicate_uids', {}, res.report);
         return;
       }
 
-      // 8. OPTIONAL AI BACKEND BRIDGE
-      try {
-        const resp = await fetch('/.netlify/functions/copilot', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            prompt: query,
-            state: {
-              config: cfg,
-              serialsCount: serials.length,
-              ordersCount: orders.length,
-              revenue: currentRevenue
-            }
-          })
-        });
-
-        if (resp.ok) {
-          const result = await resp.json();
-          appendGeminiMessage('gemini', result.reply || result.message || 'Operation executed.');
-          if (result.stateMutation) {
-            if (result.stateMutation.pricing) {
-              cfg.pricing = { ...cfg.pricing, ...result.stateMutation.pricing };
-              saveMeadhallConfig(cfg);
-              updateManualOrderTotal();
-              logAuditTrail('PRICE_UPDATE', `Pricing updated via Copilot (${result.action || 'MUTATION'}).`);
-              showToast(result.action === 'APPLY_DISCOUNT' ? 'Discount applied to catalog' : 'Pricing updated');
-            }
-            if (result.stateMutation.inventory) {
-              cfg.inventory = { ...cfg.inventory, ...result.stateMutation.inventory };
-              saveMeadhallConfig(cfg);
-              logAuditTrail('INVENTORY_ADJUST', `Inventory updated via Copilot (${result.action || 'MUTATION'}).`);
-              showToast('Inventory updated');
-            }
-          }
-        } else if (resp.status === 404) {
-          appendGeminiMessage('gemini', `Console serverless endpoint was not found (HTTP 404). Serverless function deployment in progress. In the meantime, direct operations are active:\n• *"Set card price to 1450"*\n• *"Apply 10% discount across products"*\n• *"Add 50 NTAG213 chips"*\n• *"How much is total realized value?"*`);
-        } else {
-          appendGeminiMessage('gemini', `Console serverless service returned HTTP ${resp.status}. You can try again or use direct commands:\n• *"Set card price to 1450"*\n• *"Apply 10% discount across products"*\n• *"Telemetry check"*`);
-        }
-      } catch (err) {
-        appendGeminiMessage('gemini', `Unrecognized command: *"${escapeHtml(query)}"*. Try an operational command like updating a price, restocking chips, or checking realized value.`);
+      if (/restock|add.*chip|increase.*stock|stock.*blank/i.test(q)) {
+        const match = q.match(/\d+/);
+        const qty = match ? parseInt(match[0], 10) : 50;
+        const res = WorkshopAgentTools.adjust_chip_inventory({ delta: qty, isDeduct: false });
+        appendAgentToolExecution('adjust_chip_inventory', { delta: qty, action: 'RESTOCK' }, res.report);
+        return;
       }
+
+      if (/deduct|remove.*chip|decrease.*stock|used.*chip/i.test(q)) {
+        const match = q.match(/\d+/);
+        const qty = match ? parseInt(match[0], 10) : 10;
+        const res = WorkshopAgentTools.adjust_chip_inventory({ delta: qty, isDeduct: true });
+        appendAgentToolExecution('adjust_chip_inventory', { delta: qty, action: 'DEDUCT' }, res.report);
+        return;
+      }
+
+      if (/discount|%\s*off/i.test(q)) {
+        const match = q.match(/\d+/);
+        const pct = match ? parseInt(match[0], 10) : 10;
+        const res = WorkshopAgentTools.apply_discount({ percentage: pct });
+        appendAgentToolExecution('apply_discount', { percentage: pct }, res.report);
+        return;
+      }
+
+      if (/price|set.*price|rate/i.test(q)) {
+        const match = q.match(/\d+/);
+        const price = match ? parseInt(match[0], 10) : 900;
+        let product = 'card';
+        if (/patch/i.test(q)) product = 'patch';
+        else if (/stand|puck/i.test(q)) product = 'puck';
+        else if (/shield/i.test(q)) product = 'reviewShield';
+        else if (/hub/i.test(q)) product = 'hub';
+
+        const res = WorkshopAgentTools.update_pricing({ product, price });
+        appendAgentToolExecution('update_pricing', { product, price }, res.report);
+        return;
+      }
+
+      if (/prime|load.*burner|load to writer/i.test(q)) {
+        const res = WorkshopAgentTools.prime_card_burner({ target: query });
+        appendAgentToolExecution('prime_card_burner', { target: query }, res.report);
+        return;
+      }
+
+      if (/register|add client|forge profile/i.test(q)) {
+        const res = WorkshopAgentTools.register_client_profile({ name: query });
+        appendAgentToolExecution('register_client_profile', { input: query }, res.report);
+        return;
+      }
+
+      if (/telemetry|overview|summary|report|health|status|revenue|sales/i.test(q) || !q) {
+        const res = WorkshopAgentTools.get_workshop_telemetry();
+        appendAgentToolExecution('get_workshop_telemetry', {}, res.report);
+        return;
+      }
+
+      // Default Help & Tools Discovery
+      const helpReport = 
+        "**WORKSHOP OPERATIONS AGENT READY**\n\n" +
+        "I am connected directly to Meadhall's local operations state and card burner bench. Available tools:\n\n" +
+        "• **Unit Margins Analysis:** `Calculate unit margins`\n" +
+        "• **Courier Waybill Generation:** `Generate waybill for Shawn` (Copies Lalamove/J&T text)\n" +
+        "• **Fulfillment Stepper Mutation:** `Advance AA-260906 to QC passed` or `Ship AA-260904`\n" +
+        "• **Chip Inventory Stocking:** `Restock 100 chips` or `Deduct 5 blanks`\n" +
+        "• **Duplicate UID Audit:** `Check duplicate UID collisions`\n" +
+        "• **Catalog Pricing:** `Set card price to 1450` or `Apply 10% discount`\n" +
+        "• **Burner Priming:** `Prime burner with Badshot Coffee`\n" +
+        "• **Workshop Telemetry:** `Workshop telemetry overview`";
+
+      appendAgentToolExecution('agent_discovery', { intent: query }, helpReport);
     }
 
     function escapeHtml(str) {
@@ -4236,6 +5073,15 @@
     window.updateFootprint = updateFootprint;
     window.showToast = showToast;
     window.loadSerialToBurner = loadSerialToBurner;
+    window.cycleOrderStatus = cycleOrderStatus;
+    window.copyOrderWaybill = copyOrderWaybill;
+    window.copySerialWaybill = copySerialWaybill;
+    window.playTactileTick = playTactileTick;
+    window.WorkshopAgentTools = WorkshopAgentTools;
+    window.forgeNFC = forgeNFC;
+    window.pasteClipboardToForge = pasteClipboardToForge;
+    window.copyForgedSerial = copyForgedSerial;
+    window.initSmippeListeners = initSmippeListeners;
     window.setHwMode = setHwMode;
     window.toggleBatchBurner = toggleBatchBurner;
     window.triggerChipInspection = triggerChipInspection;
@@ -4271,19 +5117,20 @@
     detectMobilePlatform();
     initGlobalHotkeys();
     initLedgerDragDrop();
+    initSmippeListeners();
     renderSerialTable();
     renderMeadhall();
     renderAuditLogs();
     runSystemAudit();
 
-    // Prime hardware burner with first verified client record if empty
+    // Prime card burner with first verified client record if empty
     const bootSerials = getSerials();
     const bootInput = document.getElementById('encoder-input');
-    const bootTarget = document.getElementById('targetUrlInput');
-    if (bootInput && !bootInput.value.trim() && bootSerials.length > 0) {
-      const initialUrl = bootSerials[0].url || bootSerials[0].targetUrl || '';
-      bootInput.value = initialUrl;
-      if (bootTarget) bootTarget.value = initialUrl;
+    const bootTarget = document.getElementById('targetUrl');
+    if ((!bootInput || !bootInput.value.trim()) && (!bootTarget || !bootTarget.value.trim()) && bootSerials.length > 0) {
+      const first = bootSerials[0];
+      const initialUrl = first.url || first.targetUrl || '';
+      loadSerialToBurner(initialUrl, first.name || first.client || '', first.serial || '', false);
     }
     updateFootprint();
     updateVisualQcDock();
