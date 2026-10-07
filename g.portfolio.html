@@ -108,6 +108,8 @@
       margin-top: 0.5rem;
       margin-bottom: 1rem;
       flex: 1;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-y: contain;
     }
 
 
@@ -152,6 +154,16 @@
     .keyboard-open #main-container:not(.active-chat) #prompt-dock-container {
       margin-top: 0.5rem !important;
       margin-bottom: 0.25rem !important;
+    }
+
+    /* Hardware Acceleration & Smooth Rendering */
+    #avatar-img {
+      will-change: transform;
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      image-rendering: -webkit-optimize-contrast;
     }
 
     /* Typeahead Suggestions Popover */
@@ -749,75 +761,88 @@
     GIAN_DATA.skills = GIAN_DATA.stack;
 
 
-    // 2. Memoji preloader engine
+    // 2. High-Performance Memoji Engine (Lag-Free, Sleep-Wake RAF, Progressive Cache)
     const totalFrames = 84;
     let currentFrame = 48; // Frame 48 faces straight forward
     let targetFrame = 48;
     let lastRenderedFrame = 48;
+    let avatarRafId = null;
     const avatarImg = document.getElementById("avatar-img");
 
-    // Full In-Memory Cache: Load all 84 images immediately
+    // Progressive In-Memory Cache
     const frameCache = new Array(totalFrames);
-    for (let i = 0; i < totalFrames; i++) {
-      const padded = String(i).padStart(2, "0");
+
+    function loadFrame(index) {
+      if (frameCache[index]) return frameCache[index];
+      const padded = String(index).padStart(2, "0");
       const img = new Image();
       img.src = `avatar/frame_${padded}_delay-0.05s.webp`;
-      frameCache[i] = img;
+      frameCache[index] = img;
+      return img;
     }
 
+    // Load initial forward frame immediately
+    loadFrame(48);
     if (avatarImg) {
       avatarImg.src = "avatar/frame_48_delay-0.05s.webp";
+    }
+
+    // Background progressive loader: loads in small idle batches to avoid network congestion
+    function scheduleBackgroundFramePreload() {
+      const queue = [];
+      for (let offset = 1; offset < 48; offset++) {
+        if (48 - offset >= 0) queue.push(48 - offset);
+        if (48 + offset < totalFrames) queue.push(48 + offset);
+      }
+
+      function loadBatch() {
+        if (queue.length === 0) return;
+        const batchSize = 6;
+        for (let i = 0; i < batchSize && queue.length > 0; i++) {
+          loadFrame(queue.shift());
+        }
+        if (queue.length > 0) {
+          if ('requestIdleCallback' in window) {
+            window.requestIdleCallback(loadBatch, { timeout: 1200 });
+          } else {
+            setTimeout(loadBatch, 80);
+          }
+        }
+      }
+
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(loadBatch, { timeout: 800 });
+      } else {
+        setTimeout(loadBatch, 120);
+      }
+    }
+
+    if (document.readyState === "complete") {
+      scheduleBackgroundFramePreload();
+    } else {
+      window.addEventListener("load", scheduleBackgroundFramePreload, { once: true });
+    }
+
+    function wakeAvatarLoop() {
+      if (!avatarRafId) {
+        avatarRafId = requestAnimationFrame(animateAvatar);
+      }
     }
 
     function handlePointerCoord(clientX) {
       if (typeof clientX !== "number" || isNaN(clientX) || window.innerWidth <= 0) return;
       const ratio = Math.max(0, Math.min(1, clientX / window.innerWidth));
       targetFrame = Math.round(ratio * (totalFrames - 1));
-    }
-
-    window.addEventListener("mousemove", (e) => {
-      handlePointerCoord(e.clientX);
-    }, { passive: true });
-
-    window.addEventListener("touchstart", (e) => {
-      if (e.touches && e.touches[0]) {
-        handlePointerCoord(e.touches[0].clientX);
-      }
-    }, { passive: true });
-
-    window.addEventListener("touchmove", (e) => {
-      if (e.touches && e.touches[0]) {
-        handlePointerCoord(e.touches[0].clientX);
-      }
-    }, { passive: true });
-
-    document.addEventListener("mouseleave", () => {
-      targetFrame = 48;
-    });
-
-    window.addEventListener("touchend", () => {
-      setTimeout(() => { targetFrame = 48; }, 850);
-    }, { passive: true });
-
-    window.addEventListener("touchcancel", () => {
-      targetFrame = 48;
-    }, { passive: true });
-
-    if (window.DeviceOrientationEvent) {
-      window.addEventListener("deviceorientation", (e) => {
-        if (e.gamma !== null && e.gamma !== undefined && !isNaN(e.gamma)) {
-          if (Math.abs(e.gamma) < 2) return;
-          const clamped = Math.max(-25, Math.min(25, e.gamma));
-          const ratio = (clamped + 25) / 50;
-          targetFrame = Math.round(ratio * (totalFrames - 1));
-        }
-      }, { passive: true });
+      wakeAvatarLoop();
     }
 
     function animateAvatar() {
+      avatarRafId = null;
       const diff = targetFrame - currentFrame;
-      if (Math.abs(diff) > 0.02) {
-        currentFrame += diff * 0.22;
+
+      if (Math.abs(diff) > 0.05) {
+        currentFrame += diff * 0.24;
+        wakeAvatarLoop();
       } else {
         currentFrame = targetFrame;
       }
@@ -826,15 +851,66 @@
 
       if (roundedIndex !== lastRenderedFrame) {
         lastRenderedFrame = roundedIndex;
-        if (frameCache[roundedIndex] && frameCache[roundedIndex].src) {
-          avatarImg.src = frameCache[roundedIndex].src;
+        const cached = frameCache[roundedIndex] || loadFrame(roundedIndex);
+        if (cached && cached.src) {
+          avatarImg.src = cached.src;
         }
       }
-
-      requestAnimationFrame(animateAvatar);
     }
-    requestAnimationFrame(animateAvatar);
 
+    // Desktop pointer movement
+    window.addEventListener("mousemove", (e) => {
+      handlePointerCoord(e.clientX);
+    }, { passive: true });
+
+    document.addEventListener("mouseleave", () => {
+      targetFrame = 48;
+      wakeAvatarLoop();
+    });
+
+    // Mobile avatar interaction scoped to avatar container (no interference with page scrolling)
+    const avatarContainer = document.getElementById("avatar-container");
+    if (avatarContainer) {
+      avatarContainer.addEventListener("touchstart", (e) => {
+        if (e.touches && e.touches[0]) {
+          handlePointerCoord(e.touches[0].clientX);
+        }
+      }, { passive: true });
+
+      avatarContainer.addEventListener("touchmove", (e) => {
+        if (e.touches && e.touches[0]) {
+          handlePointerCoord(e.touches[0].clientX);
+        }
+      }, { passive: true });
+
+      avatarContainer.addEventListener("touchend", () => {
+        setTimeout(() => {
+          targetFrame = 48;
+          wakeAvatarLoop();
+        }, 400);
+      }, { passive: true });
+
+      avatarContainer.addEventListener("touchcancel", () => {
+        targetFrame = 48;
+        wakeAvatarLoop();
+      }, { passive: true });
+    }
+
+    // Mobile gyroscope with tremor deadband damping
+    let lastGamma = 0;
+    if (window.DeviceOrientationEvent) {
+      window.addEventListener("deviceorientation", (e) => {
+        if (e.gamma === null || e.gamma === undefined || isNaN(e.gamma)) return;
+        // Deadband filter: ignore sensor noise < 1.8 degrees
+        if (Math.abs(e.gamma - lastGamma) < 1.8) return;
+        lastGamma = e.gamma;
+
+        const clamped = Math.max(-22, Math.min(22, e.gamma));
+        const ratio = (clamped + 22) / 44;
+        targetFrame = Math.round(ratio * (totalFrames - 1));
+        wakeAvatarLoop();
+      }, { passive: true });
+    }
 
     // 3. Viewport and input handling
     const mainContainer = document.getElementById("main-container");
@@ -1814,32 +1890,48 @@
     });
 
 
-    // 7. Obsidian glitter cursor engine
+        // 7. Optimized Obsidian glitter cursor engine (Zero overhead on mobile, GPU-efficient on desktop)
     (function initGlitterBlackAndWhiteCursor() {
       const canvas = document.getElementById("cursor-canvas");
       if (!canvas) return;
-      const ctx = canvas.getContext("2d");
 
-      let width = (canvas.width = window.innerWidth);
-      let height = (canvas.height = window.innerHeight);
+      // Disable completely on touch devices (Android, iPhone Safari, iPad)
+      const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || window.matchMedia("(pointer: coarse)").matches;
+      if (isTouch) {
+        canvas.style.display = "none";
+        return;
+      }
 
-      window.addEventListener("resize", () => {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-      }, { passive: true });
+      const ctx = canvas.getContext("2d", { alpha: true });
+      if (!ctx) return;
 
-      const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
+      let width = 0;
+      let height = 0;
+      let dpr = 1;
+
+      function resizeCanvas() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      resizeCanvas();
+
+      window.addEventListener("resize", resizeCanvas, { passive: true });
+
       const particles = [];
       const shockwaves = [];
-      let animId = null;
+      let isLoopRunning = false;
 
       const GLITTER_SPECS = [
-        { color: "rgba(10, 10, 12,", shadow: "rgba(0, 0, 0, 0.4)", isWhite: false },
-        { color: "rgba(24, 24, 27,", shadow: "rgba(0, 0, 0, 0.3)", isWhite: false },
-        { color: "rgba(71, 85, 105,", shadow: "rgba(30, 41, 59, 0.3)", isWhite: false },
-        { color: "rgba(148, 163, 184,", shadow: "rgba(0, 0, 0, 0.25)", isWhite: false },
-        { color: "rgba(255, 255, 255,", shadow: "rgba(0, 0, 0, 0.55)", isWhite: true },
-        { color: "rgba(248, 250, 252,", shadow: "rgba(15, 23, 42, 0.45)", isWhite: true }
+        { color: "rgba(10, 10, 12,", isWhite: false },
+        { color: "rgba(24, 24, 27,", isWhite: false },
+        { color: "rgba(71, 85, 105,", isWhite: false },
+        { color: "rgba(148, 163, 184,", isWhite: false },
+        { color: "rgba(255, 255, 255,", isWhite: true },
+        { color: "rgba(248, 250, 252,", isWhite: true }
       ];
 
       class Shockwave {
@@ -1847,25 +1939,21 @@
           this.x = x;
           this.y = y;
           this.radius = 6;
-          this.maxRadius = isCoarsePointer ? 45 : 65;
+          this.maxRadius = 65;
           this.life = 1.0;
-          this.decay = isCoarsePointer ? 0.055 : 0.045;
+          this.decay = 0.045;
         }
         update() {
           this.radius += (this.maxRadius - this.radius) * 0.2;
           this.life -= this.decay;
         }
-        draw(ctx) {
+        draw(c) {
           if (this.life <= 0) return;
-          ctx.save();
-          ctx.beginPath();
-          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-          ctx.strokeStyle = `rgba(15, 23, 42, ${this.life * 0.35})`;
-          ctx.lineWidth = 1.2;
-          ctx.shadowColor = "rgba(0, 0, 0, 0.25)";
-          ctx.shadowBlur = 4;
-          ctx.stroke();
-          ctx.restore();
+          c.beginPath();
+          c.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+          c.strokeStyle = `rgba(15, 23, 42, ${this.life * 0.35})`;
+          c.lineWidth = 1.2;
+          c.stroke();
         }
       }
 
@@ -1877,9 +1965,9 @@
           const angle = Math.random() * Math.PI * 2;
           this.vx = Math.cos(angle) * speed;
           this.vy = Math.sin(angle) * speed;
-          this.size = Math.random() * 2.6 + 0.9;
+          this.size = Math.random() * 2.4 + 0.8;
           this.life = 1.0;
-          this.decay = isBurst ? Math.random() * 0.038 + 0.024 : Math.random() * 0.018 + 0.014;
+          this.decay = isBurst ? Math.random() * 0.038 + 0.024 : Math.random() * 0.02 + 0.015;
           this.spec = GLITTER_SPECS[Math.floor(Math.random() * GLITTER_SPECS.length)];
           this.twinkleSpeed = Math.random() * 16 + 10;
           this.isSparkleCross = Math.random() > 0.65;
@@ -1891,91 +1979,48 @@
           this.vy *= 0.95;
           this.life -= this.decay;
         }
-        draw(ctx, masterAlpha = 1) {
+        draw(c, masterAlpha = 1) {
           if (this.life <= 0) return;
           const twinkle = Math.abs(Math.sin(this.life * this.twinkleSpeed));
           const alpha = Math.max(0, Math.min(1, this.life * twinkle * masterAlpha));
 
-          ctx.save();
-          ctx.fillStyle = `${this.spec.color} ${alpha})`;
-          ctx.shadowColor = this.spec.shadow;
-          ctx.shadowBlur = this.spec.isWhite ? this.size * 3 : this.size * 1.5;
-
           if (this.isSparkleCross && this.life > 0.35) {
-            const len = this.size * 2.3;
-            ctx.beginPath();
-            ctx.moveTo(this.x, this.y - len);
-            ctx.lineTo(this.x, this.y + len);
-            ctx.moveTo(this.x - len, this.y);
-            ctx.lineTo(this.x + len, this.y);
-            ctx.strokeStyle = `${this.spec.color} ${Math.min(1, alpha * 1.3)})`;
-            ctx.lineWidth = this.spec.isWhite ? 1.0 : 0.8;
-            ctx.stroke();
+            const len = this.size * 2.2;
+            c.beginPath();
+            c.moveTo(this.x, this.y - len);
+            c.lineTo(this.x, this.y + len);
+            c.moveTo(this.x - len, this.y);
+            c.lineTo(this.x + len, this.y);
+            c.strokeStyle = `${this.spec.color} ${Math.min(1, alpha * 1.3)})`;
+            c.lineWidth = 0.9;
+            c.stroke();
           } else {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
-            if (this.spec.isWhite) {
-              ctx.strokeStyle = `rgba(0, 0, 0, ${alpha * 0.35})`;
-              ctx.lineWidth = 0.5;
-              ctx.stroke();
-            }
-          }
-          ctx.restore();
-        }
-      }
+            // Soft halo without expensive shadowBlur
+            c.beginPath();
+            c.arc(this.x, this.y, this.size * 1.5, 0, Math.PI * 2);
+            c.fillStyle = `${this.spec.color} ${alpha * 0.25})`;
+            c.fill();
 
-      if (isCoarsePointer) {
-        function triggerMobileBurst(x, y) {
-          shockwaves.push(new Shockwave(x, y));
-          const burstCount = Math.floor(Math.random() * 6) + 14;
-          for (let i = 0; i < burstCount; i++) {
-            if (particles.length < 55) {
-              particles.push(new GlitterParticle(x, y, true));
-            }
-          }
-          if (!animId) startTouchLoop();
-        }
-
-        function touchLoop() {
-          ctx.clearRect(0, 0, width, height);
-
-          for (let i = shockwaves.length - 1; i >= 0; i--) {
-            shockwaves[i].update();
-            shockwaves[i].draw(ctx);
-            if (shockwaves[i].life <= 0) shockwaves.splice(i, 1);
-          }
-
-          for (let i = particles.length - 1; i >= 0; i--) {
-            particles[i].update();
-            particles[i].draw(ctx, 1);
-            if (particles[i].life <= 0) particles.splice(i, 1);
-          }
-
-          if (shockwaves.length > 0 || particles.length > 0) {
-            animId = requestAnimationFrame(touchLoop);
-          } else {
-            animId = null;
+            // Crisp core
+            c.beginPath();
+            c.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            c.fillStyle = `${this.spec.color} ${alpha})`;
+            c.fill();
           }
         }
-
-        function startTouchLoop() {
-          if (!animId) animId = requestAnimationFrame(touchLoop);
-        }
-
-        window.addEventListener("touchstart", (e) => {
-          if (e.touches && e.touches[0]) {
-            triggerMobileBurst(e.touches[0].clientX, e.touches[0].clientY);
-          }
-        }, { passive: true });
-
-        return;
       }
 
       const mouse = { x: width / 2, y: height / 2, moved: false };
       const trail = { x: width / 2, y: height / 2 };
-      let lastMoveTime = Date.now();
+      let lastMoveTime = 0;
       let masterAlpha = 0;
+
+      function startLoop() {
+        if (!isLoopRunning) {
+          isLoopRunning = true;
+          requestAnimationFrame(desktopLoop);
+        }
+      }
 
       window.addEventListener("mousemove", (e) => {
         mouse.x = e.clientX;
@@ -1983,43 +2028,44 @@
         mouse.moved = true;
         lastMoveTime = Date.now();
 
-        if (particles.length < 120) {
-          const count = Math.floor(Math.random() * 3) + 2;
+        if (particles.length < 40) {
+          const count = Math.floor(Math.random() * 2) + 1;
           for (let i = 0; i < count; i++) {
             particles.push(new GlitterParticle(mouse.x, mouse.y));
           }
         }
+        startLoop();
       }, { passive: true });
 
       window.addEventListener("mousedown", (e) => {
         lastMoveTime = Date.now();
         shockwaves.push(new Shockwave(e.clientX, e.clientY));
-        const burstCount = 22;
+        const burstCount = 12;
         for (let i = 0; i < burstCount; i++) {
-          if (particles.length < 140) {
+          if (particles.length < 50) {
             particles.push(new GlitterParticle(e.clientX, e.clientY, true));
           }
         }
+        startLoop();
       }, { passive: true });
 
       function desktopLoop() {
         ctx.clearRect(0, 0, width, height);
 
-        const isIdle = Date.now() - lastMoveTime > 700;
-        masterAlpha += ((isIdle ? 0 : 1) - masterAlpha) * 0.12;
+        const isIdle = Date.now() - lastMoveTime > 600;
+        masterAlpha += ((isIdle ? 0 : 1) - masterAlpha) * 0.14;
 
         trail.x += (mouse.x - trail.x) * 0.22;
         trail.y += (mouse.y - trail.y) * 0.22;
 
         if (masterAlpha > 0.01 && mouse.moved) {
-          const radial = ctx.createRadialGradient(trail.x, trail.y, 0, trail.x, trail.y, 36);
-          radial.addColorStop(0, `rgba(15, 23, 42, ${0.08 * masterAlpha})`);
-          radial.addColorStop(0.35, `rgba(71, 85, 105, ${0.05 * masterAlpha})`);
-          radial.addColorStop(0.7, `rgba(203, 213, 225, ${0.04 * masterAlpha})`);
+          const radial = ctx.createRadialGradient(trail.x, trail.y, 0, trail.x, trail.y, 32);
+          radial.addColorStop(0, `rgba(15, 23, 42, ${0.07 * masterAlpha})`);
+          radial.addColorStop(0.5, `rgba(71, 85, 105, ${0.04 * masterAlpha})`);
           radial.addColorStop(1, "transparent");
           ctx.fillStyle = radial;
           ctx.beginPath();
-          ctx.arc(trail.x, trail.y, 36, 0, Math.PI * 2);
+          ctx.arc(trail.x, trail.y, 32, 0, Math.PI * 2);
           ctx.fill();
         }
 
@@ -2035,10 +2081,15 @@
           if (particles[i].life <= 0) particles.splice(i, 1);
         }
 
+        // Auto-sleep check: if idle and no visible artifacts remain, sleep the RAF loop!
+        if (isIdle && masterAlpha < 0.01 && particles.length === 0 && shockwaves.length === 0) {
+          ctx.clearRect(0, 0, width, height);
+          isLoopRunning = false;
+          return;
+        }
+
         requestAnimationFrame(desktopLoop);
       }
-
-      requestAnimationFrame(desktopLoop);
     })();
 
 
