@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="format-detection" content="telephone=no">
-  <title>Talk with GI — Gian Christian Villanueva</title>
+  <title>Gian Christian Villanueva: Entrepreneur &amp; Phygital Builder</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
   <!-- Tailwind CSS via CDN -->
@@ -58,7 +58,7 @@
     #main-container.active-chat {
       justify-content: flex-start !important;
       padding-top: max(1rem, env(safe-area-inset-top));
-      padding-bottom: max(5.5rem, calc(env(safe-area-inset-bottom) + 5rem));
+      padding-bottom: max(7rem, calc(env(safe-area-inset-bottom) + 6.5rem));
       min-height: 100dvh;
     }
 
@@ -90,18 +90,19 @@
       margin-top: 0;
     }
 
-    #main-container.active-chat #hero-text p {
+    #main-container.active-chat #hero-text p.hero-subhead {
       font-size: 0.75rem;
       margin-top: 0.125rem;
-      color: #737373;
+      color: #525252;
     }
+
 
     #main-container.active-chat #new-chat-btn {
       display: inline-flex !important;
     }
 
     #main-container.active-chat #chat-feed {
-      max-height: calc(100dvh - 190px);
+      max-height: calc(100dvh - 195px);
       opacity: 1;
       pointer-events: auto;
       margin-top: 0.5rem;
@@ -109,14 +110,6 @@
       flex: 1;
     }
 
-    #main-container.active-chat #prompt-starters {
-      max-height: 0;
-      opacity: 0;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      pointer-events: none;
-    }
 
     #main-container.active-chat #prompt-dock-container {
       position: fixed;
@@ -142,12 +135,10 @@
     .keyboard-open #hero-text p {
       display: none !important;
     }
-    .keyboard-open #prompt-starters {
-      display: none !important;
-    }
     .keyboard-open #chat-feed {
       max-height: 35dvh !important;
     }
+
     .keyboard-open #main-container:not(.active-chat) {
       justify-content: flex-start !important;
       min-height: 0 !important;
@@ -163,7 +154,7 @@
       margin-bottom: 0.25rem !important;
     }
 
-    /* Typeahead Suggestions Popover: Positioned strictly on the BOTTOM side (below the input dock) */
+    /* Typeahead Suggestions Popover */
     #typeahead-suggestions {
       top: 100% !important;
       bottom: auto !important;
@@ -184,17 +175,14 @@
   <!-- Glowing Glitter Black Canvas Cursor Engine -->
   <canvas id="cursor-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
 
-  <!-- Ambient Light Halo Layer -->
-  <div class="fixed top-8 left-1/2 -translate-x-1/2 w-[320px] sm:w-[500px] h-[260px] bg-gradient-to-b from-neutral-200/50 to-transparent blur-[100px] pointer-events-none rounded-full" aria-hidden="true"></div>
 
-  <!-- Main Unified Container (Optically Centered by Default, Dynamically Morphs on Chat) -->
+  <!-- Main Unified Container (Optically Centered by Default, Dynamically Morphs on Interaction) -->
   <main id="main-container" class="min-h-[100dvh] w-full flex flex-col justify-center items-center px-4 safe-insets max-w-xl mx-auto transition-all duration-500 ease-out relative z-10">
 
-    <!-- Clean Hero Section (Pure Essentials: No Status Pills, No Micro-Tags, No Wave Emoji) -->
-    <section id="hero-section" class="flex flex-col items-center text-center transition-all duration-500 shrink-0 w-full px-4">
-      <!-- Interactive Memoji (Preserve 60FPS RAM preloader) -->
-      <div id="avatar-container" class="relative w-28 h-28 sm:w-32 sm:h-32 mx-auto select-none mb-4 transition-all duration-500">
-        <div class="absolute inset-0 bg-neutral-200/50 rounded-full blur-xl -z-10 pointer-events-none"></div>
+    <!-- Hero -->
+    <section id="hero-section" class="flex flex-col items-center text-center transition-all duration-500 shrink-0 w-full px-2">
+      <!-- 60 FPS In-Memory RAM Memoji Preloader -->
+      <div id="avatar-container" class="relative w-28 h-28 sm:w-32 sm:h-32 mx-auto select-none mb-3 transition-all duration-500">
         <img
           id="avatar-img"
           src="avatar/frame_48_delay-0.05s.webp"
@@ -203,13 +191,13 @@
         />
       </div>
 
-      <!-- Pure Identity: No Status Pills, No Micro-Tags -->
+      <!-- Hero Identity -->
       <div id="hero-text" class="text-center transition-all duration-300">
         <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900">
-          TALK WITH GI
+          GIAN CHRISTIAN VILLANUEVA
         </h1>
-        <p class="text-sm text-neutral-500 mt-1">
-          Gian Christian Villanueva — Founder of Attachment Anywhere
+        <p class="hero-subhead text-xs sm:text-sm font-semibold text-neutral-700 mt-1 tracking-tight">
+          Entrepreneur &amp; Phygital Builder
         </p>
       </div>
 
@@ -218,7 +206,7 @@
         type="button"
         id="new-chat-btn"
         onclick="resetToIdleState()"
-        class="hidden items-center gap-1.5 px-3 py-1.5 rounded-full text-xs text-neutral-600 hover:text-neutral-900 bg-neutral-100 hover:bg-neutral-200 border border-neutral-200 transition active:scale-95 cursor-pointer shrink-0"
+        class="hidden items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-neutral-600 hover:text-neutral-900 bg-neutral-100 hover:bg-neutral-200 border border-neutral-200 transition active:scale-95 cursor-pointer shrink-0"
         title="Start new conversation"
       >
         <i data-lucide="plus" class="w-3.5 h-3.5"></i>
@@ -227,8 +215,8 @@
     </section>
 
     <!-- Active Chat Feed (Between Avatar/Header and Input Dock) -->
-    <div id="chat-feed" class="w-full max-h-0 opacity-0 overflow-y-auto no-scrollbar pointer-events-none transition-all duration-500 my-0 space-y-4">
-      <!-- User & Assistant message pairs injected here -->
+    <div id="chat-feed" class="w-full max-h-0 opacity-0 overflow-y-auto no-scrollbar pointer-events-none transition-all duration-500 my-0 space-y-4 pb-28">
+      <!-- User & Assistant message pairs injected dynamically -->
     </div>
 
     <!-- Center/Bottom Input Dock -->
@@ -240,7 +228,7 @@
         <input
           id="prompt-input"
           type="text"
-          placeholder="Ask about NFC cards, pricing, delivery, DOH, or tools..."
+          placeholder="Ask about my builds, AI workflow, or video editing..."
           class="w-full bg-white border border-neutral-300 text-neutral-900 placeholder-neutral-400 text-sm sm:text-base px-5 py-4 pr-12 rounded-2xl shadow-sm focus:outline-none focus:border-neutral-900 focus:ring-1 focus:ring-neutral-900 transition"
           autocomplete="off"
         >
@@ -256,44 +244,32 @@
       </form>
     </div>
 
-    <!-- Subtle Ghost Prompt Starters -->
-    <div id="prompt-starters" class="w-full flex flex-wrap items-center justify-center gap-2 transition-all duration-300">
-      <button type="button" onclick="handlePromptStarter('How do your NFC cards work?')" class="text-xs text-neutral-600 hover:text-neutral-900 bg-neutral-100/90 hover:bg-neutral-200/90 border border-neutral-200/90 px-3.5 py-1.5 rounded-full transition cursor-pointer">How do your NFC cards work?</button>
-      <button type="button" onclick="handlePromptStarter('How much are your NFC products?')" class="text-xs text-neutral-600 hover:text-neutral-900 bg-neutral-100/90 hover:bg-neutral-200/90 border border-neutral-200/90 px-3.5 py-1.5 rounded-full transition cursor-pointer">How much are your NFC products?</button>
-      <button type="button" onclick="handlePromptStarter('What tools do you use?')" class="text-xs text-neutral-600 hover:text-neutral-900 bg-neutral-100/90 hover:bg-neutral-200/90 border border-neutral-200/90 px-3.5 py-1.5 rounded-full transition cursor-pointer">What tools do you use?</button>
-      <button type="button" onclick="handlePromptStarter('Who is Gian?')" class="text-xs text-neutral-600 hover:text-neutral-900 bg-neutral-100/90 hover:bg-neutral-200/90 border border-neutral-200/90 px-3.5 py-1.5 rounded-full transition cursor-pointer">Who is Gian?</button>
-    </div>
+
 
   </main>
 
-  <!-- ================= IN-PAGE PHONE PREVIEW MODAL ================= -->
+  <!-- In-page phone preview modal -->
   <div id="phone-preview-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300" onclick="closePhonePreviewModal()" aria-hidden="true">
-    <!-- Close Button in Top Corner -->
     <button onclick="closePhonePreviewModal()" class="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 rounded-full bg-neutral-900/80 hover:bg-neutral-800 text-white/80 hover:text-white border border-neutral-700/80 flex items-center justify-center transition-all active:scale-90 cursor-pointer z-50 shadow-lg" title="Close Preview (Esc)">
       <i data-lucide="x" class="w-5 h-5"></i>
     </button>
 
-    <!-- Mobile Device Mockup Shell (iPhone Pro Chassis) -->
     <div id="phone-mockup-container" class="w-full max-w-[360px] bg-neutral-950 border-4 border-neutral-800 rounded-[48px] p-2.5 sm:p-3 shadow-2xl relative overflow-hidden text-center max-h-[92vh] overflow-y-auto no-scrollbar transition-all duration-300 transform scale-95" onclick="event.stopPropagation()">
-      
-      <!-- Top Dynamic Island Pill -->
+      <!-- Dynamic Island Pill -->
       <div class="w-24 h-5 bg-black rounded-full mx-auto mb-2 border border-neutral-800 flex items-center justify-center shrink-0">
         <div class="w-2.5 h-2.5 rounded-full bg-neutral-800 mr-2"></div>
         <div class="w-1.5 h-1.5 rounded-full bg-neutral-900"></div>
       </div>
 
-      <!-- Live Digital Card Screen (Exact Fintech Luxury Design from aa260906052304.html) -->
+      <!-- Live Digital Card Screen -->
       <div class="bg-white rounded-[38px] p-5 sm:p-6 shadow-sm border border-gray-100 text-left relative overflow-hidden">
-        
-        <!-- Profile Header -->
         <div class="text-center mb-5">
           <img src="GI.jpg" alt="Gian Christian Villanueva" class="w-20 h-20 mx-auto mb-3 object-cover rounded-full border-2 border-gray-100 p-1 bg-white shadow-sm" onerror="this.src='avatar/frame_48_delay-0.05s.webp'">
           <h3 class="text-lg sm:text-xl font-bold text-gray-900 tracking-tight leading-tight">Gian Christian Villanueva</h3>
-          <p class="text-xs sm:text-sm font-semibold text-gray-700 mt-1">Entrepreneur</p>
+          <p class="text-xs sm:text-sm font-semibold text-gray-700 mt-1">Entrepreneur &amp; Builder</p>
           <p class="text-xs text-gray-400 mt-0.5">Attachment Anywhere</p>
         </div>
 
-        <!-- Primary Actions: Save, Share, Show QR -->
         <div class="grid grid-cols-3 gap-2 mb-5">
           <button onclick="downloadGianVCard(event)" class="flex items-center justify-center gap-1.5 bg-black text-white text-xs font-semibold py-2.5 px-2 rounded-xl shadow-sm cursor-pointer active:scale-95 transition-all">
             <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
@@ -309,33 +285,29 @@
           </button>
         </div>
 
-        <!-- Interactive In-Mockup QR Drawer (Toggled by Show QR) -->
         <div id="phone-qr-view" class="hidden mb-4 p-4 bg-gray-50 rounded-2xl border border-gray-100 text-center animate-in fade-in duration-200">
           <div class="text-xs font-bold text-gray-900 mb-0.5">Scan to Connect</div>
-          <p class="text-[10px] text-gray-500 mb-2.5">Point camera to launch this card on mobile</p>
+          <p class="text-[10px] text-gray-500 mb-2.5">Point camera to launch live card</p>
           <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://attachmentanywhere.com/260906052304.html" alt="QR Code" class="w-36 h-36 mx-auto rounded-xl bg-white p-2 border border-gray-200 shadow-xs mb-2">
           <button onclick="togglePhoneQR(event)" class="text-[11px] font-semibold text-gray-500 hover:text-black cursor-pointer">Hide QR</button>
         </div>
 
         <hr class="border-gray-100 mb-4">
 
-        <!-- Links List (Exact Fintech Luxury Pills from aa260906052304.html) -->
         <div class="space-y-2.5">
-          <!-- Call Number -->
           <a href="tel:+639657689591" class="flex items-center justify-between p-3 rounded-2xl bg-gray-50 hover:bg-gray-100 border border-gray-100 transition-all group cursor-pointer">
             <div class="flex items-center gap-3">
               <div class="w-9 h-9 rounded-xl bg-white flex items-center justify-center text-emerald-600 shadow-xs border border-gray-100 shrink-0">
                 <i data-lucide="phone" class="w-4 h-4"></i>
               </div>
               <div>
-                <div class="text-xs sm:text-sm font-semibold text-gray-900">Call Number</div>
+                <div class="text-xs sm:text-sm font-semibold text-gray-900">Direct Line</div>
                 <div class="text-[11px] text-gray-500 font-light">+63 965 768 9591</div>
               </div>
             </div>
             <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-gray-400 group-hover:translate-x-0.5 transition-transform"></i>
           </a>
 
-          <!-- Messenger -->
           <a href="https://m.me/Gian2320" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3 rounded-2xl bg-gray-50 hover:bg-gray-100 border border-gray-100 transition-all group cursor-pointer">
             <div class="flex items-center gap-3">
               <div class="w-9 h-9 rounded-xl bg-white flex items-center justify-center text-blue-600 shadow-xs border border-gray-100 shrink-0">
@@ -343,13 +315,12 @@
               </div>
               <div>
                 <div class="text-xs sm:text-sm font-semibold text-gray-900">Messenger</div>
-                <div class="text-[11px] text-gray-500 font-light">Chat directly on Messenger</div>
+                <div class="text-[11px] text-gray-500 font-light">Direct chat</div>
               </div>
             </div>
             <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-gray-400 group-hover:translate-x-0.5 transition-transform"></i>
           </a>
 
-          <!-- Instagram -->
           <a href="https://instagram.com/g.attachmenz" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3 rounded-2xl bg-gray-50 hover:bg-gray-100 border border-gray-100 transition-all group cursor-pointer">
             <div class="flex items-center gap-3">
               <div class="w-9 h-9 rounded-xl bg-white flex items-center justify-center text-pink-600 shadow-xs border border-gray-100 shrink-0">
@@ -357,13 +328,12 @@
               </div>
               <div>
                 <div class="text-xs sm:text-sm font-semibold text-gray-900">Instagram</div>
-                <div class="text-[11px] text-gray-500 font-light">Follow or DM on IG</div>
+                <div class="text-[11px] text-gray-500 font-light">@g.attachmenz</div>
               </div>
             </div>
             <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-gray-400 group-hover:translate-x-0.5 transition-transform"></i>
           </a>
 
-          <!-- Google Mail -->
           <a href="https://mail.google.com/mail/?view=cm&fs=1&to=gianchristianvillanueva@gmail.com" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3 rounded-2xl bg-gray-50 hover:bg-gray-100 border border-gray-100 transition-all group cursor-pointer">
             <div class="flex items-center gap-3">
               <div class="w-9 h-9 rounded-xl bg-white flex items-center justify-center text-red-500 shadow-xs border border-gray-100 shrink-0">
@@ -376,105 +346,155 @@
             </div>
             <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-gray-400 group-hover:translate-x-0.5 transition-transform"></i>
           </a>
-
-          <!-- Portfolio -->
-          <a href="https://attachmentanywhere.com/portfolio" onclick="event.preventDefault(); closePhonePreviewModal();" class="flex items-center justify-between p-3 rounded-2xl bg-gray-50 hover:bg-gray-100 border border-gray-100 transition-all group cursor-pointer">
-            <div class="flex items-center gap-3">
-              <div class="w-9 h-9 rounded-xl bg-white flex items-center justify-center text-indigo-600 shadow-xs border border-gray-100 shrink-0">
-                <i data-lucide="briefcase" class="w-4 h-4"></i>
-              </div>
-              <div>
-                <div class="text-xs sm:text-sm font-semibold text-gray-900">Portfolio</div>
-                <div class="text-[11px] text-gray-500 font-light">View recent projects &amp; case studies</div>
-              </div>
-            </div>
-            <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-gray-400 group-hover:translate-x-0.5 transition-transform"></i>
-          </a>
-
-          <!-- Brand Website -->
-          <a href="https://attachmentanywhere.com" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3 rounded-2xl bg-gray-50 hover:bg-gray-100 border border-gray-100 transition-all group cursor-pointer">
-            <div class="flex items-center gap-3">
-              <div class="w-9 h-9 rounded-xl bg-white flex items-center justify-center text-teal-600 shadow-xs border border-gray-100 shrink-0">
-                <i data-lucide="globe" class="w-4 h-4"></i>
-              </div>
-              <div>
-                <div class="text-xs sm:text-sm font-semibold text-gray-900">Attachment Anywhere</div>
-                <div class="text-[11px] text-gray-500 font-light">Official website &amp; smart solutions</div>
-              </div>
-            </div>
-            <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-gray-400 group-hover:translate-x-0.5 transition-transform"></i>
-          </a>
         </div>
 
-        <!-- Footer Branding (Brand ni Gian) -->
         <div class="text-center mt-6 pt-2 flex items-center justify-center gap-1.5">
           <span class="text-[11px] text-gray-400 font-medium">Powered by</span>
           <img src="brand ni gian.jpg" alt="Attachment Anywhere" class="h-10 w-auto object-contain" onerror="this.src='brandbgrmv.png'">
         </div>
-
       </div>
     </div>
   </div>
 
-  <!-- ================= CARD SPECS MODAL ================= -->
-  <div id="specs-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300" onclick="closeSpecsModal()" aria-hidden="true">
+  <!-- Card specs modal -->
+  <div id="specs-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 opacity-0 pointer-events-none transition-all duration-300" onclick="closeSpecsModal()" aria-hidden="true">
     <button onclick="closeSpecsModal()" class="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 rounded-full bg-neutral-900/80 hover:bg-neutral-800 text-white/80 hover:text-white border border-neutral-700/80 flex items-center justify-center transition-all active:scale-90 cursor-pointer z-50 shadow-lg" title="Close (Esc)">
       <i data-lucide="x" class="w-5 h-5"></i>
     </button>
     <div class="w-full max-w-lg bg-neutral-950 border border-neutral-800 rounded-3xl p-6 sm:p-7 shadow-2xl relative text-left text-white max-h-[90vh] overflow-y-auto no-scrollbar transition-all duration-300 transform scale-95" onclick="event.stopPropagation()">
       <div class="flex items-center gap-2 mb-2">
-        <span class="text-[10px] font-mono tracking-wider uppercase text-neutral-400 bg-neutral-900 px-2.5 py-0.5 rounded-full border border-neutral-800">CARD SPECIFICATIONS</span>
-        <span class="text-[10px] font-mono text-neutral-400">NTAG213 / NTAG215</span>
+        <span class="text-[10px] font-mono tracking-wider uppercase text-neutral-400 bg-neutral-900 px-2.5 py-0.5 rounded-md border border-neutral-800">HARDWARE SPECS</span>
+        <span class="text-[10px] font-mono text-neutral-400">NTAG215 / NTAG216</span>
       </div>
-      <h3 class="text-lg sm:text-xl font-extrabold text-white mb-1.5">NFC Executive Cards</h3>
-      <p class="text-xs text-neutral-400 mb-5 leading-relaxed font-light">Technical specifications and build details for Attachment Anywhere contactless business cards.</p>
+      <h3 class="text-lg sm:text-xl font-extrabold text-white mb-1.5">Attachment Anywhere NFC Hardware</h3>
+      <p class="text-xs text-neutral-400 mb-5 leading-relaxed font-light">Physical contactless hardware specifications engineered for executive profiles and cafe checkout counters.</p>
 
       <div class="space-y-3 mb-6">
         <div class="p-3.5 rounded-2xl bg-neutral-900/70 border border-neutral-800 flex items-start gap-3">
           <i data-lucide="cpu" class="w-4 h-4 text-neutral-400 shrink-0 mt-0.5"></i>
           <div>
-            <div class="text-xs font-bold text-white">Chip &amp; Memory</div>
-            <div class="text-[11px] text-neutral-400 font-light mt-0.5">NXP NTAG213 (144 bytes) or NTAG215 (504 bytes). Pre-programmed or writeable with any standard NFC app.</div>
+            <div class="text-xs font-bold text-white">Chip Architecture &amp; Memory</div>
+            <div class="text-[11px] text-neutral-400 font-light mt-0.5">High-frequency NXP NTAG215 (504 bytes) &amp; NTAG216 (888 bytes). Pre-encoded NDEF records with rewrite-lock protection.</div>
           </div>
         </div>
         <div class="p-3.5 rounded-2xl bg-neutral-900/70 border border-neutral-800 flex items-start gap-3">
           <i data-lucide="radio" class="w-4 h-4 text-neutral-400 shrink-0 mt-0.5"></i>
           <div>
-            <div class="text-xs font-bold text-white">Device Compatibility</div>
-            <div class="text-[11px] text-neutral-400 font-light mt-0.5">Native tap on iPhone (XS &amp; newer) and all NFC Android phones. No apps or camera scanning required.</div>
+            <div class="text-xs font-bold text-white">Universal Smartphone Tap</div>
+            <div class="text-[11px] text-neutral-400 font-light mt-0.5">Native passive NFC coupling on iPhone (XS through 16 Pro) and all Android handsets. Zero camera scans or third-party apps required.</div>
           </div>
         </div>
         <div class="p-3.5 rounded-2xl bg-neutral-900/70 border border-neutral-800 flex items-start gap-3">
-          <i data-lucide="credit-card" class="w-4 h-4 text-neutral-400 shrink-0 mt-0.5"></i>
+          <i data-lucide="layers" class="w-4 h-4 text-neutral-400 shrink-0 mt-0.5"></i>
           <div>
-            <div class="text-xs font-bold text-white">Card Build &amp; Size</div>
-            <div class="text-[11px] text-neutral-400 font-light mt-0.5">Standard credit card dimensions (85.6 × 54 mm, 0.84 mm thick). Matte black PVC finish with waterproof seal.</div>
-          </div>
-        </div>
-        <div class="p-3.5 rounded-2xl bg-neutral-900/70 border border-neutral-800 flex items-start gap-3">
-          <i data-lucide="shield-check" class="w-4 h-4 text-neutral-400 shrink-0 mt-0.5"></i>
-          <div>
-            <div class="text-xs font-bold text-white">Durability &amp; Life</div>
-            <div class="text-[11px] text-neutral-400 font-light mt-0.5">Waterproof (IP68), scratch-resistant, 100,000 rewrites, and 10-year EEPROM data retention.</div>
+            <div class="text-xs font-bold text-white">Anti-Metal Ferrite Shielding</div>
+            <div class="text-[11px] text-neutral-400 font-light mt-0.5">Integrated anti-metal shielding layer prevents magnetic field cancellation when placed against stainless steel espresso machines and aluminum POS counters.</div>
           </div>
         </div>
       </div>
 
       <div class="flex items-center gap-2.5 pt-4 border-t border-neutral-800">
         <button onclick="closeSpecsModal()" class="flex-1 py-3 px-4 rounded-xl border border-neutral-800 bg-neutral-900 hover:bg-neutral-800 text-xs font-bold uppercase tracking-wider text-neutral-300 text-center transition-all cursor-pointer">Close</button>
-        <button onclick="closeSpecsModal(); openPhonePreviewModal();" class="flex-1 py-3 px-4 rounded-xl bg-white text-black hover:bg-neutral-200 text-xs font-bold uppercase tracking-wider text-center transition-all cursor-pointer">Test Live Demo ⚡</button>
+        <button onclick="closeSpecsModal(); openPhonePreviewModal();" class="flex-1 py-3 px-4 rounded-xl bg-white text-black hover:bg-neutral-200 text-xs font-bold uppercase tracking-wider text-center transition-all cursor-pointer">Test Live Card Demo</button>
       </div>
     </div>
   </div>
 
-  <!-- ================= STORE DEPLOYMENTS MODAL ================= -->
-  <div id="deployments-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300" onclick="closeDeploymentsModal()" aria-hidden="true">
+  <!-- Video stack breakdown modal -->
+  <div id="video-stack-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 opacity-0 pointer-events-none transition-all duration-300" onclick="closeVideoStackModal()" aria-hidden="true">
+    <button onclick="closeVideoStackModal()" class="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 rounded-full bg-neutral-900/80 hover:bg-neutral-800 text-white/80 hover:text-white border border-neutral-700/80 flex items-center justify-center transition-all active:scale-90 cursor-pointer z-50 shadow-lg" title="Close (Esc)">
+      <i data-lucide="x" class="w-5 h-5"></i>
+    </button>
+    <div class="w-full max-w-lg bg-neutral-950 border border-neutral-800 rounded-3xl p-6 sm:p-7 shadow-2xl relative text-left text-white max-h-[90vh] overflow-y-auto no-scrollbar transition-all duration-300 transform scale-95" onclick="event.stopPropagation()">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-[10px] font-mono tracking-wider uppercase text-neutral-400 bg-neutral-900 px-2.5 py-0.5 rounded-md border border-neutral-800">CREATIVE MEDIA BREAKDOWN</span>
+        <span class="text-[10px] font-mono text-neutral-400">Whop &amp; Short-Form</span>
+      </div>
+      <h3 class="text-lg sm:text-xl font-extrabold text-white mb-1.5">High-Retention Video Pipelines</h3>
+      <p class="text-xs text-neutral-400 mb-5 leading-relaxed font-light">Algorithmic pacing, retention hook optimization, and audio-synced storytelling engineered for modern social algorithms.</p>
+
+      <div class="space-y-3 mb-6">
+        <div class="p-3.5 rounded-2xl bg-neutral-900/70 border border-neutral-800 flex items-start gap-3">
+          <i data-lucide="scissors" class="w-4 h-4 text-neutral-400 shrink-0 mt-0.5"></i>
+          <div>
+            <div class="text-xs font-bold text-white">Micro-Pacing &amp; Audio-Sync Cuts</div>
+            <div class="text-[11px] text-neutral-400 font-light mt-0.5">CapCut Desktop and Premiere Pro: custom keyframing, beat-matched cut points, and audio mixing that maintain viewer attention.</div>
+          </div>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-neutral-900/70 border border-neutral-800 flex items-start gap-3">
+          <i data-lucide="trending-up" class="w-4 h-4 text-neutral-400 shrink-0 mt-0.5"></i>
+          <div>
+            <div class="text-xs font-bold text-white">Whop Clipping Bounty Systems</div>
+            <div class="text-[11px] text-neutral-400 font-light mt-0.5">Structuring POV hooks, meme overlays, and cultural commentary to maximize algorithmic distribution curves and creator rewards.</div>
+          </div>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-neutral-900/70 border border-neutral-800 flex items-start gap-3">
+          <i data-lucide="cpu" class="w-4 h-4 text-neutral-400 shrink-0 mt-0.5"></i>
+          <div>
+            <div class="text-xs font-bold text-white">Automated Transcription &amp; Hook Extraction</div>
+            <div class="text-[11px] text-neutral-400 font-light mt-0.5">Indexing podcast transcripts with OpusClip and Gemini to extract high-impact soundbites for short-form video.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2.5 pt-4 border-t border-neutral-800">
+        <button onclick="closeVideoStackModal()" class="flex-1 py-3 px-4 rounded-xl border border-neutral-800 bg-neutral-900 hover:bg-neutral-800 text-xs font-bold uppercase tracking-wider text-neutral-300 text-center transition-all cursor-pointer">Close</button>
+        <a href="https://m.me/Gian2320" target="_blank" rel="noopener noreferrer" class="flex-1 py-3 px-4 rounded-xl bg-white text-black hover:bg-neutral-200 text-xs font-bold uppercase tracking-wider text-center transition-all cursor-pointer">Inquire Video Retainer</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Architecture modal -->
+  <div id="architecture-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 opacity-0 pointer-events-none transition-all duration-300" onclick="closeArchitectureModal()" aria-hidden="true">
+    <button onclick="closeArchitectureModal()" class="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 rounded-full bg-neutral-900/80 hover:bg-neutral-800 text-white/80 hover:text-white border border-neutral-700/80 flex items-center justify-center transition-all active:scale-90 cursor-pointer z-50 shadow-lg" title="Close (Esc)">
+      <i data-lucide="x" class="w-5 h-5"></i>
+    </button>
+    <div class="w-full max-w-lg bg-neutral-950 border border-neutral-800 rounded-3xl p-6 sm:p-7 shadow-2xl relative text-left text-white max-h-[90vh] overflow-y-auto no-scrollbar transition-all duration-300 transform scale-95" onclick="event.stopPropagation()">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-[10px] font-mono tracking-wider uppercase text-neutral-400 bg-neutral-900 px-2.5 py-0.5 rounded-md border border-neutral-800">SYSTEM ARCHITECTURE</span>
+        <span class="text-[10px] font-mono text-neutral-400">Serverless Micro-SaaS</span>
+      </div>
+      <h3 class="text-lg sm:text-xl font-extrabold text-white mb-1.5">Serverless Webhooks &amp; Dynamic Redirects</h3>
+      <p class="text-xs text-neutral-400 mb-5 leading-relaxed font-light">Direct infrastructure connecting client form submissions, dynamic NFC card payloads, and alert channels without recurring SaaS subscriptions.</p>
+
+      <div class="space-y-3 mb-6">
+        <div class="p-3.5 rounded-2xl bg-neutral-900/70 border border-neutral-800 flex items-start gap-3">
+          <i data-lucide="git-branch" class="w-4 h-4 text-neutral-400 shrink-0 mt-0.5"></i>
+          <div>
+            <div class="text-xs font-bold text-white">Dynamic NDEF Cloud Routing</div>
+            <div class="text-[11px] text-neutral-400 font-light mt-0.5">Edge redirects on Cloudflare Pages and Netlify Functions enable instant target URL updates without burning new physical chips.</div>
+          </div>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-neutral-900/70 border border-neutral-800 flex items-start gap-3">
+          <i data-lucide="zap" class="w-4 h-4 text-neutral-400 shrink-0 mt-0.5"></i>
+          <div>
+            <div class="text-xs font-bold text-white">Serverless Event Webhooks</div>
+            <div class="text-[11px] text-neutral-400 font-light mt-0.5">Custom Netlify Functions process customer checkout events, format payload data, and broadcast real-time alerts to Discord/Telegram.</div>
+          </div>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-neutral-900/70 border border-neutral-800 flex items-start gap-3">
+          <i data-lucide="terminal" class="w-4 h-4 text-neutral-400 shrink-0 mt-0.5"></i>
+          <div>
+            <div class="text-xs font-bold text-white">Google AI Web Tools</div>
+            <div class="text-[11px] text-neutral-400 font-light mt-0.5">Building web tools and database scripts using Gemini, Antigravity, and Opal for single-file, zero-bloat deployments.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2.5 pt-4 border-t border-neutral-800">
+        <button onclick="closeArchitectureModal()" class="w-full py-3 px-4 rounded-xl border border-neutral-800 bg-neutral-900 hover:bg-neutral-800 text-xs font-bold uppercase tracking-wider text-neutral-300 text-center transition-all cursor-pointer">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cafe deployments modal -->
+  <div id="deployments-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 opacity-0 pointer-events-none transition-all duration-300" onclick="closeDeploymentsModal()" aria-hidden="true">
     <button onclick="closeDeploymentsModal()" class="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 rounded-full bg-neutral-900/80 hover:bg-neutral-800 text-white/80 hover:text-white border border-neutral-700/80 flex items-center justify-center transition-all active:scale-90 cursor-pointer z-50 shadow-lg" title="Close (Esc)">
       <i data-lucide="x" class="w-5 h-5"></i>
     </button>
     <div class="w-full max-w-lg bg-neutral-950 border border-neutral-800 rounded-3xl p-6 sm:p-7 shadow-2xl relative text-left text-white max-h-[90vh] overflow-y-auto no-scrollbar transition-all duration-300 transform scale-95" onclick="event.stopPropagation()">
       <div class="flex items-center gap-2 mb-2">
-        <span class="text-[10px] font-mono tracking-wider uppercase text-neutral-400 bg-neutral-900 px-2.5 py-0.5 rounded-full border border-neutral-800">STORE DEPLOYMENTS</span>
+        <span class="text-[10px] font-mono tracking-wider uppercase text-neutral-400 bg-neutral-900 px-2.5 py-0.5 rounded-md border border-neutral-800">STORE DEPLOYMENTS</span>
         <span class="text-[10px] font-mono text-neutral-400">Metro Manila</span>
       </div>
       <h3 class="text-lg sm:text-xl font-extrabold text-white mb-1.5">Smart Review Counter Hubs</h3>
@@ -487,7 +507,7 @@
               <i data-lucide="coffee" class="w-3.5 h-3.5 text-neutral-400"></i>
               Badshot Coffee (Manila)
             </span>
-            <span class="text-[10px] font-mono text-neutral-300 bg-neutral-900 border border-neutral-800 px-2 py-0.5 rounded-full">Checkout Counter Puck</span>
+            <span class="text-[10px] font-mono text-neutral-300 bg-neutral-900 border border-neutral-800 px-2 py-0.5 rounded-md">Checkout Counter Puck</span>
           </div>
           <p class="text-[11px] text-neutral-400 font-light leading-relaxed">Placed beside the cash register. Customers tap their phone while waiting for espresso to leave a 5-star Google review directly.</p>
         </div>
@@ -498,7 +518,7 @@
               <i data-lucide="coffee" class="w-3.5 h-3.5 text-neutral-400"></i>
               1319 Cafe &amp; Roastery
             </span>
-            <span class="text-[10px] font-mono text-neutral-400 bg-neutral-900 border border-neutral-800 px-2 py-0.5 rounded-full">Dine-In Table Stands</span>
+            <span class="text-[10px] font-mono text-neutral-400 bg-neutral-900 border border-neutral-800 px-2 py-0.5 rounded-md">Dine-In Table Stands</span>
           </div>
           <p class="text-[11px] text-neutral-400 font-light leading-relaxed">Freestanding acrylic review stands placed on indoor dining tables with both tap NFC and a printed QR code backup.</p>
         </div>
@@ -509,7 +529,7 @@
               <i data-lucide="store" class="w-3.5 h-3.5 text-neutral-400"></i>
               Attachment Anywhere Workshop
             </span>
-            <span class="text-[10px] font-mono text-neutral-400 bg-neutral-900 border border-neutral-800 px-2 py-0.5 rounded-full">Anti-Metal Shielding</span>
+            <span class="text-[10px] font-mono text-neutral-400 bg-neutral-900 border border-neutral-800 px-2 py-0.5 rounded-md">Anti-Metal Shielding</span>
           </div>
           <p class="text-[11px] text-neutral-400 font-light leading-relaxed">Equipped with anti-metal ferrite shielding so tags trigger reliably even when placed on stainless steel coffee counters and metal POS stands.</p>
         </div>
@@ -517,58 +537,85 @@
 
       <div class="flex items-center gap-2.5 pt-4 border-t border-neutral-800">
         <button onclick="closeDeploymentsModal()" class="flex-1 py-3 px-4 rounded-xl border border-neutral-800 bg-neutral-900 hover:bg-neutral-800 text-xs font-bold uppercase tracking-wider text-neutral-300 text-center transition-all cursor-pointer">Close</button>
-        <button onclick="closeDeploymentsModal(); openPhonePreviewModal();" class="flex-1 py-3 px-4 rounded-xl bg-white text-black hover:bg-neutral-200 text-xs font-bold uppercase tracking-wider text-center transition-all cursor-pointer">Test Card Demo ⚡</button>
+        <button onclick="closeDeploymentsModal(); openPhonePreviewModal();" class="flex-1 py-3 px-4 rounded-xl bg-white text-black hover:bg-neutral-200 text-xs font-bold uppercase tracking-wider text-center transition-all cursor-pointer">Test Live Card Demo</button>
       </div>
     </div>
   </div>
 
   <!-- Preview Feedback Toast -->
-  <div id="preview-toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] px-4 py-2.5 rounded-full bg-neutral-900 text-white text-xs font-medium border border-neutral-700 shadow-2xl opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-2">
+  <div id="preview-toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] px-4 py-2.5 rounded-xl bg-neutral-900 text-white text-xs font-medium border border-neutral-700 shadow-2xl opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-2">
     <i data-lucide="check" class="w-4 h-4 text-neutral-300"></i>
     <span id="preview-toast-text">Action completed</span>
   </div>
 
 
-  <!-- ================= JAVASCRIPT ENGINE ================= -->
+  <!-- Scripts -->
   <script>
-    /* =========================================================================
-       1. CENTRALIZED CONTENT ENGINE (GIAN_DATA)
-       ========================================================================= */
+    // 1. Content engine
     const GIAN_DATA = {
       profile: {
         name: "Gian Christian Villanueva",
         title: "TALK WITH GI",
-        subheading: "Founder of Attachment Anywhere • 3rd Yr BS Entrepreneurship (Letran) • DOH GIP Data Encoder"
+        role: "Creative Technologist & Phygital Builder",
+        subheading: "Founder @ Attachment Anywhere • 3rd Yr BS Entrepreneurship (Letran) • DOH BLHSD Data Encoder",
+        location: "Manila, PH",
+        status: "OPEN FOR COLLABORATION & BUILDS"
       },
 
       me: {
-        headline: "Entrepreneur, Phygital Builder & Operational Technologist",
-        body: "3rd-year BS Entrepreneurship student at Colegio de San Juan de Letran and currently serving as a Data Encoder in the Government Internship Program (GIP) at the Department of Health (Bureau of Local Health Systems Development). Founder of Attachment Anywhere—manufacturing custom NFC digital calling cards, tap-to-review counter hubs, and phygital products. Actively exploring Google AI models (Gemini, Antigravity, Opal) to eliminate business friction through automations, coding, and high-retention video pipelines.",
-        tags: ["Letran Manila", "Attachment Anywhere", "DOH-BLHSD", "Google AI Ecosystem", "NFC Products", "Short-Form Creator"]
+        headline: "Creative Technologist, Phygital Builder & Solopreneur",
+        body: "3rd-year BS Entrepreneurship student at Colegio de San Juan de Letran and full-time National Health Systems Data Encoder at the Department of Health (BLHSD) via DOLE GIP. Founder of Attachment Anywhere: engineering modular contactless NFC hardware, smart review stands, and physical attachments. Building at the intersection of high-retention video motion, Google AI pipelines, and lean serverless automation.",
+        tags: ["Letran Manila", "Attachment Anywhere", "DOH-BLHSD", "Google AI Stack", "Retention Engineering", "Phygital Hardware"],
+        pillars: [
+          {
+            icon: "video",
+            title: "Motion & Creative Direction",
+            desc: "Pacing-driven video editing, hook pacing, and retention curve optimization (CapCut, Premiere pipelines). Built for viral creator clipping and bounty distribution networks on Whop."
+          },
+          {
+            icon: "cpu",
+            title: "AI Tools & Web Automation",
+            desc: "Building web applications, internal tools, and serverless webhooks using Google Gemini, Antigravity, and Opal. Applied in production to audit national health worker registries at DOH-BLHSD."
+          },
+          {
+            icon: "cpu",
+            title: "Phygital Hardware Execution",
+            desc: "Real-world manufacturing: NTAG microchip encoding, matte PVC card fabrication, and anti-metal acrylic stands deployed in Manila coffee shops (Badshot Coffee, 1319 Cafe). Physical products running offline."
+          }
+        ]
+      },
+
+      origin: {
+        story: "Nagsimula ang Attachment Anywhere bilang 'Attachment': hango sa hilig ko sa detachable accessories at modular pieces para i-elevate ang personal outfit style. Nang mapag-aralan ko ang phygital technology, na-realize ko: bakit sa damit lang? I evolved it into Attachment Anywhere para gumawa ng modular NFC products at smart review hubs na kayang ikabit sa kahit anong counter, pader, o gamit para mag-connect offline to online.",
+        philosophy: "Negative is also part of positive. Kapag may aberya sa buhay o negosyo, setbacks are not failures: part sila ng proseso. Everything happens for a reason, and every friction point provides the exact data needed to move forward."
+      },
+
+      routine: {
+        schedule: "10-hour shifts sa DOH (BLHSD) 4 days a week, diretso sa Letran for 3 to 5 hours of evening classes, plus Friday lectures. Attachment Anywhere and video clipping run during late nights and weekends. Midnight is my dedicated creative window for Google AI tools, automation, coding, and video editing."
       },
 
       projects: [
         {
           tag: "SMART CARDS",
           title: "NFC Executive Cards",
-          desc: "Matte black contactless smart cards. Tap on any iPhone or Android to open your digital profile or website instantly—zero apps needed.",
+          desc: "Custom waterproof matte PVC cards. One tap transmits your full digital profile to any smartphone, zero apps, zero camera scanning required.",
           actionLabel: "Inspect Specs",
           actionClick: "openSpecsModal()",
           icon: "sliders"
         },
         {
-          tag: "REVIEW STANDS",
+          tag: "RETAIL HUBS",
           title: "Smart Review Counter Hubs",
-          desc: "Physical tap-to-rate pucks and counter stands for coffee shops. Customers tap to open your Google review page directly.",
+          desc: "Anti-metal shielded acrylic stands deployed at Badshot Coffee and 1319 Cafe. Collects 5-star Google reviews in seconds to boost 'near me' local rankings.",
           actionLabel: "See Deployments",
           actionClick: "openDeploymentsModal()",
           icon: "map-pin"
         },
         {
-          tag: "DIGITAL CARD",
+          tag: "LIVE DEMO",
           title: "Gian's Digital Profile Card",
-          desc: "Interactive demo of the live digital profile that launches when a customer taps an Attachment Anywhere smart card.",
-          actionLabel: "Launch Live Preview ⚡",
+          desc: "Interactive live preview of the exact fintech-style digital card UI that launches when tapping an Attachment Anywhere smart card.",
+          actionLabel: "Launch Live Preview",
           actionClick: "openPhonePreviewModal()",
           isLiveDemo: true,
           icon: "smartphone"
@@ -579,85 +626,49 @@
         {
           role: "National Health Systems Data Encoder (GIP)",
           org: "Department of Health (BLHSD) × DOLE",
-          period: "Jun 2026 – Present",
-          tag: "Data Encoding",
+          period: "Jun 2026 to Present",
+          tag: "Data Operations",
           points: [
-            "Encoding and verifying national Barangay Health Workers (BHW) records across the country to resolve registry data discrepancies.",
-            "Operating and encoding records into national health systems: CSS (DOH), BHWconnect, and the Purokalusogan system.",
-            "Encoding facility submissions and updating master registry records to maintain national health worker data completeness."
+            "Serving as dedicated data encoder for BHWconnect, auditing and validating master records for Barangay Health Workers nationwide.",
+            "Operating within CSS (DOH), BHWconnect, and Purokalusogan systems to resolve health worker registry discrepancies.",
+            "Strict adherence to RA 10173 (Data Privacy Act of 2012) handling confidential national health governance records."
           ]
         },
         {
-          role: "Content Creator & Clipper (Content Rewards)",
+          role: "Short-Form Video Clipper & Creator",
           org: "Whop Clipping Community",
-          period: "Apr 2026 – Present",
-          tag: "Creator Economy",
+          period: "Apr 2026 to Present",
+          tag: "Retention Motion",
           points: [
-            "Engineering high-retention vertical video content (POV memes, viral clipping, cultural commentary).",
-            "Optimizing retention curves and hook structures for cross-platform algorithm payout bounties."
+            "Engineering high-retention vertical video edits (POV, cultural trend hooks, motivational pacing, and talk-show clipping).",
+            "Structuring first 1.5s hooks and audio-sync micro-cuts to maximize average watch duration and algorithm completion metrics.",
+            "Utilizing midnight focus hours to script, edit, and deliver client retainers with fast turnaround."
           ]
         },
         {
           role: "Administrative Assistant (SHS Work Immersion)",
           org: "Letran Community Extension Development",
-          period: "Jan 2024 – Apr 2024",
+          period: "Jan 2024 to Apr 2024",
           tag: "Community Extension",
           points: [
-            "Handled digital outreach, social media graphics, and logistical coordination for community extension programs in Manila."
-          ]
-        },
-        {
-          role: "Affiliate Marketer",
-          org: "Involve Asia",
-          period: "Nov 2020 – May 2022",
-          tag: "E-Commerce Growth",
-          points: [
-            "Promoted tech and lifestyle products through Facebook posts and affiliate conversion links."
+            "Handled digital outreach, promotional pubmats, and logistical operations for Intramuros community extension projects."
           ]
         }
       ],
 
-      stack: [
-        { category: "Google AI & Frontier Tools", tools: ["Google Gemini", "Google Antigravity", "Google Opal", "Prompt Pipelines"] },
-        { category: "Phygital & NFC Hardware", tools: ["NFC Tools Pro", "NTAG215 / NTAG216", "Physical Stand Production", "Direct Webhooks"] },
-        { category: "Web & Automation", tools: ["Tailwind CSS", "Vanilla JavaScript", "Netlify Functions", "REST Webhooks"] },
-        { category: "Creative & Media Workflows", tools: ["CapCut", "OpusClip", "High-Retention Clipping", "Audio-Sync Editing"] }
-      ],
-
-      mindset: {
-        quote: "Entrepreneurs don't complain about broken systems; they manufacture the tools to fix them.",
-        principles: [
-          { title: "Rapid Execution", desc: "Ship working prototypes in days, not months. Test reality before overplanning." },
-          { title: "Zero App Friction", desc: "Physical objects that instantly load lightweight web apps without app store friction." },
-          { title: "AI-Amplified Leverage", desc: "Harnessing Google Gemini and Antigravity to write production systems and automate manual labor." }
-        ]
-      },
-
-      hobbies: [
-        "Dystopian sci-fi worldbuilding (Silo, Fallout, Snowpiercer)",
-        "Late-night video editing and sound sync experiments",
-        "Halfcourt basketball games around Manila",
-        "Testing new AI tools and workflows"
-      ],
-
-      contact: {
-        notice: "Custom NFC hardware, review hubs, and phygital deployments.",
-        links: [
-          { label: "Order Cards", url: "order.html", icon: "credit-card" },
-          { label: "Instagram", url: "https://instagram.com/g.attachmenz", icon: "instagram" },
-          { label: "Messenger", url: "https://m.me/Gian2320", icon: "message-circle" },
-          { label: "Digital Calling Card", url: "aa260906052304.html", icon: "user-check" }
-        ],
-        referenceNotice: "Verified character references from Letran faculty and DOH BLHSD supervisory staff available upon request."
-      },
-
       commerce: {
-        pricingTier: "₱350 to ₱2,000 (Mula ReviewShield cards hanggang sa full Digital Hub setups)",
-        bulkNote: "Negotiable ang discounts para sa bulk orders, team packages, at wholesale deployments.",
+        pricingTier: "₱350 to ₱2,000 (mula ReviewShield tap hardware hanggang full custom Digital Hub packages)",
+        bulkNote: "Negotiable ang discounts para sa bulk orders, team sets, at wholesale deployments.",
+        policy: "Treating every customer with generosity. Fair pricing builds loyalty and organic word-of-mouth marketing.",
+        freebies: [
+          "100% Libre ang logo placement at card/stand layout assistance.",
+          "Smart Review Hubs include a free physical stand at 7-day free trial sa profile web hosting.",
+          "Zero vendor lock-in: bukas at tutulungan kitang ikabit ang sarili mong custom domain o hosting."
+        ],
         products: [
           {
             name: "ReviewShield & NFC Executive Cards",
-            range: "Starting at ₱350 – ₱550",
+            range: "Starting at ₱350 to ₱550",
             details: "Contactless tap hardware, matte PVC finish, 1-tap contact save (.vcf), at dynamic profile beam na walang kailangang app."
           },
           {
@@ -667,35 +678,85 @@
           }
         ],
         logistics: {
-          turnaround: "3 to 7 days production at encoding.",
+          turnaround: "3 to 7 business days for production and chip encoding.",
+          couriers: "Lalamove, Grab, and J&T Express nationwide.",
           delivery: "Lalamove, Grab, at J&T Express nationwide.",
-          meetup: "Available for personal handoff & contactless demo sa mga train stations (LRT / MRT) at accessible Metro Manila malls (₱0 shipping fee)."
+          meetup: "Personal handoff & live demo sa LRT/MRT stations at Metro Manila malls (₱0 shipping fee)."
         },
-        design: {
-          policy: "100% Libre ang logo placement at card/stand layout assistance."
-        },
-        payments: {
-          methods: ["GCash", "GoTyme Bank", "QR Ph (Universal QR for any local bank/e-wallet)"]
-        },
-        videoClipping: {
-          status: "Actively accepting clients for short-form editing and Whop clipping.",
-          pricing: "Negotiable at kayang pag-usapan depende sa volume, pacing, at turnaround."
-        }
+        payments: ["GCash", "GoTyme Bank", "QR Ph (Universal QR for any local bank or e-wallet)"]
+      },
+
+      stack: [
+        { category: "Google AI & Autonomous Dev", tools: ["Google Gemini", "Google Antigravity", "Google Opal", "Serverless Netlify Webhooks"] },
+        { category: "Phygital & NFC Engineering", tools: ["NXP NTAG213 / NTAG215", "Anti-Metal Ferrite Shielding", "NDEF URL Encoding", "Matte PVC Fabrication"] },
+        { category: "Creative Motion & Editing", tools: ["CapCut", "Audio-Sync Pacing", "1.5s Retention Hooks", "Whop Creator Bounties"] },
+        { category: "Modern Web", tools: ["Vanilla JavaScript", "Tailwind CSS", "REST Webhooks", "Zero-App Mobile Web"] }
+      ],
+
+      culture: {
+        motto: "Negative is also part of positive.",
+        playlist: "Cigarettes After Sex on loop past midnight: it calms my mind, silences external noise, and creates the stillness needed to build clearly.",
+        offline: "10,000 steps daily urban walks through random streets in Manila. It disconnects me from screens, clears cognitive fatigue, and resets my mind for the week.",
+        sciFi: "Obsessed with dystopian survival systems (Silo, Fallout, Snowpiercer). They explore human adaptation and innovation under extreme constraints: the same mindset I use when building physical products.",
+        influences: [
+          { name: "Ramon S. Ang", lesson: "Fearless industrial scale and bold execution." },
+          { name: "Josh Mojica", lesson: "Youth grit, street-smarts, and unpretentious hustle." },
+          { name: "Deijames (Australia)", lesson: "Elevated design curation and aesthetic standards." },
+          { name: "#FFFFFFT (Tokyo)", lesson: "Conviction to master a single hyper-focused obsession (pure white t-shirts)." }
+        ]
+      },
+
+      mindset: {
+        quote: "Negative is also part of positive. Every friction point provides the exact data needed to move forward.",
+        principles: [
+          { title: "Motto & Process", desc: "Negative is also part of positive. Setbacks are data points for the next iteration." },
+          { title: "Midnight Creative Focus", desc: "Cigarettes After Sex on loop past midnight creating stillness to code, edit, and build." },
+          { title: "10,000 Steps Offline Reset", desc: "Daily urban walks through Manila streets to clear screen fatigue and refresh mental clarity." }
+        ]
+      },
+
+      hobbies: [
+        "10,000 steps daily urban walks through random streets in Manila",
+        "Cigarettes After Sex on loop past midnight for focused creative build windows",
+        "Dystopian survival systems (Silo, Fallout, Snowpiercer)",
+        "Studying bold execution from Ramon S. Ang, Josh Mojica, Deijames, and #FFFFFFT"
+      ],
+
+      videoVault: {
+        title: "Short-Form Video Archive & Bounties",
+        url: "https://drive.google.com/drive/folders/1JLZG02tulsBdF3a6L8tWAp8GV35SUHDV?usp=drive_link",
+        description: "Raw and polished vertical video cuts demonstrating 1.5s hook retention, pacing, and creator clipping workflows.",
+        featuredClips: [
+          { title: "Boxabl Disruptor Clip", tag: "Tech / Real Estate" },
+          { title: "OneState Gaming Retention Cut", tag: "Gaming / POV" },
+          { title: "Greg Lav & Talk Show Cuts", tag: "Creator Commentary" },
+          { title: "Robin Alarm & Trend Hooks", tag: "Visual Hook" }
+        ]
+      },
+
+      contact: {
+        notice: "Available for collaboration, high-retention video retainers, and custom NFC hardware.",
+        links: [
+          { label: "Messenger", url: "https://m.me/Gian2320", icon: "message-circle" },
+          { label: "Instagram", url: "https://instagram.com/g.attachmenz", icon: "instagram" },
+          { label: "Video Vault", url: "https://drive.google.com/drive/folders/1JLZG02tulsBdF3a6L8tWAp8GV35SUHDV?usp=drive_link", icon: "folder" },
+          { label: "Digital Calling Card", url: "aa260906052304.html", icon: "user-check" },
+          { label: "Hardware Catalog", url: "products.html", icon: "credit-card" }
+        ],
+        referenceNotice: "Verified character references from Letran faculty and DOH BLHSD supervisory staff available upon request."
       }
     };
     GIAN_DATA.skills = GIAN_DATA.stack;
 
 
-    /* =========================================================================
-       2. CRITICAL FIX: LAG-FREE MEMOJI PRELOADER ENGINE (Full In-Memory Cache)
-       ========================================================================= */
+    // 2. Memoji preloader engine
     const totalFrames = 84;
     let currentFrame = 48; // Frame 48 faces straight forward
     let targetFrame = 48;
     let lastRenderedFrame = 48;
     const avatarImg = document.getElementById("avatar-img");
 
-    // 1. Full In-Memory Cache: Load all 84 images immediately
+    // Full In-Memory Cache: Load all 84 images immediately
     const frameCache = new Array(totalFrames);
     for (let i = 0; i < totalFrames; i++) {
       const padded = String(i).padStart(2, "0");
@@ -704,19 +765,16 @@
       frameCache[i] = img;
     }
 
-    // 2. Instant Center Mount: set base frame without delay
     if (avatarImg) {
       avatarImg.src = "avatar/frame_48_delay-0.05s.webp";
     }
 
-    // Helper: Map screen X coordinate (0 to 1) to frame index (0 to 83)
     function handlePointerCoord(clientX) {
       if (typeof clientX !== "number" || isNaN(clientX) || window.innerWidth <= 0) return;
       const ratio = Math.max(0, Math.min(1, clientX / window.innerWidth));
       targetFrame = Math.round(ratio * (totalFrames - 1));
     }
 
-    // Passive mouse and touch event listeners
     window.addEventListener("mousemove", (e) => {
       handlePointerCoord(e.clientX);
     }, { passive: true });
@@ -733,7 +791,6 @@
       }
     }, { passive: true });
 
-    // Smooth return to neutral center on leave or touch release
     document.addEventListener("mouseleave", () => {
       targetFrame = 48;
     });
@@ -746,7 +803,6 @@
       targetFrame = 48;
     }, { passive: true });
 
-    // DeviceOrientation Parallax on mobile with deadzone clamp
     if (window.DeviceOrientationEvent) {
       window.addEventListener("deviceorientation", (e) => {
         if (e.gamma !== null && e.gamma !== undefined && !isNaN(e.gamma)) {
@@ -758,7 +814,6 @@
       }, { passive: true });
     }
 
-    // 4. RequestAnimationFrame Lerp Damping Loop (Damping factor 0.22, Throttled Mutation)
     function animateAvatar() {
       const diff = targetFrame - currentFrame;
       if (Math.abs(diff) > 0.02) {
@@ -769,10 +824,8 @@
 
       const roundedIndex = Math.max(0, Math.min(totalFrames - 1, Math.round(currentFrame)));
 
-      // Throttling: Only mutate avatarImg.src when the rounded integer index actually changes
       if (roundedIndex !== lastRenderedFrame) {
         lastRenderedFrame = roundedIndex;
-        // Zero Network Scrubbing: read exclusively from frameCache
         if (frameCache[roundedIndex] && frameCache[roundedIndex].src) {
           avatarImg.src = frameCache[roundedIndex].src;
         }
@@ -783,15 +836,12 @@
     requestAnimationFrame(animateAvatar);
 
 
-    /* =========================================================================
-       3. VIRTUAL KEYBOARD & VIEWPORT ADAPTATION (Android, Huawei & iOS)
-       ========================================================================= */
+    // 3. Viewport and input handling
     const mainContainer = document.getElementById("main-container");
     const chatFeed = document.getElementById("chat-feed");
     const promptInput = document.getElementById("prompt-input");
     const sendButton = document.getElementById("send-button");
     const promptDockContainer = document.getElementById("prompt-dock-container");
-    const promptStarters = document.getElementById("prompt-starters");
     const typeaheadSuggestionsEl = document.getElementById("typeahead-suggestions");
 
     function handleViewportResize() {
@@ -799,12 +849,10 @@
       const height = window.visualViewport.height;
       const fullHeight = window.innerHeight;
 
-      // Virtual keyboard active when viewport height shrinks significantly
       const isKeyboardOpen = height < fullHeight * 0.76;
       if (isKeyboardOpen) {
         document.body.classList.add("keyboard-open");
 
-        // Dynamically compute max-height for typeahead suggestions to fit cleanly on the bottom side above the keyboard
         if (typeaheadSuggestionsEl && promptDockContainer && mainContainer && !mainContainer.classList.contains("active-chat")) {
           const rect = promptDockContainer.getBoundingClientRect();
           const availableHeight = Math.max(150, Math.floor(window.visualViewport.height - rect.bottom - 16));
@@ -831,10 +879,7 @@
       window.visualViewport.addEventListener("scroll", handleViewportResize);
     }
 
-
-    /* =========================================================================
-       4. GROUNDED TEMPLATES (Minimalist Dark AI Assistant Cards)
-       ========================================================================= */
+    // 4. Stage card templates
     function escapeHtml(text) {
       if (!text) return "";
       const div = document.createElement("div");
@@ -843,6 +888,38 @@
     }
 
     const STAGE_TEMPLATES = {
+      disciplines: () => {
+        const pillars = GIAN_DATA.me.pillars;
+        const pillarsHtml = pillars.map(p => `
+          <div class="p-4 rounded-2xl bg-neutral-50 border border-neutral-200/90 text-left space-y-1.5">
+            <div class="flex items-center gap-2">
+              <div class="w-6 h-6 rounded-lg bg-neutral-900 text-white flex items-center justify-center shrink-0 text-xs">
+                <i data-lucide="${escapeHtml(p.icon)}" class="w-3.5 h-3.5"></i>
+              </div>
+              <h4 class="text-xs sm:text-sm font-bold text-neutral-900">${escapeHtml(p.title)}</h4>
+            </div>
+            <p class="text-xs text-neutral-600 leading-relaxed font-normal">${escapeHtml(p.desc)}</p>
+          </div>
+        `).join('');
+
+        return `
+          <div class="bg-white p-5 sm:p-6 rounded-2xl border border-neutral-200/90 shadow-sm text-left space-y-3.5">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-mono tracking-wider uppercase text-neutral-500 bg-neutral-100 px-2.5 py-0.5 rounded-full border border-neutral-200">CORE VERTICALS</span>
+              <span class="text-[10px] font-mono text-neutral-400">Core Disciplines</span>
+            </div>
+            <div class="space-y-2.5">
+              ${pillarsHtml}
+            </div>
+            <div class="pt-3 border-t border-neutral-100 flex flex-wrap gap-2">
+              <button onclick="handlePromptStarter('Show your video editing work')" class="text-xs px-3 py-1.5 rounded-xl border border-neutral-300 bg-white hover:bg-neutral-50 text-neutral-800 font-medium transition cursor-pointer">Explore Motion</button>
+              <button onclick="handlePromptStarter('How do you use Google AI in your workflow?')" class="text-xs px-3 py-1.5 rounded-xl border border-neutral-300 bg-white hover:bg-neutral-50 text-neutral-800 font-medium transition cursor-pointer">AI Pipelines</button>
+              <button onclick="handlePromptStarter('What is Attachment Anywhere?')" class="text-xs px-3 py-1.5 rounded-xl border border-neutral-300 bg-white hover:bg-neutral-50 text-neutral-800 font-medium transition cursor-pointer">Phygital Hardware</button>
+            </div>
+          </div>
+        `;
+      },
+
       me: () => {
         const d = GIAN_DATA.me;
         const tagsHtml = d.tags.map(t => `<span class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-neutral-100 text-neutral-700 border border-neutral-200/90">${escapeHtml(t)}</span>`).join('');
@@ -850,21 +927,15 @@
           <div class="bg-white p-5 sm:p-6 rounded-2xl border border-neutral-200/90 shadow-sm text-left">
             <h3 class="text-base sm:text-lg font-bold text-neutral-900 mb-1.5">${escapeHtml(d.headline)}</h3>
             <p class="text-neutral-600 text-xs sm:text-sm font-normal leading-relaxed mb-4">${escapeHtml(d.body)}</p>
-            <div class="flex flex-wrap gap-1.5 mb-5">
-              ${tagsHtml}
-            </div>
+            <div class="flex flex-wrap gap-1.5 mb-5">${tagsHtml}</div>
             <div class="flex flex-wrap items-center gap-2.5 pt-4 border-t border-neutral-100">
               <button onclick="openPhonePreviewModal()" class="bg-neutral-900 text-white hover:bg-black text-xs font-semibold tracking-wide px-4 py-2.5 rounded-xl inline-flex items-center gap-2 shadow-xs transition-all active:scale-95 cursor-pointer">
                 <i data-lucide="user-check" class="w-4 h-4"></i>
-                <span>Digital Card</span>
+                <span>Digital Card Demo</span>
               </button>
               <a href="order.html" class="border border-neutral-300 bg-white hover:bg-neutral-50 text-neutral-800 text-xs font-semibold tracking-wide px-4 py-2.5 rounded-xl inline-flex items-center gap-2 transition-all active:scale-95 cursor-pointer">
                 <i data-lucide="credit-card" class="w-4 h-4"></i>
                 <span>Order Products</span>
-              </a>
-              <a href="story.html" class="border border-neutral-300 bg-white hover:bg-neutral-50 text-neutral-800 text-xs font-semibold tracking-wide px-4 py-2.5 rounded-xl inline-flex items-center gap-2 transition-all active:scale-95 cursor-pointer">
-                <i data-lucide="book-open" class="w-4 h-4"></i>
-                <span>Brand Story</span>
               </a>
             </div>
           </div>
@@ -878,9 +949,7 @@
               <div class="flex items-center justify-between gap-2 mb-2">
                 <span class="text-[10px] font-mono tracking-wider uppercase ${b.isLiveDemo ? 'text-neutral-900 bg-neutral-100 font-bold border-neutral-300' : 'text-neutral-600 bg-neutral-50 border-neutral-200'} px-2.5 py-0.5 rounded-full border">${escapeHtml(b.tag)}</span>
               </div>
-              <h4 class="font-bold text-sm sm:text-base text-neutral-900 mb-1.5">
-                ${escapeHtml(b.title)}
-              </h4>
+              <h4 class="font-bold text-sm sm:text-base text-neutral-900 mb-1.5">${escapeHtml(b.title)}</h4>
               <p class="text-xs text-neutral-600 font-normal leading-relaxed mb-4">${escapeHtml(b.desc)}</p>
             </div>
             <button onclick="${b.actionClick}" class="w-full ${b.isLiveDemo ? 'bg-neutral-900 text-white hover:bg-black shadow-xs' : 'border border-neutral-300 bg-white hover:bg-neutral-50 text-neutral-800'} text-xs font-semibold tracking-wide px-4 py-2.5 rounded-xl inline-flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer">
@@ -891,12 +960,19 @@
         `).join('');
 
         return `
-          <div class="space-y-3 pt-1">
+          <div class="space-y-3 pt-1 text-left">
             <div class="flex items-center justify-between px-1">
-              <h4 class="text-xs font-mono tracking-wider uppercase text-neutral-500">Products &amp; Builds</h4>
+              <h4 class="text-xs font-mono tracking-wider uppercase text-neutral-500">Phygital Hardware & Live Systems</h4>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              ${buildsHtml}
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">${buildsHtml}</div>
+            <div class="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200/90 flex flex-wrap items-center justify-between gap-2.5">
+              <div class="flex items-center gap-2">
+                <i data-lucide="video" class="w-4 h-4 text-neutral-700"></i>
+                <span class="text-xs font-medium text-neutral-700">Looking for creator clipping &amp; video work?</span>
+              </div>
+              <button onclick="handlePromptStarter('Show your video editing &amp; clipping work')" class="text-xs font-semibold text-neutral-900 hover:underline cursor-pointer">
+                View Video Vault
+              </button>
             </div>
           </div>
         `;
@@ -925,13 +1001,11 @@
         `).join('');
 
         return `
-          <div class="space-y-3 pt-1">
+          <div class="space-y-3 pt-1 text-left">
             <div class="px-1">
-              <h4 class="text-xs font-mono tracking-wider uppercase text-neutral-500">Experience Timeline</h4>
+              <h4 class="text-xs font-mono tracking-wider uppercase text-neutral-500">Operations & Creator Experience</h4>
             </div>
-            <div class="space-y-2.5">
-              ${itemsHtml}
-            </div>
+            <div class="space-y-2.5">${itemsHtml}</div>
           </div>
         `;
       },
@@ -939,9 +1013,7 @@
       stack: () => {
         const groupsHtml = GIAN_DATA.stack.map(g => `
           <div class="p-4 sm:p-5 rounded-2xl bg-white border border-neutral-200/90 shadow-sm hover:border-neutral-300 transition-all text-left">
-            <h4 class="text-xs font-mono uppercase tracking-wider text-neutral-800 font-semibold mb-2.5">
-              ${escapeHtml(g.category)}
-            </h4>
+            <h4 class="text-xs font-mono uppercase tracking-wider text-neutral-800 font-semibold mb-2.5">${escapeHtml(g.category)}</h4>
             <div class="flex flex-wrap gap-1.5">
               ${g.tools.map(item => `<span class="px-2.5 py-1 rounded-lg text-xs bg-neutral-100 text-neutral-800 font-medium border border-neutral-200/80">${escapeHtml(item)}</span>`).join('')}
             </div>
@@ -949,452 +1021,280 @@
         `).join('');
 
         return `
-          <div class="space-y-3 pt-1">
+          <div class="space-y-3 pt-1 text-left">
             <div class="px-1">
-              <h4 class="text-xs font-mono tracking-wider uppercase text-neutral-500">Tools, Hardware &amp; Platforms</h4>
+              <h4 class="text-xs font-mono tracking-wider uppercase text-neutral-500">Tech Stack & Execution Tools</h4>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              ${groupsHtml}
-            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">${groupsHtml}</div>
           </div>
         `;
       },
 
       contact: () => {
-        const c = GIAN_DATA.contact;
-        const linksHtml = c.links.map(l => {
-          const isPrimary = l.label.toLowerCase().includes("order");
-          const isPreview = l.label.toLowerCase().includes("digital calling card");
-          const clickAttr = isPreview ? 'onclick="event.preventDefault(); openPhonePreviewModal();"' : '';
-          const href = l.url;
-          return `
-            <a href="${href}" ${clickAttr} target="${href.startsWith('http') ? '_blank' : '_self'}" rel="${href.startsWith('http') ? 'noopener noreferrer' : ''}" class="${isPrimary ? 'bg-neutral-900 text-white hover:bg-black' : 'border border-neutral-300 bg-white hover:bg-neutral-50 text-neutral-800'} text-xs font-semibold tracking-wide px-4 py-2.5 rounded-xl inline-flex items-center justify-center gap-2 transition-all active:scale-95 flex-1 min-w-[130px] text-center cursor-pointer shadow-xs">
-              <i data-lucide="${escapeHtml(l.icon)}" class="w-4 h-4"></i>
-              <span>${escapeHtml(l.label)}</span>
-            </a>
-          `;
-        }).join('');
-
+        const c = GIAN_DATA.commerce;
         return `
           <div class="bg-white p-5 sm:p-6 rounded-2xl border border-neutral-200/90 shadow-sm text-left space-y-4">
             <div>
-              <h4 class="text-xs font-mono tracking-wider uppercase text-neutral-500 mb-1">Direct Channels</h4>
-              <p class="text-xs sm:text-sm text-neutral-600 font-normal leading-relaxed">${escapeHtml(c.notice)}</p>
+              <h4 class="text-xs font-mono tracking-wider uppercase text-neutral-500 mb-1">Direct Channels & Collaboration</h4>
+              <p class="text-xs sm:text-sm text-neutral-600 font-normal leading-relaxed">Open for hardware batches, video retainers, and AI workflows:</p>
             </div>
             <div class="flex flex-wrap gap-2.5">
-              ${linksHtml}
+              <a href="https://m.me/Gian2320" target="_blank" rel="noopener noreferrer" class="bg-neutral-900 text-white hover:bg-black text-xs font-semibold tracking-wide px-4 py-2.5 rounded-xl inline-flex items-center justify-center gap-2 transition-all active:scale-95 flex-1 min-w-[130px] shadow-xs">
+                <i data-lucide="message-circle" class="w-4 h-4"></i>
+                <span>Messenger</span>
+              </a>
+              <a href="https://instagram.com/g.attachmenz" target="_blank" rel="noopener noreferrer" class="border border-neutral-300 bg-white hover:bg-neutral-50 text-neutral-800 text-xs font-semibold tracking-wide px-4 py-2.5 rounded-xl inline-flex items-center justify-center gap-2 transition-all active:scale-95 flex-1 min-w-[130px]">
+                <i data-lucide="instagram" class="w-4 h-4"></i>
+                <span>Instagram</span>
+              </a>
+              <a href="order.html" class="border border-neutral-300 bg-white hover:bg-neutral-50 text-neutral-800 text-xs font-semibold tracking-wide px-4 py-2.5 rounded-xl inline-flex items-center justify-center gap-2 transition-all active:scale-95 flex-1 min-w-[130px]">
+                <i data-lucide="credit-card" class="w-4 h-4"></i>
+                <span>Order Hardware</span>
+              </a>
             </div>
-            <div class="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 flex items-start gap-2.5">
-              <i data-lucide="shield-check" class="w-4 h-4 text-neutral-500 shrink-0 mt-0.5"></i>
-              <p class="text-xs text-neutral-600 font-normal leading-relaxed">${escapeHtml(c.referenceNotice)}</p>
+            <div class="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-xs text-neutral-600 leading-relaxed">
+              <strong>Accepted Payments:</strong> ${c.payments.join(" • ")}
             </div>
           </div>
         `;
       },
 
       mindset: () => {
-        const m = GIAN_DATA.mindset;
-        const principlesHtml = m.principles.map(p => `
-          <div class="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-left">
-            <h5 class="text-xs font-bold text-neutral-900 mb-1">${escapeHtml(p.title)}</h5>
-            <p class="text-xs text-neutral-600 font-normal leading-relaxed">${escapeHtml(p.desc)}</p>
-          </div>
-        `).join('');
+        const m = GIAN_DATA.origin;
+        const c = GIAN_DATA.culture;
 
-        const hobbiesHtml = GIAN_DATA.hobbies.map(h => `
-          <li class="flex items-start gap-2.5 text-xs text-neutral-600 font-normal leading-relaxed">
-            <span class="w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0 mt-1.5"></span>
-            <span>${escapeHtml(h)}</span>
-          </li>
+        const influencesHtml = c.influences.map(inf => `
+          <div class="p-3 rounded-xl bg-neutral-50 border border-neutral-200">
+            <div class="text-xs font-bold text-neutral-900">${escapeHtml(inf.name)}</div>
+            <div class="text-[11px] text-neutral-500 font-normal leading-relaxed mt-0.5">${escapeHtml(inf.lesson)}</div>
+          </div>
         `).join('');
 
         return `
           <div class="space-y-3 pt-1 text-left">
             <div class="bg-neutral-900 text-white p-4 sm:p-5 rounded-2xl border border-neutral-800">
-              <blockquote class="text-xs sm:text-sm font-medium leading-relaxed text-neutral-200">
-                &ldquo;${escapeHtml(m.quote)}&rdquo;
+              <span class="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block mb-1">Core Motto</span>
+              <blockquote class="text-xs sm:text-sm font-semibold leading-relaxed text-white">
+                &ldquo;${escapeHtml(c.motto)}&rdquo;
               </blockquote>
+              <p class="text-[11px] text-neutral-300 font-light mt-1.5 leading-relaxed">
+                ${escapeHtml(m.philosophy)}
+              </p>
             </div>
-            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-neutral-200/90 shadow-sm">
-              <h4 class="text-xs font-mono uppercase tracking-wider text-neutral-500 mb-3">Operating Principles</h4>
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                ${principlesHtml}
+
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-neutral-200/90 shadow-sm space-y-3">
+              <h4 class="text-xs font-mono uppercase tracking-wider text-neutral-500">Offline & Focus Rituals</h4>
+              <div class="space-y-2 text-xs text-neutral-600">
+                <div class="flex items-start gap-2.5">
+                  <i data-lucide="footprints" class="w-4 h-4 text-neutral-800 shrink-0 mt-0.5"></i>
+                  <div>
+                    <strong class="text-neutral-900">10,000 Steps Daily:</strong> ${escapeHtml(c.offline)}
+                  </div>
+                </div>
+                <div class="flex items-start gap-2.5">
+                  <i data-lucide="headphones" class="w-4 h-4 text-neutral-800 shrink-0 mt-0.5"></i>
+                  <div>
+                    <strong class="text-neutral-900">Midnight Playlist:</strong> ${escapeHtml(c.playlist)}
+                  </div>
+                </div>
               </div>
             </div>
+
             <div class="bg-white p-4 sm:p-5 rounded-2xl border border-neutral-200/90 shadow-sm">
-              <h4 class="text-xs font-mono uppercase tracking-wider text-neutral-500 mb-2.5">Interests &amp; Offline</h4>
-              <ul class="space-y-2">
-                ${hobbiesHtml}
+              <h4 class="text-xs font-mono uppercase tracking-wider text-neutral-500 mb-3">Operating Influences</h4>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                ${influencesHtml}
+              </div>
+            </div>
+          </div>
+        `;
+      },
+
+      comparison: () => `
+        <div class="bg-white p-5 rounded-2xl border border-neutral-200/90 shadow-sm text-left space-y-4">
+          <div class="flex items-center justify-between border-b border-neutral-100 pb-3">
+            <div>
+              <h4 class="text-sm font-bold text-neutral-900">Paper Cards vs. NFC Smart Hardware</h4>
+              <p class="text-xs text-neutral-500 font-normal">ROI & long-term cost efficiency</p>
+            </div>
+            <span class="text-[10px] font-mono uppercase bg-neutral-100 text-neutral-700 px-2.5 py-1 rounded-full border border-neutral-200">ROI Comparison</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-neutral-800">Traditional Paper</span>
+                <span class="text-[11px] font-mono text-neutral-500">₱1,200 to ₱1,500 / 500 pcs</span>
+              </div>
+              <ul class="text-[11px] text-neutral-600 space-y-1.5 leading-relaxed">
+                <li>• 88% natatapon lang sa loob ng 7 days.</li>
+                <li>• Kailangang magpa-print ulit kapag may nabagong info.</li>
+                <li>• Manual typing ang kailangan para ma-save ang contact.</li>
+              </ul>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-neutral-900 text-white space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-white">Attachment Anywhere NFC</span>
+                <span class="text-[11px] font-mono text-neutral-300">Starts at ₱350 to ₱550</span>
+              </div>
+              <ul class="text-[11px] text-neutral-300 space-y-1.5 leading-relaxed">
+                <li>✓ Isang beses lang bibilhin; unlimited instant taps.</li>
+                <li>✓ Libreng dynamic updates online nang walang bagong card.</li>
+                <li>✓ 1-tap save (.vcf) diretso sa contacts ng kausap mo.</li>
               </ul>
             </div>
           </div>
-        `;
-      },
 
-      commerce: () => {
-        const c = GIAN_DATA.commerce;
-        const productsHtml = c.products.map(p => `
-          <div class="p-3.5 sm:p-4 rounded-xl bg-neutral-50 border border-neutral-200/90 text-left">
-            <div class="flex items-center justify-between gap-2 mb-1">
-              <h5 class="text-xs sm:text-sm font-bold text-neutral-900">${escapeHtml(p.name)}</h5>
-              <span class="text-[10px] font-mono text-neutral-800 font-semibold bg-neutral-200/80 border border-neutral-300 px-2 py-0.5 rounded-full">${escapeHtml(p.range)}</span>
+          <div class="pt-2 flex flex-wrap gap-2">
+            <a href="order.html" class="flex-1 py-2.5 px-4 bg-neutral-900 hover:bg-black text-white text-xs font-semibold rounded-xl text-center transition active:scale-95">
+              Switch to NFC Hardware
+            </a>
+            <button onclick="openPhonePreviewModal()" class="py-2.5 px-4 border border-neutral-300 hover:bg-neutral-50 text-neutral-800 text-xs font-semibold rounded-xl transition active:scale-95 cursor-pointer">
+              Test Live Demo
+            </button>
+          </div>
+        </div>
+      `,
+
+      bulkEstimate: () => `
+        <div class="bg-white p-5 rounded-2xl border border-neutral-200/90 shadow-sm text-left space-y-4">
+          <div class="border-b border-neutral-100 pb-3">
+            <div class="flex items-center justify-between">
+              <h4 class="text-sm font-bold text-neutral-900">Volume Pricing & Bulk Tier Estimates</h4>
+              <span class="text-[10px] font-mono uppercase bg-neutral-100 text-neutral-700 px-2 py-0.5 rounded-full border border-neutral-200">Wholesale</span>
             </div>
-            <p class="text-xs text-neutral-600 font-normal leading-relaxed">${escapeHtml(p.details)}</p>
+            <p class="text-xs text-neutral-500 font-normal mt-0.5">Flexible volume rates para sa teams, kumpanya, at cafes:</p>
+          </div>
+
+          <div class="space-y-2">
+            <div class="p-3 rounded-xl bg-neutral-50 border border-neutral-200 flex items-center justify-between">
+              <div>
+                <div class="text-xs font-bold text-neutral-900">1 to 4 Cards (Solo / Personal)</div>
+                <div class="text-[11px] text-neutral-500">Standard rate • Free logo layout + dynamic web profile</div>
+              </div>
+              <div class="text-xs font-bold font-mono text-neutral-900">₱550 / pc</div>
+            </div>
+
+            <div class="p-3 rounded-xl bg-neutral-50 border border-neutral-200 flex items-center justify-between">
+              <div>
+                <div class="text-xs font-bold text-neutral-900">5 to 9 Cards (Small Teams / Partners)</div>
+                <div class="text-[11px] text-neutral-500">~13% savings • Unified branding layout assistance</div>
+              </div>
+              <div class="text-xs font-bold font-mono text-neutral-900">₱480 / pc</div>
+            </div>
+
+            <div class="p-3 rounded-xl bg-neutral-50 border border-neutral-200 flex items-center justify-between">
+              <div>
+                <div class="text-xs font-bold text-neutral-900">10 to 19 Cards (Corporate Departments)</div>
+                <div class="text-[11px] text-neutral-500">~24% savings • Custom URL routing support</div>
+              </div>
+              <div class="text-xs font-bold font-mono text-neutral-900">₱420 / pc</div>
+            </div>
+
+            <div class="p-3 rounded-xl bg-neutral-900 text-white flex items-center justify-between">
+              <div>
+                <div class="text-xs font-bold text-white">20+ Cards / Enterprise Wholesale</div>
+                <div class="text-[11px] text-neutral-300">Max bulk discount • Full deployment package</div>
+              </div>
+              <div class="text-xs font-bold font-mono text-white">₱350 / pc</div>
+            </div>
+          </div>
+
+          <div class="p-3 rounded-xl bg-neutral-50 border border-neutral-200 flex items-center justify-between text-xs">
+            <span class="text-neutral-600">Kailangan ng custom bundle para sa cafe stands at cards?</span>
+            <a href="https://m.me/Gian2320?text=Hi%20Gian!%20Inquire%20ako%20for%20bulk%20/%20wholesale%20order" target="_blank" rel="noopener noreferrer" class="font-bold text-neutral-900 hover:underline">
+              Kausapin si Gian
+            </a>
+          </div>
+        </div>
+      `,
+
+      meetupFlow: () => `
+        <div class="bg-white p-5 rounded-2xl border border-neutral-200/90 shadow-sm text-left space-y-4">
+          <div class="flex items-center justify-between border-b border-neutral-100 pb-3">
+            <div>
+              <h4 class="text-sm font-bold text-neutral-900">Personal Meetup & Live Demo</h4>
+              <p class="text-xs text-neutral-500 font-normal">Metro Manila transit & mall handoffs • ₱0 Delivery Fee</p>
+            </div>
+            <span class="text-[10px] font-mono uppercase bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full border border-emerald-200">₱0 Shipping</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+            <div class="p-3 rounded-xl bg-neutral-50 border border-neutral-200">
+              <div class="font-bold text-neutral-900 mb-1 flex items-center gap-1.5">
+                <i data-lucide="train" class="w-3.5 h-3.5 text-neutral-700"></i>
+                Train Stations (LRT / MRT)
+              </div>
+              <p class="text-[11px] text-neutral-500 leading-relaxed">LRT-1 (Carriedo, Central, Tayuman), LRT-2 (Recto, Legarda), at accessible MRT-3 stations.</p>
+            </div>
+
+            <div class="p-3 rounded-xl bg-neutral-50 border border-neutral-200">
+              <div class="font-bold text-neutral-900 mb-1 flex items-center gap-1.5">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-neutral-700"></i>
+                Accessible Malls
+              </div>
+              <p class="text-[11px] text-neutral-500 leading-relaxed">SM Manila, Robinsons Manila, Lucky Chinatown, o paligid ng Intramuros / Letran campus.</p>
+            </div>
+          </div>
+
+          <div class="space-y-2 pt-1">
+            <a href="https://m.me/Gian2320?text=Hi%20Gian!%20Gusto%20ko%20mag-inquire%20for%20a%20personal%20NFC%20card%20demo%20or%20meetup" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 px-4 bg-neutral-900 hover:bg-black text-white text-xs font-semibold rounded-xl text-center inline-flex items-center justify-center gap-2 transition active:scale-95 shadow-xs">
+              <i data-lucide="message-circle" class="w-4 h-4"></i>
+              <span>Book Meetup via Messenger</span>
+            </a>
+          </div>
+        </div>
+      `,
+
+      videoShowcase: () => {
+        const v = GIAN_DATA.videoVault;
+        const clipsHtml = v.featuredClips.map(clip => `
+          <div class="p-3 rounded-xl bg-neutral-50 border border-neutral-200/90 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <div class="w-6 h-6 rounded-lg bg-neutral-900 text-white flex items-center justify-center shrink-0">
+                <i data-lucide="play" class="w-3 h-3"></i>
+              </div>
+              <div class="min-w-0">
+                <h5 class="text-xs font-bold text-neutral-900 truncate">${escapeHtml(clip.title)}</h5>
+                <span class="text-[10px] font-mono text-neutral-500">${escapeHtml(clip.tag)}</span>
+              </div>
+            </div>
+            <a href="${escapeHtml(v.url)}" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 text-[11px] font-semibold text-neutral-700 bg-white hover:bg-neutral-100 border border-neutral-300 rounded-lg shrink-0 transition active:scale-95">
+              Watch
+            </a>
           </div>
         `).join('');
 
-        const paymentBadges = c.payments.methods.map(m => `
-          <span class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-neutral-100 text-neutral-800 border border-neutral-200">${escapeHtml(m)}</span>
-        `).join('');
-
-        const turnaround = c.logistics.turnaround || c.logistics.leadTime || "3 to 7 days production at encoding.";
-
         return `
           <div class="bg-white p-5 sm:p-6 rounded-2xl border border-neutral-200/90 shadow-sm text-left space-y-4">
-            <div>
-              <div class="flex items-center justify-between gap-2 mb-1">
-                <h4 class="text-xs font-mono tracking-wider uppercase text-neutral-500">Commercial Policies &amp; Tiers</h4>
-                <span class="text-[10px] font-mono text-neutral-900 font-bold bg-neutral-100 border border-neutral-300 px-2.5 py-0.5 rounded-full">₱350 – ₱2,000</span>
-              </div>
-              <p class="text-xs text-neutral-600 font-normal leading-relaxed">${escapeHtml(c.pricingTier)}</p>
-            </div>
-
-            <!-- Fast-Action Interactive Engine Launchers -->
-            <div class="flex flex-wrap gap-1.5 pt-1">
-              <button type="button" onclick="handlePromptStarter('Paper vs. NFC ROI Calculator')" class="text-[11px] px-3 py-1.5 rounded-full border border-neutral-300 bg-neutral-50 hover:bg-neutral-100 text-neutral-800 font-medium transition cursor-pointer flex items-center gap-1.5">
-                <i data-lucide="calculator" class="w-3 h-3 text-neutral-500"></i>
-                <span>ROI vs. Paper Cards</span>
-              </button>
-              <button type="button" onclick="handlePromptStarter('Bulk Order Discount Estimator')" class="text-[11px] px-3 py-1.5 rounded-full border border-neutral-300 bg-neutral-50 hover:bg-neutral-100 text-neutral-800 font-medium transition cursor-pointer flex items-center gap-1.5">
-                <i data-lucide="tag" class="w-3 h-3 text-neutral-500"></i>
-                <span>Bulk Estimator</span>
-              </button>
-              <button type="button" onclick="handlePromptStarter('Transit Meetup Locations (LRT/MRT)')" class="text-[11px] px-3 py-1.5 rounded-full border border-neutral-300 bg-neutral-50 hover:bg-neutral-100 text-neutral-800 font-medium transition cursor-pointer flex items-center gap-1.5">
-                <i data-lucide="train" class="w-3 h-3 text-neutral-500"></i>
-                <span>₱0 Transit Meetup</span>
-              </button>
-            </div>
-
-            <div class="space-y-2.5">
-              ${productsHtml}
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
-              <div class="p-3 rounded-xl bg-neutral-50 border border-neutral-200 text-left">
-                <div class="flex items-center gap-1.5 text-xs font-bold text-neutral-900 mb-1">
-                  <i data-lucide="tag" class="w-3.5 h-3.5 text-neutral-600"></i>
-                  <span>Bulk &amp; Team Discounts</span>
-                </div>
-                <p class="text-[11px] text-neutral-600 font-normal leading-relaxed">${escapeHtml(c.bulkNote)}</p>
-              </div>
-
-              <div class="p-3 rounded-xl bg-neutral-50 border border-neutral-200 text-left">
-                <div class="flex items-center gap-1.5 text-xs font-bold text-neutral-900 mb-1">
-                  <i data-lucide="palette" class="w-3.5 h-3.5 text-neutral-600"></i>
-                  <span>Free Design Layout</span>
-                </div>
-                <p class="text-[11px] text-neutral-600 font-normal leading-relaxed">${escapeHtml(c.design.policy)}</p>
-              </div>
-            </div>
-
-            <div class="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 space-y-1.5 text-left">
-              <div class="flex items-center gap-1.5 text-xs font-bold text-neutral-900 mb-0.5">
-                <i data-lucide="truck" class="w-3.5 h-3.5 text-neutral-600"></i>
-                <span>Logistics, Delivery &amp; Meetup</span>
-              </div>
-              <div class="text-[11px] text-neutral-600 leading-relaxed space-y-1">
-                <div><strong class="text-neutral-900 font-semibold">Turnaround:</strong> ${escapeHtml(turnaround)}</div>
-                <div><strong class="text-neutral-900 font-semibold">Delivery:</strong> ${escapeHtml(c.logistics.delivery)}</div>
-                <div><strong class="text-neutral-900 font-semibold">Meetup:</strong> ${escapeHtml(c.logistics.meetup)}</div>
-              </div>
-            </div>
-
-            <div>
-              <div class="text-[11px] font-mono uppercase tracking-wider text-neutral-500 mb-2">Accepted Payment Channels</div>
-              <div class="flex flex-wrap gap-1.5">
-                ${paymentBadges}
-              </div>
-            </div>
-
-            <!-- Interactive Conversion Estimators & Schedulers -->
-            <div class="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200/90 text-left space-y-2">
-              <div class="text-[10px] font-mono uppercase tracking-wider text-neutral-500 font-medium">Interactive Conversion Tools:</div>
-              <div class="flex flex-wrap gap-1.5">
-                <button type="button" onclick="handlePromptStarter('Paper vs. NFC ROI Calculator')" class="text-xs font-medium px-2.5 py-1.5 rounded-lg border border-neutral-300 bg-white hover:bg-neutral-100 text-neutral-800 transition cursor-pointer flex items-center gap-1.5 shadow-2xs">
-                  <i data-lucide="calculator" class="w-3.5 h-3.5 text-neutral-600"></i>
-                  <span>ROI vs. Paper Cards</span>
-                </button>
-                <button type="button" onclick="handlePromptStarter('Bulk Order Discount Estimator')" class="text-xs font-medium px-2.5 py-1.5 rounded-lg border border-neutral-300 bg-white hover:bg-neutral-100 text-neutral-800 transition cursor-pointer flex items-center gap-1.5 shadow-2xs">
-                  <i data-lucide="tag" class="w-3.5 h-3.5 text-neutral-600"></i>
-                  <span>Bulk Estimator</span>
-                </button>
-                <button type="button" onclick="handlePromptStarter('Transit Meetup Locations (LRT/MRT)')" class="text-xs font-medium px-2.5 py-1.5 rounded-lg border border-neutral-300 bg-white hover:bg-neutral-100 text-neutral-800 transition cursor-pointer flex items-center gap-1.5 shadow-2xs">
-                  <i data-lucide="train" class="w-3.5 h-3.5 text-neutral-600"></i>
-                  <span>₱0 Transit Meetup</span>
-                </button>
-              </div>
-            </div>
-
-            <div class="flex flex-wrap items-center gap-2.5 pt-2 border-t border-neutral-100">
-              <a href="order.html" class="bg-neutral-900 text-white hover:bg-black text-xs font-semibold tracking-wide px-4 py-2.5 rounded-xl inline-flex items-center justify-center gap-2 transition-all active:scale-95 flex-1 min-w-[130px] text-center cursor-pointer shadow-xs">
-                <i data-lucide="credit-card" class="w-4 h-4"></i>
-                <span>Order Products</span>
-              </a>
-              <a href="https://m.me/Gian2320" target="_blank" rel="noopener noreferrer" class="border border-neutral-300 bg-white hover:bg-neutral-50 text-neutral-800 text-xs font-semibold tracking-wide px-4 py-2.5 rounded-xl inline-flex items-center justify-center gap-2 transition-all active:scale-95 flex-1 min-w-[130px] text-center cursor-pointer shadow-xs">
-                <i data-lucide="message-circle" class="w-4 h-4"></i>
-                <span>Chat on Messenger</span>
-              </a>
-            </div>
-          </div>
-        `;
-      },
-
-      roi: () => {
-        return `
-          <div id="roi-calculator-card" class="bg-white p-5 sm:p-6 rounded-2xl border border-neutral-200/90 shadow-sm text-left space-y-4">
-            <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center justify-between border-b border-neutral-100 pb-3">
               <div>
-                <span class="text-[10px] font-mono tracking-wider uppercase text-neutral-500 bg-neutral-100 px-2.5 py-0.5 rounded-full border border-neutral-200">ROI CALCULATOR</span>
-                <h3 class="text-base sm:text-lg font-bold text-neutral-900 mt-1.5">Paper Business Cards vs. NFC Smart Card</h3>
+                <span class="text-[10px] font-mono tracking-wider uppercase text-neutral-500 bg-neutral-100 px-2 py-0.5 rounded-full border border-neutral-200">RETENTION MOTION</span>
+                <h4 class="text-sm sm:text-base font-bold text-neutral-900 mt-1.5">${escapeHtml(v.title)}</h4>
               </div>
-              <span class="text-xs font-mono font-bold text-neutral-900 bg-neutral-100 px-3 py-1 rounded-full border border-neutral-300 shrink-0">Up to 88% Savings</span>
+              <span class="text-[10px] font-mono uppercase bg-neutral-100 text-neutral-700 px-2.5 py-1 rounded-full border border-neutral-200">Whop Archive</span>
             </div>
-            <p class="text-xs text-neutral-600 font-normal leading-relaxed">
-              Paper cards run out, get thrown away within 7 days, and require expensive reprints whenever info changes. 1 Attachment Anywhere smart card lasts 100,000+ taps with infinite cloud updates.
+
+            <p class="text-xs sm:text-sm text-neutral-600 font-normal leading-relaxed">
+              ${escapeHtml(v.description)}
             </p>
 
-            <!-- Preset Buttons -->
-            <div>
-              <div class="text-[11px] font-mono uppercase tracking-wider text-neutral-500 mb-2">Select Your Use Case:</div>
-              <div class="grid grid-cols-3 gap-2">
-                <button type="button" onclick="updateRoiPreset('solo')" id="roi-btn-solo" class="roi-preset-btn p-2.5 rounded-xl border border-neutral-900 bg-neutral-900 text-white text-xs font-semibold text-center transition cursor-pointer">
-                  Solo Pro<br><span class="text-[10px] opacity-80">1 Person</span>
-                </button>
-                <button type="button" onclick="updateRoiPreset('team')" id="roi-btn-team" class="roi-preset-btn p-2.5 rounded-xl border border-neutral-300 bg-white text-neutral-800 hover:bg-neutral-50 text-xs font-semibold text-center transition cursor-pointer">
-                  Small Team<br><span class="text-[10px] opacity-70">5 Members</span>
-                </button>
-                <button type="button" onclick="updateRoiPreset('sales')" id="roi-btn-sales" class="roi-preset-btn p-2.5 rounded-xl border border-neutral-300 bg-white text-neutral-800 hover:bg-neutral-50 text-xs font-semibold text-center transition cursor-pointer">
-                  Sales Division<br><span class="text-[10px] opacity-70">15 Members</span>
-                </button>
+            <div class="space-y-2">
+              <div class="text-[10px] font-mono tracking-wider uppercase text-neutral-400">Featured Retention Cuts</div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                ${clipsHtml}
               </div>
             </div>
 
-            <!-- Dynamic Comparison Grid -->
-            <div class="grid grid-cols-2 gap-3 pt-1">
-              <div class="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-left">
-                <div class="text-[10px] font-mono uppercase text-neutral-500 mb-1">Traditional Paper Cards</div>
-                <div id="roi-paper-cost" class="text-lg font-bold text-neutral-900 font-mono">₱9,000</div>
-                <div class="text-[11px] text-neutral-500 font-normal mt-0.5">Recurring spend over 3 years</div>
-                <div class="mt-2 pt-2 border-t border-neutral-200 text-[10px] text-neutral-600">
-                  ⚠️ <span id="roi-paper-waste">1,500</span> paper cards wasted &amp; discarded
-                </div>
-              </div>
-
-              <div class="p-3.5 rounded-xl bg-neutral-950 text-white text-left border border-neutral-800">
-                <div class="text-[10px] font-mono uppercase text-neutral-400 mb-1">Attachment Anywhere NFC</div>
-                <div id="roi-nfc-cost" class="text-lg font-bold text-white font-mono">₱500</div>
-                <div class="text-[11px] text-neutral-400 font-normal mt-0.5">One-time hardware investment</div>
-                <div class="mt-2 pt-2 border-t border-neutral-800 text-[10px] text-neutral-300 font-medium">
-                  ✓ 100k+ taps • 10-year chip retention
-                </div>
-              </div>
-            </div>
-
-            <!-- Net Result Banner -->
-            <div class="p-3.5 rounded-xl bg-neutral-100 border border-neutral-200/90 flex items-center justify-between gap-3">
-              <div>
-                <div class="text-[10px] font-mono uppercase tracking-wider text-neutral-500">Your Estimated 3-Year Savings</div>
-                <div id="roi-net-savings" class="text-xl font-black text-neutral-900 font-mono">₱8,500+ Saved</div>
-              </div>
-              <div class="text-right">
-                <span class="inline-block px-2.5 py-1 rounded-full text-[11px] font-bold bg-neutral-900 text-white">
-                  +400% Contact Save Rate
-                </span>
-              </div>
-            </div>
-
-            <!-- CTAs -->
-            <div class="flex flex-wrap items-center gap-2.5 pt-2 border-t border-neutral-100">
-              <a href="order.html" class="bg-neutral-900 text-white hover:bg-black text-xs font-semibold tracking-wide px-4 py-2.5 rounded-xl inline-flex items-center justify-center gap-2 transition-all active:scale-95 flex-1 min-w-[130px] text-center cursor-pointer shadow-xs">
-                <i data-lucide="credit-card" class="w-4 h-4"></i>
-                <span>Switch to NFC (Order)</span>
+            <div class="pt-2 flex flex-wrap gap-2.5">
+              <a href="${escapeHtml(v.url)}" target="_blank" rel="noopener noreferrer" class="flex-1 min-w-[160px] py-2.5 px-4 bg-neutral-900 hover:bg-black text-white text-xs font-semibold rounded-xl text-center inline-flex items-center justify-center gap-2 transition active:scale-95 shadow-xs">
+                <i data-lucide="folder" class="w-4 h-4"></i>
+                <span>Open Google Drive Vault</span>
               </a>
-              <button type="button" onclick="openPhonePreviewModal()" class="border border-neutral-300 bg-white hover:bg-neutral-50 text-neutral-800 text-xs font-semibold tracking-wide px-4 py-2.5 rounded-xl inline-flex items-center justify-center gap-2 transition-all active:scale-95 flex-1 min-w-[130px] text-center cursor-pointer shadow-xs">
-                <i data-lucide="smartphone" class="w-4 h-4"></i>
-                <span>Test Live Demo ⚡</span>
-              </button>
-            </div>
-          </div>
-        `;
-      },
-
-      bulkEstimator: () => {
-        return `
-          <div id="bulk-estimator-card" class="bg-white p-5 sm:p-6 rounded-2xl border border-neutral-200/90 shadow-sm text-left space-y-4">
-            <div class="flex items-center justify-between gap-2">
-              <div>
-                <span class="text-[10px] font-mono tracking-wider uppercase text-neutral-500 bg-neutral-100 px-2.5 py-0.5 rounded-full border border-neutral-200">BULK ESTIMATOR</span>
-                <h3 class="text-base sm:text-lg font-bold text-neutral-900 mt-1.5">Team &amp; Wholesale Pricing Calculator</h3>
-              </div>
-              <span id="bulk-discount-badge" class="text-xs font-mono font-bold text-neutral-900 bg-neutral-100 px-3 py-1 rounded-full border border-neutral-300 shrink-0">20% OFF</span>
-            </div>
-            <p class="text-xs text-neutral-600 font-normal leading-relaxed">
-              Tiered volume discounts for corporate teams, agencies, real estate brokers, and restaurant chains. 100% libre ang logo placement at card layout.
-            </p>
-
-            <!-- Quantity Control -->
-            <div class="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 flex items-center justify-between gap-4">
-              <div>
-                <div class="text-[10px] font-mono uppercase text-neutral-500">Order Quantity</div>
-                <div class="text-xs font-semibold text-neutral-700">Custom Matte PVC NFC Cards</div>
-              </div>
-              <div class="flex items-center gap-2">
-                <button type="button" onclick="adjustBulkQuantity(-1)" class="w-8 h-8 rounded-lg border border-neutral-300 bg-white hover:bg-neutral-100 text-neutral-800 font-bold flex items-center justify-center cursor-pointer active:scale-90 transition">&minus;</button>
-                <span id="bulk-qty-display" class="w-12 text-center text-base font-bold text-neutral-900 font-mono">10</span>
-                <button type="button" onclick="adjustBulkQuantity(1)" class="w-8 h-8 rounded-lg border border-neutral-300 bg-white hover:bg-neutral-100 text-neutral-800 font-bold flex items-center justify-center cursor-pointer active:scale-90 transition">&plus;</button>
-              </div>
-            </div>
-
-            <!-- Preset Volume Chips -->
-            <div class="flex flex-wrap gap-1.5">
-              <button type="button" onclick="setBulkQuantity(1)" data-qty="1" class="bulk-preset-chip px-3 py-1.5 rounded-xl text-xs border border-neutral-300 bg-white text-neutral-800 hover:bg-neutral-100 transition cursor-pointer">1 Card (Solo)</button>
-              <button type="button" onclick="setBulkQuantity(5)" data-qty="5" class="bulk-preset-chip px-3 py-1.5 rounded-xl text-xs border border-neutral-300 bg-white text-neutral-800 hover:bg-neutral-100 transition cursor-pointer">5 Cards (10% OFF)</button>
-              <button type="button" onclick="setBulkQuantity(10)" data-qty="10" class="bulk-preset-chip px-3 py-1.5 rounded-xl text-xs border border-neutral-900 bg-neutral-900 text-white font-semibold transition cursor-pointer">10 Cards (20% OFF)</button>
-              <button type="button" onclick="setBulkQuantity(25)" data-qty="25" class="bulk-preset-chip px-3 py-1.5 rounded-xl text-xs border border-neutral-300 bg-white text-neutral-800 hover:bg-neutral-100 transition cursor-pointer">25 Cards (30% OFF)</button>
-              <button type="button" onclick="setBulkQuantity(50)" data-qty="50" class="bulk-preset-chip px-3 py-1.5 rounded-xl text-xs border border-neutral-300 bg-white text-neutral-800 hover:bg-neutral-100 transition cursor-pointer">50+ Wholesale</button>
-            </div>
-
-            <!-- Dynamic Computation Display -->
-            <div class="p-4 rounded-xl bg-neutral-100 border border-neutral-200/90 space-y-2">
-              <div class="flex justify-between items-center text-xs text-neutral-600">
-                <span>Unit Rate (Base ₱550):</span>
-                <span id="bulk-unit-price" class="font-mono font-semibold text-neutral-800">₱440 / unit</span>
-              </div>
-              <div class="flex justify-between items-center text-xs text-neutral-600">
-                <span>Total Volume Savings:</span>
-                <span id="bulk-savings-amount" class="font-mono font-bold text-neutral-900">₱1,100 Saved</span>
-              </div>
-              <div class="pt-2 border-t border-neutral-200 flex justify-between items-center">
-                <span class="text-xs font-bold text-neutral-900">Estimated Total:</span>
-                <span id="bulk-total-price" class="text-lg font-black text-neutral-900 font-mono">₱4,400</span>
-              </div>
-            </div>
-
-            <!-- Value Inclusions -->
-            <div class="text-[11px] text-neutral-600 space-y-1 pl-1">
-              <div>✓ 100% Libre ang logo placement at card design layout</div>
-              <div>✓ Pre-programmed &amp; verified NTAG215 contactless chips</div>
-              <div>✓ Free personal meetup (LRT/MRT) o Lalamove/J&amp;T delivery</div>
-            </div>
-
-            <!-- CTAs -->
-            <div class="flex flex-wrap items-center gap-2.5 pt-2 border-t border-neutral-100">
-              <a id="bulk-order-cta" href="order.html" class="bg-neutral-900 text-white hover:bg-black text-xs font-semibold tracking-wide px-4 py-2.5 rounded-xl inline-flex items-center justify-center gap-2 transition-all active:scale-95 flex-1 min-w-[130px] text-center cursor-pointer shadow-xs">
-                <i data-lucide="credit-card" class="w-4 h-4"></i>
-                <span>Order Batch via Checkout</span>
-              </a>
-              <a href="https://m.me/Gian2320" target="_blank" rel="noopener noreferrer" class="border border-neutral-300 bg-white hover:bg-neutral-50 text-neutral-800 text-xs font-semibold tracking-wide px-4 py-2.5 rounded-xl inline-flex items-center justify-center gap-2 transition-all active:scale-95 flex-1 min-w-[130px] text-center cursor-pointer shadow-xs">
+              <a href="https://m.me/Gian2320?text=Hi%20Gian!%20Inquire%20ako%20for%20video%20editing%20/%20clipping%20retainer" target="_blank" rel="noopener noreferrer" class="flex-1 min-w-[160px] py-2.5 px-4 border border-neutral-300 hover:bg-neutral-50 text-neutral-800 text-xs font-semibold rounded-xl text-center inline-flex items-center justify-center gap-2 transition active:scale-95">
                 <i data-lucide="message-circle" class="w-4 h-4"></i>
-                <span>Message for Custom Quote</span>
-              </a>
-            </div>
-          </div>
-        `;
-      },
-
-      meetupScheduler: () => {
-        return `
-          <div id="transit-scheduler-card" class="bg-white p-5 sm:p-6 rounded-2xl border border-neutral-200/90 shadow-sm text-left space-y-4">
-            <div class="flex items-center justify-between gap-2">
-              <div>
-                <span class="text-[10px] font-mono tracking-wider uppercase text-neutral-500 bg-neutral-100 px-2.5 py-0.5 rounded-full border border-neutral-200">TRANSIT MEETUP</span>
-                <h3 class="text-base sm:text-lg font-bold text-neutral-900 mt-1.5">Train Station &amp; Mall Contactless Handoff</h3>
-              </div>
-              <span class="text-xs font-mono font-bold text-neutral-900 bg-neutral-100 px-3 py-1 rounded-full border border-neutral-300 shrink-0">₱0 Shipping Fee</span>
-            </div>
-            <p class="text-xs text-neutral-600 font-normal leading-relaxed">
-              Meet personally with Gian for a contactless hardware demo and zero-shipping fee pickup. Available across major Metro Manila LRT, MRT, and mall hubs.
-            </p>
-
-            <!-- Line Tabs -->
-            <div class="grid grid-cols-4 gap-1.5">
-              <button type="button" onclick="selectTransitLine('lrt1')" id="transit-tab-lrt1" class="transit-tab-btn p-2 rounded-xl border border-neutral-900 bg-neutral-900 text-white text-[11px] font-semibold text-center transition cursor-pointer">LRT-1</button>
-              <button type="button" onclick="selectTransitLine('lrt2')" id="transit-tab-lrt2" class="transit-tab-btn p-2 rounded-xl border border-neutral-300 bg-white text-neutral-800 hover:bg-neutral-50 text-[11px] font-semibold text-center transition cursor-pointer">LRT-2</button>
-              <button type="button" onclick="selectTransitLine('mrt3')" id="transit-tab-lrt3" class="transit-tab-btn p-2 rounded-xl border border-neutral-300 bg-white text-neutral-800 hover:bg-neutral-50 text-[11px] font-semibold text-center transition cursor-pointer">MRT-3</button>
-              <button type="button" onclick="selectTransitLine('malls')" id="transit-tab-malls" class="transit-tab-btn p-2 rounded-xl border border-neutral-300 bg-white text-neutral-800 hover:bg-neutral-50 text-[11px] font-semibold text-center transition cursor-pointer">Malls</button>
-            </div>
-
-            <!-- Stations List -->
-            <div id="transit-stations-container" class="flex flex-wrap gap-1.5 pt-1">
-              <!-- Dynamically populated station pills -->
-            </div>
-
-            <!-- Selected Handoff Summary -->
-            <div class="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-left space-y-2">
-              <div class="flex items-start gap-2.5">
-                <i data-lucide="map-pin" class="w-4 h-4 text-neutral-900 shrink-0 mt-0.5"></i>
-                <div class="text-xs text-neutral-700 leading-relaxed">
-                  <span class="text-[10px] font-mono text-neutral-500 uppercase block">Chosen Handoff Location</span>
-                  <strong id="transit-selected-location" class="text-neutral-900 text-sm font-bold">Central Terminal (LRT-1)</strong>
-                </div>
-              </div>
-              <div class="grid grid-cols-2 gap-2 pt-2 border-t border-neutral-200/80 text-[11px] text-neutral-600">
-                <div><strong class="text-neutral-900">Fee:</strong> ₱0 (Free Meetup)</div>
-                <div><strong class="text-neutral-900">Turnaround:</strong> 3–7 Days Prod</div>
-              </div>
-            </div>
-
-            <!-- CTAs -->
-            <div class="flex flex-wrap items-center gap-2.5 pt-2 border-t border-neutral-100">
-              <a id="transit-messenger-cta" href="https://m.me/Gian2320" target="_blank" rel="noopener noreferrer" class="bg-neutral-900 text-white hover:bg-black text-xs font-semibold tracking-wide px-4 py-2.5 rounded-xl inline-flex items-center justify-center gap-2 transition-all active:scale-95 flex-1 min-w-[130px] text-center cursor-pointer shadow-xs">
-                <i data-lucide="message-circle" class="w-4 h-4"></i>
-                <span>Schedule Meetup on Messenger</span>
-              </a>
-              <a href="order.html" class="border border-neutral-300 bg-white hover:bg-neutral-50 text-neutral-800 text-xs font-semibold tracking-wide px-4 py-2.5 rounded-xl inline-flex items-center justify-center gap-2 transition-all active:scale-95 flex-1 min-w-[130px] text-center cursor-pointer shadow-xs">
-                <i data-lucide="truck" class="w-4 h-4"></i>
-                <span>Ship via Courier Instead</span>
-              </a>
-            </div>
-          </div>
-        `;
-      },
-
-      clipping: () => {
-        const vc = GIAN_DATA.commerce.videoClipping;
-        return `
-          <div class="bg-white p-5 sm:p-6 rounded-2xl border border-neutral-200/90 shadow-sm text-left space-y-4">
-            <div>
-              <div class="flex items-center justify-between gap-2 mb-1">
-                <h4 class="text-xs font-mono tracking-wider uppercase text-neutral-500">Creator Workflows</h4>
-                <span class="text-[10px] font-mono text-neutral-900 font-bold bg-neutral-100 border border-neutral-300 px-2.5 py-0.5 rounded-full">Open for Clients</span>
-              </div>
-              <h3 class="text-base sm:text-lg font-bold text-neutral-900 mb-1">Short-Form Video Editing &amp; Whop Clipping</h3>
-              <p class="text-xs sm:text-sm text-neutral-600 font-normal leading-relaxed">${escapeHtml(vc.status)}</p>
-            </div>
-
-            <div class="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-left space-y-1">
-              <div class="text-xs font-bold text-neutral-900">Pricing &amp; Terms</div>
-              <p class="text-xs text-neutral-600 font-normal leading-relaxed">${escapeHtml(vc.pricing)}</p>
-            </div>
-
-            <div>
-              <div class="text-[11px] font-mono uppercase tracking-wider text-neutral-500 mb-2">Editing Stack &amp; Optimization</div>
-              <div class="flex flex-wrap gap-1.5">
-                <span class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-neutral-100 text-neutral-800 border border-neutral-200">CapCut Pro</span>
-                <span class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-neutral-100 text-neutral-800 border border-neutral-200">OpusClip</span>
-                <span class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-neutral-100 text-neutral-800 border border-neutral-200">High-Retention Hooks</span>
-                <span class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-neutral-100 text-neutral-800 border border-neutral-200">Sound-Sync Pacing</span>
-              </div>
-            </div>
-
-            <div class="flex flex-wrap items-center gap-2.5 pt-2 border-t border-neutral-100">
-              <a href="https://m.me/Gian2320" target="_blank" rel="noopener noreferrer" class="bg-neutral-900 text-white hover:bg-black text-xs font-semibold tracking-wide px-4 py-2.5 rounded-xl inline-flex items-center justify-center gap-2 transition-all active:scale-95 flex-1 min-w-[130px] text-center cursor-pointer shadow-xs">
-                <i data-lucide="message-circle" class="w-4 h-4"></i>
-                <span>Inquire for Video Editing</span>
-              </a>
-              <a href="https://instagram.com/g.attachmenz" target="_blank" rel="noopener noreferrer" class="border border-neutral-300 bg-white hover:bg-neutral-50 text-neutral-800 text-xs font-semibold tracking-wide px-4 py-2.5 rounded-xl inline-flex items-center justify-center gap-2 transition-all active:scale-95 flex-1 min-w-[130px] text-center cursor-pointer shadow-xs">
-                <i data-lucide="instagram" class="w-4 h-4"></i>
-                <span>Instagram Profile</span>
+                <span>Inquire Video Retainer</span>
               </a>
             </div>
           </div>
@@ -1404,211 +1304,49 @@
       fallback: () => `
         <div class="bg-white p-5 rounded-2xl border border-neutral-200/90 shadow-sm text-left space-y-3">
           <p class="text-xs text-neutral-500 font-normal">
-            Select an interactive engine or topic below:
+            Pumili ng paksa o mag-type ng anumang tanong sa input dock sa ibaba:
           </p>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            <button onclick="handlePromptStarter('Paper vs. NFC ROI Calculator')" class="text-left p-3.5 rounded-xl bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 transition cursor-pointer">
-              <div class="text-xs font-bold text-neutral-900 mb-0.5">Paper vs. NFC ROI</div>
-              <div class="text-[11px] text-neutral-500 font-normal">Calculate 3-year savings vs paper cards.</div>
+            <button onclick="handlePromptStarter('Bakit Letran Entrepreneurship?')" class="text-left p-3.5 rounded-xl bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 transition cursor-pointer">
+              <div class="text-xs font-bold text-neutral-900 mb-0.5">Letran &amp; Startup Origin</div>
+              <div class="text-[11px] text-neutral-500 font-normal">Bakit Entrepreneurship at paano nabuo ang Attachment.</div>
             </button>
-            <button onclick="handlePromptStarter('Bulk Order Discount Estimator')" class="text-left p-3.5 rounded-xl bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 transition cursor-pointer">
-              <div class="text-xs font-bold text-neutral-900 mb-0.5">Bulk Order Estimator</div>
-              <div class="text-[11px] text-neutral-500 font-normal">Tiered 10%–35% discounts for teams.</div>
+            <button onclick="handlePromptStarter('How do your NFC cards work?')" class="text-left p-3.5 rounded-xl bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 transition cursor-pointer">
+              <div class="text-xs font-bold text-neutral-900 mb-0.5">NFC Hardware &amp; Review Hubs</div>
+              <div class="text-[11px] text-neutral-500 font-normal">Specs, Badshot deployments, at live demo.</div>
             </button>
-            <button onclick="handlePromptStarter('Transit Meetup Locations (LRT/MRT)')" class="text-left p-3.5 rounded-xl bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 transition cursor-pointer">
-              <div class="text-xs font-bold text-neutral-900 mb-0.5">Transit Meetup Scheduler</div>
-              <div class="text-[11px] text-neutral-500 font-normal">₱0 shipping fee handoff sa LRT/MRT &amp; malls.</div>
+            <button onclick="handlePromptStarter('What tools do you use?')" class="text-left p-3.5 rounded-xl bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 transition cursor-pointer">
+              <div class="text-xs font-bold text-neutral-900 mb-0.5">Google AI &amp; Webhooks</div>
+              <div class="text-[11px] text-neutral-500 font-normal">Gemini, Antigravity, at anti-AI-slop philosophy.</div>
             </button>
-            <button onclick="handlePromptStarter('How much are your NFC products?')" class="text-left p-3.5 rounded-xl bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 transition cursor-pointer">
-              <div class="text-xs font-bold text-neutral-900 mb-0.5">Commercial Policies</div>
-              <div class="text-[11px] text-neutral-500 font-normal">₱350–₱2,000, ReviewShield, free stands.</div>
+            <button onclick="handlePromptStarter('Show your video editing & clipping work')" class="text-left p-3.5 rounded-xl bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 transition cursor-pointer">
+              <div class="text-xs font-bold text-neutral-900 mb-0.5">Video Editing &amp; Whop Clipping</div>
+              <div class="text-[11px] text-neutral-500 font-normal">Retention curve pacing, 1.5s hook, at CapCut stack.</div>
             </button>
           </div>
         </div>
       `
     };
+    STAGE_TEMPLATES.commerce = STAGE_TEMPLATES.bulkEstimate;
+    STAGE_TEMPLATES.meetupScheduler = STAGE_TEMPLATES.meetupFlow;
+    STAGE_TEMPLATES.videoShowcase = STAGE_TEMPLATES.videoShowcase;
+    STAGE_TEMPLATES.videoVault = STAGE_TEMPLATES.videoShowcase;
+    STAGE_TEMPLATES.video = STAGE_TEMPLATES.videoShowcase;
 
 
-    /* =========================================================================
-       5. CLIENT CONVERSION ENGINES LOGIC (ROI, BULK ESTIMATOR & TRANSIT MEETUP)
-       ========================================================================= */
-    const ROI_PRESETS = {
-      solo: { paperCost: "₱9,000", nfcCost: "₱500", savings: "₱8,500+ Saved", waste: "1,500" },
-      team: { paperCost: "₱36,000", nfcCost: "₱2,200", savings: "₱33,800+ Saved", waste: "6,000" },
-      sales: { paperCost: "₱108,000", nfcCost: "₱5,775", savings: "₱102,225+ Saved", waste: "18,000" }
-    };
-
-    function updateRoiPreset(key) {
-      const p = ROI_PRESETS[key] || ROI_PRESETS.solo;
-      const paperEl = document.getElementById("roi-paper-cost");
-      const nfcEl = document.getElementById("roi-nfc-cost");
-      const savingsEl = document.getElementById("roi-net-savings");
-      const wasteEl = document.getElementById("roi-paper-waste");
-
-      if (paperEl) paperEl.textContent = p.paperCost;
-      if (nfcEl) nfcEl.textContent = p.nfcCost;
-      if (savingsEl) savingsEl.textContent = p.savings;
-      if (wasteEl) wasteEl.textContent = p.waste;
-
-      document.querySelectorAll(".roi-preset-btn").forEach(btn => {
-        btn.classList.remove("border-neutral-900", "bg-neutral-900", "text-white");
-        btn.classList.add("border-neutral-300", "bg-white", "text-neutral-800");
-      });
-      const activeBtn = document.getElementById(`roi-btn-${key}`);
-      if (activeBtn) {
-        activeBtn.classList.remove("border-neutral-300", "bg-white", "text-neutral-800");
-        activeBtn.classList.add("border-neutral-900", "bg-neutral-900", "text-white");
-      }
-    }
-
-    let currentBulkQty = 10;
-    function calculateBulkPricing(qty) {
-      const base = 550;
-      let discountRate = 0;
-      let badge = "Standard Rate";
-
-      if (qty >= 50) {
-        discountRate = 0.35;
-        badge = "35% OFF Wholesale";
-      } else if (qty >= 25) {
-        discountRate = 0.30;
-        badge = "30% OFF Bulk";
-      } else if (qty >= 10) {
-        discountRate = 0.20;
-        badge = "20% OFF Bulk";
-      } else if (qty >= 5) {
-        discountRate = 0.10;
-        badge = "10% OFF Team";
-      }
-
-      const unitPrice = Math.round(base * (1 - discountRate));
-      const total = unitPrice * qty;
-      const regularTotal = base * qty;
-      const savings = regularTotal - total;
-
-      return { qty, unitPrice, total, savings, badge };
-    }
-
-    function renderBulkEstimatorState(qty) {
-      currentBulkQty = Math.max(1, Math.min(100, qty));
-      const data = calculateBulkPricing(currentBulkQty);
-
-      const qtyDisplay = document.getElementById("bulk-qty-display");
-      const badgeDisplay = document.getElementById("bulk-discount-badge");
-      const unitDisplay = document.getElementById("bulk-unit-price");
-      const savingsDisplay = document.getElementById("bulk-savings-amount");
-      const totalDisplay = document.getElementById("bulk-total-price");
-
-      if (qtyDisplay) qtyDisplay.textContent = data.qty;
-      if (badgeDisplay) badgeDisplay.textContent = data.badge;
-      if (unitDisplay) unitDisplay.textContent = `₱${data.unitPrice.toLocaleString()} / unit`;
-      if (savingsDisplay) savingsDisplay.textContent = `₱${data.savings.toLocaleString()} Saved`;
-      if (totalDisplay) totalDisplay.textContent = `₱${data.total.toLocaleString()}`;
-
-      const cta = document.getElementById("bulk-order-cta");
-      if (cta) {
-        cta.href = `order.html?qty=${data.qty}`;
-      }
-
-      document.querySelectorAll(".bulk-preset-chip").forEach(btn => {
-        const chipVal = parseInt(btn.getAttribute("data-qty"), 10);
-        if (chipVal === currentBulkQty) {
-          btn.classList.remove("border-neutral-300", "bg-white", "text-neutral-800");
-          btn.classList.add("border-neutral-900", "bg-neutral-900", "text-white", "font-semibold");
-        } else {
-          btn.classList.remove("border-neutral-900", "bg-neutral-900", "text-white", "font-semibold");
-          btn.classList.add("border-neutral-300", "bg-white", "text-neutral-800");
-        }
-      });
-    }
-
-    function adjustBulkQuantity(delta) {
-      renderBulkEstimatorState(currentBulkQty + delta);
-    }
-
-    function setBulkQuantity(val) {
-      renderBulkEstimatorState(val);
-    }
-
-    const TRANSIT_LINES = {
-      lrt1: ["Doroteo Jose", "Carriedo", "Central Terminal", "EDSA / Pasay", "Vito Cruz", "Gil Puyat (Buendia)", "United Nations"],
-      lrt2: ["Recto", "Legarda", "Pureza", "V. Mapa", "J. Ruiz", "Araneta Center-Cubao"],
-      mrt3: ["Taft Avenue", "Ayala (Makati)", "Shaw Blvd", "Araneta-Cubao", "North Avenue", "Buendia"],
-      malls: ["SM Manila", "Robinsons Manila (Ermita)", "SM Megamall", "Trinoma", "Greenbelt Makati", "Gateway Mall Cubao"]
-    };
-
-    let currentTransitLine = "lrt1";
-    let currentTransitStation = "Central Terminal (LRT-1)";
-
-    function selectTransitLine(lineKey) {
-      currentTransitLine = lineKey;
-      document.querySelectorAll(".transit-tab-btn").forEach(btn => {
-        btn.classList.remove("border-neutral-900", "bg-neutral-900", "text-white");
-        btn.classList.add("border-neutral-300", "bg-white", "text-neutral-800");
-      });
-      const activeTab = document.getElementById(`transit-tab-${lineKey}`);
-      if (activeTab) {
-        activeTab.classList.remove("border-neutral-300", "bg-white", "text-neutral-800");
-        activeTab.classList.add("border-neutral-900", "bg-neutral-900", "text-white");
-      }
-
-      const container = document.getElementById("transit-stations-container");
-      if (!container) return;
-      const stations = TRANSIT_LINES[lineKey] || [];
-      container.innerHTML = stations.map((s, idx) => {
-        const isSelected = s === currentTransitStation || idx === 0;
-        if (isSelected && !currentTransitStation) currentTransitStation = s;
-        return `
-          <button type="button" onclick="selectTransitStation('${escapeHtml(s)}')" class="transit-station-pill px-3 py-1.5 rounded-xl text-xs ${isSelected ? 'border-neutral-900 bg-neutral-900 text-white font-semibold' : 'border-neutral-300 bg-white text-neutral-800 hover:bg-neutral-100'} border transition cursor-pointer">
-            ${escapeHtml(s)}
-          </button>
-        `;
-      }).join('');
-
-      updateTransitDisplay();
-    }
-
-    function selectTransitStation(s) {
-      currentTransitStation = s;
-      document.querySelectorAll(".transit-station-pill").forEach(p => {
-        if (p.textContent.trim() === s) {
-          p.classList.remove("border-neutral-300", "bg-white", "text-neutral-800");
-          p.classList.add("border-neutral-900", "bg-neutral-900", "text-white", "font-semibold");
-        } else {
-          p.classList.remove("border-neutral-900", "bg-neutral-900", "text-white", "font-semibold");
-          p.classList.add("border-neutral-300", "bg-white", "text-neutral-800");
-        }
-      });
-      updateTransitDisplay();
-    }
-
-    function updateTransitDisplay() {
-      const locDisplay = document.getElementById("transit-selected-location");
-      const cta = document.getElementById("transit-messenger-cta");
-      const lineName = currentTransitLine.toUpperCase();
-      const fullLabel = `${currentTransitStation} (${lineName})`;
-      if (locDisplay) locDisplay.textContent = fullLabel;
-      if (cta) {
-        cta.href = `https://m.me/Gian2320?ref=meetup_${encodeURIComponent(currentTransitStation)}`;
-      }
-    }
-
-
-    /* =========================================================================
-       6. DYNAMIC TYPEAHEAD CHAT HINTS ENGINE
-       ========================================================================= */
+    // 5. Dynamic typeahead engine
     const TYPEAHEAD_HINTS = [
-      { query: "Paper vs. NFC ROI Calculator", label: "Paper vs. NFC ROI Calculator", category: "ROI & Savings", icon: "calculator", keywords: ["roi", "paper", "savings", "calculator", "compare", "waste", "cost", "sulit"] },
-      { query: "Bulk Order Discount Estimator", label: "Bulk Order & Wholesale Estimator", category: "Discounts", icon: "tag", keywords: ["bulk", "discount", "estimator", "team", "wholesale", "quantity", "maramihan"] },
-      { query: "Transit Meetup Locations (LRT/MRT)", label: "Transit Meetup Scheduler (LRT/MRT)", category: "Meetup ₱0", icon: "train", keywords: ["meetup", "lrt", "mrt", "train", "station", "transit", "mall", "pickup"] },
-      { query: "How much are your NFC products?", label: "NFC Cards & Hubs Pricing (₱350–₱2,000)", category: "Pricing", icon: "credit-card", keywords: ["pricing", "price", "how much", "magkano", "presyo", "cost", "rates", "tier", "reviewshield", "hub"] },
-      { query: "How do your NFC cards work?", label: "How contactless NFC cards work", category: "Hardware", icon: "radio", keywords: ["nfc", "work", "tap", "ntag", "chip", "iphone", "android", "contactless"] },
-      { query: "Accepted payment methods (GCash, GoTyme, QR Ph)", label: "Payment Channels (GCash, GoTyme, QR Ph)", category: "Payments", icon: "wallet", keywords: ["payment", "gcash", "gotyme", "qr ph", "pay", "bayad", "mop"] },
-      { query: "Is logo placement and layout assistance free?", label: "100% Free Logo & Layout Assistance", category: "Design", icon: "palette", keywords: ["logo", "design", "layout", "free", "custom", "assistance"] },
-      { query: "Short-form video editing and Whop clipping", label: "Video Editing & Whop Clipping Services", category: "Services", icon: "scissors", keywords: ["video", "clipping", "whop", "editing", "capcut", "short-form", "reels"] },
-      { query: "What tools and AI stack do you use?", label: "Tools, Hardware & Platforms Stack", category: "Stack", icon: "cpu", keywords: ["tools", "stack", "gemini", "antigravity", "hardware", "software", "opal"] },
-      { query: "Who is Gian Christian Villanueva?", label: "Who is Gian Christian Villanueva? (Letran & DOH)", category: "About", icon: "user", keywords: ["gian", "christian", "who", "founder", "letran", "bio", "background", "story"] },
-      { query: "DOH National Health Systems data encoding", label: "DOH GIP National Health Systems Experience", category: "Auditing", icon: "database", keywords: ["doh", "gip", "health", "encoder", "bhw", "registry", "audit"] }
+      { query: "What are your core disciplines?", label: "What are your core disciplines?", category: "Overview", icon: "layers", keywords: ["discipline", "disciplines", "what do you do", "skills", "pillars", "tri", "focus", "sino ka", "overview"] },
+      { query: "How did Attachment Anywhere start?", label: "Origin: Detachable Fashion to Phygital NFC", category: "Origin", icon: "tag", keywords: ["origin", "fashion", "accessories", "damit", "simula", "nagsimula", "start", "bakit", "pormahan"] },
+      { query: "What is your daily routine & schedule?", label: "Daily Routine: 10-Hr DOH Shifts & Letran Classes", category: "Routine", icon: "clock", keywords: ["routine", "schedule", "doh", "letran", "shift", "daily", "midnight", "tulog", "hours"] },
+      { query: "How do you use Google AI in your workflow?", label: "How do you use Google AI in your workflow?", category: "AI Systems", icon: "cpu", keywords: ["google ai", "gemini", "antigravity", "opal", "ai", "workflow", "prompt", "pipeline", "serverless", "automate"] },
+      { query: "Show your video editing work", label: "Show your video editing & clipping work", category: "Motion", icon: "video", keywords: ["video", "editing", "whop", "clipping", "reels", "tiktok", "retention", "hook", "capcut", "pacing", "vault", "drive", "bounty"] },
+      { query: "What is Attachment Anywhere?", label: "What is Attachment Anywhere? (Phygital)", category: "Hardware", icon: "cpu", keywords: ["attachment", "anywhere", "startup", "hardware", "nfc", "cards", "stand", "cafe", "badshot", "1319"] },
+      { query: "What did you do at DOH?", label: "What did you do at DOH? (Auditing & Systems)", category: "Operations", icon: "database", keywords: ["doh", "gip", "health", "bhw", "registry", "encoder", "data", "audit", "systems", "purokalusogan"] },
+      { query: "How much are your NFC products?", label: "Hardware & NFC Pricing Tiers (₱350 to ₱2,000)", category: "Pricing", icon: "credit-card", keywords: ["price", "pricing", "magkano", "how much", "cost", "presyo", "rates", "tier", "free", "libre"] },
+      { query: "Transit Meetup Locations (LRT/MRT)", label: "Transit Meetup & Handoff (₱0 Shipping)", category: "Meetup", icon: "map-pin", keywords: ["meetup", "lrt", "mrt", "train", "station", "mall", "handoff", "pickup"] },
+      { query: "Who is Gian Christian Villanueva?", label: "Who is Gian Christian Villanueva? (Letran & Background)", category: "Profile", icon: "user", keywords: ["gian", "christian", "who", "founder", "letran", "bio", "background", "story", "student", "aral"] },
+      { query: "What are your offline hobbies & interests?", label: "Culture: 10K Walks, CAS on Loop & Sci-Fi Systems", category: "Interests", icon: "compass", keywords: ["hobbies", "interests", "offline", "music", "sci-fi", "walks", "steps", "cigarettes after sex", "silo", "fallout", "snowpiercer", "influences"] }
     ];
 
     let activeSuggestionIndex = -1;
@@ -1634,7 +1372,7 @@
 
       let matches = [];
       if (!clean) {
-        matches = TYPEAHEAD_HINTS.slice(0, 4);
+        matches = TYPEAHEAD_HINTS.slice(0, 5);
       } else {
         matches = TYPEAHEAD_HINTS.filter(h => {
           return h.label.toLowerCase().includes(clean) ||
@@ -1656,14 +1394,13 @@
             <i data-lucide="${escapeHtml(m.icon)}" class="w-3.5 h-3.5 text-neutral-400 group-hover:text-neutral-900 shrink-0"></i>
             <span class="font-medium truncate">${escapeHtml(m.label)}</span>
           </span>
-          <span class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider bg-neutral-100 px-2 py-0.5 rounded-full border border-neutral-200/80 shrink-0">${escapeHtml(m.category)}</span>
+          <span class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider bg-neutral-100 px-2 py-0.5 rounded-md border border-neutral-200/80 shrink-0">${escapeHtml(m.category)}</span>
         </button>
       `).join('');
 
       typeaheadSuggestionsEl.classList.remove("hidden");
       lucide.createIcons();
 
-      // Dynamic visualViewport max-height adaptation on the bottom side above the keyboard
       if (document.body.classList.contains("keyboard-open") && window.visualViewport && promptDockContainer && mainContainer && !mainContainer.classList.contains("active-chat")) {
         const rect = promptDockContainer.getBoundingClientRect();
         const availableHeight = Math.max(150, Math.floor(window.visualViewport.height - rect.bottom - 16));
@@ -1687,142 +1424,219 @@
     }
 
 
-    /* =========================================================================
-       7. MINIMALIST CONVERSATIONAL AI ENGINE (STREAMING & CHAT STATE)
-       ========================================================================= */
+    // 6. Conversational intent engine
     let isStreaming = false;
 
-    function hasAny(targetStr, keywords) {
-      return keywords.some(k => targetStr.includes(k));
+    function hasKeyword(targetStr, keyword) {
+      if (keyword.length <= 3) {
+        const regex = new RegExp(`(^|[^a-z0-9])${keyword}([^a-z0-9]|$)`, 'i');
+        return regex.test(targetStr);
+      }
+      return targetStr.includes(keyword);
     }
 
-    function resolveGroundedResponse(rawText) {
+    function hasAny(targetStr, keywords) {
+      return keywords.some(k => hasKeyword(targetStr, k));
+    }
+
+        function resolveGroundedResponse(rawText) {
       const q = rawText.toLowerCase().trim();
 
-      // 1. Paper vs. NFC ROI Calculator & Comparison
-      if (hasAny(q, ["roi", "paper vs nfc", "paper card", "waste", "savings", "sulit", "why nfc", "compare paper", "return on investment", "disposable", "savings calculator"])) {
+      // 1. Bulk & Volume Pricing
+      if (hasAny(q, ["bulk", "wholesale", "volume", "team order", "discount", "maramihan", "bulto"])) {
         return {
-          text: "Narito ang Paper vs. NFC ROI analysis: 88% ng traditional paper business cards ay itinatapon sa loob lamang ng 7 araw, at gumagastos ang mga kumpanya ng ₱3,000+ bawat taon sa paulit-ulit na pagpapa-print. Sa 1 Attachment Anywhere NFC card (₱350–₱550), one-time investment lang ito na may 100k+ taps, 10-year chip retention, at instant 1-tap contact save na makakatipid ng libu-libong piso:",
-          templateKey: "roi"
+          text: "Nag-aalok kami ng wholesale discounts para sa teams, companies, at multi-branch deployments. Mula ₱550 para sa solo cards, bumababa ito sa ₱480 para sa 5-9 cards, ₱420 para sa 10-19 cards, at ₱350 per piece para sa 20+ cards:",
+          templateKey: "bulkEstimate"
         };
       }
 
-      // 2. Bulk Estimator & Wholesale Volume Pricing
-      if (hasAny(q, ["bulk", "estimator", "volume", "wholesale", "maramihan", "team package", "discount", "estimate", "compute", "corporate quote"])) {
+      // 2. Paper Cards vs NFC Hardware (Comparison & ROI)
+      if (hasAny(q, ["compare", "comparison", "paper vs", "traditional", "bakit nfc", "why nfc", "roi", "papel"])) {
         return {
-          text: `Para sa bulk orders at business deployments: ${GIAN_DATA.commerce.bulkNote} May 10% hanggang 35% tiered discounts depende sa dami, kasama ang 100% libreng logo branding at card encoding. Gamitin ang live calculator sa ibaba para makita ang total at savings:`,
-          templateKey: "bulkEstimator"
+          text: "Ang tradisyonal na papel na business cards ay may 88% discard rate sa loob ng unang 7 araw. Sa Attachment Anywhere contactless NFC hardware, isang beses ka lang bibili: may unlimited instant profile beams ka na, libreng dynamic web updates anumang oras, at 1-tap contact save diretso sa phone ng kausap mo:",
+          templateKey: "comparison"
         };
       }
 
-      // 3. Transit Meetup & Contactless Handoff (LRT / MRT / Malls)
-      if (hasAny(q, ["meetup", "meet up", "meet-up", "lrt", "mrt", "train", "station", "mall", "transit", "handoff", "zero shipping", "manila meetup", "schedule meetup", "pickup"])) {
+      // 3. Personal Meetup & Transit Handoffs
+      if (hasAny(q, ["meetup", "meet up", "lrt", "mrt", "train", "station", "mall", "handoff", "pickup", "personal demo"])) {
         return {
-          text: `${GIAN_DATA.commerce.logistics.meetup} Pumili ng istasyon ng LRT-1, LRT-2, MRT-3, o mall sa ibaba para mag-book ng libreng personal contactless demo at handoff kay Gian:`,
-          templateKey: "meetupScheduler"
+          text: "Nag-aalok ako ng personal handoff at live contactless demo sa mga accessible LRT/MRT stations at Metro Manila malls nang may ₱0 shipping fee:",
+          templateKey: "meetupFlow"
         };
       }
 
-      // 4. Commercial Policies & Pricing Tiers
-      if (hasAny(q, ["price", "pricing", "prices", "presyo", "cost", "how much", "magkano", "tier", "bayad", "rates", "package", "quote", "reviewshield", "stand", "hub"])) {
+      // 4. Origin & Brand Evolution (Fashion to Phygital)
+      if (hasAny(q, ["origin", "history", "start", "started", "paano nagsimula", "simula", "bakit attachment", "fashion", "accessories", "damit", "pormahan", "evolution"])) {
         return {
-          text: `Ang pricing ng hardware ay ${GIAN_DATA.commerce.pricingTier}. Kasama rin ang libreng acrylic stand at free website landing page (may 7-day trial) sa Smart Review Hub, at 100% libre ang logo placement at card/stand layout assistance:`,
-          templateKey: "commerce"
-        };
-      }
-
-      // 5. Courier Delivery Logistics & Turnaround
-      if (hasAny(q, ["delivery", "deliver", "shipping", "ship", "lalamove", "grab", "j&t", "lead time", "leadtime", "turnaround", "production time", "gaano katagal", "kailan"])) {
-        return {
-          text: `Para sa delivery at fulfillment: ${GIAN_DATA.commerce.logistics.turnaround} Supported courier services: ${GIAN_DATA.commerce.logistics.delivery} ${GIAN_DATA.commerce.logistics.meetup}`,
-          templateKey: "commerce"
-        };
-      }
-
-      // 6. Payment Methods & Universal QR Ph
-      if (hasAny(q, ["payment", "payments", "pay", "mode of payment", "mop", "gcash", "gotyme", "qr ph", "qrph", "bank transfer", "paano magbayad"])) {
-        const methods = GIAN_DATA.commerce.payments.methods.join(", ");
-        return {
-          text: `Tumatanggap kami ng payment sa pamamagitan ng: ${methods}. Universal ang QR Ph para sa kahit anong local bank o e-wallet app:`,
-          templateKey: "commerce"
-        };
-      }
-
-      // 7. Custom Design & Free Logo Policy
-      if (hasAny(q, ["logo", "design fee", "custom design", "layout", "free design", "layout assistance"])) {
-        return {
-          text: `${GIAN_DATA.commerce.design.policy} Walang hidden design charges para sa pag-layout ng branding mo sa smart card o counter stand:`,
-          templateKey: "commerce"
-        };
-      }
-
-      // 8. Short-Form Video Editing & Whop Clipping
-      if (hasAny(q, ["clipping", "video clip", "video clipping", "video edit", "video editing", "editor", "whop", "short-form", "reels", "tiktok edit"])) {
-        return {
-          text: `${GIAN_DATA.commerce.videoClipping.status} ${GIAN_DATA.commerce.videoClipping.pricing} Gumagamit ako ng CapCut at OpusClip pipelines para sa high-retention hook structures at sound-sync pacing:`,
-          templateKey: "clipping"
-        };
-      }
-
-      // 9. Direct Contact & Ordering
-      if (hasAny(q, ["contact", "hire", "order", "reach out", "email", "instagram", "messenger", "buy card", "bili", "order card"])) {
-        return {
-          text: "Maaari kang mag-order diretso sa aming checkout page o makipag-ugnayan sa Messenger at Instagram para sa custom smart cards at phygital deployments:",
-          templateKey: "contact"
-        };
-      }
-
-      // 10. NFC Cards & How they work
-      if (hasAny(q, ["nfc", "how do your", "how does it work", "cards work", "card work", "ntag", "contactless", "rfid", "chip", "frequency", "antenna", "tap phone"])) {
-        return {
-          text: "Attachment Anywhere NFC cards use embedded NTAG215 and NTAG216 contactless microchips sealed in waterproof matte PVC. When tapped against any iPhone (XS or newer) or modern Android, the device's native NFC antenna reads the programmed NDEF record and launches your custom profile, website, or Google review page instantly in Safari or Chrome. No mobile app, Bluetooth pairing, or camera scanning required.",
+          text: "Attachment Anywhere began as 'Attachment' from my passion for detachable fashion accessories and modular pieces. When I studied phygital tech, I asked myself: why stop at clothing? I evolved it into Attachment Anywhere to build modular NFC hardware and smart review hubs that attach to any counter, wall, or object to connect offline to online:",
           templateKey: "projects"
         };
       }
 
-      // 11. Builds & Physical Products
-      if (hasAny(q, ["build", "builds", "product", "products", "project", "projects", "hardware", "executive"])) {
+      // 5. 10,000 Steps Daily Urban Walks
+      if (hasAny(q, ["10,000", "10000", "walk", "walks", "lakad", "steps", "urban", "disconnect"])) {
         return {
-          text: "Here are the active contactless hardware products and live interactive digital profiles manufactured by Attachment Anywhere:",
-          templateKey: "projects"
-        };
-      }
-
-      // 12. Tools, Systems & AI Stack
-      if (hasAny(q, ["tool", "tools", "stack", "system", "systems", "platform", "platforms", "gemini", "antigravity", "opal", "software", "tech", "apps", "pipeline"])) {
-        return {
-          text: "Here are my active production platforms, frontier Google AI models, physical hardware tooling, and automation workflows:",
-          templateKey: "stack"
-        };
-      }
-
-      // 13. Work Experience & DOH Health Systems
-      if (hasAny(q, ["experience", "doh", "gip", "health", "encoder", "encoding", "career", "intern", "timeline", "bhw", "work history"])) {
-        return {
-          text: "Here is my professional experience timeline, including encoding national Barangay Health Worker registries at the Department of Health and engineering high-retention video pipelines:",
-          templateKey: "experience"
-        };
-      }
-
-      // 14. Who is Gian / Profile & Bio
-      if (hasAny(q, ["who is gian", "who are you", "about gian", "who", "gian", "student", "letran", "bio", "founder", "background", "story"])) {
-        return {
-          text: "I'm Gian Christian Villanueva—a 3rd-year BS Entrepreneurship student at Colegio de San Juan de Letran and the founder of Attachment Anywhere. I also serve as a National Health Systems Data Encoder at the Department of Health (BLHSD) through the DOLE GIP program. I combine physical NFC hardware production with Google AI pipelines to eliminate business friction.",
-          templateKey: "me"
-        };
-      }
-
-      // 15. Mindset & Hobbies
-      if (hasAny(q, ["mindset", "philosophy", "quote", "principle", "hobby", "hobbies", "interest", "basketball", "sci-fi"])) {
-        return {
-          text: "“Entrepreneurs don't complain about broken systems; they manufacture the tools to fix them.” Here are my operating principles and offline interests:",
+          text: "Every day, I log 10,000 steps walking through random streets across Manila. It disconnects me from screens, clears cognitive fatigue, and resets my mind after intense building sessions:",
           templateKey: "mindset"
         };
       }
 
-      // 16. General / Fallback
+      // 6. Midnight Playlist & Deep Focus Ritual
+      if (hasAny(q, ["music", "playlist", "cas", "cigarettes after sex", "midnight focus", "late night", "chill"])) {
+        return {
+          text: "Past midnight, I keep Cigarettes After Sex on loop. It calms my mind, eliminates external noise, and creates the stillness needed to write clean code, design hardware, and edit video:",
+          templateKey: "mindset"
+        };
+      }
+
+      // 7. Dystopian Sci-Fi & Survival Systems
+      if (hasAny(q, ["sci-fi", "scifi", "dystopian", "silo", "fallout", "snowpiercer", "survival"])) {
+        return {
+          text: "I am fascinated by dystopian survival systems in stories like Silo, Fallout, and Snowpiercer. They explore human ingenuity, resource constraints, and resilience: principles I apply directly when architecting lean physical products:",
+          templateKey: "mindset"
+        };
+      }
+
+      // 8. Operating Influences & Business Mentors
+      if (hasAny(q, ["influence", "influences", "mentor", "mentors", "ramon ang", "josh mojica", "deijames", "fffffft", "idols"])) {
+        return {
+          text: "My approach is shaped by distinct operators: Ramon S. Ang for bold industrial scale, Josh Mojica for youth grit, Deijames for elevated design curation, and Tokyo's #FFFFFFT for radical focus on mastering one thing:",
+          templateKey: "mindset"
+        };
+      }
+
+      // 9. Core Motto & Operating Philosophy
+      if (hasAny(q, ["philosophy", "motto", "mindset", "pananaw", "prinsipyo", "negative is also part of positive", "failure"])) {
+        return {
+          text: "My core operating philosophy is simple: negative is also part of positive. When setbacks occur in life or business, they are not failures but necessary milestones in the process. Everything happens for a reason, and every friction point provides the exact data needed to move forward:",
+          templateKey: "mindset"
+        };
+      }
+
+      // 10. Daily Routine & Schedule (DOH + Letran + Midnight Builds)
+      if (hasAny(q, ["routine", "schedule", "araw-araw", "daily", "oras", "shift", "10 hours", "10-hour", "tulog", "workload"])) {
+        return {
+          text: "My weekly operating rhythm is relentless: 10-hour shifts at DOH-BLHSD 4 days a week, straight to Letran for 3 to 5 hours of evening classes, plus Friday lectures. Attachment Anywhere and video clipping run during late nights and weekends, with midnight as my dedicated creative window for Google AI tools, coding, and video editing:",
+          templateKey: "experience"
+        };
+      }
+
+      // 11. General Pricing, Generous Policy & Freebies
+      if (hasAny(q, ["price", "pricing", "magkano", "presyo", "how much", "rate", "rates", "tier", "cost", "free", "libre"])) {
+        return {
+          text: "Attachment Anywhere deployments range from ₱350 for ReviewShield tap hardware up to ₱2,000 for full custom Digital Hub setups. I treat every customer with generosity: 100% free logo placement, free acrylic stand with a 7-day hosting trial, and zero vendor lock-in:",
+          templateKey: "bulkEstimate"
+        };
+      }
+
+      // 12. Payment Methods
+      if (hasAny(q, ["payment", "payments", "bayad", "gcash", "gotyme", "qr ph", "qrph", "mop"])) {
+        return {
+          text: "We accept instant digital payments via GCash, GoTyme Bank, and Universal QR Ph, which works with all major Philippine banking and e-wallet apps:",
+          templateKey: "contact"
+        };
+      }
+
+      // 13. Turnaround, Logistics & Couriers
+      if (hasAny(q, ["turnaround", "shipping", "delivery", "lalamove", "grab", "j&t"])) {
+        return {
+          text: "Production and chip encoding take 3 to 7 business days. We ship nationwide via Lalamove, Grab, and J&T Express, or via personal handoff at accessible train stations across Metro Manila:",
+          templateKey: "meetupFlow"
+        };
+      }
+
+      // 14. Contact & Direct Collaboration
+      if (hasAny(q, ["contact", "hire", "messenger", "instagram", "email", "reach", "talk", "collaborate", "collab"])) {
+        return {
+          text: "You can message me directly on Facebook Messenger for custom NFC builds, video retainers, or web projects. Verified character references from Letran faculty and DOH supervisory staff are available upon request:",
+          templateKey: "contact"
+        };
+      }
+
+      // 15. DOH Operations & Auditing (Data Privacy Compliant)
+      if (hasAny(q, ["doh", "gip", "auditing", "bhw", "systems", "operations", "health", "registry", "encoder", "purokalusogan", "css", "bhwconnect"])) {
+        return {
+          text: "At the Department of Health Bureau of Local Health Systems Development (DOH-BLHSD) under the DOLE GIP program, I audit and validate national Barangay Health Worker (BHW) registries across provincial health offices. Operating across CSS, BHWconnect, and Purokalusogan, I strictly adhere to Republic Act 10173 (Data Privacy Act of 2012) handling confidential national health records:",
+          templateKey: "experience"
+        };
+      }
+
+      // 16. Letran & Entrepreneurship Foundations
+      if (hasAny(q, ["letran", "school", "college", "course", "aral", "student", "university", "entrepreneurship", "studies"])) {
+        return {
+          text: "As a 3rd-year BS Entrepreneurship student at Colegio de San Juan de Letran in Intramuros Manila, my coursework directly informs Attachment Anywhere. Academic study in unit economics, customer acquisition loops, supplier logistics, and cash-flow management gives me the operational discipline to manufacture physical goods profitably, pairing business fundamentals with modern AI and technical execution:",
+          templateKey: "me"
+        };
+      }
+
+      // 17. Video Editing, Whop Clipping & Google Drive Vault
+      if (hasAny(q, ["video", "clip", "clipping", "whop", "edit", "editing", "retention", "capcut", "pacing", "premiere", "reels", "tiktok", "vault", "drive", "bounty", "bounties"])) {
+        return {
+          text: "Short-form video is retention engineering. In the Whop creator clipping network, payouts depend on algorithmic watch-time graphs: nailing the first 1.5-second visual hook, cutting precisely to audio transients, and using dynamic punch-ins every 3 to 4 seconds to eliminate drop-off. You can explore raw and polished vertical cuts in my Google Drive vault or inquire directly for client retainers:",
+          templateKey: "videoShowcase"
+        };
+      }
+
+      // 18. Google AI & Autonomous Systems
+      if (hasAny(q, ["ai", "google ai", "gemini", "antigravity", "opal", "workflow", "automate", "serverless", "automation", "ai workflow", "ai pipeline", "how do you use ai", "artificial intelligence", "webhook"])) {
+        return {
+          text: "I treat frontier AI models as an execution multiplier rather than a gimmick. Using Google Gemini, Antigravity, and Opal, I turn raw system requirements into deployed single-file tools, serverless webhook routing in Netlify, and database scripts in hours. This replaces expensive third-party monthly SaaS subscriptions with owned, ultra-fast web infrastructure that handles real workloads without bloat:",
+          templateKey: "stack"
+        };
+      }
+
+      // 19. Hardware Specs & Microchip Engineering
+      if (hasAny(q, ["specs", "ntag", "microchip", "ntag213", "ntag215", "ferrite", "shielding", "ndef"])) {
+        return {
+          text: "Our cards and stands utilize high-frequency NXP NTAG microchips encoded with NDEF standards. For cafe counters and metal surface mounting, we engineer custom anti-metal ferrite shielding to prevent electromagnetic eddy currents from blocking the RF antenna:",
+          templateKey: "projects"
+        };
+      }
+
+      // 20. Retail Counter Deployments (Badshot, 1319 Cafe)
+      if (hasAny(q, ["cafe", "deployments", "badshot", "1319", "counter hub", "review hub", "stands"])) {
+        return {
+          text: "Smart Review Counter Hubs are deployed in physical retail spaces including Badshot Coffee and 1319 Cafe in Manila. Customers tap to instantly open the 5-star Google review prompt, turning in-store foot traffic into local search ranking growth:",
+          templateKey: "projects"
+        };
+      }
+
+      // 21. Live Demo / Digital Profile Card
+      if (hasAny(q, ["live demo", "demo", "phone preview", "digital card", "subok"])) {
+        return {
+          text: "Maaari mong i-test ang mismong digital profile card UI sa pamamagitan ng aming interactive mobile simulator:",
+          templateKey: "projects"
+        };
+      }
+
+      // 22. Attachment Anywhere & Phygital Hardware
+      if (hasAny(q, ["attachment anywhere", "nfc", "phygital", "hardware", "cards", "card", "stands", "stand", "puck", "smart card"])) {
+        return {
+          text: "Attachment Anywhere started from a clear real-world friction: over 88% of paper business cards get thrown in the trash within 7 days. I set out to replace paper waste with durable matte PVC smart cards and freestanding acrylic counter displays. Each unit contains high-frequency NTAG microchips backed with anti-metal ferrite shielding, enabling instant contactless Google reviews and profile beam taps even on stainless steel cafe espresso machines like those at Badshot Coffee and 1319 Cafe:",
+          templateKey: "projects"
+        };
+      }
+
+      // 23. Core Disciplines / Overview / Sino ka
+      if (hasAny(q, ["disciplines", "discipline", "what do you do", "overview", "background", "skills", "pillars", "verticals", "three", "tri"])) {
+        return {
+          text: "I operate at the convergence of three execution-heavy verticals: Phygital Hardware, Google AI Pipelines, and High-Retention Motion Media. In my 3rd year studying Entrepreneurship at Letran Manila, the core philosophy is simple: build, manufacture, and distribute real working products instead of theoretical slide decks. Every project connects hardware you can hold to software and video that capture audience attention:",
+          templateKey: "disciplines"
+        };
+      }
+
+      // 24. Profile / Who is Gian
+      if (hasAny(q, ["who is gian", "who are you", "about gian", "who", "gian", "story", "bio", "sino ka"])) {
+        return {
+          text: "I am Gian Christian Villanueva: Creative Technologist, Phygital Builder, and Solopreneur based in Manila. 3rd-year BS Entrepreneurship student at Letran, full-time data encoder at DOH-BLHSD, and founder of Attachment Anywhere:",
+          templateKey: "me"
+        };
+      }
+
+      // 25. Fallback
       return {
-        text: "I'm Gian's digital twin. I can answer questions about Attachment Anywhere NFC cards (₱350–₱2,000), meetup & delivery, Paper vs. NFC ROI, bulk orders, my DOH experience, short-form clipping, or my Google AI stack. What would you like to explore?",
+        text: "I am Gian's terminal. You can ask about my origin story from fashion to phygital, daily routine between DOH and Letran, 10,000-step walks, midnight build windows, video clipping, Google AI pipelines, or contactless NFC hardware:",
         templateKey: "fallback"
       };
     }
@@ -1839,7 +1653,6 @@
       hideTypeahead();
       if (promptInput) promptInput.value = "";
 
-      // Transition to active-chat state
       if (mainContainer) {
         mainContainer.classList.add("active-chat");
       }
@@ -1847,29 +1660,29 @@
         chatFeed.classList.remove("max-h-0", "opacity-0", "pointer-events-none");
       }
 
-      // 1. Append User Message Bubble
+      // 1. User Message
       const userMsgEl = document.createElement("div");
       userMsgEl.className = "flex justify-end animate-in fade-in slide-in-from-bottom-2 duration-200";
       userMsgEl.innerHTML = `
-        <div class="bg-neutral-100 text-neutral-900 text-sm px-4 py-2.5 rounded-2xl rounded-tr-xs max-w-[85%] border border-neutral-200/90 shadow-xs leading-relaxed font-normal">
+        <div class="bg-neutral-100 text-neutral-900 text-xs sm:text-sm px-4 py-2.5 rounded-2xl rounded-tr-xs max-w-[85%] border border-neutral-200/90 shadow-xs leading-relaxed font-normal">
           ${escapeHtml(text)}
         </div>
       `;
       chatFeed.appendChild(userMsgEl);
       scrollChatToBottom();
 
-      // 2. Resolve Grounded Answer & Card Template from GIAN_DATA
+      // 2. Grounded Answer
       const resolved = resolveGroundedResponse(text);
 
-      // 3. Append Assistant Message Shell
+      // 3. Assistant Message Shell
       const assistantMsgEl = document.createElement("div");
       assistantMsgEl.className = "flex items-start gap-3 animate-in fade-in slide-in-from-bottom-2 duration-300";
       assistantMsgEl.innerHTML = `
         <div class="w-7 h-7 rounded-full overflow-hidden bg-neutral-100 border border-neutral-200 shrink-0 mt-0.5 shadow-xs">
           <img src="avatar/frame_48_delay-0.05s.webp" alt="Gian" class="w-full h-full object-cover">
         </div>
-        <div class="flex-1 space-y-3.5 text-sm leading-relaxed overflow-hidden">
-          <div class="assistant-text text-neutral-800 text-sm leading-relaxed font-normal"></div>
+        <div class="flex-1 space-y-3 text-xs sm:text-sm leading-relaxed overflow-hidden">
+          <div class="assistant-text text-neutral-800 leading-relaxed font-normal"></div>
           <div class="assistant-cards"></div>
         </div>
       `;
@@ -1879,7 +1692,7 @@
       const textEl = assistantMsgEl.querySelector(".assistant-text");
       const cardsEl = assistantMsgEl.querySelector(".assistant-cards");
 
-      // 4. Stream Grounded Text Answer Word by Word
+      // 4. Word-by-Word Stream
       isStreaming = true;
       if (sendButton) sendButton.disabled = true;
 
@@ -1890,27 +1703,16 @@
         if (wordIdx < words.length) {
           wordIdx++;
           const currentWords = words.slice(0, wordIdx).join(" ");
-          textEl.innerHTML = `${escapeHtml(currentWords)} <span class="inline-block w-1.5 h-3.5 bg-neutral-900 animate-pulse ml-0.5 -mb-0.5"></span>`;
+          textEl.innerHTML = `${escapeHtml(currentWords)} <span class="inline-block w-1.5 h-3.5 bg-neutral-900 ml-0.5 -mb-0.5"></span>`;
           scrollChatToBottom();
-          setTimeout(streamChunk, 22);
+          setTimeout(streamChunk, 20);
         } else {
-          // Finished streaming text
           textEl.innerHTML = escapeHtml(resolved.text);
 
-          // Inject Rich Interactive Cards if available
           if (resolved.templateKey && STAGE_TEMPLATES[resolved.templateKey]) {
             cardsEl.innerHTML = STAGE_TEMPLATES[resolved.templateKey]();
             cardsEl.classList.add("animate-in", "fade-in", "duration-300");
             lucide.createIcons();
-
-            // Initialize conversion widget state
-            if (resolved.templateKey === 'roi') {
-              setTimeout(() => updateRoiPreset('solo'), 20);
-            } else if (resolved.templateKey === 'bulkEstimator') {
-              setTimeout(() => renderBulkEstimatorState(10), 20);
-            } else if (resolved.templateKey === 'meetupScheduler') {
-              setTimeout(() => selectTransitLine('lrt1'), 20);
-            }
           }
 
           isStreaming = false;
@@ -1922,8 +1724,7 @@
         }
       }
 
-      // Start streaming after brief pause
-      setTimeout(streamChunk, 120);
+      setTimeout(streamChunk, 100);
     }
 
     function handlePromptStarter(promptText) {
@@ -2004,7 +1805,6 @@
       });
     }
 
-    // Auto-focus input on desktop load & initialize typeahead listeners
     window.addEventListener("DOMContentLoaded", () => {
       lucide.createIcons();
       initTypeaheadListeners();
@@ -2014,9 +1814,7 @@
     });
 
 
-    /* =========================================================================
-       6. BLACK & WHITE GLITTER CANVAS CURSOR ENGINE (Light Mode Obsidian-Starlight)
-       ========================================================================= */
+    // 7. Obsidian glitter cursor engine
     (function initGlitterBlackAndWhiteCursor() {
       const canvas = document.getElementById("cursor-canvas");
       if (!canvas) return;
@@ -2035,14 +1833,13 @@
       const shockwaves = [];
       let animId = null;
 
-      // Particle palette: Crisp obsidian blacks, charcoal, platinum, and brilliant diamond white with halo contrast
       const GLITTER_SPECS = [
-        { color: "rgba(10, 10, 12,", shadow: "rgba(0, 0, 0, 0.4)", isWhite: false },     // Pure obsidian black
-        { color: "rgba(24, 24, 27,", shadow: "rgba(0, 0, 0, 0.3)", isWhite: false },     // Charcoal void
-        { color: "rgba(71, 85, 105,", shadow: "rgba(30, 41, 59, 0.3)", isWhite: false },  // Slate graphite
-        { color: "rgba(148, 163, 184,", shadow: "rgba(0, 0, 0, 0.25)", isWhite: false }, // Metallic silver/platinum
-        { color: "rgba(255, 255, 255,", shadow: "rgba(0, 0, 0, 0.55)", isWhite: true },  // Diamond white shimmer (with dark halo shadow)
-        { color: "rgba(248, 250, 252,", shadow: "rgba(15, 23, 42, 0.45)", isWhite: true } // Icy starlight white
+        { color: "rgba(10, 10, 12,", shadow: "rgba(0, 0, 0, 0.4)", isWhite: false },
+        { color: "rgba(24, 24, 27,", shadow: "rgba(0, 0, 0, 0.3)", isWhite: false },
+        { color: "rgba(71, 85, 105,", shadow: "rgba(30, 41, 59, 0.3)", isWhite: false },
+        { color: "rgba(148, 163, 184,", shadow: "rgba(0, 0, 0, 0.25)", isWhite: false },
+        { color: "rgba(255, 255, 255,", shadow: "rgba(0, 0, 0, 0.55)", isWhite: true },
+        { color: "rgba(248, 250, 252,", shadow: "rgba(15, 23, 42, 0.45)", isWhite: true }
       ];
 
       class Shockwave {
@@ -2085,7 +1882,7 @@
           this.decay = isBurst ? Math.random() * 0.038 + 0.024 : Math.random() * 0.018 + 0.014;
           this.spec = GLITTER_SPECS[Math.floor(Math.random() * GLITTER_SPECS.length)];
           this.twinkleSpeed = Math.random() * 16 + 10;
-          this.isSparkleCross = Math.random() > 0.65; // 35% chance for 4-point star glint
+          this.isSparkleCross = Math.random() > 0.65;
         }
         update() {
           this.x += this.vx;
@@ -2106,7 +1903,6 @@
 
           if (this.isSparkleCross && this.life > 0.35) {
             const len = this.size * 2.3;
-            // Draw cross star glint
             ctx.beginPath();
             ctx.moveTo(this.x, this.y - len);
             ctx.lineTo(this.x, this.y + len);
@@ -2120,7 +1916,6 @@
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
             ctx.fill();
             if (this.spec.isWhite) {
-              // Fine dark core ring so white glitter contrasts perfectly on white bg
               ctx.strokeStyle = `rgba(0, 0, 0, ${alpha * 0.35})`;
               ctx.lineWidth = 0.5;
               ctx.stroke();
@@ -2130,7 +1925,6 @@
         }
       }
 
-      /* --- MOBILE COARSE POINTER: Tap Burst Shockwave Engine --- */
       if (isCoarsePointer) {
         function triggerMobileBurst(x, y) {
           shockwaves.push(new Shockwave(x, y));
@@ -2178,7 +1972,6 @@
         return;
       }
 
-      /* --- DESKTOP FINE POINTER: Continuous 60 FPS Trail Engine --- */
       const mouse = { x: width / 2, y: height / 2, moved: false };
       const trail = { x: width / 2, y: height / 2 };
       let lastMoveTime = Date.now();
@@ -2190,7 +1983,6 @@
         mouse.moved = true;
         lastMoveTime = Date.now();
 
-        // Spawn micro stardust glitter specks per move event (alternating black and white)
         if (particles.length < 120) {
           const count = Math.floor(Math.random() * 3) + 2;
           for (let i = 0; i < count; i++) {
@@ -2199,7 +1991,6 @@
         }
       }, { passive: true });
 
-      // Click burst: spawn explosive black & white glitter radiating outward
       window.addEventListener("mousedown", (e) => {
         lastMoveTime = Date.now();
         shockwaves.push(new Shockwave(e.clientX, e.clientY));
@@ -2221,7 +2012,6 @@
         trail.y += (mouse.y - trail.y) * 0.22;
 
         if (masterAlpha > 0.01 && mouse.moved) {
-          // Ambient soft graphite/mist stardust glow under cursor
           const radial = ctx.createRadialGradient(trail.x, trail.y, 0, trail.x, trail.y, 36);
           radial.addColorStop(0, `rgba(15, 23, 42, ${0.08 * masterAlpha})`);
           radial.addColorStop(0.35, `rgba(71, 85, 105, ${0.05 * masterAlpha})`);
@@ -2233,14 +2023,12 @@
           ctx.fill();
         }
 
-        // Draw and update shockwaves
         for (let i = shockwaves.length - 1; i >= 0; i--) {
           shockwaves[i].update();
           shockwaves[i].draw(ctx);
           if (shockwaves[i].life <= 0) shockwaves.splice(i, 1);
         }
 
-        // Update and draw particles
         for (let i = particles.length - 1; i >= 0; i--) {
           particles[i].update();
           particles[i].draw(ctx, masterAlpha);
@@ -2252,10 +2040,9 @@
 
       requestAnimationFrame(desktopLoop);
     })();
-  
-    /* =========================================================================
-       7. ZERO-REDIRECT IN-PAGE MODALS & PHONE PREVIEW LOGIC
-       ========================================================================= */
+
+
+    // 8. Modal controls
     function openPhonePreviewModal() {
       const modal = document.getElementById("phone-preview-modal");
       if (!modal) return;
@@ -2300,6 +2087,40 @@
       document.body.classList.remove("overflow-hidden");
     }
 
+    function openVideoStackModal() {
+      const modal = document.getElementById("video-stack-modal");
+      if (!modal) return;
+      modal.classList.remove("opacity-0", "pointer-events-none");
+      modal.classList.add("opacity-100", "pointer-events-auto");
+      document.body.classList.add("overflow-hidden");
+      lucide.createIcons();
+    }
+
+    function closeVideoStackModal() {
+      const modal = document.getElementById("video-stack-modal");
+      if (!modal) return;
+      modal.classList.remove("opacity-100", "pointer-events-auto");
+      modal.classList.add("opacity-0", "pointer-events-none");
+      document.body.classList.remove("overflow-hidden");
+    }
+
+    function openArchitectureModal() {
+      const modal = document.getElementById("architecture-modal");
+      if (!modal) return;
+      modal.classList.remove("opacity-0", "pointer-events-none");
+      modal.classList.add("opacity-100", "pointer-events-auto");
+      document.body.classList.add("overflow-hidden");
+      lucide.createIcons();
+    }
+
+    function closeArchitectureModal() {
+      const modal = document.getElementById("architecture-modal");
+      if (!modal) return;
+      modal.classList.remove("opacity-100", "pointer-events-auto");
+      modal.classList.add("opacity-0", "pointer-events-none");
+      document.body.classList.remove("overflow-hidden");
+    }
+
     function openDeploymentsModal() {
       const modal = document.getElementById("deployments-modal");
       if (!modal) return;
@@ -2320,17 +2141,17 @@
     function closeAllModals() {
       closePhonePreviewModal();
       closeSpecsModal();
+      closeVideoStackModal();
+      closeArchitectureModal();
       closeDeploymentsModal();
     }
 
-    // Keyboard Escape to close any modal
     window.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
         closeAllModals();
       }
     });
 
-    // Touch swipe down on phone preview modal to close
     (function initModalSwipeClose() {
       let touchStartY = 0;
       const modal = document.getElementById("phone-preview-modal");
@@ -2365,13 +2186,12 @@
       }, 2500);
     }
 
-    
     function shareCallingCard(e) {
       if (e) e.stopPropagation();
       if (navigator.share) {
         navigator.share({
           title: "Gian Christian Villanueva • Digital Calling Card",
-          text: "Attachment Anywhere • Smart Contactless Solutions",
+          text: "Attachment Anywhere • Entrepreneur & Phygital Builder",
           url: "https://attachmentanywhere.com/260906052304.html"
         }).catch(() => {});
       } else {
@@ -2396,13 +2216,13 @@
       const vcardContent = `BEGIN:VCARD
 VERSION:3.0
 FN:Gian Christian Villanueva
-N:Villanueva;Gian;;Christian;
-TITLE:Founder & Builder
+N:Villanueva;Gian;Christian;;
+TITLE:Entrepreneur & Builder
 ORG:Attachment Anywhere
 TEL;TYPE=CELL:+639657689591
 EMAIL:gianchristianvillanueva@gmail.com
 URL:https://attachmentanywhere.com
-NOTE:Attachment Anywhere Smart Contactless Calling Card
+NOTE:Entrepreneur & Phygital Builder
 END:VCARD`;
       const blob = new Blob([vcardContent], { type: "text/vcard;charset=utf-8;" });
       const url = URL.createObjectURL(blob);
@@ -2415,12 +2235,6 @@ END:VCARD`;
       URL.revokeObjectURL(url);
       showPreviewToast("Saved: Gian_Christian_Villanueva.vcf");
     }
-
-    function previewCafeReviewDemo(e) {
-      if (e) e.stopPropagation();
-      showPreviewToast("Simulating NFC tap: Google Maps 5★ Review flow loaded!");
-    }
-
   </script>
 </body>
 </html>

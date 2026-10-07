@@ -1,0 +1,23 @@
+# Attachment Anywhere — Production Redirect Rules
+/c/aa260906052304    /aa260906052304.html   302
+/c/aa260906as2525    /aa260906AS2525.html   302
+/c/aa260906as0400    /aa260906AS0400.html   302
+/c/aa260906AS1497    /aa260906AS1497.html   302
+/c/aa260908072405    /aa260908072405.html   302
+/c/aa2609109199      /aa2609109199.html     302
+/c/aa2609109130      /aa2609109130.html     302
+/c/aa260919153138    /aa260919153138.html   302
+/c/pending-001       /order.html            302
+/c/pending-002       /order.html            302
+/c/260906052304      /aa260906052304.html   302
+/c/260908072405      /aa260908072405.html   302
+/c/260906AS0400      /aa260906AS0400.html   302
+/c/260906AS1497      /aa260906AS1497.html   302
+/c/260906AS2525      /aa260906AS2525.html   302
+/c/2609109130        /aa2609109130.html     302
+/c/2609109199        /aa2609109199.html     302
+/c/260919153138      /aa260919153138.html   302
+/c/aa:serial         /aa:serial.html        302
+/c/:serial           /aa:serial.html        302
+/portfolio           /g.portfolio.html      200
+/g.portfolio         /g.portfolio.html      200
