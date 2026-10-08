@@ -3,12 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
-  <meta name="theme-color" content="#ffffff">
+  <!-- PWA & Mobile Web App Meta -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Talk with GI">
+  <meta name="application-name" content="Talk with GI">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#ffffff">
   <meta name="format-detection" content="telephone=no">
   <title>Gian Christian Villanueva: Entrepreneur &amp; Phygital Builder</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Apple Touch Icon (Uses Gian's Avatar frame or brand icon) -->
+  <link rel="apple-touch-icon" href="avatar/frame_48_delay-0.05s.webp">
+
+  <!-- Web App Manifest (Inline Blob or manifest.json) -->
+  <link rel="manifest" href="manifest.json">
 
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -186,6 +196,52 @@
 
   <!-- Glowing Glitter Black Canvas Cursor Engine -->
   <canvas id="cursor-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+  <!-- Floating Top Bar Actions (PWA Install Trigger) -->
+  <header class="fixed top-3 right-3 sm:top-4 sm:right-4 z-40 flex items-center gap-2">
+    <button
+      type="button"
+      id="pwa-install-header-btn"
+      onclick="openPwaInstallModal()"
+      class="hidden items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold text-neutral-800 bg-white/90 hover:bg-neutral-100 border border-neutral-200/90 shadow-xs backdrop-blur-md transition-all duration-150 ease-out active:scale-[0.98] cursor-pointer"
+      title="Install Talk with GI as an app"
+    >
+      <i data-lucide="download" class="w-3.5 h-3.5 text-neutral-700"></i>
+      <span>Install App</span>
+    </button>
+  </header>
+
+  <!-- Smart Mobile Install Banner -->
+  <aside
+    id="pwa-mobile-banner"
+    class="fixed bottom-3 left-3 right-3 sm:left-auto sm:right-4 sm:bottom-4 z-40 max-w-sm mx-auto hidden bg-neutral-950/95 text-white border border-neutral-800 ring-1 ring-inset ring-white/5 rounded-2xl p-3 shadow-2xl backdrop-blur-md transition-all duration-200 ease-out transform translate-y-8 opacity-0"
+    aria-label="Add to home screen notice"
+  >
+    <div class="flex items-center gap-2.5">
+      <img src="avatar/frame_48_delay-0.05s.webp" alt="Talk with GI" class="w-9 h-9 rounded-xl object-cover bg-neutral-900 border border-neutral-800 shrink-0">
+      <div class="flex-1 min-w-0 text-left">
+        <div class="text-xs font-bold text-white tracking-tight truncate">Talk with GI</div>
+        <div class="text-[11px] text-neutral-400 font-normal truncate">Add to Home Screen</div>
+      </div>
+      <div class="flex items-center gap-1.5 shrink-0">
+        <button
+          type="button"
+          onclick="openPwaInstallModal()"
+          class="px-2.5 py-1.5 rounded-xl bg-white text-black hover:bg-neutral-200 text-xs font-bold transition-all duration-150 ease-out active:scale-[0.98] cursor-pointer shadow-xs"
+        >
+          Install
+        </button>
+        <button
+          type="button"
+          onclick="dismissPwaBanner()"
+          class="w-7 h-7 rounded-lg text-neutral-400 hover:text-white flex items-center justify-center transition-all duration-150 ease-out active:scale-[0.98] cursor-pointer"
+          aria-label="Dismiss banner"
+        >
+          <i data-lucide="x" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+    </div>
+  </aside>
 
 
   <!-- Main Unified Container (Optically Centered by Default, Dynamically Morphs on Interaction) -->
@@ -554,6 +610,72 @@
     </div>
   </div>
 
+  <!-- Dedicated PWA Install Modal -->
+  <div id="pwa-install-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-200 ease-out" onclick="closePwaInstallModal()" aria-hidden="true">
+    <button onclick="closePwaInstallModal()" class="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 rounded-full bg-neutral-900/80 hover:bg-neutral-800 text-white/80 hover:text-white border border-neutral-700/80 flex items-center justify-center transition-all duration-150 ease-out active:scale-[0.98] cursor-pointer z-50 shadow-lg" title="Close (Esc)">
+      <i data-lucide="x" class="w-5 h-5"></i>
+    </button>
+    <div class="w-full max-w-md bg-neutral-950 border border-neutral-800 ring-1 ring-inset ring-white/5 rounded-3xl p-6 sm:p-7 shadow-2xl relative text-left text-white max-h-[90vh] overflow-y-auto no-scrollbar transition-all duration-200 ease-out transform scale-95" onclick="event.stopPropagation()">
+      <div class="flex items-center gap-3.5 mb-5 pb-4 border-b border-neutral-800">
+        <img src="avatar/frame_48_delay-0.05s.webp" alt="Talk with GI" class="w-14 h-14 rounded-2xl object-cover bg-neutral-900 border border-neutral-800 shadow-md shrink-0">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] font-mono tracking-wider uppercase text-neutral-400 bg-neutral-900 px-2 py-0.5 rounded border border-neutral-800">WEB APP</span>
+            <span class="text-[10px] font-mono text-emerald-400 font-semibold">STANDALONE</span>
+          </div>
+          <h3 class="text-lg sm:text-xl font-bold text-white tracking-tight leading-tight mt-1">Talk with GI</h3>
+          <p class="text-xs text-neutral-400 font-light mt-0.5">Gian Christian Villanueva</p>
+        </div>
+      </div>
+
+      <!-- Android / Chromium Native Flow View -->
+      <div id="pwa-android-flow" class="space-y-4">
+        <p class="text-xs text-neutral-300 leading-relaxed font-normal">Add directly to your device home screen for full-screen launching and instant offline access.</p>
+        <button id="pwa-native-install-btn" onclick="triggerNativePwaInstall()" class="w-full py-3.5 px-4 rounded-xl bg-white text-black hover:bg-neutral-200 text-xs font-bold uppercase tracking-wider text-center transition-all duration-150 ease-out active:scale-[0.98] cursor-pointer shadow-md flex items-center justify-center gap-2">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>Add to Home Screen</span>
+        </button>
+      </div>
+
+      <!-- iOS Safari Flow View -->
+      <div id="pwa-ios-flow" class="hidden space-y-4">
+        <p class="text-xs text-neutral-300 leading-relaxed font-normal">To install on your iPhone or iPad, follow these 3 steps in Safari:</p>
+        <div class="space-y-2.5">
+          <div class="p-3.5 rounded-2xl bg-neutral-900/80 border border-neutral-800 flex items-start gap-3">
+            <div class="w-6 h-6 rounded-lg bg-neutral-800 text-white flex items-center justify-center text-xs font-mono font-bold shrink-0">1</div>
+            <div class="text-xs leading-relaxed text-neutral-300">
+              Tap the <span class="font-bold text-white inline-flex items-center gap-1 mx-0.5">Share <i data-lucide="share" class="w-3.5 h-3.5 text-sky-400 inline"></i></span> button in Safari's bottom toolbar.
+            </div>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-neutral-900/80 border border-neutral-800 flex items-start gap-3">
+            <div class="w-6 h-6 rounded-lg bg-neutral-800 text-white flex items-center justify-center text-xs font-mono font-bold shrink-0">2</div>
+            <div class="text-xs leading-relaxed text-neutral-300">
+              Scroll down and tap <span class="font-bold text-white inline-flex items-center gap-1 mx-0.5">Add to Home Screen <i data-lucide="plus-square" class="w-3.5 h-3.5 text-white inline"></i></span>.
+            </div>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-neutral-900/80 border border-neutral-800 flex items-start gap-3">
+            <div class="w-6 h-6 rounded-lg bg-neutral-800 text-white flex items-center justify-center text-xs font-mono font-bold shrink-0">3</div>
+            <div class="text-xs leading-relaxed text-neutral-300">
+              Tap <span class="font-bold text-white">Add</span> in the top-right corner of your screen.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Generic Desktop / Other Browsers Flow View -->
+      <div id="pwa-generic-flow" class="hidden space-y-4">
+        <p class="text-xs text-neutral-300 leading-relaxed font-normal">Click the install icon in your browser address bar, or open your browser menu and choose <span class="font-bold text-white">Install Talk with GI</span>.</p>
+      </div>
+
+      <div class="pt-4 mt-5 border-t border-neutral-800 flex items-center justify-between">
+        <span class="text-[11px] text-neutral-500 font-mono">No App Store download required</span>
+        <button onclick="closePwaInstallModal()" class="px-4 py-2 rounded-xl border border-neutral-800 bg-neutral-900 hover:bg-neutral-800 text-xs font-semibold text-neutral-300 transition-all duration-150 ease-out active:scale-[0.98] cursor-pointer">
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Preview Feedback Toast -->
   <div id="preview-toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] px-4 py-2.5 rounded-xl bg-neutral-900 text-white text-xs font-medium border border-neutral-700 shadow-2xl opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-2">
     <i data-lucide="check" class="w-4 h-4 text-neutral-300"></i>
@@ -598,7 +720,7 @@
       },
 
       origin: {
-        story: "Nagsimula ang Attachment Anywhere bilang 'Attachment': hango sa hilig ko sa detachable accessories at modular pieces para i-elevate ang personal outfit style. Nang mapag-aralan ko ang phygital technology, na-realize ko: bakit sa damit lang? I evolved it into Attachment Anywhere para gumawa ng modular NFC products at smart review hubs na kayang ikabit sa kahit anong counter, pader, o gamit para mag-connect offline to online.",
+        story: "Nagsimula ang Attachment Anywhere bilang 'Attachment': hango sa hilig ko sa detachable accessories at modular pieces para i-customize ang personal outfit style. Nang mapag-aralan ko ang phygital technology, na-realize ko: bakit sa damit lang? I evolved it into Attachment Anywhere para gumawa ng modular NFC products at smart review hubs na kayang ikabit sa kahit anong counter, pader, o gamit para mag-connect offline to online.",
         philosophy: "Negative is also part of positive. Kapag may aberya sa buhay o negosyo, setbacks are not failures: part sila ng proseso. Everything happens for a reason, and every friction point provides the exact data needed to move forward."
       },
 
@@ -713,7 +835,7 @@
         influences: [
           { name: "Ramon S. Ang", lesson: "Fearless industrial scale and bold execution." },
           { name: "Josh Mojica", lesson: "Youth grit, street-smarts, and unpretentious hustle." },
-          { name: "Deijames (Australia)", lesson: "Elevated design curation and aesthetic standards." },
+          { name: "Deijames (Australia)", lesson: "Refined design curation and aesthetic standards." },
           { name: "#FFFFFFT (Tokyo)", lesson: "Conviction to master a single hyper-focused obsession (pure white t-shirts)." }
         ]
       },
@@ -1377,6 +1499,30 @@
         `;
       },
 
+      pwaInstall: () => `
+        <div class="bg-white p-5 rounded-2xl border border-neutral-200/90 shadow-sm text-left space-y-4">
+          <div class="flex items-center gap-3">
+            <img src="avatar/frame_48_delay-0.05s.webp" alt="Talk with GI" class="w-12 h-12 rounded-xl object-cover bg-neutral-100 border border-neutral-200 shrink-0">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-mono tracking-wider uppercase text-neutral-500 bg-neutral-100 px-2 py-0.5 rounded border border-neutral-200">STANDALONE APP</span>
+              </div>
+              <h4 class="text-sm sm:text-base font-bold text-neutral-900 mt-0.5">Talk with GI on Home Screen</h4>
+              <p class="text-xs text-neutral-500 font-normal">iOS Safari &amp; Android Chrome compatible</p>
+            </div>
+          </div>
+          <p class="text-xs sm:text-sm text-neutral-600 font-normal leading-relaxed">
+            Install this portfolio directly to your mobile device or desktop. Launches full-screen with offline caching and instant load times.
+          </p>
+          <div class="pt-1 flex flex-wrap gap-2.5">
+            <button onclick="openPwaInstallModal()" class="flex-1 min-w-[160px] py-2.5 px-4 bg-neutral-900 hover:bg-black text-white text-xs font-semibold rounded-xl text-center inline-flex items-center justify-center gap-2 transition-all duration-150 ease-out active:scale-[0.98] cursor-pointer shadow-xs">
+              <i data-lucide="download" class="w-4 h-4"></i>
+              <span>Install to Home Screen</span>
+            </button>
+          </div>
+        </div>
+      `,
+
       fallback: () => `
         <div class="bg-white p-5 rounded-2xl border border-neutral-200/90 shadow-sm text-left space-y-3">
           <p class="text-xs text-neutral-500 font-normal">
@@ -1408,10 +1554,13 @@
     STAGE_TEMPLATES.videoShowcase = STAGE_TEMPLATES.videoShowcase;
     STAGE_TEMPLATES.videoVault = STAGE_TEMPLATES.videoShowcase;
     STAGE_TEMPLATES.video = STAGE_TEMPLATES.videoShowcase;
+    STAGE_TEMPLATES.pwa = STAGE_TEMPLATES.pwaInstall;
+    STAGE_TEMPLATES.install = STAGE_TEMPLATES.pwaInstall;
 
 
     // 5. Dynamic typeahead engine
     const TYPEAHEAD_HINTS = [
+      { query: "How do I install this app?", label: "Add to Home Screen / Install PWA", category: "App", icon: "download", keywords: ["install", "pwa", "app", "home screen", "add to home screen", "standalone", "download", "save to phone", "paano i-install"] },
       { query: "What are your core disciplines?", label: "What are your core disciplines?", category: "Overview", icon: "layers", keywords: ["discipline", "disciplines", "what do you do", "skills", "pillars", "tri", "focus", "sino ka", "overview"] },
       { query: "How did Attachment Anywhere start?", label: "Origin: Detachable Fashion to Phygital NFC", category: "Origin", icon: "tag", keywords: ["origin", "fashion", "accessories", "damit", "simula", "nagsimula", "start", "bakit", "pormahan"] },
       { query: "What is your daily routine & schedule?", label: "Daily Routine: 10-Hr DOH Shifts & Letran Classes", category: "Routine", icon: "clock", keywords: ["routine", "schedule", "doh", "letran", "shift", "daily", "midnight", "tulog", "hours"] },
@@ -1518,6 +1667,14 @@
         function resolveGroundedResponse(rawText) {
       const q = rawText.toLowerCase().trim();
 
+      // PWA & Standalone App Installation
+      if (hasAny(q, ["install", "pwa", "add to home screen", "home screen", "standalone", "download app", "save to phone", "paano i-install", "install app"])) {
+        return {
+          text: "Talk with GI is engineered as a standalone Progressive Web App. You can install it straight to your device home screen for full-screen launching and instant offline access without needing an App Store download:",
+          templateKey: "pwaInstall"
+        };
+      }
+
       // 1. Bulk & Volume Pricing
       if (hasAny(q, ["bulk", "wholesale", "volume", "team order", "discount", "maramihan", "bulto"])) {
         return {
@@ -1577,7 +1734,7 @@
       // 8. Operating Influences & Business Mentors
       if (hasAny(q, ["influence", "influences", "mentor", "mentors", "ramon ang", "josh mojica", "deijames", "fffffft", "idols"])) {
         return {
-          text: "My approach is shaped by distinct operators: Ramon S. Ang for bold industrial scale, Josh Mojica for youth grit, Deijames for elevated design curation, and Tokyo's #FFFFFFT for radical focus on mastering one thing:",
+          text: "My approach is shaped by distinct operators: Ramon S. Ang for bold industrial scale, Josh Mojica for youth grit, Deijames for refined design curation, and Tokyo's #FFFFFFT for radical focus on mastering one thing:",
           templateKey: "mindset"
         };
       }
@@ -2189,13 +2346,160 @@
       document.body.classList.remove("overflow-hidden");
     }
 
+    function openPwaInstallModal() {
+      const modal = document.getElementById("pwa-install-modal");
+      if (!modal) return;
+
+      const androidFlow = document.getElementById("pwa-android-flow");
+      const iosFlow = document.getElementById("pwa-ios-flow");
+      const genericFlow = document.getElementById("pwa-generic-flow");
+
+      if (isIOSDevice()) {
+        if (iosFlow) iosFlow.classList.remove("hidden");
+        if (androidFlow) androidFlow.classList.add("hidden");
+        if (genericFlow) genericFlow.classList.add("hidden");
+      } else if (deferredPwaPrompt) {
+        if (androidFlow) androidFlow.classList.remove("hidden");
+        if (iosFlow) iosFlow.classList.add("hidden");
+        if (genericFlow) genericFlow.classList.add("hidden");
+      } else {
+        if (genericFlow) genericFlow.classList.remove("hidden");
+        if (androidFlow) androidFlow.classList.add("hidden");
+        if (iosFlow) iosFlow.classList.add("hidden");
+      }
+
+      modal.classList.remove("opacity-0", "pointer-events-none");
+      modal.classList.add("opacity-100", "pointer-events-auto");
+      const dialog = modal.querySelector("div[onclick]");
+      if (dialog) {
+        dialog.classList.remove("scale-95");
+        dialog.classList.add("scale-100");
+      }
+      document.body.classList.add("overflow-hidden");
+      lucide.createIcons();
+    }
+
+    function closePwaInstallModal() {
+      const modal = document.getElementById("pwa-install-modal");
+      if (!modal) return;
+      modal.classList.remove("opacity-100", "pointer-events-auto");
+      modal.classList.add("opacity-0", "pointer-events-none");
+      const dialog = modal.querySelector("div[onclick]");
+      if (dialog) {
+        dialog.classList.remove("scale-100");
+        dialog.classList.add("scale-95");
+      }
+      document.body.classList.remove("overflow-hidden");
+    }
+
     function closeAllModals() {
       closePhonePreviewModal();
       closeSpecsModal();
       closeVideoStackModal();
       closeArchitectureModal();
       closeDeploymentsModal();
+      closePwaInstallModal();
     }
+
+    /* =========================================================================
+       PWA / ADD TO HOME SCREEN ENGINE
+       ========================================================================= */
+    let deferredPwaPrompt = null;
+
+    function isStandaloneMode() {
+      return (
+        window.matchMedia('(display-mode: standalone)').matches ||
+        window.navigator.standalone === true ||
+        document.referrer.includes('android-app://')
+      );
+    }
+
+    function isIOSDevice() {
+      return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    }
+
+    async function triggerNativePwaInstall() {
+      if (!deferredPwaPrompt) {
+        closePwaInstallModal();
+        return;
+      }
+      try {
+        await deferredPwaPrompt.prompt();
+        const choice = await deferredPwaPrompt.userChoice;
+        if (choice && choice.outcome === 'accepted') {
+          showPreviewToast("App installation initiated!");
+          const banner = document.getElementById("pwa-mobile-banner");
+          if (banner) banner.remove();
+          const btn = document.getElementById("pwa-install-header-btn");
+          if (btn) btn.classList.add("hidden");
+        }
+      } catch (err) {
+        console.error("Install prompt error:", err);
+      } finally {
+        deferredPwaPrompt = null;
+        closePwaInstallModal();
+      }
+    }
+
+    function dismissPwaBanner() {
+      const banner = document.getElementById("pwa-mobile-banner");
+      if (!banner) return;
+      banner.classList.remove("opacity-100", "translate-y-0");
+      banner.classList.add("opacity-0", "translate-y-8");
+      setTimeout(() => {
+        banner.classList.add("hidden");
+      }, 300);
+      try {
+        sessionStorage.setItem("gi_pwa_banner_dismissed", "1");
+      } catch (e) {}
+    }
+
+    function initPwaManager() {
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("./sw.js").catch((err) => {
+            console.warn("SW registration error:", err);
+          });
+        });
+      }
+
+      if (isStandaloneMode()) {
+        const headerBtn = document.getElementById("pwa-install-header-btn");
+        if (headerBtn) headerBtn.classList.add("hidden");
+        const banner = document.getElementById("pwa-mobile-banner");
+        if (banner) banner.remove();
+        return;
+      }
+
+      const headerBtn = document.getElementById("pwa-install-header-btn");
+      if (headerBtn) {
+        headerBtn.classList.remove("hidden");
+        headerBtn.classList.add("inline-flex");
+      }
+
+      window.addEventListener("beforeinstallprompt", (e) => {
+        e.preventDefault();
+        deferredPwaPrompt = e;
+      });
+
+      const isMobile = window.matchMedia("(max-width: 640px)").matches || isIOSDevice() || ('ontouchstart' in window);
+      const isDismissed = sessionStorage.getItem("gi_pwa_banner_dismissed") === "1";
+      if (isMobile && !isDismissed) {
+        setTimeout(() => {
+          const banner = document.getElementById("pwa-mobile-banner");
+          if (banner && !isStandaloneMode()) {
+            banner.classList.remove("hidden");
+            requestAnimationFrame(() => {
+              banner.classList.remove("opacity-0", "translate-y-8");
+              banner.classList.add("opacity-100", "translate-y-0");
+            });
+            lucide.createIcons();
+          }
+        }, 2200);
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", initPwaManager);
 
     window.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
@@ -2206,21 +2510,40 @@
     (function initModalSwipeClose() {
       let touchStartY = 0;
       const modal = document.getElementById("phone-preview-modal");
-      if (!modal) return;
-      modal.addEventListener("touchstart", (e) => {
-        if (e.touches && e.touches[0]) {
-          touchStartY = e.touches[0].clientY;
-        }
-      }, { passive: true });
-
-      modal.addEventListener("touchend", (e) => {
-        if (e.changedTouches && e.changedTouches[0]) {
-          const touchEndY = e.changedTouches[0].clientY;
-          if (touchEndY - touchStartY > 80) {
-            closePhonePreviewModal();
+      if (modal) {
+        modal.addEventListener("touchstart", (e) => {
+          if (e.touches && e.touches[0]) {
+            touchStartY = e.touches[0].clientY;
           }
-        }
-      }, { passive: true });
+        }, { passive: true });
+
+        modal.addEventListener("touchend", (e) => {
+          if (e.changedTouches && e.changedTouches[0]) {
+            const touchEndY = e.changedTouches[0].clientY;
+            if (touchEndY - touchStartY > 80) {
+              closePhonePreviewModal();
+            }
+          }
+        }, { passive: true });
+      }
+
+      const pwaModal = document.getElementById("pwa-install-modal");
+      if (pwaModal) {
+        pwaModal.addEventListener("touchstart", (e) => {
+          if (e.touches && e.touches[0]) {
+            touchStartY = e.touches[0].clientY;
+          }
+        }, { passive: true });
+
+        pwaModal.addEventListener("touchend", (e) => {
+          if (e.changedTouches && e.changedTouches[0]) {
+            const touchEndY = e.changedTouches[0].clientY;
+            if (touchEndY - touchStartY > 80) {
+              closePwaInstallModal();
+            }
+          }
+        }, { passive: true });
+      }
     })();
 
     function showPreviewToast(message) {

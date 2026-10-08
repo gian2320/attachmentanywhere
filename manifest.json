@@ -1,0 +1,32 @@
+{
+  "name": "Talk with GI - Gian Christian Villanueva",
+  "short_name": "Talk with GI",
+  "description": "Conversational portfolio of Gian Christian Villanueva: Creative Technologist, Phygital Builder & Entrepreneur.",
+  "start_url": "/g.portfolio.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "avatar/frame_48_delay-0.05s.webp",
+      "sizes": "192x192 512x512",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "brandbgrmv.png",
+      "sizes": "866x288",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
+
