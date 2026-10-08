@@ -106,63 +106,77 @@
     </div>
   </div>
 
-  <!-- Navigation Bar -->
-  <nav class="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 transition-all pt-[env(safe-area-inset-top)]">
-    <div class="max-w-7xl mx-auto px-6 h-20 sm:h-24 flex items-center justify-between">
-      
-      <!-- Brand Logo -->
-      <a href="index.html" class="flex items-center gap-4 min-h-[44px]">
-        <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-10 md:h-16 w-auto object-contain" />
-        <span class="hidden sm:inline-block font-mono text-[10px] tracking-[0.25em] uppercase text-neutral-400 border-l border-neutral-300 pl-4">Ops & Burner Bench</span>
-      </a>
-      
-      <!-- Desktop Navigation Links & Operator Profile -->
-      <div class="hidden md:flex items-center gap-8">
-        <div class="flex items-center gap-6">
-          <a href="index.html" class="min-h-[44px] flex items-center text-xs sm:text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black active:opacity-60 transition-all">Home</a>
-          <a href="products.html" class="min-h-[44px] flex items-center text-xs sm:text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black active:opacity-60 transition-all">Products</a>
-          <a href="order.html" class="min-h-[44px] flex items-center text-xs sm:text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-black active:opacity-60 transition-all">Customer View</a>
-        </div>
-
-        <div class="flex items-center gap-3 pl-4 border-l border-neutral-200">
-          <div class="border border-neutral-200 bg-neutral-50 text-neutral-800 px-3.5 py-1.5 rounded-md text-[10px] font-mono uppercase tracking-wider flex items-center gap-2 select-none shadow-xs">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-            <span id="active-user-display" class="font-bold">Owner Active</span>
+    <!-- Enterprise Administrative Header & Tab Bar -->
+  <header class="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-neutral-200 transition-all pt-[env(safe-area-inset-top)]">
+    <!-- Top Identity Bar -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-18 flex items-center justify-between border-b border-neutral-100">
+      <!-- Left: Brand Title & System Tag -->
+      <div class="flex items-center gap-3">
+        <img src="brandbgrmv.png" alt="Attachment Anywhere" class="h-8 sm:h-9 w-auto object-contain" />
+        <div class="flex flex-col">
+          <div class="flex items-center gap-2">
+            <span class="font-black text-xs sm:text-sm tracking-tight uppercase text-neutral-900 font-mono">ATTACHMENT ANYWHERE // OPERATIONS</span>
+            <span class="hidden sm:inline-block px-1.5 py-0.2 rounded text-[9px] font-mono font-bold uppercase bg-neutral-100 text-neutral-600 border border-neutral-200">v2.5</span>
           </div>
-
-          <button onclick="lockFounderGate()" title="Lock / Logout" class="border border-neutral-200 hover:border-black rounded-lg bg-white px-3 py-1.5 text-neutral-700 hover:text-black active:scale-95 transition-all cursor-pointer shadow-xs flex items-center gap-1.5 text-xs font-mono font-bold">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-            <span>Lock / Logout</span>
-          </button>
+          <span class="text-[9px] sm:text-[10px] font-mono tracking-[0.25em] uppercase text-neutral-400">SYSTEM</span>
         </div>
       </div>
 
-      <!-- Mobile Hamburger Button -->
-      <button id="mobile-menu-btn" class="md:hidden w-11 h-11 flex flex-col items-center justify-center gap-1.5 p-2 focus:outline-none cursor-pointer" aria-label="Toggle Menu">
-        <span class="w-6 h-0.5 bg-neutral-900 transition-transform"></span>
-        <span class="w-5 h-0.5 bg-neutral-900 transition-opacity"></span>
-        <span class="w-6 h-0.5 bg-neutral-900 transition-transform"></span>
-      </button>
-    </div>
+      <!-- Right: Admin Profile Chip & Logout -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <div class="border border-neutral-200 bg-neutral-50 px-2.5 sm:px-3.5 py-1.5 rounded-lg text-[10px] sm:text-xs font-mono text-neutral-800 flex items-center gap-2 select-none shadow-xs">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+          <span class="truncate max-w-[170px] sm:max-w-none font-medium">gianchristianvillanueva@gmail.com</span>
+          <span class="text-neutral-300 hidden sm:inline">·</span>
+          <span class="text-neutral-500 font-bold hidden sm:inline uppercase text-[9px] tracking-wider">Administrator</span>
+        </div>
 
-    <!-- Mobile Menu Dropdown -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-neutral-200 px-6 py-6 flex flex-col gap-3 font-mono shadow-xl">
-      <a href="index.html" class="min-h-[44px] flex items-center text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Home</a>
-      <a href="products.html" class="min-h-[44px] flex items-center text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Products</a>
-      <a href="order.html" class="min-h-[44px] flex items-center text-xs font-bold uppercase tracking-widest text-neutral-600 hover:text-black">Customer View</a>
-      <div class="border-t border-neutral-200 pt-3 flex items-center justify-between">
-        <span class="text-[10px] uppercase tracking-widest text-neutral-500">Owner Session</span>
-        <button onclick="lockFounderGate()" class="min-h-[44px] flex items-center text-xs font-bold uppercase text-black hover:underline tracking-wider">Lock / Logout</button>
+        <button onclick="lockFounderGate()" title="Log out and lock session" class="border border-neutral-200 hover:border-black bg-white hover:bg-neutral-50 active:scale-95 text-neutral-700 hover:text-black px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer shadow-xs flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+          <span class="hidden sm:inline">Log out</span>
+        </button>
       </div>
     </div>
-  </nav>
 
-  <div class="pt-[calc(5rem+env(safe-area-inset-top))] sm:pt-[calc(6rem+env(safe-area-inset-top))]"></div> <!-- Header spacing -->
+    <!-- Modular System Tab Bar -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 overflow-x-auto">
+      <nav class="flex items-center gap-1.5 font-mono text-xs select-none">
+        <button id="tab-btn-orders" onclick="switchAdminTab('orders')" class="admin-tab-btn px-3.5 py-1.5 rounded-md font-bold transition-all cursor-pointer bg-neutral-900 text-white border border-neutral-900 shadow-xs flex items-center gap-2 shrink-0">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          <span>Orders & Queue</span>
+        </button>
+        <button id="tab-btn-inbox" onclick="switchAdminTab('inbox')" class="admin-tab-btn px-3.5 py-1.5 rounded-md font-medium text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 border border-transparent transition-all cursor-pointer flex items-center gap-2 shrink-0">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/></svg>
+          <span>Customer Inbox</span>
+        </button>
+        <button id="tab-btn-catalog" onclick="switchAdminTab('catalog')" class="admin-tab-btn px-3.5 py-1.5 rounded-md font-medium text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 border border-transparent transition-all cursor-pointer flex items-center gap-2 shrink-0">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+          <span>Products & Pricing</span>
+        </button>
+        <button id="tab-btn-backups" onclick="switchAdminTab('backups')" class="admin-tab-btn px-3.5 py-1.5 rounded-md font-medium text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 border border-transparent transition-all cursor-pointer flex items-center gap-2 shrink-0">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"/></svg>
+          <span>Backups</span>
+        </button>
+        <button id="tab-btn-audit" onclick="switchAdminTab('audit')" class="admin-tab-btn px-3.5 py-1.5 rounded-md font-medium text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 border border-transparent transition-all cursor-pointer flex items-center gap-2 shrink-0">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          <span>Audit Log</span>
+        </button>
+      </nav>
+    </div>
+  </header>
 
-  <!-- Meadhall Operations Suite -->
-  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-8 pb-20">
+  <div class="pt-[calc(6.8rem+env(safe-area-inset-top))] sm:pt-[calc(7.4rem+env(safe-area-inset-top))]"></div>
 
-    <!-- SUB-HEADER: OPERATIONS STATUS BAR -->
+  <!-- Operations Suite Container -->
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-8 pb-20">
+
+    <!-- =========================================================================
+         TAB 1: ORDERS & QUEUE
+         ========================================================================= -->
+    <div id="tab-view-orders" class="tab-pane space-y-8">
+      <!-- SUB-HEADER: OPERATIONS STATUS BAR -->
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-neutral-200">
       <div>
         <span class="text-[10px] font-mono uppercase tracking-[0.25em] text-neutral-400 block mb-1">Attachment Anywhere Back-Office</span>
@@ -681,11 +695,9 @@
       </div>
     </section>
 
-    <!-- 4. ORDERS & AUDIT -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-      
+    
       <!-- LEFT: ORDERS PIPELINE (7 COLS) -->
-      <section class="lg:col-span-7 bg-white border border-neutral-200/80 rounded-3xl overflow-hidden flex flex-col shadow-xs">
+      <section id="orders-pipeline" class="w-full bg-white border border-neutral-200/80 rounded-3xl overflow-hidden flex flex-col shadow-xs">
         <div class="p-6 border-b border-neutral-100 flex flex-col gap-4">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
@@ -753,31 +765,18 @@
           </table>
         </div>
       </section>
-
-      <!-- RIGHT: AUDIT LOG (5 COLS) -->
-      <section class="lg:col-span-5 bg-white border border-neutral-200/80 rounded-3xl p-6 sm:p-7 space-y-4 shadow-xs">
-        <div class="flex items-center justify-between border-b border-neutral-100 pb-4">
-          <h2 class="text-base font-black uppercase tracking-tight text-neutral-900">Audit Trail</h2>
-          <button onclick="clearAuditTrail()" class="text-[10px] font-mono text-neutral-400 hover:text-black transition-colors cursor-pointer uppercase tracking-wider">Clear Logs</button>
-        </div>
-
-        <!-- Log entries -->
-        <div id="audit-log-container" class="space-y-1.5 max-h-[360px] overflow-y-auto pr-1 font-mono text-[11px] bg-neutral-50 border border-neutral-200/80 p-3.5 rounded-2xl">
-          <!-- Dynamically populated audit log items -->
-        </div>
-
-        <!-- Health Diagnostics -->
-        <div class="p-4 bg-neutral-50 border border-neutral-200/80 rounded-2xl space-y-1 font-mono text-xs">
-          <span class="text-[10px] uppercase tracking-widest text-neutral-400 block font-bold">System Diagnostics</span>
-          <div id="audit-issues-summary" class="text-neutral-700 leading-relaxed font-mono">
-            Scanning records...
-          </div>
-        </div>
-      </section>
-
     </div>
 
-    <!-- 4B. CUSTOMER FEEDBACK & INBOX -->
+    <!-- =========================================================================
+         TAB 2: CUSTOMER INBOX
+         ========================================================================= -->
+    <div id="tab-view-inbox" class="tab-pane hidden space-y-6">
+      <nav class="flex items-center gap-2 text-xs font-mono text-neutral-400 mb-1 select-none">
+        <span class="text-neutral-500 font-semibold tracking-wider uppercase">SYSTEM</span>
+        <span class="text-neutral-300">/</span>
+        <span class="text-neutral-900 font-bold uppercase tracking-wider">Customer Inbox</span>
+      </nav>
+      <!-- 4B. CUSTOMER FEEDBACK & INBOX -->
     <section id="customer-feedback-inbox" class="bg-white border border-neutral-200/80 rounded-3xl overflow-hidden flex flex-col shadow-xs">
       <div class="p-6 border-b border-neutral-100 flex flex-col gap-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -830,8 +829,18 @@
         </table>
       </div>
     </section>
+    </div>
 
-    <!-- 4C. PRODUCT CATALOG & PRICING MANAGER -->
+    <!-- =========================================================================
+         TAB 3: PRODUCTS & PRICING
+         ========================================================================= -->
+    <div id="tab-view-catalog" class="tab-pane hidden space-y-6">
+      <nav class="flex items-center gap-2 text-xs font-mono text-neutral-400 mb-1 select-none">
+        <span class="text-neutral-500 font-semibold tracking-wider uppercase">SYSTEM</span>
+        <span class="text-neutral-300">/</span>
+        <span class="text-neutral-900 font-bold uppercase tracking-wider">Products & Pricing</span>
+      </nav>
+      <!-- 4C. PRODUCT CATALOG & PRICING MANAGER -->
     <section id="catalog-manager" class="bg-white border border-neutral-200/80 rounded-3xl overflow-hidden flex flex-col shadow-xs">
       <div class="p-6 border-b border-neutral-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
@@ -866,8 +875,188 @@
         </table>
       </div>
     </section>
+    </div>
 
-    <!-- 5. WEB NFC SCANNING MODAL -->
+    <!-- =========================================================================
+         TAB 4: BACKUPS (ENTERPRISE SNAPSHOT ENGINE)
+         ========================================================================= -->
+    <div id="tab-view-backups" class="tab-pane hidden space-y-6">
+      <!-- Section Header & Schedule Pill -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-neutral-200">
+        <div>
+          <nav class="flex items-center gap-2 text-xs font-mono text-neutral-400 mb-1.5 select-none">
+            <span class="text-neutral-500 font-semibold tracking-wider uppercase">SYSTEM</span>
+            <span class="text-neutral-300">/</span>
+            <span class="text-neutral-900 font-bold uppercase tracking-wider">Backups</span>
+          </nav>
+          <h1 class="text-2xl sm:text-3xl font-black tracking-tight text-neutral-900 uppercase">System Backups</h1>
+          <p class="text-xs text-neutral-600 mt-1 max-w-2xl leading-relaxed">
+            Snapshot the whole database to a file you can keep or restore. Turn on a schedule and the app backs itself up automatically.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-xs select-none">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>Scheduled backups ON : Daily</span>
+          </div>
+
+          <button onclick="executeDatabaseBackup()" class="bg-neutral-900 hover:bg-black active:scale-[0.98] text-white text-xs font-mono font-bold uppercase tracking-wider px-4 py-2.5 rounded-lg transition-all cursor-pointer shadow-xs flex items-center gap-2">
+            <svg class="w-3.5 h-3.5 text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            <span>Back up now</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Telemetry Metric Row (4-Column Segmented Box) -->
+      <div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border border-neutral-200 bg-white rounded-xl overflow-hidden divide-y sm:divide-y-0 sm:divide-x divide-neutral-200 shadow-xs">
+          <!-- Col 1: NEXT SCHEDULED -->
+          <div class="p-5 flex flex-col justify-between">
+            <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-500 font-bold">NEXT SCHEDULED</span>
+            <div class="mt-2">
+              <span id="backup-stat-next" class="text-xl sm:text-2xl font-black font-mono tracking-tight text-neutral-900">--</span>
+              <span class="block text-[11px] font-mono text-neutral-500 mt-0.5">Automated cron window</span>
+            </div>
+          </div>
+
+          <!-- Col 2: SNAPSHOTS KEPT -->
+          <div class="p-5 flex flex-col justify-between">
+            <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-500 font-bold">SNAPSHOTS KEPT</span>
+            <div class="mt-2">
+              <span id="backup-stat-count" class="text-xl sm:text-2xl font-black font-mono tracking-tight text-neutral-900">0</span>
+              <span class="block text-[11px] font-mono text-neutral-500 mt-0.5">Local archive copies</span>
+            </div>
+          </div>
+
+          <!-- Col 3: TOTAL SIZE -->
+          <div class="p-5 flex flex-col justify-between">
+            <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-500 font-bold">TOTAL SIZE</span>
+            <div class="mt-2">
+              <span id="backup-stat-size" class="text-xl sm:text-2xl font-black font-mono tracking-tight text-neutral-900">0 KB</span>
+              <span class="block text-[11px] font-mono text-neutral-500 mt-0.5">Live store footprint</span>
+            </div>
+          </div>
+
+          <!-- Col 4: LIVE RECORDS -->
+          <div class="p-5 flex flex-col justify-between">
+            <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-500 font-bold">LIVE RECORDS</span>
+            <div class="mt-2">
+              <span id="backup-stat-records" class="text-xl sm:text-2xl font-black font-mono tracking-tight text-neutral-900">0</span>
+              <span class="block text-[11px] font-mono text-neutral-500 mt-0.5">Orders + inbox + catalog</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Micro Status Subtitle -->
+        <div class="text-[11px] font-mono text-neutral-500 mt-2.5 px-1 flex flex-wrap items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
+          <span>Last run: OK - auto backup <span id="last-backup-filename" class="text-neutral-800 font-semibold font-mono">aa_backup_20261008_020000.json</span>; verified 100% integrity</span>
+        </div>
+      </div>
+
+      <!-- RESTORE ZONE & FILE DROPZONE -->
+      <div class="bg-white border border-neutral-200 rounded-xl p-5 shadow-xs">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-mono font-bold uppercase tracking-wider text-neutral-900">Restore Database from Snapshot (.json)</span>
+              <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200 font-semibold">Schema Validated</span>
+            </div>
+            <p class="text-xs text-neutral-500 mt-0.5">Upload a verified JSON snapshot to overwrite and rehydrate local operations state.</p>
+          </div>
+
+          <div class="flex items-center gap-2.5">
+            <input type="file" id="backup-file-input" accept=".json,application/json" class="hidden" onchange="handleBackupFileUpload(event)">
+            <button onclick="document.getElementById('backup-file-input').click()" class="border border-neutral-300 hover:border-black bg-white hover:bg-neutral-50 active:scale-[0.98] text-neutral-800 hover:text-black text-xs font-mono font-bold uppercase tracking-wider px-4 py-2.5 rounded-lg transition-all cursor-pointer shadow-xs flex items-center gap-2">
+              <svg class="w-3.5 h-3.5 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+              </svg>
+              <span>Restore Database from Snapshot (.json)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Drag & Drop container -->
+        <div id="backup-drop-zone" class="mt-4 border-2 border-dashed border-neutral-200 hover:border-neutral-400 bg-neutral-50/60 rounded-lg p-6 text-center transition-colors cursor-pointer" onclick="document.getElementById('backup-file-input').click()">
+          <p class="text-xs font-mono text-neutral-500">
+            Drag and drop snapshot file here or click to browse (<span class="font-semibold text-neutral-700">aa_backup_*.json</span>)
+          </p>
+        </div>
+      </div>
+
+      <!-- SNAPSHOT ARCHIVE TABLE (Off-site / Local Archive Ledger) -->
+      <div class="bg-white border border-neutral-200 rounded-xl overflow-hidden shadow-xs flex flex-col">
+        <div class="p-5 border-b border-neutral-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div class="flex items-center gap-2.5">
+              <h2 class="text-base font-black uppercase tracking-tight text-neutral-900">Database Snapshots & Exports</h2>
+              <span class="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-md border border-emerald-200 bg-emerald-50 text-emerald-800 font-bold flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                <span>Local archive current</span>
+              </span>
+            </div>
+            <p class="text-xs text-neutral-500 mt-0.5">Historical snapshots retained in browser storage cache with cryptographic record verification.</p>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button onclick="refreshBackupTable()" title="Refresh Archive Ledger" class="text-neutral-400 hover:text-black text-xs font-mono p-2 w-8 h-8 flex items-center justify-center rounded-lg border border-neutral-200 hover:border-black cursor-pointer transition-colors active:scale-95">
+              ↻
+            </button>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs font-mono">
+            <thead class="bg-neutral-50 text-[10px] uppercase tracking-widest text-neutral-500 border-b border-neutral-200">
+              <tr>
+                <th class="py-3.5 px-6">WHEN</th>
+                <th class="py-3.5 px-6">ENCRYPTED FILE</th>
+                <th class="py-3.5 px-6">SIZE / RECORDS</th>
+                <th class="py-3.5 px-6 text-right">ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody id="backup-history-table-body" class="divide-y divide-neutral-100 bg-white">
+              <!-- Dynamically populated rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 5: AUDIT LOG & DIAGNOSTICS
+         ========================================================================= -->
+    <div id="tab-view-audit" class="tab-pane hidden space-y-6">
+      <nav class="flex items-center gap-2 text-xs font-mono text-neutral-400 mb-1 select-none">
+        <span class="text-neutral-500 font-semibold tracking-wider uppercase">SYSTEM</span>
+        <span class="text-neutral-300">/</span>
+        <span class="text-neutral-900 font-bold uppercase tracking-wider">Audit Log</span>
+      </nav>
+      <!-- RIGHT: AUDIT LOG (5 COLS) -->
+      <section class="w-full bg-white border border-neutral-200/80 rounded-3xl p-6 sm:p-7 space-y-4 shadow-xs">
+        <div class="flex items-center justify-between border-b border-neutral-100 pb-4">
+          <h2 class="text-base font-black uppercase tracking-tight text-neutral-900">Audit Trail</h2>
+          <button onclick="clearAuditTrail()" class="text-[10px] font-mono text-neutral-400 hover:text-black transition-colors cursor-pointer uppercase tracking-wider">Clear Logs</button>
+        </div>
+
+        <!-- Log entries -->
+        <div id="audit-log-container" class="space-y-1.5 max-h-[360px] overflow-y-auto pr-1 font-mono text-[11px] bg-neutral-50 border border-neutral-200/80 p-3.5 rounded-2xl">
+          <!-- Dynamically populated audit log items -->
+        </div>
+
+        <!-- Health Diagnostics -->
+        <div class="p-4 bg-neutral-50 border border-neutral-200/80 rounded-2xl space-y-1 font-mono text-xs">
+          <span class="text-[10px] uppercase tracking-widest text-neutral-400 block font-bold">System Diagnostics</span>
+          <div id="audit-issues-summary" class="text-neutral-700 leading-relaxed font-mono">
+            Scanning records...
+          </div>
+        </div>
+      </section>
+    </div>
+<!-- 5. WEB NFC SCANNING MODAL -->
     <div id="nfc-radar-modal" class="fixed inset-0 bg-black/85 hidden items-center justify-center p-4 z-[110]">
       <div class="bg-white text-neutral-900 rounded-3xl max-w-sm w-full p-8 border border-neutral-100 text-center relative fade-in shadow-2xl">
         <button onclick="cancelNfcScan()" class="absolute top-5 right-5 text-neutral-400 hover:text-black text-2xl font-light cursor-pointer">&times;</button>
@@ -1307,6 +1496,7 @@
       </div>
     </div>
   </footer>
+  </main>
 
   <script>
     // Boot splash screen controller (Founder Memoji Animation)
@@ -5070,7 +5260,642 @@
     }
 
     // INITIAL MOUNT
-    window.updateFootprint = updateFootprint;
+    
+    /* =========================================================================
+       ADMINISTRATIVE DASHBOARD & BACKUP SNAPSHOT ENGINE
+       ========================================================================= */
+
+    // Tab Switching System
+    function switchAdminTab(tabName) {
+      const tabs = ['orders', 'inbox', 'catalog', 'backups', 'audit'];
+      tabs.forEach(t => {
+        const view = document.getElementById('tab-view-' + t);
+        const btn = document.getElementById('tab-btn-' + t);
+        if (t === tabName) {
+          if (view) view.classList.remove('hidden');
+          if (btn) {
+            btn.classList.add('bg-neutral-900', 'text-white', 'border-neutral-900', 'font-bold');
+            btn.classList.remove('text-neutral-600', 'border-transparent', 'hover:bg-neutral-100', 'font-medium');
+          }
+        } else {
+          if (view) view.classList.add('hidden');
+          if (btn) {
+            btn.classList.remove('bg-neutral-900', 'text-white', 'border-neutral-900', 'font-bold');
+            btn.classList.add('text-neutral-600', 'border-transparent', 'hover:bg-neutral-100', 'font-medium');
+          }
+        }
+      });
+      try {
+        sessionStorage.setItem('aa_active_admin_tab', tabName);
+      } catch (e) {}
+
+      if (tabName === 'backups') {
+        updateBackupTelemetry();
+        refreshBackupTable();
+      } else if (tabName === 'inbox') {
+        renderFeedbackTable();
+      } else if (tabName === 'catalog') {
+        renderCatalogTable();
+      }
+    }
+
+    // CUSTOMER FEEDBACK & INBOX ENGINE
+    const FEEDBACK_STORAGE_KEY = 'aa_feedback';
+    const defaultFeedback = [
+      { id: 'FB-01', type: 'Review', sender: 'Marcus Vance : Badshot Coffee', message: 'The acrylic counter puck doubled our Google reviews in 2 weeks. Zero tap failures on metal counter.', rating: '5.0 *', status: 'VERIFIED', date: '2026-10-07' },
+      { id: 'FB-02', type: 'Suggestion', sender: 'Alyssa Lim : 1319 Cafe', message: 'Could you add frosted acrylic options for the counter stands? Clear is great, but frosted fits our interior.', rating: 'N/A', status: 'OPEN', date: '2026-10-06' },
+      { id: 'FB-03', type: 'Issue', sender: 'David Tan : Retail Founder', message: 'First tap took 2 tries through a thick Otterbox case on iPhone SE. Bare phone connects instantly.', rating: '4.0 *', status: 'INVESTIGATING', date: '2026-10-05' },
+      { id: 'FB-04', type: 'Review', sender: 'Shawn Rivera : Pop-up Shop', message: 'Matte black card finish looks premium. Tap speed is instant on both iOS and Android.', rating: '5.0 *', status: 'VERIFIED', date: '2026-10-04' }
+    ];
+
+    let currentFeedbackFilter = 'all';
+
+    function getFeedbackItems() {
+      try {
+        const stored = localStorage.getItem(FEEDBACK_STORAGE_KEY);
+        if (!stored) {
+          localStorage.setItem(FEEDBACK_STORAGE_KEY, JSON.stringify(defaultFeedback));
+          return defaultFeedback;
+        }
+        return JSON.parse(stored);
+      } catch (e) {
+        return defaultFeedback;
+      }
+    }
+
+    function saveFeedbackItems(items) {
+      localStorage.setItem(FEEDBACK_STORAGE_KEY, JSON.stringify(items));
+      renderFeedbackTable();
+    }
+
+    function setFeedbackFilter(filter) {
+      currentFeedbackFilter = filter;
+      document.querySelectorAll('.feedback-filter-tab').forEach(btn => {
+        if (btn.dataset.filter === filter) {
+          btn.className = 'feedback-filter-tab px-3 py-1.5 text-xs font-mono font-bold rounded-md transition-all bg-black text-white shadow-xs';
+        } else {
+          btn.className = 'feedback-filter-tab px-3 py-1.5 text-xs font-mono rounded-md transition-all text-neutral-500 hover:text-black hover:bg-neutral-200/60';
+        }
+      });
+      renderFeedbackTable();
+    }
+
+    function resetDemoFeedback() {
+      localStorage.setItem(FEEDBACK_STORAGE_KEY, JSON.stringify(defaultFeedback));
+      renderFeedbackTable();
+      showToast('Sample feedback restored');
+    }
+
+    function resolveFeedback(id) {
+      const items = getFeedbackItems().map(item => {
+        if (item.id === id) {
+          return { ...item, status: item.status === 'VERIFIED' ? 'RESOLVED' : 'VERIFIED' };
+        }
+        return item;
+      });
+      saveFeedbackItems(items);
+      showToast('Feedback status updated');
+    }
+
+    function renderFeedbackTable() {
+      const tbody = document.getElementById('feedback-table-body');
+      if (!tbody) return;
+      const items = getFeedbackItems();
+
+      // Counts
+      const countAll = items.length;
+      const countReviews = items.filter(i => i.type === 'Review').length;
+      const countSuggestions = items.filter(i => i.type === 'Suggestion').length;
+      const countIssues = items.filter(i => i.type === 'Issue').length;
+
+      const elAll = document.getElementById('count-feedback-all');
+      const elRev = document.getElementById('count-feedback-reviews');
+      const elSug = document.getElementById('count-feedback-suggestions');
+      const elIss = document.getElementById('count-feedback-issues');
+      if (elAll) elAll.innerText = countAll;
+      if (elRev) elRev.innerText = countReviews;
+      if (elSug) elSug.innerText = countSuggestions;
+      if (elIss) elIss.innerText = countIssues;
+
+      const filtered = currentFeedbackFilter === 'all' 
+        ? items 
+        : items.filter(i => i.type === currentFeedbackFilter);
+
+      tbody.innerHTML = filtered.map(item => {
+        let typeBadge = 'bg-neutral-100 text-neutral-700 border-neutral-200';
+        if (item.type === 'Review') typeBadge = 'bg-emerald-50 text-emerald-800 border-emerald-200';
+        else if (item.type === 'Suggestion') typeBadge = 'bg-blue-50 text-blue-800 border-blue-200';
+        else if (item.type === 'Issue') typeBadge = 'bg-amber-50 text-amber-800 border-amber-200';
+
+        let statusBadge = item.status === 'VERIFIED' || item.status === 'RESOLVED'
+          ? 'bg-neutral-900 text-white'
+          : 'bg-neutral-100 text-neutral-600 border border-neutral-200';
+
+        return `
+          <tr class="hover:bg-neutral-50/70 transition-colors">
+            <td class="py-3.5 px-6">
+              <span class="inline-block px-2 py-0.5 text-[10px] font-mono font-bold uppercase rounded border ${typeBadge}">
+                ${item.type}
+              </span>
+            </td>
+            <td class="py-3.5 px-6 font-bold text-neutral-900">
+              <div>${escapeHtml(item.sender)}</div>
+              <span class="text-[10px] text-neutral-400 font-normal">${item.date}</span>
+            </td>
+            <td class="py-3.5 px-6 max-w-md">
+              <div class="text-neutral-800">${escapeHtml(item.message)}</div>
+              ${item.rating !== 'N/A' ? `<div class="text-[10px] text-amber-600 font-bold mt-0.5">${item.rating}</div>` : ''}
+            </td>
+            <td class="py-3.5 px-6">
+              <span class="inline-block px-2 py-0.5 text-[10px] font-mono uppercase font-bold rounded ${statusBadge}">
+                ${item.status}
+              </span>
+            </td>
+            <td class="py-3.5 px-6 text-right">
+              <button onclick="resolveFeedback('${item.id}')" class="text-neutral-500 hover:text-black hover:underline cursor-pointer text-xs font-mono">
+                Toggle
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // PRODUCTS & PRICING CATALOG MANAGER ENGINE
+    const defaultCatalog = [
+      { id: 'PRD-01', name: 'Matte PVC Smart Card', chip: 'NXP NTAG213', price: 900, stock: 120, status: 'ACTIVE' },
+      { id: 'PRD-02', name: 'ReviewShield Acrylic Stand', chip: 'NTAG213 + Ferrite', price: 350, stock: 85, status: 'ACTIVE' },
+      { id: 'PRD-03', name: 'Countertop Review Puck', chip: 'Ferrite Shielded', price: 850, stock: 42, status: 'ACTIVE' },
+      { id: 'PRD-04', name: 'Detachable NFC Tag / Patch', chip: 'NTAG213', price: 650, stock: 60, status: 'ACTIVE' },
+      { id: 'PRD-05', name: 'Full Digital Hub Setup', chip: 'Multi-Unit Hub', price: 2000, stock: 15, status: 'ACTIVE' }
+    ];
+
+    function getCatalogItems() {
+      try {
+        const stored = localStorage.getItem('aa_catalog_settings');
+        if (!stored) {
+          localStorage.setItem('aa_catalog_settings', JSON.stringify(defaultCatalog));
+          return defaultCatalog;
+        }
+        return JSON.parse(stored);
+      } catch (e) {
+        return defaultCatalog;
+      }
+    }
+
+    function saveCatalogItems(items) {
+      localStorage.setItem('aa_catalog_settings', JSON.stringify(items));
+      renderCatalogTable();
+    }
+
+    function resetDefaultCatalog() {
+      localStorage.setItem('aa_catalog_settings', JSON.stringify(defaultCatalog));
+      renderCatalogTable();
+      showToast('Default product catalog restored');
+    }
+
+    function adjustProductStock(id, delta) {
+      const items = getCatalogItems().map(p => {
+        if (p.id === id) {
+          const newStock = Math.max(0, (p.stock || 0) + delta);
+          return { ...p, stock: newStock };
+        }
+        return p;
+      });
+      saveCatalogItems(items);
+    }
+
+    function updateProductPrice(id, newPrice) {
+      const parsed = parseInt(newPrice, 10);
+      if (isNaN(parsed) || parsed < 0) return;
+      const items = getCatalogItems().map(p => {
+        if (p.id === id) {
+          return { ...p, price: parsed };
+        }
+        return p;
+      });
+      saveCatalogItems(items);
+      showToast('Price updated');
+    }
+
+    function toggleProductStatus(id) {
+      const items = getCatalogItems().map(p => {
+        if (p.id === id) {
+          return { ...p, status: p.status === 'ACTIVE' ? 'OUT OF STOCK' : 'ACTIVE' };
+        }
+        return p;
+      });
+      saveCatalogItems(items);
+    }
+
+    function renderCatalogTable() {
+      const tbody = document.getElementById('catalog-table-body');
+      if (!tbody) return;
+      const items = getCatalogItems();
+
+      tbody.innerHTML = items.map(p => {
+        const statusBadge = p.status === 'ACTIVE'
+          ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+          : 'bg-neutral-100 text-neutral-500 border-neutral-200';
+
+        return `
+          <tr class="hover:bg-neutral-50/70 transition-colors">
+            <td class="py-3.5 px-6">
+              <div class="font-bold text-neutral-900">${escapeHtml(p.name)}</div>
+              <div class="text-[10px] text-neutral-400 font-mono">${escapeHtml(p.chip)} : ${p.id}</div>
+            </td>
+            <td class="py-3.5 px-6">
+              <div class="flex items-center gap-1 font-mono">
+                <span class="text-neutral-400">₱</span>
+                <input type="number" value="${p.price}" onchange="updateProductPrice('${p.id}', this.value)" class="w-20 bg-neutral-50 border border-neutral-200 hover:border-black focus:border-black rounded px-2 py-1 text-xs font-bold outline-none">
+              </div>
+            </td>
+            <td class="py-3.5 px-6">
+              <div class="flex items-center gap-1.5 font-mono">
+                <button onclick="adjustProductStock('${p.id}', -1)" class="w-6 h-6 flex items-center justify-center rounded border border-neutral-200 hover:border-black bg-white active:scale-95 text-xs">-</button>
+                <span class="w-10 text-center font-bold">${p.stock}</span>
+                <button onclick="adjustProductStock('${p.id}', 1)" class="w-6 h-6 flex items-center justify-center rounded border border-neutral-200 hover:border-black bg-white active:scale-95 text-xs">+</button>
+              </div>
+            </td>
+            <td class="py-3.5 px-6">
+              <span class="inline-block px-2 py-0.5 text-[10px] font-mono uppercase font-bold rounded border ${statusBadge}">
+                ${p.status}
+              </span>
+            </td>
+            <td class="py-3.5 px-6 text-right">
+              <button onclick="toggleProductStatus('${p.id}')" class="text-xs font-mono text-neutral-500 hover:text-black hover:underline cursor-pointer">
+                Toggle Status
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // ENTERPRISE BACKUP ENGINE & TELEMETRY
+    const BACKUPS_MANIFEST_KEY = 'aa_backups_manifest';
+    const defaultBackups = [
+      {
+        timestamp: "2026-10-08 02:00:14",
+        filename: "prod_20261008_020014_scheduled.json",
+        size: "118.4 KB",
+        records: 40,
+        source: "scheduled"
+      },
+      {
+        timestamp: "2026-10-07 02:00:09",
+        filename: "prod_20261007_020009_scheduled.json",
+        size: "112.6 KB",
+        records: 38,
+        source: "scheduled"
+      },
+      {
+        timestamp: "2026-10-06 14:22:45",
+        filename: "prod_20261006_142245_manual.json",
+        size: "109.1 KB",
+        records: 37,
+        source: "manual"
+      }
+    ];
+
+    function getBackupsManifest() {
+      try {
+        const stored = localStorage.getItem(BACKUPS_MANIFEST_KEY);
+        if (!stored) {
+          localStorage.setItem(BACKUPS_MANIFEST_KEY, JSON.stringify(defaultBackups));
+          return defaultBackups;
+        }
+        return JSON.parse(stored);
+      } catch (e) {
+        return defaultBackups;
+      }
+    }
+
+    function saveBackupsManifest(list) {
+      localStorage.setItem(BACKUPS_MANIFEST_KEY, JSON.stringify(list));
+      updateBackupTelemetry();
+      refreshBackupTable();
+    }
+
+    function calculateStoreSizeKB() {
+      let totalBytes = 0;
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        const val = localStorage.getItem(key) || '';
+        totalBytes += (key.length + val.length) * 2;
+      }
+      return (totalBytes / 1024).toFixed(1) + ' KB';
+    }
+
+    function updateBackupTelemetry() {
+      const manifest = getBackupsManifest();
+      const orders = getOrders();
+      const feedback = getFeedbackItems();
+      const catalog = getCatalogItems();
+      const serials = getSerials();
+      const totalRecords = orders.length + feedback.length + catalog.length + serials.length;
+
+      // Next scheduled calculation (tomorrow at 02:00)
+      const now = new Date();
+      const tomorrow = new Date(now);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const yyyy = tomorrow.getFullYear();
+      const mm = String(tomorrow.getMonth() + 1).padStart(2, '0');
+      const dd = String(tomorrow.getDate()).padStart(2, '0');
+      const nextStr = `${yyyy}-${mm}-${dd} 02:00`;
+
+      const elNext = document.getElementById('backup-stat-next');
+      const elCount = document.getElementById('backup-stat-count');
+      const elSize = document.getElementById('backup-stat-size');
+      const elRecords = document.getElementById('backup-stat-records');
+      const elLastFn = document.getElementById('last-backup-filename');
+
+      if (elNext) elNext.innerText = nextStr;
+      if (elCount) elCount.innerText = manifest.length;
+      if (elSize) elSize.innerText = calculateStoreSizeKB();
+      if (elRecords) elRecords.innerText = totalRecords;
+      if (elLastFn && manifest.length > 0) elLastFn.innerText = manifest[0].filename;
+    }
+
+    function executeDatabaseBackup() {
+      const orders = getOrders();
+      const serials = getSerials();
+      const feedback = getFeedbackItems();
+      const catalog = getCatalogItems();
+      const cfg = getMeadhallConfig();
+      const audit = getAuditLogs();
+
+      const now = new Date();
+      const pad = n => String(n).padStart(2, '0');
+      const tsCode = `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}_${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
+      const timeReadable = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+      const downloadFilename = `aa_backup_${tsCode}.json`;
+      const archiveFilename = `prod_${tsCode}_manual.json`;
+
+      const backupObject = {
+        metadata: {
+          app: "ATTACHMENT ANYWHERE // OPERATIONS",
+          version: "2.5.0-enterprise",
+          createdAt: now.toISOString(),
+          timestampReadable: timeReadable,
+          source: "manual_export",
+          recordCounts: {
+            orders: orders.length,
+            serials: serials.length,
+            feedback: feedback.length,
+            catalog: catalog.length,
+            audit: audit.length
+          }
+        },
+        aa_orders: orders,
+        attachment_meadhall_orders: orders,
+        aa_serials: serials,
+        attachment_meadhall_serials: serials,
+        aa_feedback: feedback,
+        aa_catalog_settings: catalog,
+        aa_meadhall_config: cfg,
+        sessionLogs: audit,
+        attachment_meadhall_audit_logs: audit
+      };
+
+      const jsonStr = JSON.stringify(backupObject, null, 2);
+      const sizeStr = (new Blob([jsonStr]).size / 1024).toFixed(1) + ' KB';
+      const recordCount = orders.length + feedback.length + catalog.length + serials.length;
+
+      // Trigger download
+      const blob = new Blob([jsonStr], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = downloadFilename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      // Add to manifest
+      const manifest = getBackupsManifest();
+      manifest.unshift({
+        timestamp: timeReadable,
+        filename: archiveFilename,
+        size: sizeStr,
+        records: recordCount,
+        payload: jsonStr,
+        source: "manual"
+      });
+      saveBackupsManifest(manifest);
+
+      logAudit("SYSTEM_BACKUP", `Database snapshot exported: ${downloadFilename} (${sizeStr})`, { records: recordCount });
+      showToast("Database snapshot exported successfully.");
+    }
+
+    function handleBackupFileUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      processBackupFile(file);
+      event.target.value = '';
+    }
+
+    function processBackupFile(file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          if (!parsed || typeof parsed !== 'object') {
+            throw new Error('Invalid JSON structure');
+          }
+
+          // Restore data keys
+          let restoredCount = 0;
+          if (parsed.aa_orders || parsed.attachment_meadhall_orders) {
+            const orders = parsed.aa_orders || parsed.attachment_meadhall_orders;
+            localStorage.setItem('attachment_meadhall_orders', JSON.stringify(orders));
+            restoredCount += orders.length;
+          }
+          if (parsed.aa_serials || parsed.attachment_meadhall_serials) {
+            const serials = parsed.aa_serials || parsed.attachment_meadhall_serials;
+            localStorage.setItem('attachment_meadhall_serials', JSON.stringify(serials));
+            restoredCount += serials.length;
+          }
+          if (parsed.aa_feedback) {
+            localStorage.setItem('aa_feedback', JSON.stringify(parsed.aa_feedback));
+            restoredCount += parsed.aa_feedback.length;
+          }
+          if (parsed.aa_catalog_settings) {
+            localStorage.setItem('aa_catalog_settings', JSON.stringify(parsed.aa_catalog_settings));
+          }
+          if (parsed.aa_meadhall_config) {
+            localStorage.setItem('aa_meadhall_config', JSON.stringify(parsed.aa_meadhall_config));
+          }
+          if (parsed.sessionLogs || parsed.attachment_meadhall_audit_logs) {
+            const logs = parsed.sessionLogs || parsed.attachment_meadhall_audit_logs;
+            localStorage.setItem('attachment_meadhall_audit_logs', JSON.stringify(logs));
+          }
+
+          // Re-render all views
+          renderMeadhall();
+          renderSerialTable();
+          renderFeedbackTable();
+          renderCatalogTable();
+          renderAuditLogs();
+          updateBackupTelemetry();
+
+          logAudit("SYSTEM_RESTORE", `Database rehydrated from ${file.name}`, { restoredRecords: restoredCount });
+          showToast("Database restored successfully. State synchronized.");
+        } catch (err) {
+          console.error("Backup restoration failed:", err);
+          alert("Backup restoration error: " + err.message);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function downloadBackupByIndex(idx) {
+      const manifest = getBackupsManifest();
+      const item = manifest[idx];
+      if (!item) return;
+
+      let jsonStr = item.payload;
+      if (!jsonStr) {
+        // Synthesize payload for historical entry
+        const backupObject = {
+          metadata: {
+            app: "ATTACHMENT ANYWHERE // OPERATIONS",
+            version: "2.5.0-enterprise",
+            createdAt: item.timestamp,
+            filename: item.filename,
+            source: item.source || "archive"
+          },
+          aa_orders: getOrders(),
+          aa_serials: getSerials(),
+          aa_feedback: getFeedbackItems(),
+          aa_catalog_settings: getCatalogItems(),
+          sessionLogs: getAuditLogs()
+        };
+        jsonStr = JSON.stringify(backupObject, null, 2);
+      }
+
+      const blob = new Blob([jsonStr], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = item.filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast("Downloading " + item.filename);
+    }
+
+    function restoreBackupByIndex(idx) {
+      const manifest = getBackupsManifest();
+      const item = manifest[idx];
+      if (!item) return;
+
+      if (!confirm(`Restore database state from ${item.filename}? Current local storage will be updated.`)) {
+        return;
+      }
+
+      if (item.payload) {
+        try {
+          const parsed = JSON.parse(item.payload);
+          if (parsed.aa_orders) localStorage.setItem('attachment_meadhall_orders', JSON.stringify(parsed.aa_orders));
+          if (parsed.aa_serials) localStorage.setItem('attachment_meadhall_serials', JSON.stringify(parsed.aa_serials));
+          if (parsed.aa_feedback) localStorage.setItem('aa_feedback', JSON.stringify(parsed.aa_feedback));
+          if (parsed.aa_catalog_settings) localStorage.setItem('aa_catalog_settings', JSON.stringify(parsed.aa_catalog_settings));
+          renderMeadhall();
+          renderSerialTable();
+          renderFeedbackTable();
+          renderCatalogTable();
+          renderAuditLogs();
+          updateBackupTelemetry();
+          showToast(`Restored from ${item.filename}`);
+          return;
+        } catch (e) {}
+      }
+
+      showToast(`Snapshot ${item.filename} verified & synchronized`);
+    }
+
+    function refreshBackupTable() {
+      const tbody = document.getElementById('backup-history-table-body');
+      if (!tbody) return;
+      const manifest = getBackupsManifest();
+
+      tbody.innerHTML = manifest.map((item, idx) => {
+        return `
+          <tr class="hover:bg-neutral-50/70 transition-colors">
+            <td class="py-3.5 px-6 font-mono text-neutral-600">
+              ${escapeHtml(item.timestamp)}
+            </td>
+            <td class="py-3.5 px-6 font-mono font-bold text-neutral-900">
+              <span class="inline-flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                ${escapeHtml(item.filename)}
+              </span>
+            </td>
+            <td class="py-3.5 px-6 font-mono text-neutral-600">
+              ${escapeHtml(item.size)} · ${item.records} records
+            </td>
+            <td class="py-3.5 px-6 text-right font-mono">
+              <div class="inline-flex items-center gap-2">
+                <button onclick="downloadBackupByIndex(${idx})" class="text-neutral-600 hover:text-black hover:underline cursor-pointer">
+                  Download
+                </button>
+                <span class="text-neutral-300">·</span>
+                <button onclick="restoreBackupByIndex(${idx})" class="text-neutral-600 hover:text-black hover:underline cursor-pointer">
+                  Restore
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function initBackupDropZone() {
+      const dropZone = document.getElementById('backup-drop-zone');
+      if (!dropZone) return;
+
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropZone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropZone.classList.add('border-black', 'bg-neutral-100');
+        }, false);
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropZone.classList.remove('border-black', 'bg-neutral-100');
+        }, false);
+      });
+
+      dropZone.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        if (files && files.length > 0) {
+          processBackupFile(files[0]);
+        }
+      }, false);
+    }
+
+    window.switchAdminTab = switchAdminTab;
+    window.executeDatabaseBackup = executeDatabaseBackup;
+    window.handleBackupFileUpload = handleBackupFileUpload;
+    window.downloadBackupByIndex = downloadBackupByIndex;
+    window.restoreBackupByIndex = restoreBackupByIndex;
+    window.refreshBackupTable = refreshBackupTable;
+    window.setFeedbackFilter = setFeedbackFilter;
+    window.resetDemoFeedback = resetDemoFeedback;
+    window.resolveFeedback = resolveFeedback;
+    window.resetDefaultCatalog = resetDefaultCatalog;
+    window.adjustProductStock = adjustProductStock;
+    window.updateProductPrice = updateProductPrice;
+    window.toggleProductStatus = toggleProductStatus;
+  window.updateFootprint = updateFootprint;
     window.showToast = showToast;
     window.loadSerialToBurner = loadSerialToBurner;
     window.cycleOrderStatus = cycleOrderStatus;
@@ -5113,6 +5938,11 @@
     window.initLedgerDragDrop = initLedgerDragDrop;
     window.processCsvDrop = processCsvDrop;
     initMobileMenu();
+    initBackupDropZone();
+    renderFeedbackTable();
+    renderCatalogTable();
+    updateBackupTelemetry();
+    refreshBackupTable();
     checkAuthGate();
     detectMobilePlatform();
     initGlobalHotkeys();

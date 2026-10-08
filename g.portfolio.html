@@ -197,53 +197,6 @@
   <!-- Glowing Glitter Black Canvas Cursor Engine -->
   <canvas id="cursor-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
 
-  <!-- Floating Top Bar Actions (PWA Install Trigger) -->
-  <header class="fixed top-3 right-3 sm:top-4 sm:right-4 z-40 flex items-center gap-2">
-    <button
-      type="button"
-      id="pwa-install-header-btn"
-      onclick="openPwaInstallModal()"
-      class="hidden items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold text-neutral-800 bg-white/90 hover:bg-neutral-100 border border-neutral-200/90 shadow-xs backdrop-blur-md transition-all duration-150 ease-out active:scale-[0.98] cursor-pointer"
-      title="Install Talk with GI as an app"
-    >
-      <i data-lucide="download" class="w-3.5 h-3.5 text-neutral-700"></i>
-      <span>Install App</span>
-    </button>
-  </header>
-
-  <!-- Smart Mobile Install Banner -->
-  <aside
-    id="pwa-mobile-banner"
-    class="fixed bottom-3 left-3 right-3 sm:left-auto sm:right-4 sm:bottom-4 z-40 max-w-sm mx-auto hidden bg-neutral-950/95 text-white border border-neutral-800 ring-1 ring-inset ring-white/5 rounded-2xl p-3 shadow-2xl backdrop-blur-md transition-all duration-200 ease-out transform translate-y-8 opacity-0"
-    aria-label="Add to home screen notice"
-  >
-    <div class="flex items-center gap-2.5">
-      <img src="avatar/frame_48_delay-0.05s.webp" alt="Talk with GI" class="w-9 h-9 rounded-xl object-cover bg-neutral-900 border border-neutral-800 shrink-0">
-      <div class="flex-1 min-w-0 text-left">
-        <div class="text-xs font-bold text-white tracking-tight truncate">Talk with GI</div>
-        <div class="text-[11px] text-neutral-400 font-normal truncate">Add to Home Screen</div>
-      </div>
-      <div class="flex items-center gap-1.5 shrink-0">
-        <button
-          type="button"
-          onclick="openPwaInstallModal()"
-          class="px-2.5 py-1.5 rounded-xl bg-white text-black hover:bg-neutral-200 text-xs font-bold transition-all duration-150 ease-out active:scale-[0.98] cursor-pointer shadow-xs"
-        >
-          Install
-        </button>
-        <button
-          type="button"
-          onclick="dismissPwaBanner()"
-          class="w-7 h-7 rounded-lg text-neutral-400 hover:text-white flex items-center justify-center transition-all duration-150 ease-out active:scale-[0.98] cursor-pointer"
-          aria-label="Dismiss banner"
-        >
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-    </div>
-  </aside>
-
-
   <!-- Main Unified Container (Optically Centered by Default, Dynamically Morphs on Interaction) -->
   <main id="main-container" class="min-h-[100dvh] w-full flex flex-col justify-center items-center px-4 safe-insets max-w-xl mx-auto transition-all duration-500 ease-out relative z-10">
 
@@ -720,12 +673,14 @@
       },
 
       origin: {
-        story: "Nagsimula ang Attachment Anywhere bilang 'Attachment': hango sa hilig ko sa detachable accessories at modular pieces para i-customize ang personal outfit style. Nang mapag-aralan ko ang phygital technology, na-realize ko: bakit sa damit lang? I evolved it into Attachment Anywhere para gumawa ng modular NFC products at smart review hubs na kayang ikabit sa kahit anong counter, pader, o gamit para mag-connect offline to online.",
-        philosophy: "Negative is also part of positive. Kapag may aberya sa buhay o negosyo, setbacks are not failures: part sila ng proseso. Everything happens for a reason, and every friction point provides the exact data needed to move forward."
+        story: "Attachment Anywhere started as 'Attachment', rooted in my passion for detachable accessories and modular pieces to customize personal style. When I studied phygital technology, I realized: why stop at clothing? I evolved it into Attachment Anywhere to build modular NFC products and smart review hubs that mount to any counter, wall, or surface to connect offline touchpoints online.",
+        resellingRoots: "Back in Junior High School, I took on academic commissions (₱100 to ₱350) and resold hype DBTK shirts (+₱200 to ₱300 over retail). I walked from Balintawak LRT station all the way to DBTK Shorthorn to pick up drops to resell. That taught me early on that if you know how to walk, hustle, and read customer demand, you can build income independently.",
+        fatherInfluence: "My street smarts came directly from my father. Growing up, I accompanied him across his amusement and arcade operations, where I learned how to deal with diverse customers, read crowd behavior, and handle daily cash flow. You cannot learn that in a textbook: that gave me practical grit and street instincts long before studying formal entrepreneurship.",
+        philosophy: "Negative is also part of positive. When friction happens in life or business, setbacks are never failures: they are necessary milestones in the process. Everything happens for a reason, and every obstacle provides the exact data needed to move forward."
       },
 
       routine: {
-        schedule: "10-hour shifts sa DOH (BLHSD) 4 days a week, diretso sa Letran for 3 to 5 hours of evening classes, plus Friday lectures. Attachment Anywhere and video clipping run during late nights and weekends. Midnight is my dedicated creative window for Google AI tools, automation, coding, and video editing."
+        schedule: "10-hour shifts at DOH (BLHSD) 4 days a week, straight to Letran for 3 to 5 hours of evening classes, plus Friday lectures. Attachment Anywhere and video clipping run late nights and weekends. Midnight is my dedicated creative window for Google AI tools, automation, coding, and video editing."
       },
 
       projects: [
@@ -791,31 +746,31 @@
       ],
 
       commerce: {
-        pricingTier: "₱350 to ₱2,000 (mula ReviewShield tap hardware hanggang full custom Digital Hub packages)",
-        bulkNote: "Negotiable ang discounts para sa bulk orders, team sets, at wholesale deployments.",
+        pricingTier: "₱350 to ₱2,000 (from ReviewShield tap hardware to full custom Digital Hub packages)",
+        bulkNote: "Negotiable volume discounts for bulk orders, team sets, and wholesale retail deployments.",
         policy: "Treating every customer with generosity. Fair pricing builds loyalty and organic word-of-mouth marketing.",
         freebies: [
-          "100% Libre ang logo placement at card/stand layout assistance.",
-          "Smart Review Hubs include a free physical stand at 7-day free trial sa profile web hosting.",
-          "Zero vendor lock-in: bukas at tutulungan kitang ikabit ang sarili mong custom domain o hosting."
+          "100% free logo placement and card/stand layout design assistance.",
+          "Smart Review Hubs include a complimentary physical stand and 7-day trial for profile web hosting.",
+          "Zero vendor lock-in: full assistance to connect your own custom domain or external hosting."
         ],
         products: [
           {
             name: "ReviewShield & NFC Executive Cards",
             range: "Starting at ₱350 to ₱550",
-            details: "Contactless tap hardware, matte PVC finish, 1-tap contact save (.vcf), at dynamic profile beam na walang kailangang app."
+            details: "Contactless tap hardware, matte PVC finish, 1-tap contact save (.vcf), and instant profile beaming with zero apps required."
           },
           {
             name: "Smart Review Counter Hubs",
             range: "Includes Free Acrylic Stand + Web Setup",
-            details: "May kasamang libreng stand at free website landing page na may 7-day free trial. Pwedeng ikabit sa sariling custom business domain o hosting."
+            details: "Includes a complimentary stand and custom website landing page with a 7-day trial. Easily connects to your own custom business domain or hosting."
           }
         ],
         logistics: {
           turnaround: "3 to 7 business days for production and chip encoding.",
           couriers: "Lalamove, Grab, and J&T Express nationwide.",
-          delivery: "Lalamove, Grab, at J&T Express nationwide.",
-          meetup: "Personal handoff & live demo sa LRT/MRT stations at Metro Manila malls (₱0 shipping fee)."
+          delivery: "Lalamove, Grab, and J&T Express nationwide.",
+          meetup: "Personal handoff & live demo at LRT/MRT stations and Metro Manila malls (₱0 shipping fee)."
         },
         payments: ["GCash", "GoTyme Bank", "QR Ph (Universal QR for any local bank or e-wallet)"]
       },
@@ -1325,9 +1280,9 @@
                 <span class="text-[11px] font-mono text-neutral-500">₱1,200 to ₱1,500 / 500 pcs</span>
               </div>
               <ul class="text-[11px] text-neutral-600 space-y-1.5 leading-relaxed">
-                <li>• 88% natatapon lang sa loob ng 7 days.</li>
-                <li>• Kailangang magpa-print ulit kapag may nabagong info.</li>
-                <li>• Manual typing ang kailangan para ma-save ang contact.</li>
+                <li>• 88% discarded within the first 7 days.</li>
+                <li>• Requires expensive reprints whenever information changes.</li>
+                <li>• High friction: recipients must manually type details.</li>
               </ul>
             </div>
 
@@ -1337,9 +1292,9 @@
                 <span class="text-[11px] font-mono text-neutral-300">Starts at ₱350 to ₱550</span>
               </div>
               <ul class="text-[11px] text-neutral-300 space-y-1.5 leading-relaxed">
-                <li>✓ Isang beses lang bibilhin; unlimited instant taps.</li>
-                <li>✓ Libreng dynamic updates online nang walang bagong card.</li>
-                <li>✓ 1-tap save (.vcf) diretso sa contacts ng kausap mo.</li>
+                <li>✓ One-time purchase with unlimited instant contactless taps.</li>
+                <li>✓ Free dynamic updates online without buying a new card.</li>
+                <li>✓ 1-tap save (.vcf) directly into your recipient's contacts.</li>
               </ul>
             </div>
           </div>
@@ -1362,7 +1317,7 @@
               <h4 class="text-sm font-bold text-neutral-900">Volume Pricing & Bulk Tier Estimates</h4>
               <span class="text-[10px] font-mono uppercase bg-neutral-100 text-neutral-700 px-2 py-0.5 rounded-full border border-neutral-200">Wholesale</span>
             </div>
-            <p class="text-xs text-neutral-500 font-normal mt-0.5">Flexible volume rates para sa teams, kumpanya, at cafes:</p>
+            <p class="text-xs text-neutral-500 font-normal mt-0.5">Tiered volume rates for teams, businesses, and retail locations:</p>
           </div>
 
           <div class="space-y-2">
@@ -1400,9 +1355,9 @@
           </div>
 
           <div class="p-3 rounded-xl bg-neutral-50 border border-neutral-200 flex items-center justify-between text-xs">
-            <span class="text-neutral-600">Kailangan ng custom bundle para sa cafe stands at cards?</span>
-            <a href="https://m.me/Gian2320?text=Hi%20Gian!%20Inquire%20ako%20for%20bulk%20/%20wholesale%20order" target="_blank" rel="noopener noreferrer" class="font-bold text-neutral-900 hover:underline">
-              Kausapin si Gian
+            <span class="text-neutral-600">Need a custom bundle for cafe stands and cards?</span>
+            <a href="https://m.me/Gian2320?text=Hi%20Gian!%20Inquire%20for%20bulk%20/%20wholesale%20order" target="_blank" rel="noopener noreferrer" class="font-bold text-neutral-900 hover:underline">
+              Talk with Gian
             </a>
           </div>
         </div>
@@ -1424,7 +1379,7 @@
                 <i data-lucide="train" class="w-3.5 h-3.5 text-neutral-700"></i>
                 Train Stations (LRT / MRT)
               </div>
-              <p class="text-[11px] text-neutral-500 leading-relaxed">LRT-1 (Carriedo, Central, Tayuman), LRT-2 (Recto, Legarda), at accessible MRT-3 stations.</p>
+              <p class="text-[11px] text-neutral-500 leading-relaxed">LRT-1 (Carriedo, Central, Tayuman), LRT-2 (Recto, Legarda), and accessible MRT-3 stations.</p>
             </div>
 
             <div class="p-3 rounded-xl bg-neutral-50 border border-neutral-200">
@@ -1432,12 +1387,12 @@
                 <i data-lucide="map-pin" class="w-3.5 h-3.5 text-neutral-700"></i>
                 Accessible Malls
               </div>
-              <p class="text-[11px] text-neutral-500 leading-relaxed">SM Manila, Robinsons Manila, Lucky Chinatown, o paligid ng Intramuros / Letran campus.</p>
+              <p class="text-[11px] text-neutral-500 leading-relaxed">SM Manila, Robinsons Manila, Lucky Chinatown, or around Intramuros / Letran campus.</p>
             </div>
           </div>
 
           <div class="space-y-2 pt-1">
-            <a href="https://m.me/Gian2320?text=Hi%20Gian!%20Gusto%20ko%20mag-inquire%20for%20a%20personal%20NFC%20card%20demo%20or%20meetup" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 px-4 bg-neutral-900 hover:bg-black text-white text-xs font-semibold rounded-xl text-center inline-flex items-center justify-center gap-2 transition active:scale-95 shadow-xs">
+            <a href="https://m.me/Gian2320?text=Hi%20Gian!%20Inquire%20for%20a%20personal%20NFC%20card%20demo%20or%20meetup" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 px-4 bg-neutral-900 hover:bg-black text-white text-xs font-semibold rounded-xl text-center inline-flex items-center justify-center gap-2 transition active:scale-95 shadow-xs">
               <i data-lucide="message-circle" class="w-4 h-4"></i>
               <span>Book Meetup via Messenger</span>
             </a>
@@ -1445,7 +1400,7 @@
         </div>
       `,
 
-      videoShowcase: () => {
+      video: () => {
         const v = GIAN_DATA.videoVault;
         const clipsHtml = v.featuredClips.map(clip => `
           <div class="p-3 rounded-xl bg-neutral-50 border border-neutral-200/90 flex items-center justify-between gap-3">
@@ -1468,15 +1423,23 @@
           <div class="bg-white p-5 sm:p-6 rounded-2xl border border-neutral-200/90 shadow-sm text-left space-y-4">
             <div class="flex items-center justify-between border-b border-neutral-100 pb-3">
               <div>
-                <span class="text-[10px] font-mono tracking-wider uppercase text-neutral-500 bg-neutral-100 px-2 py-0.5 rounded-full border border-neutral-200">RETENTION MOTION</span>
-                <h4 class="text-sm sm:text-base font-bold text-neutral-900 mt-1.5">${escapeHtml(v.title)}</h4>
+                <h4 class="text-sm sm:text-base font-bold text-neutral-900">Short-Form Video Vault & Bounties</h4>
+                <p class="text-xs text-neutral-500 font-normal mt-0.5">Retention motion media & creator clipping workflows</p>
               </div>
-              <span class="text-[10px] font-mono uppercase bg-neutral-100 text-neutral-700 px-2.5 py-1 rounded-full border border-neutral-200">Whop Archive</span>
+              <span class="text-[10px] font-mono uppercase bg-neutral-100 text-neutral-700 px-2.5 py-1 rounded-full border border-neutral-200">Drive Vault</span>
             </div>
 
-            <p class="text-xs sm:text-sm text-neutral-600 font-normal leading-relaxed">
-              ${escapeHtml(v.description)}
-            </p>
+            <div class="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200/90 space-y-2 text-xs">
+              <div class="font-bold text-neutral-900 flex items-center gap-2">
+                <i data-lucide="scissors" class="w-3.5 h-3.5 text-neutral-700"></i>
+                Retention Strategy & Pacing Rules
+              </div>
+              <ul class="text-[11px] text-neutral-600 space-y-1.5 leading-relaxed">
+                <li>• <strong>1.5s Visual Hook:</strong> High-impact visual or question hook in the first frame to arrest feed drop-off.</li>
+                <li>• <strong>Audio-Sync Punch-Ins:</strong> Dynamic micro punch-in zoom cuts every 3 to 4 seconds beat-matched to audio transients.</li>
+                <li>• <strong>Micro-Captions & Pacing:</strong> Fast-paced kinetic typography and sound design engineered to maximize watch time.</li>
+              </ul>
+            </div>
 
             <div class="space-y-2">
               <div class="text-[10px] font-mono tracking-wider uppercase text-neutral-400">Featured Retention Cuts</div>
@@ -1486,7 +1449,7 @@
             </div>
 
             <div class="pt-2 flex flex-wrap gap-2.5">
-              <a href="${escapeHtml(v.url)}" target="_blank" rel="noopener noreferrer" class="flex-1 min-w-[160px] py-2.5 px-4 bg-neutral-900 hover:bg-black text-white text-xs font-semibold rounded-xl text-center inline-flex items-center justify-center gap-2 transition active:scale-95 shadow-xs">
+              <a href="https://drive.google.com/drive/folders/1JLZG02tulsBdF3a6L8tWAp8GV35SUHDV?usp=drive_link" target="_blank" rel="noopener noreferrer" class="flex-1 min-w-[160px] py-2.5 px-4 bg-neutral-900 hover:bg-black text-white text-xs font-semibold rounded-xl text-center inline-flex items-center justify-center gap-2 transition active:scale-95 shadow-xs">
                 <i data-lucide="folder" class="w-4 h-4"></i>
                 <span>Open Google Drive Vault</span>
               </a>
@@ -1526,41 +1489,38 @@
       fallback: () => `
         <div class="bg-white p-5 rounded-2xl border border-neutral-200/90 shadow-sm text-left space-y-3">
           <p class="text-xs text-neutral-500 font-normal">
-            Pumili ng paksa o mag-type ng anumang tanong sa input dock sa ibaba:
+            Select a topic or type any question in the input dock below:
           </p>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            <button onclick="handlePromptStarter('Bakit Letran Entrepreneurship?')" class="text-left p-3.5 rounded-xl bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 transition cursor-pointer">
+            <button onclick="handlePromptStarter('Why Letran Entrepreneurship?')" class="text-left p-3.5 rounded-xl bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 transition cursor-pointer">
               <div class="text-xs font-bold text-neutral-900 mb-0.5">Letran &amp; Startup Origin</div>
-              <div class="text-[11px] text-neutral-500 font-normal">Bakit Entrepreneurship at paano nabuo ang Attachment.</div>
+              <div class="text-[11px] text-neutral-500 font-normal">Why Entrepreneurship and how Attachment Anywhere was built.</div>
             </button>
             <button onclick="handlePromptStarter('How do your NFC cards work?')" class="text-left p-3.5 rounded-xl bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 transition cursor-pointer">
               <div class="text-xs font-bold text-neutral-900 mb-0.5">NFC Hardware &amp; Review Hubs</div>
-              <div class="text-[11px] text-neutral-500 font-normal">Specs, Badshot deployments, at live demo.</div>
+              <div class="text-[11px] text-neutral-500 font-normal">Specs, Badshot deployments, and live mobile preview.</div>
             </button>
             <button onclick="handlePromptStarter('What tools do you use?')" class="text-left p-3.5 rounded-xl bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 transition cursor-pointer">
               <div class="text-xs font-bold text-neutral-900 mb-0.5">Google AI &amp; Webhooks</div>
-              <div class="text-[11px] text-neutral-500 font-normal">Gemini, Antigravity, at anti-AI-slop philosophy.</div>
+              <div class="text-[11px] text-neutral-500 font-normal">Gemini, Antigravity, and zero-bloat code architecture.</div>
             </button>
             <button onclick="handlePromptStarter('Show your video editing & clipping work')" class="text-left p-3.5 rounded-xl bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 transition cursor-pointer">
               <div class="text-xs font-bold text-neutral-900 mb-0.5">Video Editing &amp; Whop Clipping</div>
-              <div class="text-[11px] text-neutral-500 font-normal">Retention curve pacing, 1.5s hook, at CapCut stack.</div>
+              <div class="text-[11px] text-neutral-500 font-normal">Retention curve pacing, 1.5s hook, and CapCut pipeline.</div>
             </button>
           </div>
         </div>
       `
     };
     STAGE_TEMPLATES.commerce = STAGE_TEMPLATES.bulkEstimate;
-    STAGE_TEMPLATES.meetupScheduler = STAGE_TEMPLATES.meetupFlow;
-    STAGE_TEMPLATES.videoShowcase = STAGE_TEMPLATES.videoShowcase;
-    STAGE_TEMPLATES.videoVault = STAGE_TEMPLATES.videoShowcase;
-    STAGE_TEMPLATES.video = STAGE_TEMPLATES.videoShowcase;
+    STAGE_TEMPLATES.videoShowcase = STAGE_TEMPLATES.video;
+    STAGE_TEMPLATES.videoVault = STAGE_TEMPLATES.video;
     STAGE_TEMPLATES.pwa = STAGE_TEMPLATES.pwaInstall;
     STAGE_TEMPLATES.install = STAGE_TEMPLATES.pwaInstall;
 
 
     // 5. Dynamic typeahead engine
     const TYPEAHEAD_HINTS = [
-      { query: "How do I install this app?", label: "Add to Home Screen / Install PWA", category: "App", icon: "download", keywords: ["install", "pwa", "app", "home screen", "add to home screen", "standalone", "download", "save to phone", "paano i-install"] },
       { query: "What are your core disciplines?", label: "What are your core disciplines?", category: "Overview", icon: "layers", keywords: ["discipline", "disciplines", "what do you do", "skills", "pillars", "tri", "focus", "sino ka", "overview"] },
       { query: "How did Attachment Anywhere start?", label: "Origin: Detachable Fashion to Phygital NFC", category: "Origin", icon: "tag", keywords: ["origin", "fashion", "accessories", "damit", "simula", "nagsimula", "start", "bakit", "pormahan"] },
       { query: "What is your daily routine & schedule?", label: "Daily Routine: 10-Hr DOH Shifts & Letran Classes", category: "Routine", icon: "clock", keywords: ["routine", "schedule", "doh", "letran", "shift", "daily", "midnight", "tulog", "hours"] },
@@ -1678,7 +1638,7 @@
       // 1. Bulk & Volume Pricing
       if (hasAny(q, ["bulk", "wholesale", "volume", "team order", "discount", "maramihan", "bulto"])) {
         return {
-          text: "Nag-aalok kami ng wholesale discounts para sa teams, companies, at multi-branch deployments. Mula ₱550 para sa solo cards, bumababa ito sa ₱480 para sa 5-9 cards, ₱420 para sa 10-19 cards, at ₱350 per piece para sa 20+ cards:",
+          text: "We offer volume discounts for teams, companies, and multi-branch retail deployments. Starting from ₱550 for single cards, rates scale down to ₱480 for 5-9 cards, ₱420 for 10-19 cards, and ₱350 per piece for 20+ units:",
           templateKey: "bulkEstimate"
         };
       }
@@ -1686,7 +1646,7 @@
       // 2. Paper Cards vs NFC Hardware (Comparison & ROI)
       if (hasAny(q, ["compare", "comparison", "paper vs", "traditional", "bakit nfc", "why nfc", "roi", "papel"])) {
         return {
-          text: "Ang tradisyonal na papel na business cards ay may 88% discard rate sa loob ng unang 7 araw. Sa Attachment Anywhere contactless NFC hardware, isang beses ka lang bibili: may unlimited instant profile beams ka na, libreng dynamic web updates anumang oras, at 1-tap contact save diretso sa phone ng kausap mo:",
+          text: "Traditional paper business cards have an 88% discard rate within the first 7 days. With Attachment Anywhere contactless NFC hardware, you make a one-time purchase with unlimited profile beams, free dynamic web updates anytime, and 1-tap contact saving directly to the other person's phone:",
           templateKey: "comparison"
         };
       }
@@ -1694,7 +1654,7 @@
       // 3. Personal Meetup & Transit Handoffs
       if (hasAny(q, ["meetup", "meet up", "lrt", "mrt", "train", "station", "mall", "handoff", "pickup", "personal demo"])) {
         return {
-          text: "Nag-aalok ako ng personal handoff at live contactless demo sa mga accessible LRT/MRT stations at Metro Manila malls nang may ₱0 shipping fee:",
+          text: "I offer personal handoffs and live contactless hardware demos across accessible LRT/MRT train stations and Metro Manila malls with ₱0 shipping fees:",
           templateKey: "meetupFlow"
         };
       }
@@ -1704,6 +1664,22 @@
         return {
           text: "Attachment Anywhere began as 'Attachment' from my passion for detachable fashion accessories and modular pieces. When I studied phygital tech, I asked myself: why stop at clothing? I evolved it into Attachment Anywhere to build modular NFC hardware and smart review hubs that attach to any counter, wall, or object to connect offline to online:",
           templateKey: "projects"
+        };
+      }
+
+      // High School Reselling & Balintawak Roots
+      if (hasAny(q, ["resell", "dbtk", "balintawak", "unang benta", "commission", "commissions", "shorthorn", "reselling", "jhs"])) {
+        return {
+          text: GIAN_DATA.origin.resellingRoots,
+          templateKey: "me"
+        };
+      }
+
+      // Father's Influence & Street Smarts
+      if (hasAny(q, ["tatay", "father", "pamilya", "amusement", "kanino natuto", "street smarts", "diskarte"])) {
+        return {
+          text: GIAN_DATA.origin.fatherInfluence,
+          templateKey: "me"
         };
       }
 
@@ -1838,7 +1814,7 @@
       // 21. Live Demo / Digital Profile Card
       if (hasAny(q, ["live demo", "demo", "phone preview", "digital card", "subok"])) {
         return {
-          text: "Maaari mong i-test ang mismong digital profile card UI sa pamamagitan ng aming interactive mobile simulator:",
+          text: "You can test the actual digital profile card interface in real time using our interactive phone simulator:",
           templateKey: "projects"
         };
       }
@@ -2428,10 +2404,6 @@
         const choice = await deferredPwaPrompt.userChoice;
         if (choice && choice.outcome === 'accepted') {
           showPreviewToast("App installation initiated!");
-          const banner = document.getElementById("pwa-mobile-banner");
-          if (banner) banner.remove();
-          const btn = document.getElementById("pwa-install-header-btn");
-          if (btn) btn.classList.add("hidden");
         }
       } catch (err) {
         console.error("Install prompt error:", err);
@@ -2439,19 +2411,6 @@
         deferredPwaPrompt = null;
         closePwaInstallModal();
       }
-    }
-
-    function dismissPwaBanner() {
-      const banner = document.getElementById("pwa-mobile-banner");
-      if (!banner) return;
-      banner.classList.remove("opacity-100", "translate-y-0");
-      banner.classList.add("opacity-0", "translate-y-8");
-      setTimeout(() => {
-        banner.classList.add("hidden");
-      }, 300);
-      try {
-        sessionStorage.setItem("gi_pwa_banner_dismissed", "1");
-      } catch (e) {}
     }
 
     function initPwaManager() {
@@ -2463,40 +2422,10 @@
         });
       }
 
-      if (isStandaloneMode()) {
-        const headerBtn = document.getElementById("pwa-install-header-btn");
-        if (headerBtn) headerBtn.classList.add("hidden");
-        const banner = document.getElementById("pwa-mobile-banner");
-        if (banner) banner.remove();
-        return;
-      }
-
-      const headerBtn = document.getElementById("pwa-install-header-btn");
-      if (headerBtn) {
-        headerBtn.classList.remove("hidden");
-        headerBtn.classList.add("inline-flex");
-      }
-
       window.addEventListener("beforeinstallprompt", (e) => {
         e.preventDefault();
         deferredPwaPrompt = e;
       });
-
-      const isMobile = window.matchMedia("(max-width: 640px)").matches || isIOSDevice() || ('ontouchstart' in window);
-      const isDismissed = sessionStorage.getItem("gi_pwa_banner_dismissed") === "1";
-      if (isMobile && !isDismissed) {
-        setTimeout(() => {
-          const banner = document.getElementById("pwa-mobile-banner");
-          if (banner && !isStandaloneMode()) {
-            banner.classList.remove("hidden");
-            requestAnimationFrame(() => {
-              banner.classList.remove("opacity-0", "translate-y-8");
-              banner.classList.add("opacity-100", "translate-y-0");
-            });
-            lucide.createIcons();
-          }
-        }, 2200);
-      }
     }
 
     window.addEventListener("DOMContentLoaded", initPwaManager);
