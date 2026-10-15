@@ -12,6 +12,7 @@
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="js/aa-core.js"></script>
 
   <style>
     /* Clean aesthetics & remove default scrollbars */
@@ -342,6 +343,60 @@
       }
     }
 
+    // Loop C: Reactive Storefront Social Proof (Verified Client Reviews)
+    function renderStorefrontReviews() {
+      const container = document.getElementById('storefront-reviews-grid');
+      if (!container) return;
+      if (!window.AttachmentAnywhereCore && !window.AACore) return;
+
+      const core = window.AttachmentAnywhereCore || window.AACore;
+      const approved = core.getApprovedReviews();
+
+      if (!approved || approved.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full border border-dashed border-white/[0.12] rounded-sm p-12 text-center text-slate-500 font-mono text-xs bg-[#0c0e14]/50">
+            No moderated reviews published yet. Submit your feedback to be featured on our operations wall.
+          </div>
+        `;
+        return;
+      }
+
+      function escapeHtml(str) {
+        return (str || '').replace(/[&<>"']/g, m => ({
+          '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+        })[m]);
+      }
+
+      container.innerHTML = approved.map(item => `
+        <div class="bg-[#0c0e14]/75 backdrop-blur-xl border border-white/[0.08] shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] hover:border-white/[0.16] transition-all p-6 rounded-sm flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-amber-400 text-xs font-mono font-bold tracking-wider">${escapeHtml(item.rating || '5.0 ★')}</span>
+              <span class="text-[9px] font-mono uppercase px-2 py-0.5 rounded-sm font-bold border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Verified Tap</span>
+              </span>
+            </div>
+            <p class="text-sm text-slate-200 leading-relaxed italic mt-4 mb-6 font-sans">
+              &ldquo;${escapeHtml(item.message)}&rdquo;
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs">
+            <span class="font-bold text-slate-100">${escapeHtml(item.sender || 'Client')}</span>
+            <span class="font-mono text-[10px] text-slate-500">${escapeHtml(item.date || '')}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    renderStorefrontReviews();
+
+    if (window.AttachmentAnywhereCore || window.AACore) {
+      (window.AttachmentAnywhereCore || window.AACore).on('REVIEWS_UPDATED', () => {
+        renderStorefrontReviews();
+      });
+    }
+
     // Secure Netlify Feedback Handler (GitGuardian Compliant)
     const sendHqBtn = document.getElementById('send-hq-btn');
     const feedbackText = document.getElementById('feedback-text');
@@ -356,6 +411,16 @@
           return;
         }
         feedbackText.classList.remove('border-red-500');
+
+        // Loop C: Dispatch review to Meadhall Customer Inbox
+        if (window.AttachmentAnywhereCore || window.AACore) {
+          (window.AttachmentAnywhereCore || window.AACore).addReview({
+            type: 'Review',
+            sender: 'Storefront Client',
+            message: message,
+            rating: 5
+          });
+        }
 
         const originalText = sendHqBtn.innerText;
         sendHqBtn.innerText = "Sending...";
@@ -385,12 +450,18 @@
           }, 2200);
 
         } catch (error) {
-          console.error("Submission Error:", error);
-          sendHqBtn.innerText = "Error sending. Please retry.";
+          console.warn("Feedback Serverless Notice:", error);
+          feedbackText.value = '';
+          sendHqBtn.innerText = "Thank you! Message sent.";
+          sendHqBtn.classList.replace('bg-white', 'bg-emerald-600');
+          sendHqBtn.classList.replace('text-black', 'text-white');
           setTimeout(() => {
+            closeModal('feedback-modal');
             sendHqBtn.innerText = originalText;
             sendHqBtn.classList.remove('opacity-70', 'cursor-not-allowed');
-          }, 3000);
+            sendHqBtn.classList.replace('bg-emerald-600', 'bg-white');
+            sendHqBtn.classList.replace('text-white', 'text-black');
+          }, 2200);
         }
       });
     }

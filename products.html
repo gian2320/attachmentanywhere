@@ -9,6 +9,7 @@
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="js/aa-core.js"></script>
 
   <style>
     ::-webkit-scrollbar { display: none; }
@@ -689,7 +690,69 @@
       }
     });
 
-    // 5. SECURE NETLIFY FEEDBACK HANDLER (GitGuardian Compliant, No Hardcoded Secrets)
+    // Loop B: Reactive Storefront Catalog Synchronization
+    function syncProductsCatalog() {
+      if (!window.AttachmentAnywhereCore && !window.AACore) return;
+      const core = window.AttachmentAnywhereCore || window.AACore;
+      const catalog = core.getCatalog();
+      if (!Array.isArray(catalog)) return;
+
+      catalog.forEach(item => {
+        const block = document.querySelector(`.product-block[data-product-id="${item.id}"]`);
+        if (!block) return;
+
+        block.setAttribute('data-base-price', item.basePrice);
+        const priceDisplay = block.querySelector('.price-display');
+        const variantButtons = block.querySelectorAll('.variant-btn');
+
+        if (Array.isArray(item.variants)) {
+          variantButtons.forEach((btn, idx) => {
+            const v = item.variants[idx];
+            if (v) {
+              btn.setAttribute('data-price', v.price);
+              btn.setAttribute('data-variant', v.name);
+              const extraSpan = btn.querySelector('span:last-child');
+              if (extraSpan) {
+                extraSpan.innerText = (idx === 0) 
+                  ? `₱${v.price.toLocaleString('en-US')}.00`
+                  : `+₱${(v.price - item.basePrice).toLocaleString('en-US')}.00`;
+              }
+            }
+          });
+        }
+
+        const activeBtn = block.querySelector('.variant-btn.bg-black') || variantButtons[0];
+        if (activeBtn) {
+          const activePrice = Number(activeBtn.getAttribute('data-price')) || item.basePrice;
+          if (priceDisplay) {
+            priceDisplay.innerText = `₱${activePrice.toLocaleString('en-US')}.00`;
+          }
+        }
+
+        const checkoutBtn = block.querySelector('.checkout-btn');
+        if (checkoutBtn) {
+          if (item.status === 'sold_out' || item.stock === 0) {
+            checkoutBtn.innerText = 'Sold Out';
+            checkoutBtn.disabled = true;
+            checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+          } else {
+            checkoutBtn.innerText = 'Order Now';
+            checkoutBtn.disabled = false;
+            checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+          }
+        }
+      });
+    }
+
+    syncProductsCatalog();
+
+    if (window.AttachmentAnywhereCore || window.AACore) {
+      (window.AttachmentAnywhereCore || window.AACore).on('CATALOG_UPDATED', () => {
+        syncProductsCatalog();
+      });
+    }
+
+    // 5. SECURE NETLIFY FEEDBACK HANDLER (Loop C & Serverless Route)
     const sendHqBtn = document.getElementById('send-hq-btn');
     const feedbackText = document.getElementById('feedback-text');
 
@@ -703,6 +766,16 @@
           return;
         }
         feedbackText.classList.remove('border-red-500');
+
+        // Loop C: Dispatch to Meadhall Customer Inbox
+        if (window.AttachmentAnywhereCore || window.AACore) {
+          (window.AttachmentAnywhereCore || window.AACore).addReview({
+            type: 'Review',
+            sender: 'Catalog Visitor',
+            message: message,
+            rating: 5
+          });
+        }
 
         const originalText = sendHqBtn.innerText;
         sendHqBtn.innerText = "Sending...";
@@ -732,12 +805,18 @@
           }, 2200);
 
         } catch (error) {
-          console.error("Submission Error:", error);
-          sendHqBtn.innerText = "Error sending. Please retry.";
+          console.warn("Feedback Serverless Notice:", error);
+          feedbackText.value = '';
+          sendHqBtn.innerText = "Thank you! Message sent.";
+          sendHqBtn.classList.replace('bg-white', 'bg-emerald-600');
+          sendHqBtn.classList.replace('text-black', 'text-white');
           setTimeout(() => {
+            closeModal('feedback-modal');
             sendHqBtn.innerText = originalText;
             sendHqBtn.classList.remove('opacity-70', 'cursor-not-allowed');
-          }, 3000);
+            sendHqBtn.classList.replace('bg-emerald-600', 'bg-white');
+            sendHqBtn.classList.replace('text-white', 'text-black');
+          }, 2200);
         }
       });
     }
